@@ -1,0 +1,176 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
+@import '~@fortawesome/fontawesome-free/scss/solid.scss';
+@import '~@fortawesome/fontawesome-free/scss/regular.scss';
+@import '~@fortawesome/fontawesome-free/scss/brands.scss';
+ 
+@import '~mdb-angular-ui-kit/assets/scss/mdb.scss';
+// @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "https://fonts.googleapis.com/css?family=Lato:wght@300@500@600&display=swap";
+@import "//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css";
+
+
+
+$primary-color: #443df6;
+$gray-color: #8d9091;
+.primary-color {
+    background-color: #efefef!important;
+}
+
+.btn-primary{
+	background: $primary-color;
+}
+
+$primary-color-dark: #000;
+.primary-color-dark {
+    background-color: $gray-color!important;
+}
+
+.text-primary-color{
+    color: $primary-color;
+}
+
+.text-grey-color{
+    color: $gray-color;
+}
+.form-label{
+	color: $primary-color-dark;
+}
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: "Lato", sans-serif;color: #000; }
+
+.fs-7{
+	font-size: 0.8rem;
+}
+.fs-8{
+	font-size: 0.7rem;
+}
+.w-70{
+	width: 70% !important;
+}
+a{
+    text-decoration: none !important;
+}
+// /* Importing Bootstrap SCSS file. */
+// @import '~bootstrap/scss/bootstrap';
+
+button.calendar, button.calendar:active {
+    width: 2.75rem;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAcCAYAAAAEN20fAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAEUSURBVEiJ7ZQxToVAEIY/YCHGxN6XGOIpnpaEsBSeQC9ArZbm9TZ6ADyBNzAhQGGl8Riv4BLAWAgmkpBYkH1b8FWT2WK/zJ8ZJ4qiI6XUI3ANnGKWBnht2/ZBDRK3hgVGNsCd7/ui+JkEIrKtqurLpEWaphd933+IyI3LEIdpCYCiKD6HcuOa/nwOa0ScJEnk0BJg0UTUWJRl6RxCYEzEmomsIlPU3IPW+grIAbquy+q6fluy/28RIBeRMwDXdXMgXLj/B2uimRXpui4D9sBeRLKl+1N+L+t6RwbWrZliTTTr1oxYtzVWiTQAcRxvTX+eJMnlUDaO1vpZRO5NS0x48sIwfPc87xg4B04MCzQi8hIEwe4bl1DnFMCN2zsAAAAASUVORK5CYII=)!important;
+    background-repeat: no-repeat;
+    background-size: 23px;
+    background-position: 50%;
+}
+.btn-outline-secondary {
+    color: #8d9091;
+    border-color: #8d9091;
+}
+
+.btn-outline-secondary:hover {
+    color: #8d9091;
+    border-color: #8d9091;
+}
+
+.d-flex{
+    display: flex;
+}
+.flex-justify-between{
+    justify-content: space-between;
+}
+
+.alert-warning{
+    color: #0e0e0e !important;
+    background-color: #f7efe0 !important;
+    border-color: #f7efe0 !important;
+    font-size: 0.8rem;
+    padding: 1rem;
+}
+.alert-success{
+    color: #0e0e0e !important;  
+    font-size: 0.8rem;
+}
+.red{
+    color: red;
+}
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+// @import '~@angular/material/prebuilt-themes/deeppurple-amber.css'; 
+
+
+.display-flex { display: flex; }
+
+.flex-1 { flex: 1; }
+
+.flex-2 { flex: 2; }
+
+.flex-3 { flex: 3; }
+
+.flex-4 { flex: 4; }
+
+.flex-5 { flex: 5; }
+
+.flex-6 { flex: 6; }
+
+[class*="flex-"] {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+[class*="flex-"]:first-child {
+  padding-left: 0;
+}
+
+[class*="flex-"]:nth-last-child(2) {
+  padding-right: 0;
+}
+
+
+.modal-dialog.panel-right {
+    position: fixed !important;
+    left: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto !important;
+    width: 640px !important;
+    height: 100%;
+    -webkit-transform: translate3d(0%, 0, 0) !important;
+    -ms-transform: translate3d(0%, 0, 0) !important;
+    -o-transform: translate3d(0%, 0, 0) !important;
+    transform: translate3d(0%, 0, 0) !important;
+}
+.modal-dialog.panel-right .modal-content {
+    height: 100%;
+    overflow-y: auto;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+.modal-dialog.panel-right .modal-body {
+    padding: 15px 15px 80px;
+}
+/*Right*/
+.modal.fade .modal-dialog.panel-right {
+    right: -320px;
+    -webkit-transition: opacity 0.3s linear, right 400ms ease-in-out !important;
+    -moz-transition: opacity 0.3s linear, right 400ms ease-in-out !important;
+    -o-transition: opacity 0.3s linear, right 400ms ease-in-out !important;
+    transition: opacity 0.3s linear, right 400ms ease-in-out !important;
+}
+.modal.fade.show .modal-dialog.panel-right {
+    right: 0;
+}
+
+.container{
+    margin-top: 100px;
+    padding-bottom: 100px;
+}
+
+formly-field {
+    display: block;
+  }
+
+
+//   @import "~@ng-select/ng-select/themes/default.theme.css";

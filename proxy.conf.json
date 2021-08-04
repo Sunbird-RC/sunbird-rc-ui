@@ -1,0 +1,25 @@
+{
+    "/registry/api/v1": {
+      "target": "https://ndear.xiv.in",
+      "changeOrigin": true,
+      "logLevel": "debug",
+      "secure": false
+
+    },
+
+    "/registry/api": {
+      "target": "https://ndear.xiv.in",
+      "changeOrigin": true,
+      "logLevel": "debug",
+      "secure": false
+
+    },
+
+    "/registry/api/docs": {
+      "target": "https://ndear.xiv.in",
+      "changeOrigin": true,
+      "logLevel": "debug",
+      "secure": false
+
+    }
+  }
