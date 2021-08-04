@@ -1,0 +1,151 @@
+// dl{
+//     display: flex;
+//     flex-wrap: wrap;
+//     flex-direction: column;
+//     height: 4em;
+// }
+// dt{
+//     font-weight: 500;
+// }
+// dl,dt{
+//     flex-basis: 30%;
+//     margin-bottom: 0 !important;
+// }
+// .right-xl-modal{
+//     &.modal{
+//         right: 0 !important;
+//         width: 70% !important;
+//         left: inherit !important;
+//     }
+//     .modal-dialog{
+//         max-width: 997px !important;
+//         margin: 0 auto !important;
+//     }
+// }
+// .right-l-modal{
+//     &.modal{
+//         right: 0 !important;
+//         width: 55% !important;
+//         left: inherit !important;
+//     }
+//     .modal-dialog{
+//         max-width: 800px !important;
+//         margin: 0 auto !important;
+//     }
+// }
+// .h-100vh{
+//     height: 100vh;
+// }
+// .blue-shade-btn{
+//     background: #7f6ae245;
+//     padding: 0.6rem;
+//     border-radius: 5px;
+//     margin-bottom: 0.4rem;
+//     font-size: 0.9rem;
+// }
+
+
+
+// .modal.left .modal-dialog,
+// .modal.right .modal-dialog {
+//     position: fixed;
+//     margin: auto;
+//     width: 620px;
+//     height: 100%;
+//     -webkit-transform: translate3d(0%, 0, 0);
+//         -ms-transform: translate3d(0%, 0, 0);
+//          -o-transform: translate3d(0%, 0, 0);
+//             transform: translate3d(0%, 0, 0);
+// }
+
+// .modal.left .modal-content,
+// .modal.right .modal-content {
+//     height: 100%;
+//     overflow-y: auto;
+// }
+
+// .modal.left .modal-body,
+// .modal.right .modal-body {
+//     padding: 15px 15px 80px;
+// }
+
+// /*Left*/
+// .modal.left.fade .modal-dialog{
+//     left: -320px;
+//     -webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
+//        -moz-transition: opacity 0.3s linear, left 0.3s ease-out;
+//          -o-transition: opacity 0.3s linear, left 0.3s ease-out;
+//             transition: opacity 0.3s linear, left 0.3s ease-out;
+// }
+
+// .modal.left.fade.in .modal-dialog{
+//     left: 0;
+// }
+
+// /*Right*/
+// .modal.right.fade .modal-dialog {
+//     right: -320px;
+//     -webkit-transition: opacity 0.3s linear, right 0.3s ease-out;
+//        -moz-transition: opacity 0.3s linear, right 0.3s ease-out;
+//          -o-transition: opacity 0.3s linear, right 0.3s ease-out;
+//             transition: opacity 0.3s linear, right 0.3s ease-out;
+// }
+
+// .modal.right.fade.in .modal-dialog {
+//     right: 0;
+// }
+
+// /* ----- MODAL STYLE ----- */
+// .modal-content {
+//     border-radius: 0;
+//     border: none;
+// }
+
+// .modal-header {
+//     border-bottom-color: #EEEEEE;
+//     background-color: #FAFAFA;
+// }
+
+// /* ----- v CAN BE DELETED v ----- */
+// /* body {
+// background-color: #78909C;
+// } */
+
+// .demo {
+// padding-top: 60px;
+// padding-bottom: 110px;
+// }
+
+// .btn-demo {
+// margin: 15px;
+// padding: 10px 15px;
+// border-radius: 0;
+// font-size: 16px;
+// background-color: #FFFFFF;
+// }
+
+// .btn-demo:focus {
+// outline: 0;
+// }
+
+// .demo-footer {
+// position: fixed;
+// bottom: 0;
+// width: 100%;
+// padding: 15px;
+// background-color: #212121;
+// text-align: center;
+// }
+
+// .demo-footer > a {
+// text-decoration: none;
+// font-weight: bold;
+// font-size: 16px;
+// color: #fff;
+// }
+// .red{
+//     color: red;
+// }
+
+
+  

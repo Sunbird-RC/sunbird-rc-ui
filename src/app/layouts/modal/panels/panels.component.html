@@ -1,0 +1,10 @@
+<div class="modal-backdrop fade" [class.show]="show"></div>
+<div class="modal d-block fade " [class.show]="show" tabindex="-1" role="dialog" aria-labelledby="modalIdLabel">
+  <div role="document" class="modal-dialog panel-right">
+    <div class="modal-content">
+      <div class="container" style="margin-top: 0; padding-bottom: 0;">
+        <router-outlet #outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>
