@@ -52,13 +52,7 @@ Key | Value
 `fields.class` | Class of field
 `fields.disabled` | `boolean` Disable the field (readonly)
 `fields.children` | `object` Reference field of defination (same properties as `fieldsets`)
-`fields.validation` | Ex. 
-```json 
-                                {
-                                    "pattern": "^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$",
-                                    "message": "GSTIN is not valid. Ex: 06BZAHM6385P6Z2"
-                                }
-```     
+`fields.validation` | <pre>{<br>&nbsp;&nbsp;"pattern": "^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$",<br>&nbsp;&nbsp;"message": "GSTIN is not valid. Ex: 06BZAHM6385P6Z2<br>}</pre>
 
 ### Layouts
 The `layouts.json` is used to define how the public and private profile pages look like. For each entity in OpenSaber backend, a layout file should be defined with the fields and the order in which they should display. 
