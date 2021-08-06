@@ -1,273 +1,51 @@
-# NDEAR Front-end
+# OpenSaber-RC Frontend
 
-Configurable Angular front end with generic forms and layouts for open saber back end
+Configurable Angular front end with generic forms and layouts for OpenSaber RC
+
+# Installation & Configuration
 
 ## Installation
+This is an Angular 8 project, and you need to install the dependencies, and run the project. 
 
-Run `npm install` or `npm ci` to install the necessary dependencies.
+## Configuration
+The application needs to be configured with the appropriate fields to be able to use it. Example configuration is provided in the `src/examples` folder.
 
-## Development server
+### Environment Config
 
-Run `npm start` for a dev server. Navigate to [http://localhost:4200/](http://localhost:4200/). The app will automatically reload if you change any of the source files.
+Key | Value
+------------          | -------------
+`baseUrl`             | Base URL for the OpenSaber backend. Eg: https://registry.com/api
+`schemaUrl`           | URL to the OpenAPI schema definition. This could be a HTTP path or a path to a local file Eg: https://registry.com/api/schema.json OR /assets/schema.json
+`logo`                | URL to logo. This logo is displayed in the header of the UI
 
-## Proxy configuration
 
-To avoid CORS issues you can use proxy configuration.
-Run `npm start` or `ng serve --proxy-config proxy.conf.json`
+### Forms
+The `forms.json` needs to be placed in `src/assets/config`. This file defines the schema for various forms used, along with the fields for each. The form rendering is based on the formly.dev library, and the forms.json is a small wrapper on top of the formly schema.
 
-For additional configuration please check `proxy.conf.json` file.
+In this file `forms` is an array with key/value pairs. They key is the code / slug of the form which is used to access the form. Eg: if the key for a form is `employee-signup` that form can be accessed via `/forms/employee-signup`. Each form definition will have the below fields - 
 
-## Build
+Key | Value
+------------          | -------------
+`form.api`            | This is the path to the API endpoints for the entity this form handles. Eg: `/Employer`
+`form.type`           | Forms can be of 2 types. It can either be a form to create a new entity Eg: Employer, or it could be a form to submit a "sub-field" eg: work experience of an employee. For the former use `entity`. For the latter use `property:<property name>` (eg: property:work_experience)
+`form.formclass`      | HTML Class applied to the form container
+`form.title`          | Title of form
+`form.redirectTo`     | Redirect URL on after form submit
+`form.fieldsets`      | List of fieldsets(multiple) for this form. At least one fieldset is needed
 
-Run `npm build` to build the project. The build artifacts will be stored in the `dist` directory. Use the `-prod` flag for a production build.
 
-## Running unit tests
-
-Run `npm test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `npm e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Customizations
-
-For this showcase we hardcoded the schemas (`app/forms/forms.json`, `app/layouts/layouts.json`). You can replace them with your own or handle them completely dynamically.
-
-In `app.module.ts` we customized the validation and executed a manual resolving step before handing the schemas over to JSON Forms. These steps are optional and can be skipped if needed.
-
-## Generic Form Example
-
-Let's create a registry of employees and employers
-
-`Employees` add and edit their Experience and `Employers` attest it.
-
-We can get Employee and Employer schema created as per model from open saber
-
-Replace `schemaUrl` in `environments/environment.ts` and `environments/environment.prod.ts` (for production only)
-
-### app/forms/forms.json
-
-```json
-{
-    "type": "opensaberLayoutSchema",
-    "version": "0.1",
-    "forms": [
-                {
-                    "employer-signup": {
-                        "api": "/Employer/invite",
-                        "type": "entity",
-                        "formclass":"row",
-                        "title": "Sign up / Create new account",
-                        "fieldsets": [
-                            {
-                                "definition": "Employer",
-                                "fields": [
-                                    {
-                                        "name":"identityDetails",
-                                        "children": {
-                                            "definition": "IdentityDetails",
-                                            "title": false,
-                                            "fields": [
-                                                {
-                                                    "name": "fullName",
-                                                    "required": true
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "name":"contactDetails",
-                                        "children": {
-                                            "definition": "ContactDetails",
-                                            "title": false,
-                                            "fields": [
-                                                {
-                                                    "name": "email",
-                                                    "required": true
-                                                },
-                                                {
-                                                    "name": "mobile",
-                                                    "required": true
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        ],
-                        "redirectTo":"/profile/employer"
-                    }
-                },
-                {
-                    "employer-setup": {
-                        "api": "/Employer",
-                        "type": "entity",
-                        "redirectTo":"/profile/employer",
-                        "fieldsets": [
-                            {
-                                "definition": "Employer",
-                                "fields": [
-                                    {
-                                        "name":"contactDetails"
-                                    },
-                                    {
-                                        "name":"identityDetails",
-                                        "children":{
-                                            "definition": "IdentityDetails",
-                                            "title": false,
-                                            "fields": [
-                                                {
-                                                    "name": "fullName",
-                                                    "required": true
-                                                },
-                                                {
-                                                    "name": "gender",
-                                                    "required": true
-                                                },
-                                                {
-                                                    "name": "dob",
-                                                    "required": true,
-                                                    "type": "date"
-                                                },
-                                                {
-                                                    "name": "identityType",
-                                                    "required": true
-                                                },
-                                                {
-                                                    "name": "identityValue",
-                                                    "required": true
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                },
-                {
-                    "employee-signup": {
-                        "api": "/Employee/invite",
-                        "type": "entity",
-                        "formclass":"row",
-                        "title": "Sign up / Create new account",
-                        "fieldsets": [
-                            {
-                                "definition": "Employee",
-                                "fields": [
-                                    {
-                                        "name":"identityDetails",
-                                        "children": {
-                                            "definition": "IdentityDetails",
-                                            "title": false,
-                                            "fields": [
-                                                {
-                                                    "name": "fullName",
-                                                    "required": true
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "name":"fresher",
-                                        "custom":true,
-                                        "element":{
-                                            "title": "Are you fresher?",
-                                            "enum": [
-                                            "Yes",
-                                            "No"
-                                            ],
-                                            "widget": {
-                                            "formlyConfig": {
-                                                "type": "radio",
-                                                "fieldGroupClassName":"controls",
-                                                "className": "radio"
-                                            }
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "name":"lastCompanyName",
-                                        "custom":true,
-                                        "element":{
-                                            "title": "Last company name",
-                                            "widget": {
-                                                "formlyConfig": {
-                                                    "type": "input",
-                                                    "expressionProperties": {
-                                                        "hide": "!model.fresher || model.fresher === 'No'"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "name":"contactDetails",
-                                        "children": {
-                                            "definition": "ContactDetails",
-                                            "title": false,
-                                            "fields": [
-                                                {
-                                                    "name": "email",
-                                                    "required": true
-                                                },
-                                                {
-                                                    "name": "mobile",
-                                                    "required": true
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        ],
-                        "redirectTo":"/profile/employee"
-                    }
-                },
-                {
-                    "employee-experience": {
-                        "api": "/Employee",
-                        "type": "property:experience",
-                        "redirectTo":"/profile/employee"
-                        "fieldsets": [
-                            {
-                                "definition": "Experience",
-                                "fields": ["*"]
-                            }
-                        ]
-                    }
-                },
-            ]
-}
-```
-
-`formUrl = {baseUrl}/forms/:route`
-
-`form = forms[route]`
+**fieldsets**
 
 Key | Value
 ------------ | -------------
-`form.api` | URL Path of API
-`form.type` | Type of form `entity` or `property:<property name>`
-`form.formclass` | Class of form
-`form.title` | Title of form
-`form.redirectTo` | Redirect URL on after form submit
-`form.fieldsets` | Array/List of fieldsets(multiple) to populate in `form`.
+`fieldsets.definition` | Name of the OpenAPI "Definition" to use
+`fieldsets.fields` | List of fields(multiple) to populate for this fieldset. If you wish to display all fields from the schema, you can skip defining each field, and use use `"fields": ["*"]`
 
 
->`fieldsets`
+**fields**
 
 Key | Value
 ------------ | -------------
-`fieldsets.definition` | Defination of fields from JSON Schemas in `schemaUrl`
-`fieldsets.fields` | Array/List of fields(multiple) to populate in `fieldsets`
-
-
->`fields`
-
-Key | Value
------------- | -------------
-`[*]` | This will take all fields from JSON Schemas in `schemaUrl`
 `fields.name` | Name of field (same as defined in defination of that schema)
 `fields.custom` | `boolean` Name of custome field (not defined in defination of that schema)
 `fields.required` | `boolean`
@@ -282,75 +60,18 @@ Key | Value
                                 }
 ```     
 
-### app/layouts/layouts.json
+### Layouts
+The `layouts.json` is used to define how the public and private profile pages look like. For each entity in OpenSaber backend, a layout file should be defined with the fields and the order in which they should display. 
 
-```json
-{
-    "type": "opensaberLayoutSchema",
-    "version": "0.1",
-    "layouts": [
-        {
-            "employer": {
-                "api": "/Employer",
-                "title": "Employer Profile",
-                "blocks": [
-                    {
-                        "definition": "Employer",
-                        "title": "Basic details",
-                        "add": false,
-                        "edit": true,
-                        "editform":"employer-setup",
-                        "fields": {
-                            "includes": ["*"]
-                        }
-                    }
-                ]
-            }
-        },
-        {
-            "employee": {
-                "api": "/Employee",
-                "title": "Employee Profile",
-                "blocks": [
-                    {
-                        "definition": "Employee",
-                        "title": "Basic details",
-                        "add": false,
-                        "edit": false,
-                        "fields": {
-                            "includes": ["*"],
-                            "excludes": ["experience"]
-                        }
-                    },
-                    {
-                        "definition": "Experience",
-                        "title": "Experience details",
-                        "add": true,
-                        "addform":"employee-experience",
-                        "edit": false,
-                        "multiple": true,
-                        "fields": {
-                            "includes": ["experience"]
-                        }
-                    }
-                ]
-            }
-        }
-    ]
-}
-```
-
-`layoutUrl = {baseUrl}/profile/:route`
-
-`layout = layouts[route]`
+In this file `layouts` is an array with key/value pairs. They key is the code / slug of the layout page which is used to access the form. Eg: if the key for a layout is `employee-profile` that page can be accessed via `/profile/employee-profile`. Each layout definition will have the below fields - 
 
 Key | Value
------------- | -------------
-`layout.api` | URL Path of API
-`layout.title` | Title of form
+------------    | -------------
+`layout.api`    | URL Path of API
+`layout.title`  | Title of form
 `layout.blocks` | Cards/Blocks (multiple) to populate in `layout`.
 
->`blocks`
+**blocks**
 
 Key | Value
 ------------ | -------------
@@ -364,9 +85,40 @@ Key | Value
 `blocks.fields` | Array/List of fields(multiple) to populate in `fieldsets`
 
 
->`fields`
+**fields**
 
 Key | Value
 ------------ | -------------
-`fields.includes` | Array/list of Included Fields from response or [*]
+`fields.includes` | Array/list of Included Fields from response or `[*]` for all fields
 `fields.excludes` | Array/list of Excluded Fields from response
+
+
+# Examples
+
+## Professional Registry
+Let's create a registry of employees and employers, where the employees are able to add work experience at each employer. Consider the below cases
+
+- Employees sign up for an account
+- Employers sign up for an account
+- Employees add and edit their Experience claim
+- Employers attest the experience claim
+
+The `src/examples/professional-registry` folder has the forms and layouts files to enable this use case
+
+## Insurance Registry
+Let's create a registry for insurance, which lets users maintain their policies in the electronic format
+
+- Users sign up for an account
+- Insurance companies sign up for an account
+- User adds their policy details as a claim
+- Insurance companies attest the claim
+
+The `src/examples/insurance-registry` folder has the forms and layouts files to enable this use case
+
+
+
+# FAQs
+
+## Proxy configuration
+To avoid CORS issues you can use proxy configuration. Run `npm start` or `ng serve --proxy-config proxy.conf.json`. For additional configuration please check `proxy.conf.json` file.
+
