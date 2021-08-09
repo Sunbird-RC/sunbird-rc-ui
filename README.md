@@ -35,9 +35,9 @@ For this showcase we hardcoded the schemas (`app/forms/forms.json`, `app/layouts
 
 In `app.module.ts` we customized the validation and executed a manual resolving step before handing the schemas over to JSON Forms. These steps are optional and can be skipped if needed.
 
-## Generic Form Example
+## Generic Form Example [check all examples here](src/app/examples)
 
-Let's create a registry of employees and employers or [click here for other exaples](/src/app/examples)
+Let's create a registry of employees and employers
 
 `Employees` add and edit their Experience and `Employers` attest it.
 
