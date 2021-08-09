@@ -37,7 +37,7 @@ In `app.module.ts` we customized the validation and executed a manual resolving 
 
 ## Generic Form Example
 
-Let's create a registry of employees and employers
+Let's create a registry of employees and employers or [click here for other exaples](/src/app/examples)
 
 `Employees` add and edit their Experience and `Employers` attest it.
 
@@ -45,7 +45,7 @@ We can get Employee and Employer schema created as per model from open saber
 
 Replace `schemaUrl` in `environments/environment.ts` and `environments/environment.prod.ts` (for production only)
 
-### app/forms/forms.json
+### assets/config/forms.json
 
 ```json
 {
