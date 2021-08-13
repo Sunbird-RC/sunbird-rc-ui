@@ -1,0 +1,53 @@
+{
+    "type": "opensaberLayoutSchema",
+    "version": "0.1",
+    "layouts": [
+        {
+            "employer": {
+                "api": "/Employer",
+                "title": "Employer Profile",
+                "blocks": [
+                    {
+                        "definition": "Employer",
+                        "title": "Basic details",
+                        "add": false,
+                        "edit": true,
+                        "editform":"employer-setup",
+                        "fields": {
+                            "includes": ["*"]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "employee": {
+                "api": "/Employee",
+                "title": "Employee Profile",
+                "blocks": [
+                    {
+                        "definition": "Employee",
+                        "title": "Basic details",
+                        "add": false,
+                        "edit": false,
+                        "fields": {
+                            "includes": ["*"],
+                            "excludes": ["experience"]
+                        }
+                    },
+                    {
+                        "definition": "Experience",
+                        "title": "Experience details",
+                        "add": true,
+                        "addform":"employee-experience",
+                        "edit": false,
+                        "multiple": true,
+                        "fields": {
+                            "includes": ["experience"]
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}
