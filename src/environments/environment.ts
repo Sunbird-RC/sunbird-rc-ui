@@ -5,6 +5,6 @@
 export const environment = {
   production: false,
   baseUrl: 'http://localhost:4200/registry/api/v1',
-  schemaUrl: 'assets/examples/schema.json', //asset path OR URL
+  schemaUrl: 'assets/config/schema.json', //asset path OR URL
   logo: 'assets/logo.png' //asset path OR URL
 };

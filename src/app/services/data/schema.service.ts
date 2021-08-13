@@ -22,7 +22,7 @@ export class SchemaService {
   }
 
   getFormJSON() {
-    let url = "./assets/configs/forms.json";
+    let url = "./assets/config/forms.json";
     const req = {
       url: url
     };
@@ -31,7 +31,7 @@ export class SchemaService {
   }
 
   getLayoutJSON() {
-    let url = "./assets/configs/layouts.json";
+    let url = "./assets/config/layouts.json";
     const req = {
       url: url
     };
@@ -40,7 +40,7 @@ export class SchemaService {
   }
 
   getTableJSON() {
-    let url = "./assets/configs/tables.json";
+    let url = "./assets/config/tables.json";
     const req = {
       url: url
     };
