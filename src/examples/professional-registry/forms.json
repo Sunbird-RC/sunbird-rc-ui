@@ -1,0 +1,191 @@
+{
+    "type": "opensaberLayoutSchema",
+    "version": "0.1",
+    "forms": [
+                {
+                    "employer-signup": {
+                        "api": "/Employer/invite",
+                        "type": "entity",
+                        "formclass":"row",
+                        "title": "Sign up / Create new account",
+                        "fieldsets": [
+                            {
+                                "definition": "Employer",
+                                "fields": [
+                                    {
+                                        "name":"identityDetails",
+                                        "children": {
+                                            "definition": "IdentityDetails",
+                                            "title": false,
+                                            "fields": [
+                                                {
+                                                    "name": "fullName",
+                                                    "required": true
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name":"contactDetails",
+                                        "children": {
+                                            "definition": "ContactDetails",
+                                            "title": false,
+                                            "fields": [
+                                                {
+                                                    "name": "email",
+                                                    "required": true
+                                                },
+                                                {
+                                                    "name": "mobile",
+                                                    "required": true
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        ],
+                        "redirectTo":"/profile/employer"
+                    }
+                },
+                {
+                    "employer-setup": {
+                        "api": "/Employer",
+                        "type": "entity",
+                        "redirectTo":"/profile/employer",
+                        "fieldsets": [
+                            {
+                                "definition": "Employer",
+                                "fields": [
+                                    {
+                                        "name":"contactDetails"
+                                    },
+                                    {
+                                        "name":"identityDetails",
+                                        "children":{
+                                            "definition": "IdentityDetails",
+                                            "title": false,
+                                            "fields": [
+                                                {
+                                                    "name": "fullName",
+                                                    "required": true
+                                                },
+                                                {
+                                                    "name": "gender",
+                                                    "required": true
+                                                },
+                                                {
+                                                    "name": "dob",
+                                                    "required": true,
+                                                    "type": "date"
+                                                },
+                                                {
+                                                    "name": "identityType",
+                                                    "required": true
+                                                },
+                                                {
+                                                    "name": "identityValue",
+                                                    "required": true
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "employee-signup": {
+                        "api": "/Employee/invite",
+                        "type": "entity",
+                        "formclass":"row",
+                        "title": "Sign up / Create new account",
+                        "fieldsets": [
+                            {
+                                "definition": "Employee",
+                                "fields": [
+                                    {
+                                        "name":"identityDetails",
+                                        "children": {
+                                            "definition": "IdentityDetails",
+                                            "title": false,
+                                            "fields": [
+                                                {
+                                                    "name": "fullName",
+                                                    "required": true
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name":"fresher",
+                                        "custom":true,
+                                        "element":{
+                                            "title": "Are you fresher?",
+                                            "enum": [
+                                            "Yes",
+                                            "No"
+                                            ],
+                                            "widget": {
+                                            "formlyConfig": {
+                                                "type": "radio",
+                                                "fieldGroupClassName":"controls",
+                                                "className": "radio"
+                                            }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "name":"lastCompanyName",
+                                        "custom":true,
+                                        "element":{
+                                            "title": "Last company name",
+                                            "widget": {
+                                                "formlyConfig": {
+                                                    "type": "input",
+                                                    "expressionProperties": {
+                                                        "hide": "!model.fresher || model.fresher === 'No'"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "name":"contactDetails",
+                                        "children": {
+                                            "definition": "ContactDetails",
+                                            "title": false,
+                                            "fields": [
+                                                {
+                                                    "name": "email",
+                                                    "required": true
+                                                },
+                                                {
+                                                    "name": "mobile",
+                                                    "required": true
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        ],
+                        "redirectTo":"/profile/employee"
+                    }
+                },
+                {
+                    "employee-experience": {
+                        "api": "/Employee",
+                        "type": "property:experience",
+                        "redirectTo":"/profile/employee",
+                        "fieldsets": [
+                            {
+                                "definition": "Experience",
+                                "fields": ["*"]
+                            }
+                        ]
+                    }
+                }
+            ]
+}

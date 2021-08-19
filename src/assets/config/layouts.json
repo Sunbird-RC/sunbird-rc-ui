@@ -1,0 +1,113 @@
+{
+    "type": "opensaberLayoutSchema",
+    "version": "0.1",
+    "layouts": [
+        {
+            "institute": {
+                "api": "/Institute",
+                "title": "Institute Profile",
+                "blocks": [
+                    {
+                        "definition": "Institute",
+                        "title": "Basic details",
+                        "add": false,
+                        "edit": true,
+                        "editform":"institute-setup",
+                        "fields": {
+                            "includes": ["*"],
+                            "excludes": ["affiliation"]
+                        }
+                    },
+                    {
+                        "definition": "Institute",
+                        "title": "Affiliation details",
+                        "add": true,
+                        "addform":"affiliation",
+                        "edit": false,
+                        "editform":"affiliation",
+                        "multiple": true,
+                        "fields": {
+                            "includes": ["affiliation"]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "teacher": {
+                "api": "/Teacher",
+                "title": "Teacher Profile",
+                "blocks": [
+                    {
+                        "definition": "Teacher",
+                        "title": "Basic details",
+                        "add": false,
+                        "edit": true,
+                        "editform":"teacher-setup",
+                        "fields": {
+                            "includes": ["*"],
+                            "excludes": ["experience","academicQualifications"]
+                        }
+                    },
+                    {
+                        "definition": "Teacher",
+                        "title": "Experience details",
+                        "add": true,
+                        "addform":"teacher-experience",
+                        "edit": false,
+                        "multiple": true,
+                        "fields": {
+                            "includes": ["experience"]
+                        }
+                    },
+                    {
+                        "definition": "Teacher",
+                        "title": "Academic Qualifications",
+                        "add": true,
+                        "addform":"teacher-education",
+                        "edit": false,
+                        "multiple": true,
+                        "fields": {
+                            "includes": ["academicQualifications"]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "student": {
+                "api": "/Student",
+                "title": "Student Profile",
+                "blocks": [
+                    {
+                        "definition": "Student",
+                        "title": "Basic details",
+                        "add": false,
+                        "edit": true,
+                        "editform":"student-setup",
+                        "fields": {
+                            "includes": ["*"],
+                            "excludes": ["educationDetails"]
+                        }
+                    },
+                    {
+                        "definition": "Student",
+                        "title": "Education details",
+                        "add": true,
+                        "addform":"student-education",
+                        "edit": false,
+                        "multiple": true,
+                        "fields": {
+                            "includes": ["educationDetails"]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "board-cbse": {
+                "table": "board-cbse-attestation"
+            }
+        }
+    ]
+}
