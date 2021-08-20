@@ -1,0 +1,413 @@
+{
+    "type": "opensaberLayoutSchema",
+    "version": "0.1",
+    "forms": [
+        {
+            "child-signup": {
+                "api": "/Vaccine/invite",
+                "type": "entity",
+                "formclass": "row",
+                "title": "Sign up / Create new account",
+                "fieldsets": [
+                    {
+                        "definition": "Child",
+                        "fields": [
+                            {
+                                "name": "identityDetails",
+                                "children": {
+                                    "definition": "IdentityDetails",
+                                    "title": false,
+                                    "fields": [
+                                        {
+                                            "name": "fullName",
+                                            "required": true
+                                        },
+                                        {
+                                            "name": "guardianName"
+                                        },
+                                        {
+                                            "name": "guardianRelation"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "contactDetails",
+                                "children": {
+                                    "definition": "ContactDetails",
+                                    "title": false,
+                                    "fields": [
+                                        {
+                                            "name": "email",
+                                            "required": true
+                                        },
+                                        {
+                                            "name": "mobile",
+                                            "required": true
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "redirectTo": "/profile/child"
+            }
+        },
+        {
+            "practitioner-signup": {
+                "api": "/Vaccine/invite",
+                "type": "entity",
+                "formclass": "row",
+                "title": "Sign up / Create new account",
+                "fieldsets": [
+                    {
+                        "definition": "Practitioner",
+                        "fields": [
+                            {
+                                "name": "identityDetails",
+                                "children": {
+                                    "definition": "IdentityDetails",
+                                    "title": false,
+                                    "fields": [
+                                        {
+                                            "name": "fullName",
+                                            "required": true
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "contactDetails",
+                                "children": {
+                                    "definition": "ContactDetails",
+                                    "title": false,
+                                    "fields": [
+                                        {
+                                            "name": "email",
+                                            "required": true
+                                        },
+                                        {
+                                            "name": "mobile",
+                                            "required": true
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "redirectTo": "/profile/practitioner"
+            }
+        },
+        {
+            "hospital-signup": {
+                "api": "/Vaccine/invite",
+                "type": "entity",
+                "formclass": "row",
+                "title": "Sign up / Create new account",
+                "fieldsets": [
+                    {
+                        "definition": "Hospital",
+                        "fields": [
+                            {
+                                "name": "identityDetails",
+                                "children": {
+                                    "definition": "IdentityDetails",
+                                    "title": false,
+                                    "fields": [
+                                        {
+                                            "name": "fullName",
+                                            "required": true
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "contactDetails",
+                                "children": {
+                                    "definition": "ContactDetails",
+                                    "title": false,
+                                    "fields": [
+                                        {
+                                            "name": "email",
+                                            "required": true
+                                        },
+                                        {
+                                            "name": "mobile",
+                                            "required": true
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "redirectTo": "/profile/hospital"
+            }
+        },
+        {
+            "admin-signup": {
+                "api": "/Vaccine/invite",
+                "type": "entity",
+                "formclass": "row",
+                "title": "Sign up / Create new account",
+                "fieldsets": [
+                    {
+                        "definition": "Practitioner",
+                        "fields": [
+                            {
+                                "name": "identityDetails",
+                                "children": {
+                                    "definition": "IdentityDetails",
+                                    "title": false,
+                                    "fields": [
+                                        {
+                                            "name": "fullName",
+                                            "required": true
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "contactDetails",
+                                "children": {
+                                    "definition": "ContactDetails",
+                                    "title": false,
+                                    "fields": [
+                                        {
+                                            "name": "email",
+                                            "required": true
+                                        },
+                                        {
+                                            "name": "mobile",
+                                            "required": true
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "redirectTo": "/profile/practitioner"
+            }
+        },
+        {
+            "child-setup": {
+                "api": "/Vaccine/invite",
+                "type": "entity",
+                "formclass": "row",
+                "title": "Child Setup",
+                "fieldsets": [
+                    {
+                        "definition": "Child",
+                        "fields": [
+                            {
+                                "name": "identityDetails",
+                                "children": {
+                                    "definition": "IdentityDetails",
+                                    "title": "Identity Details",
+                                    "fields": [
+                                        {
+                                            "name": "fullName",
+                                            "required": true
+                                        },
+                                        {
+                                            "name": "guardianName"
+                                        },
+                                        {
+                                            "name": "guardianRelation"
+                                        },
+                                        {
+                                            "name": "gender",
+                                            "required": true
+                                        },
+                                        {
+                                            "name": "dob",
+                                            "required": true,
+                                            "type": "date"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "contactDetails"
+                            },
+                            {
+                                "name": "vaccinationDetails"
+                            }
+                        ]
+                    }
+                ],
+                "redirectTo": "/profile/child"
+            }
+        },
+        {
+            "practitioner-setup": {
+                "api": "/Vaccine/invite",
+                "type": "entity",
+                "formclass": "row",
+                "title": "Practitioner Details",
+                "fieldsets": [
+                    {
+                        "definition": "Practitioner",
+                        "fields": [
+                            {
+                                "name": "identityDetails",
+                                "children": {
+                                    "definition": "IdentityDetails",
+                                    "title": "Identity Details",
+                                    "fields": [
+                                        {
+                                            "name": "fullName",
+                                            "required": true
+                                        },
+                                        {
+                                            "name": "gender",
+                                            "required": true
+                                        },
+                                        {
+                                            "name": "dob",
+                                            "required": true,
+                                            "type": "date"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "contactDetails"
+                            },
+                            {
+                                "name": "qualification"
+                            },
+                            {
+                                "name": "experience"
+                            }
+                        ]
+                    }
+                ],
+                "redirectTo": "/profile/practitioner"
+            }
+        },
+        {
+            "child-vaccine": {
+                "api": "/vaccine",
+                "type": "property:vaccine",
+                "redirectTo": "/child/vaccine",
+                "title": "Add Vaccination Details",
+                "fieldsets": [
+                    {
+                        "definition": "VaccinationDetails",
+                        "fields": [
+                            {
+                                "name": "vaccineName",
+                                "required": true
+                            },
+                            {
+                                "name": "authorisationId",
+                                "required": true
+                            },
+                            {
+                                "name": "manufacturerName",
+                                "required": true
+                            },
+                            {
+                                "name": "hospitalName",
+                                "required": true
+                            },
+                            {
+                                "name": "practitionerName",
+                                "required": true
+                            },
+                            {
+                                "name": "vaccinationDate",
+                                "required": true
+                            },
+                            {
+                                "name": "vaccinationCertificate",
+                                "required": true
+                            },
+                            {
+                                "name": "childAge",
+                                "required": true
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "vaccine-setup": {
+                "api": "/Vaccine/invite",
+                "type": "entity",
+                "formclass": "row",
+                "title": "Add New Vaccine",
+                "fieldsets": [
+                    {
+                        "definition": "VaccineInfo",
+                        "fields": [
+                            {
+                                "name": "vaccinationDetails"
+                            }
+                        ]
+                    }
+                ],
+                "redirectTo": "/profile/child"
+            }
+        },
+        {
+            "hospital-setup": {
+                "api": "/Vaccine/invite",
+                "type": "entity",
+                "formclass": "row primary",
+                "header": "main",
+                "title": "Add New Hospital",
+                "fieldsets": [
+                    {
+                        "definition": "Hospital",
+                        "fields": [
+                            {
+                                "name": "identityDetails",
+                                "children": {
+                                    "definition": "IdentityDetails",
+                                    "title": false,
+                                    "fields": [
+                                        {
+                                            "name": "fullName",
+                                            "required": true
+                                        },
+                                        {
+                                            "name": "establishmentYear",
+                                            "required": true
+                                        },
+                                        {
+                                            "name": "gstnId",
+                                            "required": true
+                                        },
+                                        {
+                                            "name": "website"
+                                        },
+                                        {
+                                            "name": "social"
+                                        },
+                                        {
+                                            "name": "department",
+                                            "required": true
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "contactDetails"
+                            },
+                            {
+                                "name": "affiliations"
+                            }
+                        ]
+                    }
+                ],
+                "redirectTo": "/profile/hospital"
+            }
+        }
+    ]
+}
