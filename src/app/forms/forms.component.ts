@@ -60,6 +60,7 @@ export class FormsComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.add = this.router.url.includes('add');
+
       if (params['form'] != undefined) {
         this.form = params['form']
       }
@@ -183,22 +184,29 @@ export class FormsComponent implements OnInit {
     var ref_required = []
     if (field.children.fields && field.children.fields.length > 0) {
       field.children.fields.forEach(reffield => {
+
         this.addWidget(field.children, reffield, field.name);
+
         if (reffield.required) {
           ref_required.push(reffield.name)
         }
+
         ref_properties[reffield.name] = this.responseData.definitions[field.children.definition].properties[reffield.name];
+
         // this.property[field.children.definition].properties[reffield.name] = this.responseData.definitions[field.children.definition].properties[reffield.name];
       });
       // this.property[field.name] = ref_properties;
+
       if (this.responseData.definitions[fieldset.definition].properties.hasOwnProperty(field.name)) {
         this.responseData.definitions[fieldset.definition].properties[field.name].properties = ref_properties;
       } else {
         this.responseData.definitions[fieldset.definition].properties = ref_properties;
+
       }
       this.definations[field.children.definition].properties = ref_properties;
       this.definations[field.children.definition].required = ref_required;
     }
+
   }
 
   nastedChild(fieldset, fieldName, res) {
@@ -212,10 +220,6 @@ export class FormsComponent implements OnInit {
         if (tempArr[key].type == 'string') {
           temp_arr_fields.push({ 'name': key, 'type': tempArr[key].type });
         }
-        
-      if (field.custom && field.element) {
-        this.responseData.definitions[fieldset.definition].properties[field.name] = field.element;
-        this.customFields.push(field.name)
       } else {
         let res = this.responseData.definitions[fieldName.replace(/^./, fieldName[0].toUpperCase())].properties[key];
         if (res.hasOwnProperty('properties') || res.hasOwnProperty('$ref')) {
@@ -234,9 +238,14 @@ export class FormsComponent implements OnInit {
             name: key.toLowerCase()
           }
 
+
           temp_arr_fields.push(temp2);
+
+          // this.checkProperty(fieldset, temp2);
+
           temp2.children.fields.forEach(reffield => {
             this.addChildWidget(reffield, fieldName, key);
+
          });
         } else {
           delete this.responseData.definitions[fieldName.replace(/^./, fieldName[0].toUpperCase())].properties[key];
@@ -254,8 +263,11 @@ export class FormsComponent implements OnInit {
   }
 
   addFields(fieldset) {
+
     if (fieldset.fields.length) {
+
       fieldset.fields.forEach(field => {
+
         if(this.responseData.definitions[fieldset.definition] && this.responseData.definitions[fieldset.definition].hasOwnProperty('properties'))
         {
           let res = this.responseData.definitions[fieldset.definition].properties;
@@ -283,10 +295,13 @@ export class FormsComponent implements OnInit {
           if (this.property[field.name].description) {
             delete this.property[field.name].description;
           }
+
         }
       });
     } else {
+      // institute ----
       let res = this.responseData.definitions[fieldset.definition].properties;
+
       this.nastedChild(fieldset, fieldset.definition, res);
       // this.definations[fieldset.definition].properties[field.name] = this.responseData.definitions[fieldset.definition].properties[field.name];
     }
@@ -332,6 +347,7 @@ export class FormsComponent implements OnInit {
             "validation": {},
             "expressionProperties": {}
           }
+
         }
 
         if(this.privacyCheck){
@@ -364,6 +380,7 @@ export class FormsComponent implements OnInit {
         if (field.format) {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = field.format;
         }
+
         if (field.validation) {
           if (field.validation.message) {
             this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['validation'] = {
@@ -444,71 +461,9 @@ export class FormsComponent implements OnInit {
           }
         }
       }
-      if (field.autofill) {
-        if (field.autofill.apiURL) {
-          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['modelOptions'] = {
-            updateOn: 'blur'
-          };
-          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'] = {}
-          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name] = {}
-          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name]['expression'] = (control: FormControl) => {
-            if (control.value != null) {
-              if (field.autofill.method === 'GET') {
-                var apiurl = field.autofill.apiURL.replace("{{value}}", control.value)
-                this.generalService.getPrefillData(apiurl).subscribe((res) => {
-                  if (field.autofill.fields) {
-                    field.autofill.fields.forEach(element => {
-                      for (var [key1, value1] of Object.entries(element)) {
-                        this.createPath(this.model, key1, this.ObjectbyString(res, value1))
-                        this.form2.get(key1).setValue(this.ObjectbyString(res, value1))
-                      }
-                    });
-                  }
-                  if (field.autofill.dropdowns) {
-                    field.autofill.dropdowns.forEach(element => {
-                      for (var [key1, value1] of Object.entries(element)) {
-                        if (Array.isArray(res)) {
-                          res = res[0]
-                        }
-                        this.schema["properties"][key1]['items']['enum'] = this.ObjectbyString(res, value1)
-                      }
-                    });
-                  }
-                });
-              }
-              else if (field.autofill.method === 'POST') {
-                var datapath = this.findPath(field.autofill.body, "{{value}}", '')
-                if (datapath) {
-                  var dataobject = this.setPathValue(field.autofill.body, datapath, control.value)
-                  this.generalService.postPrefillData(field.autofill.apiURL, dataobject).subscribe((res) => {
-                    if (field.autofill.fields) {
-                      field.autofill.fields.forEach(element => {
-                        for (var [key1, value1] of Object.entries(element)) {
-                          this.createPath(this.model, key1, this.ObjectbyString(res, value1))
-                          this.form2.get(key1).setValue(this.ObjectbyString(res, value1))
-                        }
-                      });
-                    }
-                    if (field.autofill.dropdowns) {
-                      field.autofill.dropdowns.forEach(element => {
-                        for (var [key1, value1] of Object.entries(element)) {
-                          if (Array.isArray(res)) {
-                            res = res[0]
-                          }
-                          this.schema["properties"][key1]['items']['enum'] = this.ObjectbyString(res, value1)
-                        }
-                      });
-                    }
-                  });
-                }
-
-              }
-            }
-          }
-        }
-      }
       if (field.type) {
         if (field.type == "autocomplete") {
+         
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = "autocomplete";
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = this.responseData.definitions[fieldset.definition].properties[field.name]['title'];
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['search$'] = (term) => {
@@ -545,6 +500,8 @@ export class FormsComponent implements OnInit {
         if (this.privateFields.includes(temp_access_field)) {
           this.responseData.definitions[fieldset.definition].properties[field.name].access = 'private';
           this.addLockIcon(this.responseData.definitions[fieldset.definition].properties[field.name]);
+
+
         } else if (this.internalFields.includes(temp_access_field)) {
           this.responseData.definitions[fieldset.definition].properties[field.name].access = 'internal';
           this.addLockIcon(this.responseData.definitions[fieldset.definition].properties[field.name]);
@@ -558,6 +515,7 @@ export class FormsComponent implements OnInit {
       this.res.properties[field.name]['widget'] = field.widget;
     }
     else {
+
       this.res.properties[field.name]['widget'] = {
         "formlyConfig": {
           "templateOptions": {
@@ -586,6 +544,7 @@ export class FormsComponent implements OnInit {
 
       let temp_access_field = '$.' + ParentName + '.' + childrenName + '.' + field.name;
 
+
       if (this.privateFields.includes(temp_access_field)) {
         this.res.properties[field.name].access = 'private';
         this.addLockIcon(this.res.properties[field.name]);
@@ -594,7 +553,9 @@ export class FormsComponent implements OnInit {
         this.res.properties[field.name].access = 'internal';
         this.addLockIcon(this.res.properties[field.name]);
       }
+
       this.responseData.definitions[ParentName.replace(/^./, ParentName[0].toUpperCase())].properties[childrenName] = this.res;
+
     }
   };
 
@@ -663,6 +624,7 @@ export class FormsComponent implements OnInit {
       get_url = this.apiUrl
     }
     this.generalService.getData(get_url).subscribe((res) => {
+      // if(this.property[definition])
       this.model = res[0];
       this.identifier = res[0].osid;
       this.loadSchema()
