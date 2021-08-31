@@ -294,4 +294,5 @@ export class LayoutsComponent implements OnInit {
   ngOnDestroy() {
     this.destroy.next();
   }
+
 }
