@@ -28,6 +28,8 @@ import { EditPanelComponent } from './layouts/modal/panels/edit-panel/edit-panel
 import { AddPanelComponent } from './layouts/modal/panels/add-panel/add-panel.component';
 import { TablesComponent } from './tables/tables.component';
 import { HeaderComponent } from './header/header.component';
+import { FormlyFieldFile } from './forms/types/file.type';
+import { FileValueAccessor } from './forms/types/file-value-accessor';
 
 
 //form validations
@@ -72,8 +74,6 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
 }
 
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -87,7 +87,8 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
     ModalRouterAddLinkDirective,
     PanelsComponent, EditPanelComponent, AddPanelComponent, TablesComponent,
     AutocompleteTypeComponent,
-    HeaderComponent
+    HeaderComponent,
+    FileValueAccessor
   ],
   imports: [
     BrowserModule,
@@ -133,7 +134,8 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
         {
           name: 'autocomplete',
           component: AutocompleteTypeComponent
-        }
+        },
+        { name: 'file', component: FormlyFieldFile, wrappers: ['form-field'] }
       ],
     }),
     ToastrModule.forRoot({

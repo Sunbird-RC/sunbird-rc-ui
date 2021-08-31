@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SchemaService } from '../services/data/schema.service';
 import { GeneralService } from '../services/general/general.service';
 import * as TableSchemas from './tables.json'
 
@@ -20,7 +19,7 @@ export class TablesComponent implements OnInit {
   property: any[] = [];
   // tr: any[] = [];
 
-  constructor(public router: Router, private route: ActivatedRoute,public schemaService: SchemaService, public generalService: GeneralService) { }
+  constructor(public router: Router, private route: ActivatedRoute, public generalService: GeneralService) { }
 
   ngOnInit(): void {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -33,16 +32,14 @@ export class TablesComponent implements OnInit {
       this.entity = (params['entity']).toLowerCase();
       this.tab = tab_url.replace(this.table,"").replace(this.entity,"").split("/").join("")
       console.log("tab",this.tab)
-      this.schemaService.getTableJSON().subscribe(async (TableSchemas) => {
-        var filtered = TableSchemas.tables.filter(obj => {
-          // console.log(Object.keys(obj)[0])
-          return Object.keys(obj)[0] === this.table
-        })
-        // console.log(filtered)
-        this.tableSchema = filtered[0][this.table]
-        this.apiUrl = this.tableSchema.api;
-        await this.getData();
+      var filtered = TableSchemas.tables.filter(obj => {
+        // console.log(Object.keys(obj)[0])
+        return Object.keys(obj)[0] === this.table
       })
+      // console.log(filtered)
+      this.tableSchema = filtered[0][this.table]
+      this.apiUrl = this.tableSchema.api;
+      await this.getData();
     });
   }
 
