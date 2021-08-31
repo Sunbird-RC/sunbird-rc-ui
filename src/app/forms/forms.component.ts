@@ -60,7 +60,6 @@ export class FormsComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.add = this.router.url.includes('add');
-
       if (params['form'] != undefined) {
         this.form = params['form']
       }
@@ -213,6 +212,10 @@ export class FormsComponent implements OnInit {
         if (tempArr[key].type == 'string') {
           temp_arr_fields.push({ 'name': key, 'type': tempArr[key].type });
         }
+        
+      if (field.custom && field.element) {
+        this.responseData.definitions[fieldset.definition].properties[field.name] = field.element;
+        this.customFields.push(field.name)
       } else {
         let res = this.responseData.definitions[fieldName.replace(/^./, fieldName[0].toUpperCase())].properties[key];
         if (res.hasOwnProperty('properties') || res.hasOwnProperty('$ref')) {
@@ -441,9 +444,71 @@ export class FormsComponent implements OnInit {
           }
         }
       }
+      if (field.autofill) {
+        if (field.autofill.apiURL) {
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['modelOptions'] = {
+            updateOn: 'blur'
+          };
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'] = {}
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name] = {}
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name]['expression'] = (control: FormControl) => {
+            if (control.value != null) {
+              if (field.autofill.method === 'GET') {
+                var apiurl = field.autofill.apiURL.replace("{{value}}", control.value)
+                this.generalService.getPrefillData(apiurl).subscribe((res) => {
+                  if (field.autofill.fields) {
+                    field.autofill.fields.forEach(element => {
+                      for (var [key1, value1] of Object.entries(element)) {
+                        this.createPath(this.model, key1, this.ObjectbyString(res, value1))
+                        this.form2.get(key1).setValue(this.ObjectbyString(res, value1))
+                      }
+                    });
+                  }
+                  if (field.autofill.dropdowns) {
+                    field.autofill.dropdowns.forEach(element => {
+                      for (var [key1, value1] of Object.entries(element)) {
+                        if (Array.isArray(res)) {
+                          res = res[0]
+                        }
+                        this.schema["properties"][key1]['items']['enum'] = this.ObjectbyString(res, value1)
+                      }
+                    });
+                  }
+                });
+              }
+              else if (field.autofill.method === 'POST') {
+                var datapath = this.findPath(field.autofill.body, "{{value}}", '')
+                if (datapath) {
+                  var dataobject = this.setPathValue(field.autofill.body, datapath, control.value)
+                  this.generalService.postPrefillData(field.autofill.apiURL, dataobject).subscribe((res) => {
+                    if (field.autofill.fields) {
+                      field.autofill.fields.forEach(element => {
+                        for (var [key1, value1] of Object.entries(element)) {
+                          this.createPath(this.model, key1, this.ObjectbyString(res, value1))
+                          this.form2.get(key1).setValue(this.ObjectbyString(res, value1))
+                        }
+                      });
+                    }
+                    if (field.autofill.dropdowns) {
+                      field.autofill.dropdowns.forEach(element => {
+                        for (var [key1, value1] of Object.entries(element)) {
+                          if (Array.isArray(res)) {
+                            res = res[0]
+                          }
+                          this.schema["properties"][key1]['items']['enum'] = this.ObjectbyString(res, value1)
+                        }
+                      });
+                    }
+                  });
+                }
+
+              }
+            }
+          }
+        }
+      }
       if (field.type) {
         if (field.type == "autocomplete") {
-         
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = "autocomplete";
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = this.responseData.definitions[fieldset.definition].properties[field.name]['title'];
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['search$'] = (term) => {
@@ -598,7 +663,6 @@ export class FormsComponent implements OnInit {
       get_url = this.apiUrl
     }
     this.generalService.getData(get_url).subscribe((res) => {
-      // if(this.property[definition])
       this.model = res[0];
       this.identifier = res[0].osid;
       this.loadSchema()
