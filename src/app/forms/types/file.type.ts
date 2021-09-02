@@ -44,8 +44,7 @@ export class FormlyFieldFile extends FieldType {
         this.color = 'green';
         this.icon = 'fa fa-check-circle'
       }, (err) => {
-        this.lable = 'Something went wrong with ' + file.name
-        console.log('error2', err.error.params.errmsg)
+        this.lable = 'Something went wrong with ' + file.name;
       });
     }
 
