@@ -7,8 +7,14 @@ import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 import { JSONSchema7 } from "json-schema";
 import { GeneralService } from '../services/general/general.service';
 import { Location } from '@angular/common'
+import { title } from 'process';
+import { combineLatest, startWith, switchMap } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
+import { of } from 'rxjs';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
 import { of as observableOf } from 'rxjs';
+// import { Observable, of } from 'rxjs';
+import { delay, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-forms',
@@ -378,6 +384,9 @@ export class FormsComponent implements OnInit {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['required'] = true;
         }
         if (field.format) {
+          if (this.type && this.type.includes("property")) {
+            localStorage.setItem('property',this.type.split(":")[1]);
+          }
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = field.format;
         }
 
@@ -737,3 +746,5 @@ export class FormsComponent implements OnInit {
   }
 
 }
+
+

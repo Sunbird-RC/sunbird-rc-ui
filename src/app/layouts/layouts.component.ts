@@ -41,6 +41,7 @@ export class LayoutsComponent implements OnInit {
       if (params['tab']) {
         this.tab = params['tab']
       }
+      localStorage.setItem('entity',this.layout);
       this.layout = this.layout.toLowerCase()
     });
     this.schemaService.getSchemas().subscribe(async (res) => 
@@ -58,6 +59,7 @@ export class LayoutsComponent implements OnInit {
         if (this.layoutSchema.api) {
           this.apiUrl = this.layoutSchema.api;
           await this.getData();
+          
         }
       }, (error) => {
         //Layout Error callback
@@ -267,6 +269,7 @@ export class LayoutsComponent implements OnInit {
         this.model = res[0];
         this.identifier = res[0].osid;
       }
+      localStorage.setItem('osid',this.identifier);
       this.addData()
     });
   }
@@ -294,4 +297,5 @@ export class LayoutsComponent implements OnInit {
   ngOnDestroy() {
     this.destroy.next();
   }
+
 }
