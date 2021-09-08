@@ -10,7 +10,7 @@ import { TablesComponent } from './tables/tables.component';
 const routes: Routes = [
   // Forms
   { path: 'form/:form', component: FormsComponent },
-  { path: 'form/:form/:id', component: FormsComponent },
+  { path: 'form/:form/:id', component: FormsComponent, canActivate: [AuthGuard] },
 
 
   // Layouts
