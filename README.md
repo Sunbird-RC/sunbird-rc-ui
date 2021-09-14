@@ -1,4 +1,4 @@
-# OpenSaber-RC Frontend
+# Sunbird-RC UI
 
 Configurable Angular front end with generic forms and layouts for OpenSaber RC
 
@@ -97,7 +97,7 @@ Let's create a registry of employees and employers, where the employees are able
 - Employees add and edit their Experience claim
 - Employers attest the experience claim
 
-The `src/examples/professional-registry` [folder](https://github.com/Sunbird-RC/opensaber-rc-ui/tree/main/src/examples/professional-registry) has the forms and layouts files to enable this use case
+The `src/examples/professional-registry` [folder](https://github.com/Sunbird-RC/sunbird-rc-ui/tree/main/src/examples/professional-registry) has the forms and layouts files to enable this use case
 
 ## Insurance Registry
 Let's create a registry for insurance, which lets users maintain their policies in the electronic format
@@ -107,7 +107,7 @@ Let's create a registry for insurance, which lets users maintain their policies 
 - User adds their policy details as a claim
 - Insurance companies attest the claim
 
-The `src/examples/insurance-registry` [folder](https://github.com/Sunbird-RC/opensaber-rc-ui/tree/main/src/examples/insurance-registry) has the forms and layouts files to enable this use case
+The `src/examples/insurance-registry` [folder](https://github.com/Sunbird-RC/sunbird-rc-ui/tree/main/src/examples/insurance-registry) has the forms and layouts files to enable this use case
 
 
 
