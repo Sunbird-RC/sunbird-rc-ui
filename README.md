@@ -2,6 +2,9 @@
 
 Configurable Angular front end with generic forms and layouts for OpenSaber RC
 
+# Community Discussions & Issue Reporting
+Please use the community repo for reporting issues & participating in discussions
+
 # Installation & Configuration
 
 ## Installation
