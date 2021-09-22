@@ -5,8 +5,7 @@
 /tmp
 /out-tsc
 # Only exists if Bazel was run
-/bazel-out
-/src/assets/config
+/bazel-oauth
 
 # dependencies
 /node_modules
