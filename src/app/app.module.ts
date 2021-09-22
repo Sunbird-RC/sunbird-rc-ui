@@ -9,6 +9,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { APP_INITIALIZER } from '@angular/core';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
 
 // formly
 import { FormlyModule, FormlyFieldConfig } from '@ngx-formly/core';
@@ -32,6 +33,11 @@ import { TablesComponent } from './tables/tables.component';
 import { HeaderComponent } from './header/header.component';
 import { FormlyFieldFile } from './forms/types/file.type';
 import { FileValueAccessor } from './forms/types/file-value-accessor';
+import { DocViewComponent } from './layouts/doc-view/doc-view.component';
+import { FormlyFieldNgSelect } from './forms/types/multiselect.type';
+import { Bootstrap4FrameworkModule } from 'angular6-json-schema-form';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { FormDetailComponent } from './tables/form-detail/form-detail/form-detail.component';
 
 
 //form validations
@@ -90,7 +96,11 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
     PanelsComponent, EditPanelComponent, AddPanelComponent, TablesComponent,
     AutocompleteTypeComponent,
     HeaderComponent,
-    FileValueAccessor
+    FormDetailComponent,
+    FileValueAccessor,
+    FormlyFieldFile,
+    DocViewComponent,
+    FormlyFieldNgSelect
   ],
   imports: [
     BrowserModule,
@@ -102,6 +112,8 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
     NgbModule,
     FormlyBootstrapModule,
     KeycloakAngularModule,
+    NgxDocViewerModule,
+    Bootstrap4FrameworkModule,
     FormlyModule.forRoot({
       extras: { resetFieldOnHide: true },
       validationMessages: [
@@ -138,7 +150,8 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
           name: 'autocomplete',
           component: AutocompleteTypeComponent
         },
-        { name: 'file', component: FormlyFieldFile, wrappers: ['form-field'] }
+        { name: 'file', component: FormlyFieldFile, wrappers: ['form-field'] },
+        { name: 'multiselect', component: FormlyFieldNgSelect }
       ],
     }),
     ToastrModule.forRoot({
@@ -154,7 +167,8 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
     useFactory: initializeKeycloak,
     multi: true,
     deps: [KeycloakService],
-  },]
+  },
+  { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'always' } }]
 })
 export class AppModule {
 }

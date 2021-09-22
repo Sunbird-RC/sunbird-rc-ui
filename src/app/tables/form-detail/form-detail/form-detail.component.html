@@ -1,0 +1,177 @@
+<header style="margin-bottom: 45px;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarExample01"
+                aria-controls="navbarExample01" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarExample01">
+                <div class="nav-item active logo-text">
+                    <a class="nav-link" aria-current="page" style="color: black;">Attest Details</a>
+                </div>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <button type="button" (click)="close()" class="close float-right"><span _ngcontent-fni-c481=""
+                                aria-hidden="true">×</span></button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="container">
+
+    <div class="mt-5">
+
+        <h5>Claims by {{claimData?.requestorName}}</h5>
+    </div>
+    <!-- <button style="margin: 8px;" class="btn btn-primary text-end pr-20 fw-bold text-capitalize"
+                        (click)="onAttestApproveReject()"><i class="fa fa-check-circle text-success"
+                                data-mdb-toggle="tooltip" title="Attested"></i>Approve</button>
+                        <button style="margin: 8px;" class="btn btn-primary text-end fw-bold pr-20 text-capitalize"
+                            data-toggle="modal" data-target="#deny"><i
+                                class="fa fa-exclamation-circle red"></i>Deny</button> -->
+
+    <!-- <ng-template [ngIf]="type == 'experience'">
+        <h6>Experience</h6>
+        <div class="card">
+            <div class="card-body" style="height: 128px;">
+                <dl>
+                    <dd>
+                        <div><b>{{experienceDetail.TeacherType}}</b></div>
+                        <div>{{experienceDetail.institute}}</div>
+                        <div *ngIf="experienceDetail.enddate; else elseBlock1">{{experienceDetail.startdate}} -
+                            {{experienceDetail.enddate}}</div>
+                        <ng-template #elseBlock1>
+                            <div>{{experienceDetail.startdate}} - Current</div>
+                        </ng-template>
+                        <div class="fs-7 text-grey-color">{{experienceDetail.EmploymentType}}</div>
+                    </dd>
+                    <dd style="text-align-last: right;">
+                        <button style="margin: 8px;" class="btn btn-primary text-end pr-20 fw-bold text-capitalize"
+                            (click)="onAttest()"><i class="fa fa-check-circle text-success"></i>Approve</button>
+                        <button style="margin: 8px;" class="btn btn-primary text-end fw-bold pr-20 text-capitalize"
+                            data-toggle="modal" data-target="#deny"><i
+                                class="fa fa-exclamation-circle red"></i>Deny</button>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        <hr>
+    </ng-template> -->
+
+    <div>
+        <!-- <h6>Attestations </h6> -->
+        <div class="card">
+            <div class="card-body">
+                <dl class="d-flex">
+                    <dd class="w-70">
+                        <div *ngFor="let item of propertyData">
+                            <div *ngIf="item?.title == 'FileName'; else noFile">
+                                {{item?.title}} : <a href="" style="color:#1266f1" >{{item?.value}}</a>
+                            </div>
+                            <ng-template #noFile>
+                                 {{item?.title}} : <b>{{item?.value}}</b>
+                            </ng-template>
+                        </div>
+                        <div *ngIf="documents != null" class="mb-3">
+                            <ng-template ngFor let-document [ngForOf]="documents" let-i="index">
+                                <a href="/document/view?u={{document.fileName}}" class="badge badge-pill badge-primary mr-1" target="_blank"><i class="fa fa-paperclip" aria-hidden="true"></i> Document {{i + 1}}</a>
+                            </ng-template >
+                        </div>
+                    </dd>
+                    <dd style="text-align-last: right;" class="float-end">
+                        <button style="margin: 8px;" class="btn btn-primary text-end pr-20 fw-bold text-capitalize"
+                            (click)="onAttestApproveReject('GRANT_CLAIM',$event)"><i
+                                class="fa fa-check-circle text-success" data-mdb-toggle="tooltip"
+                                title="Attested"></i>Approve</button>
+                        <button style="margin: 8px;" class="btn btn-primary text-end fw-bold pr-20 text-capitalize"
+                            data-toggle="modal" data-target="#deny"><i
+                                class="fa fa-exclamation-circle red"></i>Deny</button>
+                    </dd>
+                    
+                </dl>
+                
+                <div class="card" style="background-color: #eef3f399;">
+
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a href="#comment" class="nav-link active" data-toggle="tab">Comments</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#note" class="nav-link" data-toggle="tab">Notes</a>
+                        </li>
+
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="comment">
+                            <div class="px-3">
+                                    <json-schema-form [schema]="commentSchema" [layout]="form1" framework="bootstrap-4"
+                                        (onSubmit)="saveComments($event)">
+                                    </json-schema-form>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="note">
+                            <div class="px-3">
+                                    <json-schema-form [schema]="approveNoteSchema" [layout]="form"
+                                        framework="bootstrap-4" (onSubmit)="saveNote($event)">
+                                    </json-schema-form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="px-3 mb-3" *ngFor="let noteData of notes">
+                        <ng-template [ngIf]="noteData.notes != ''">
+                            <h6 class="mb-1">{{noteData.notes}}</h6>
+                            <span class="fs-7 text-grey-color">By {{noteData.addedBy}}, {{noteData.createdAt | date}}</span>
+                        </ng-template>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="mt-5">
+        <h5>Public Profile of {{claimData?.requestorName}}</h5>
+    </div>
+    <ng-template [ngIf]="profile">
+        <app-layouts layout={{claimEntity}} identifier={{claimEntityId}} public={{profile}}></app-layouts>
+    </ng-template>
+
+
+
+    <!-- <div class="card" style="background-color: #f2e39c99;">
+        <div class="card-body">
+            <h5>Add a Note for {{claimData?.requestorName}}</h5>
+            <ng-template [ngIf]="noteAdded">
+                <div style="color: green;"><i class="fa fa-check"></i> Note Added!
+                </div>
+            </ng-template>
+            <json-schema-form [schema]="approveNoteSchema" [layout]="form" framework="bootstrap-4"
+                (onSubmit)="saveNote($event)">
+            </json-schema-form>
+        </div>
+    </div>
+</div> -->
+
+<!-- deny Modal -->
+<div class="modal right fade" id="deny" tabindex="-1" role="dialog" aria-labelledby="deny">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel2">Deny {{type}}</h5>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button> -->
+            </div>
+
+            <div class="modal-body">
+                <json-schema-form [schema]="denyNoteSchema" [layout]="form" framework="bootstrap-4"
+                    (onSubmit)="onAttestApproveReject('REJECT_CLAIM',$event)">
+                </json-schema-form>
+            </div>
+
+        </div>
+    </div>
+</div>
