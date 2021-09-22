@@ -1,0 +1,785 @@
+{
+    "type": "opensaberLayoutSchema",
+    "version": "0.1",
+    "forms": [
+        {
+            "institute-signup": {
+                "api": "/Institute/invite",
+                "type": "entity",
+                "formclass": "row",
+                "header": "main",
+                "title": "Sign up / Create new account",
+                "fieldsets": [
+                    {
+                        "definition": "Institute",
+                        "fields": [
+                            {
+                                "name": "instituteName",
+                                "required": true
+                            },
+                            {
+                                "name": "email",
+                                "required": true,
+                                "validation": {
+                                    "pattern": "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z0-9.-]+$",
+                                    "message": "Email is not valid."
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "redirectTo": "/profile/institute"
+            }
+        },
+        {
+            "institute-setup-short": {
+                "api": "/Institute",
+                "type": "entity",
+                "title": "Institute Setup",
+                "redirectTo": "/profile/institute",
+                "fieldsets": [
+                    {
+                        "definition": "Institute",
+                        "title": "Basic details",
+                        "formclass": "row",
+                        "fields": [
+                            {
+                                "name": "instituteName",
+                                "required": true
+                            },
+                            {
+                                "name": "gstnId",
+                                "validation": {
+                                    "pattern": "^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$",
+                                    "message": "GSTIN is not valid. Ex: 06BZAHM6385P6Z2"
+                                }
+                            },
+                            {
+                                "name": "adminName",
+                                "class": "form-check form-check-inline pl-5"
+                            },
+                            {
+                                "name": "adminEmail",
+                                "format": "email",
+                                "required": true,
+                                "class": "form-check form-check-inline pl-5"
+                            },
+                            {
+                                "name": "address",
+                                "children": {
+                                    "definition": "Address",
+                                    "fields": [
+                                        {
+                                            "name": "landmark"
+                                        },
+                                        {
+                                            "name": "locality"
+                                        },
+                                        {
+                                            "name": "state",
+                                            "required": true
+                                        },
+                                        {
+                                            "name": "district",
+                                            "required": true
+                                        },
+                                        {
+                                            "name": "village"
+                                        },
+                                        {
+                                            "name": "pincode",
+                                            "required": true
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "institute-setup": {
+                "api": "/Institute",
+                "type": "entity",
+                "title": "Institute Setup",
+                "fieldsets": [
+                    {
+                        "definition": "Institute",
+                        "privacyConfig": "InstituteOsConfig",
+                        "globalPrivacyConfig": "public-access",
+                        "title": "Basic details",
+                        "fields": [
+                            {
+                                "name": "instituteName",
+                                "required": true
+                            },
+                            {
+                                "name": "gstnId",
+                                "validation": {
+                                    "pattern": "^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$",
+                                    "message": "GSTIN is not valid. Ex: 06BZAHM6385P6Z2"
+                                },
+                                "autofill": {
+                                    "apiURL": "https://appyflow.in/api/verifyGST?gstNo={{value}}&key_secret=XgTCGs0xmLgtBTCqj90sNOJEuL83",
+                                    "method": "GET",
+                                    "fields": [
+                                        {
+                                            "address.plot": "taxpayerInfo.pradr.addr.flno"
+                                        },
+                                        {
+                                            "address.street": "taxpayerInfo.pradr.addr.st"
+                                        },
+                                        {
+                                            "address.landmark": "taxpayerInfo.pradr.addr.bnm"
+                                        },
+                                        {
+                                            "address.locality": "taxpayerInfo.pradr.addr.loc"
+                                        },
+                                        {
+                                            "address.state": "taxpayerInfo.pradr.addr.stcd"
+                                        },
+                                        {
+                                            "address.district": "taxpayerInfo.pradr.addr.dst"
+                                        },
+                                        {
+                                            "address.village": "taxpayerInfo.pradr.addr.city"
+                                        },
+                                        {
+                                            "address.pincode": "taxpayerInfo.pradr.addr.pncd"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "address",
+                                "required": true
+                            },
+                            {
+                                "name": "establishmentYear",
+                                "required": true,
+                                "validation": {
+                                    "pattern": "^[12][0-9]{3}$",
+                                    "message": "Year is not valid"
+                                }
+                            },
+                            {
+                                "name": "contactNumber",
+                                "type": "number",
+                                "required": true
+                            },
+                            {
+                                "name": "email",
+                                "required": true
+                            },
+                            {
+                                "name": "website",
+                                "required": true
+                            },
+                            {
+                                "name": "category",
+                                "required": true
+                            },
+                            {
+                                "name": "schoolType",
+                                "required": true
+                            },
+                            {
+                                "name": "instituteManagement",
+                                "required": true
+                            },
+                            {
+                                "name": "committee",
+                                "required": true
+                            },
+                            {
+                                "name": "adminEmail",
+                                "required": true,
+                                "class": "form-check form-check-inline pl-5"
+                            },
+                            {
+                                "name": "adminName",
+                                "class": "form-check form-check-inline pl-5"
+                            }
+                        ],
+                        "except": [
+                            "affiliation"
+                        ]
+                    }
+                ],
+                "redirectTo": "/profile/institute"
+            }
+        },
+        {
+            "affiliation": {
+                "api": "/Institute",
+                "type": "property:affiliation",
+                "title": "Affiliation Details",
+                "redirectTo": "/profile/institute",
+                "fieldsets": [
+                    {
+                        "definition": "Affiliation",
+                        "privacyConfig": "AffiliationOsConfig",
+                        "fields": [
+                            {
+                                "name": "affiliationNumber",
+                                "required": true
+                            },
+                            {
+                                "name": "board",
+                                "required": true,
+                                "enum": [{"label": "CBSE Board", "value": "board-cbse"}]
+                            },
+                            {
+                                "name": "grantYear",
+                                "required": true,
+                                "validation": {
+                                    "pattern": "^[0-9]{4}$",
+                                    "message": "Year is not valid. Ex: 2016"
+                                }
+                            },
+                            {
+                                "name": "expiryYear",
+                                "validation": {
+                                    "pattern": "^[0-9]{4}$",
+                                    "message": "Year is not valid. Ex: 2016"
+                                }
+                            },
+                            {
+                                "name": "medium",
+                                "required": true
+                            },
+                            {
+                                "name": "classes",
+                                "required": true,
+                                "type": "multiselect"
+                            },
+                            {
+                                "name": "attest",
+                                "custom": true,
+                                "element": {
+                                    "title": "Send for attestation?",
+                                    "widget": {
+                                        "formlyConfig": {
+                                            "type": "checkbox",
+                                            "fieldGroupClassName": "controls",
+                                            "className": "checkbox",
+                                            "templateOptions": {
+                                                "required": true
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "teacher-signup": {
+                "api": "/Teacher/invite",
+                "type": "entity",
+                "formclass": "row",
+                "header": "main",
+                "title": "Sign up / Create new account",
+                "fieldsets": [
+                    {
+                        "definition": "Teacher",
+                        "fields": [
+                            {
+                                "name": "identityDetails",
+                                "children": {
+                                    "definition": "IdentityDetails",
+                                    "title": false,
+                                    "fields": [
+                                        {
+                                            "name": "fullName",
+                                            "required": true
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "contactDetails",
+                                "children": {
+                                    "definition": "ContactDetails",
+                                    "title": false,
+                                    "fields": [
+                                        {
+                                            "name": "email",
+                                            "required": true
+                                        },
+                                        {
+                                            "name": "mobile",
+                                            "required": true,
+                                            "validation": {
+                                                "pattern": "[6-9]{1}[0-9]{9}",
+                                                "message": "Mobile Number must be 10 digit number."
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "redirectTo": "/profile/teacher"
+            }
+        },
+        {
+            "teacher-setup": {
+                "api": "/Teacher",
+                "type": "entity",
+                "redirectTo": "/profile/teacher",
+                "fieldsets": [
+                    {
+                        "definition": "Teacher",
+                        "privacyConfig": "TeacherOsConfig",
+                        "globalPrivacyConfig": "internal-access",
+                        "fields": [
+                            {
+                                "name": "contactDetails"
+                            },
+                            {
+                                "name": "identityDetails",
+                                "children": {
+                                    "definition": "IdentityDetails",
+                                    "title": false,
+                                    "fields": [
+                                        {
+                                            "name": "fullName",
+                                            "required": true
+                                        },
+                                        {
+                                            "name": "gender",
+                                            "required": true
+                                        },
+                                        {
+                                            "name": "dob",
+                                            "required": true,
+                                            "type": "date"
+                                        },
+                                        {
+                                            "name": "identityHolder"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "teacher-education": {
+                "api": "/Teacher",
+                "type": "property:academicQualifications",
+                "redirectTo": "/profile/teacher",
+                "fieldsets": [
+                    {
+                        "definition": "AcademicQualification",
+                        "privacyConfig": "AffiliationOsConfig",
+                        "fields": [
+                            {
+                                "name": "instituteOSID",
+                                "custom": true,
+                                "element": {
+                                    "widget": {
+                                        "formlyConfig": {
+                                            "type": "input",
+                                            "templateOptions": {
+                                                "type": "hidden"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "name": "instituteName",
+                                "required": true,
+                                "type": "autocomplete",
+                                "api": "/Institute/search",
+                                "key": "instituteName",
+                                "value": "instituteName",
+                                "autofill": {
+                                    "apiURL": "https://ndear.xiv.in/registry/api/v1/Institute/search",
+                                    "method": "POST",
+                                    "body": {
+                                        "filters": {
+                                            "instituteName": {
+                                                "contains": "{{value}}"
+                                            }
+                                        },
+                                        "limit": 20,
+                                        "offset": 0
+                                    },
+                                    "fields": [
+                                        {
+                                            "instituteOSID": "osid"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "qualification",
+                                "required": true
+                            },
+                            {
+                                "name": "program"
+                            },
+                            {
+                                "name": "graduationYear",
+                                "required": true
+                            },
+                            {
+                                "name": "marks"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "teacher-experience": {
+                "api": "/Teacher",
+                "type": "property:experience",
+                "redirectTo": "/profile/teacher",
+                "fieldsets": [
+                    {
+                        "definition": "ExperienceType",
+                        "privacyConfig": "AffiliationOsConfig",
+                        "fields": [
+                            {
+                                "name": "instituteOSID",
+                                "hidden": true
+                            },
+                            {
+                                "name": "instituteName",
+                                "required": true,
+                                "type": "autocomplete",
+                                "api": "/Institute/search",
+                                "key": "instituteName",
+                                "value": "instituteName",
+                                "autofill": {
+                                    "apiURL": "https://ndear.xiv.in/registry/api/v1/Institute/search",
+                                    "method": "POST",
+                                    "body": {
+                                        "filters": {
+                                            "instituteName": {
+                                                "contains": "{{value}}"
+                                            }
+                                        },
+                                        "limit": 20,
+                                        "offset": 0
+                                    },
+                                    "fields": [
+                                        {
+                                            "instituteOSID": "osid"
+                                        }
+                                    ],
+                                    "dropdowns": [
+                                        {
+                                            "grades": "affiliation[0].classes"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "employmentType",
+                                "required": true
+                            },
+                            {
+                                "name": "start",
+                                "required": true,
+                                "type": "date"
+                            },
+                            {
+                                "name": "end",
+                                "type": "date"
+                            },
+                            {
+                                "name": "teacherType",
+                                "required": true
+                            },
+                            {
+                                "name": "subjects",
+                                "type": "multiselect"
+                            },
+                            {
+                                "name": "grades",
+                                "type": "multiselect"
+                            },
+                            {
+                                "name": "attest",
+                                "custom": true,
+                                "element": {
+                                    "title": "Send for attestation?",
+                                    "widget": {
+                                        "formlyConfig": {
+                                            "type": "checkbox",
+                                            "fieldGroupClassName": "controls",
+                                            "className": "checkbox",
+                                            "templateOptions": {
+                                                "required": true
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "student-signup": {
+                "api": "/Student/invite",
+                "type": "entity",
+                "formclass": "row",
+                "header": "main",
+                "title": "Sign up / Create new account",
+                "fieldsets": [
+                    {
+                        "definition": "Student",
+                        "dependencies": {
+                            "above13": {
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "above13": {
+                                                "enum": [
+                                                    "No"
+                                                ]
+                                            },
+                                            "guardianDetails": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "fullName": {
+                                                        "type": "string",
+                                                        "title": "Guardian's Full Name"
+                                                    },
+                                                    "relation": {
+                                                        "type": "string",
+                                                        "title": "Guardian's Relation type"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "above13": {
+                                                "enum": [
+                                                    "Yes"
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "guardianDetails"
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        "fields": [
+                            {
+                                "name": "above13",
+                                "custom": true,
+                                "element": {
+                                    "title": "Are you above 13?",
+                                    "enum": [
+                                        "Yes",
+                                        "No"
+                                    ],
+                                    "widget": {
+                                        "formlyConfig": {
+                                            "type": "radio",
+                                            "fieldGroupClassName": "controls",
+                                            "className": "radio"
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "name": "identityDetails",
+                                "children": {
+                                    "definition": "IdentityDetails",
+                                    "title": false,
+                                    "fields": [
+                                        {
+                                            "name": "fullName",
+                                            "required": true
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "contactDetails",
+                                "children": {
+                                    "definition": "ContactDetails",
+                                    "title": false,
+                                    "fields": [
+                                        {
+                                            "name": "email",
+                                            "required": true
+                                        },
+                                        {
+                                            "name": "mobile",
+                                            "required": true,
+                                            "validation": {
+                                                "pattern": "[6-9]{1}[0-9]{9}",
+                                                "message": "Mobile Number must be 10 digit number."
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "redirectTo": "/profile/student"
+            }
+        },
+        {
+            "student-setup": {
+                "api": "/Student",
+                "type": "entity",
+                "redirectTo": "/profile/student",
+                "fieldsets": [
+                    {
+                        "definition": "Student",
+                        "privacyConfig": "StudentOsConfig",
+                        "globalPrivacyConfig": "private-access",
+                        "fields": [
+                            {
+                                "name": "contactDetails"
+                            },
+                            {
+                                "name": "identityDetails",
+                                "children": {
+                                    "definition": "IdentityDetails",
+                                    "title": false,
+                                    "fields": [
+                                        {
+                                            "name": "fullName",
+                                            "required": true
+                                        },
+                                        {
+                                            "name": "gender",
+                                            "required": true
+                                        },
+                                        {
+                                            "name": "dob",
+                                            "required": true,
+                                            "type": "date"
+                                        },
+                                        {
+                                            "name": "identityHolder",
+                                            "required": true
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "student-education": {
+                "api": "/Student",
+                "type": "property:educationDetails",
+                "redirectTo": "/profile/student",
+                "fieldsets": [
+                    {
+                        "definition": "EducationType",
+                        "privacyConfig": "AffiliationOsConfig",
+                        "fields": [
+                            {
+                                "name": "instituteOSID",
+                                "custom": true,
+                                "element": {
+                                    "widget": {
+                                        "formlyConfig": {
+                                            "type": "input",
+                                            "templateOptions": {
+                                                "type": "hidden"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "name": "institute",
+                                "required": true,
+                                "type": "autocomplete",
+                                "api": "/Institute/search",
+                                "key": "instituteName",
+                                "value": "instituteName",
+                                "autofill": {
+                                    "apiURL": "https://ndear.xiv.in/registry/api/v1/Institute/search",
+                                    "method": "POST",
+                                    "body": {
+                                        "filters": {
+                                            "instituteName": {
+                                                "contains": "{{value}}"
+                                            }
+                                        },
+                                        "limit": 20,
+                                        "offset": 0
+                                    },
+                                    "fields": [
+                                        {
+                                            "instituteOSID": "osid"
+                                        }
+                                    ],
+                                    "dropdowns": [
+                                        {
+                                            "class": "affiliation[0].classes"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "board",
+                                "required": true,
+                                "enum": [{"label": "CBSE Board", "value": "board-cbse"}]
+                            },
+                            {
+                                "name": "medium",
+                                "required": true
+                            },
+                            {
+                                "name": "class",
+                                "required": true
+                            },
+                            {
+                                "name": "documents",
+                                "format": "file",
+                                "multiple": true
+                            },
+                            {
+                                "name": "attest",
+                                "custom": true,
+                                "element": {
+                                    "title": "Send for attestation?",
+                                    "widget": {
+                                        "formlyConfig": {
+                                            "type": "checkbox",
+                                            "fieldGroupClassName": "controls",
+                                            "className": "checkbox",
+                                            "templateOptions": {
+                                                "required": true
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}
