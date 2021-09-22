@@ -666,8 +666,7 @@
                                             "required": true
                                         },
                                         {
-                                            "name": "gender",
-                                            "required": true
+                                            "name": "gender"
                                         },
                                         {
                                             "name": "dob",
