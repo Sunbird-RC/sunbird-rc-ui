@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { APP_INITIALIZER } from '@angular/core';
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 
 // formly
 import { FormlyModule, FormlyFieldConfig } from '@ngx-formly/core';
@@ -17,6 +18,7 @@ import { ObjectTypeComponent } from '../app/forms/types/object.type';
 import { MultiSchemaTypeComponent } from '../app/forms/types/multischema.type';
 import { NullTypeComponent } from '../app/forms/types/null.type';
 import { AutocompleteTypeComponent } from '../app/forms/types/autocomplete.type';
+import { initializeKeycloak } from '../app/utility/app.init';
 
 //Local imports
 import { FormsComponent } from './forms/forms.component';
@@ -99,6 +101,7 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
     ReactiveFormsModule,
     NgbModule,
     FormlyBootstrapModule,
+    KeycloakAngularModule,
     FormlyModule.forRoot({
       extras: { resetFieldOnHide: true },
       validationMessages: [
@@ -146,7 +149,12 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   entryComponents: [],
   bootstrap: [AppComponent],
-  providers: []
+  providers: [{
+    provide: APP_INITIALIZER,
+    useFactory: initializeKeycloak,
+    multi: true,
+    deps: [KeycloakService],
+  },]
 })
 export class AppModule {
 }
