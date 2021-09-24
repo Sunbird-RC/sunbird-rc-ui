@@ -638,7 +638,7 @@
                         ]
                     }
                 ],
-                "redirectTo": "/profile/student"
+            "redirectTo": "/profile/student"
             }
         },
         {
