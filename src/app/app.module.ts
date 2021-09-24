@@ -42,6 +42,7 @@ import { InstallComponent } from './install/install.component';
 import { HomeComponent } from './home/home.component';
 import { FormlyHorizontalWrapper } from './forms/types/horizontal.wrapper';
 import { AppConfig } from './app.config';
+import { PanelWrapperComponent } from './forms/types/group.type';
 
 
 //form validations
@@ -125,7 +126,8 @@ function initConfig(config: AppConfig){
     Bootstrap4FrameworkModule,
     FormlyModule.forRoot({
       extras: { resetFieldOnHide: true },
-      wrappers: [{ name: 'form-field-horizontal', component: FormlyHorizontalWrapper }],
+      wrappers: [{ name: 'form-field-horizontal', component: FormlyHorizontalWrapper },
+      { name: 'panel', component: PanelWrapperComponent }],
       validationMessages: [
         { name: 'required', message: 'This field is required' },
         

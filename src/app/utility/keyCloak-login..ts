@@ -22,7 +22,7 @@ export class KeyCloakLogin {
     
         this.user = this.keycloak.getUsername();
         this.keycloak.getToken().then((token)=>{
-          console.log('keyCloak teacher token - ', token);
+          console.log('keyCloak token - ', token);
           localStorage.setItem('token', token);
           localStorage.setItem('loggedInUser', this.user)
         });

@@ -21,6 +21,6 @@ export class HeaderComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.logo = this.config.getEnv('baseUrl');
+    this.logo = this.config.getEnv('logoPath');
   }
 }

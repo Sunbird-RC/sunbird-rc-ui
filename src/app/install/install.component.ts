@@ -28,6 +28,10 @@ export class InstallComponent implements OnInit {
       defaultValue: 'development',
       templateOptions: {
         label: 'Select environment',
+        required: true,
+        addonLeft: {
+          text: 'environment:',
+        },
         options: [
           { label: 'Development', value: 'development' },
           { label: 'Production', value: 'production' }
@@ -39,6 +43,7 @@ export class InstallComponent implements OnInit {
       type: 'input',
       templateOptions: {
         placeholder: 'ex: https://example.com/api/v1',
+        required: true,
         addonLeft: {
           text: 'baseUrl:',
         },
@@ -50,6 +55,7 @@ export class InstallComponent implements OnInit {
       type: 'input',
       templateOptions: {
         placeholder: 'ex: https://example.com/api/docs/schema.json',
+        required: true,
         addonLeft: {
           text: 'schemaUrl:',
         },
@@ -57,33 +63,78 @@ export class InstallComponent implements OnInit {
       },
     },
     {
+      key: 'keycloack',
+      wrappers: ['panel'],
+      templateOptions: { label: 'Keycloak Configurations' },
+      fieldGroup: [{
+        key: 'url',
+        type: 'input',
+        templateOptions: {
+          placeholder: 'ex: https://example.com/auth',
+          required: true,
+          type: 'text',
+          label: 'Auth URL',
+          addonLeft: {
+            text: 'url:',
+          },
+        },
+      },
+      {
+        key: 'realm',
+        type: 'input',
+        templateOptions: {
+          required: true,
+          type: 'text',
+          addonLeft: {
+            text: 'realm:',
+          },
+        },
+      },
+      {
+        key: 'clientId',
+        type: 'input',
+        templateOptions: {
+          required: true,
+          type: 'text',
+          addonLeft: {
+            text: 'clientId:',
+          },
+        },
+      }
+    ],
+    },
+    {
       key: 'configFolder',
       type: 'input',
+      defaultValue: '/assets/config/',
       templateOptions: {
-        placeholder: 'ex: src/assets/config/',
         addonLeft: {
           text: 'configFolder:',
         },
-        label: 'Read config files from which folder?',
+        required: true,
+        label: 'Read config files(forms.json,etc.) from which folder?',
       },
     },
     {
       key: 'logoPath',
       type: 'input',
+      defaultValue: '/assets/logo.png',
       templateOptions: {
-        placeholder: 'ex: src/assets/logo.png',
         addonLeft: {
           text: 'logoPath:',
         },
+        required: true,
         label: 'what is the path of logo file?',
       },
     },
+   
   ];
 
   constructor(public router: Router,private httpClient: HttpClient) { }
 
   ngOnInit(): void {
-    this.checkConfig();
+    this.checkConfig().subscribe((res) => {if(res){this.router.navigate([''])}},
+    (error) => this.installed = false);
     // this.generalService.getConfigs().subscribe((res) => {
     //   console.log(res);
     //   if (res.installed) {
@@ -114,7 +165,6 @@ export class InstallComponent implements OnInit {
         );
 }
   async submit() {
-    // this.model['installed'] = true;
     await this.saveConfig('config.json', JSON.stringify(this.model));
     this.installed = true;
   }
