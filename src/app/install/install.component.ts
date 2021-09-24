@@ -63,7 +63,7 @@ export class InstallComponent implements OnInit {
       },
     },
     {
-      key: 'keycloack',
+      key: 'keycloak',
       wrappers: ['panel'],
       templateOptions: { label: 'Keycloak Configurations' },
       fieldGroup: [{
