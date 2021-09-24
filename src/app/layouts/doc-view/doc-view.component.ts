@@ -13,6 +13,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { GeneralService } from 'src/app/services/general/general.service';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { KeycloakService } from 'keycloak-angular';
+import { AppConfig } from 'src/app/app.config';
 
 
 @Component({
@@ -22,11 +23,11 @@ import { KeycloakService } from 'keycloak-angular';
 })
 export class DocViewComponent implements OnInit {
   docUrl: string;
-  baseUrl = environment.baseUrl;
+  baseUrl = this.config.getEnv('baseUrl');
   extension;
   public bearerToken: string | undefined = undefined;
   constructor(private route: ActivatedRoute,
-    private keycloakService: KeycloakService) { }
+    private keycloakService: KeycloakService, private config: AppConfig) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(async params => {

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AppConfig } from 'src/app/app.config';
 import { environment } from 'src/environments/environment';
 import { DataService } from './data-request.service';
 
@@ -7,9 +8,9 @@ import { DataService } from './data-request.service';
 })
 export class SchemaService {
 
-  schemaUrl = environment.schemaUrl;
+  schemaUrl = this.config.getEnv('schemaUrl');
 
-  constructor(public dataService: DataService) {
+  constructor(public dataService: DataService,private config: AppConfig) {
   }
 
   getSchemas() {

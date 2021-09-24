@@ -4,10 +4,10 @@ import { GeneralService } from 'src/app/services/general/general.service';
 
 @Component({
   selector: 'app-form-detail',
-  templateUrl: './form-detail.component.html',
-  styleUrls: ['./form-detail.component.css']
+  templateUrl: './attestation.component.html',
+  styleUrls: ['./attestation.component.css']
 })
-export class FormDetailComponent implements OnInit {
+export class AttestationComponent implements OnInit {
 
   entityId: string;
   user: any;

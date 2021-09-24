@@ -37,7 +37,11 @@ import { DocViewComponent } from './layouts/doc-view/doc-view.component';
 import { FormlyFieldNgSelect } from './forms/types/multiselect.type';
 import { Bootstrap4FrameworkModule } from 'angular6-json-schema-form';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
-import { FormDetailComponent } from './tables/form-detail/form-detail/form-detail.component';
+import { AttestationComponent } from './tables/attestation/attestation.component';
+import { InstallComponent } from './install/install.component';
+import { HomeComponent } from './home/home.component';
+import { FormlyHorizontalWrapper } from './forms/types/horizontal.wrapper';
+import { AppConfig } from './app.config';
 
 
 //form validations
@@ -81,6 +85,9 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
   return `should be equal to constant "${field.templateOptions.const}"`;
 }
 
+function initConfig(config: AppConfig){
+  return () => config.load()
+}
 
 @NgModule({
   declarations: [
@@ -96,11 +103,13 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
     PanelsComponent, EditPanelComponent, AddPanelComponent, TablesComponent,
     AutocompleteTypeComponent,
     HeaderComponent,
-    FormDetailComponent,
+    AttestationComponent,
     FileValueAccessor,
     FormlyFieldFile,
     DocViewComponent,
-    FormlyFieldNgSelect
+    FormlyFieldNgSelect,
+    InstallComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -116,6 +125,7 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
     Bootstrap4FrameworkModule,
     FormlyModule.forRoot({
       extras: { resetFieldOnHide: true },
+      wrappers: [{ name: 'form-field-horizontal', component: FormlyHorizontalWrapper }],
       validationMessages: [
         { name: 'required', message: 'This field is required' },
         
@@ -162,7 +172,10 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   entryComponents: [],
   bootstrap: [AppComponent],
-  providers: [{
+  providers: [
+    AppConfig,
+    { provide: APP_INITIALIZER, useFactory: initConfig, deps: [AppConfig], multi: true },
+    {
     provide: APP_INITIALIZER,
     useFactory: initializeKeycloak,
     multi: true,

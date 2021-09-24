@@ -3,14 +3,15 @@ import { DataService } from '../data/data-request.service';
 import { environment} from '../../../environments/environment';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable, Subscriber } from 'rxjs';
+import { AppConfig } from 'src/app/app.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GeneralService {
-  baseUrl = environment.baseUrl;
+  baseUrl = this.config.getEnv('baseUrl');
 
-  constructor(public dataService: DataService) {
+  constructor(public dataService: DataService, private config: AppConfig) {
   }
 
   postData(apiUrl,data) {
@@ -71,6 +72,16 @@ export class GeneralService {
     return this.dataService.put(req);
   }
 
+  // Configurations
+  getConfigs() {
+    console.log("here")
+    let url = "./assets/config/config.json";
+    const req = {
+      url: url
+    };
+
+    return this.dataService.get(req);
+  }
 
 }
 
