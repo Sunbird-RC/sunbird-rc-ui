@@ -1,6 +1,7 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 #configs
-/src/assets/config.json
+/src/assets/config/config.json
+/src/assets/config/edu
 # compiled output
 /dist
 /tmp
