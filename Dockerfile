@@ -2,7 +2,6 @@
 FROM node as build
 WORKDIR /app
 COPY package*.json /app/
-RUN npm install --global yarn
 RUN yarn install
 COPY . /app
 ARG configuration=production
