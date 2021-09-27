@@ -9,7 +9,11 @@ pipeline {
 
   stages {
     stage('Install') {
-      steps { sh 'npm install' }
+      steps { 
+          sh 'npm cache clean --force'
+          sh 'npm install -g @angular/cli'
+          sh 'npm install' 
+          }
     }
 
     stage('Test') {
