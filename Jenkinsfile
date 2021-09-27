@@ -1,6 +1,6 @@
 pipeline {
   agent {
-    dockerfile true
+    docker { image 'node:latest' }
   }
   environment {
         registry= "paraspatel1434/sunbird-rc-ui"
