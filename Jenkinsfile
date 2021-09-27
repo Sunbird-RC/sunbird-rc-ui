@@ -1,7 +1,12 @@
 pipeline {
   agent {
-    docker { image 'node:latest' }
+    dockerfile true
   }
+  environment {
+        registry= "paraspatel1434/sunbird-rc-ui"
+        registryCredential= 'dockerhub'
+    }
+
   stages {
     stage('Install') {
       steps { sh 'npm install' }
