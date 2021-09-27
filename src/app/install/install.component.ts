@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { GeneralService } from '../services/general/general.service';
 import { FormGroup } from '@angular/forms';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -135,17 +133,6 @@ export class InstallComponent implements OnInit {
   ngOnInit(): void {
     this.checkConfig().subscribe((res) => {if(res){this.router.navigate([''])}},
     (error) => this.installed = false);
-    // this.generalService.getConfigs().subscribe((res) => {
-    //   console.log(res);
-    //   if (res.installed) {
-    //     this.router.navigate([''])
-    //   }
-    //   else {
-    //     this.installed = false;
-    //   }
-    // }, error => {
-    //   this.installed = false;
-    // })
   }
   
   checkConfig(): Observable<boolean> {
