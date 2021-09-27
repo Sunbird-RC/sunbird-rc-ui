@@ -148,4 +148,109 @@
 // }
 
 
+// Files
+.upload-wrapper {
+    padding-bottom: 1.25em;
+    .upload-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      height: 50px;
+      width: 90%;
+      border: 1px dashed #3f51c2;
+      border-radius: 5px;
+      .helper-text {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .absolute-div {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: absolute;
+          right: 3%;
+          left: 3%;
+          mat-icon {
+            color: #3f51c2;
+            &:hover {
+              cursor: pointer;
+            }
+          }
+          div {
+            // padding-top: 4px;
+            color: #3f51c2;
+            &:hover {
+              cursor: pointer;
+            }
+          }
+        }
+      }
+      .mask {
+        justify-content: center;
+        align-items: stretch;
+        flex: 1;
+        border-radius: 5px;
+        padding: 0%;
+      }
+      &:hover {
+        .mask {
+          background-color: #3f51c2;
+          opacity: 0.2;
+          cursor: pointer;
+        }
+      }
+    }
+    .centered {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    .file-container {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      align-content: space-between;
+      justify-content: flex-start;
+      padding: 10px;
+      margin-top: 8px;
+      margin-bottom: 8px;
+      .file {
+        position: relative;
+        padding: 5px;
+        img {
+          width: 105px;
+          height: 105px;
+          display: block;
+          border-radius: 5px;
+          object-fit: cover;
+        }
+        span {
+          display: none;
+        //   position: absolute;
+          z-index: 1;
+          left: 10px;
+          top: 10px;
+          color: #3f51c2;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+        &:hover {
+          span {
+            display: inherit;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+    .underline {
+      border: #3f51c2 solid 1px;
+    }
+    .underline-red {
+      color: red;
+    }
+  }
+  
+
   

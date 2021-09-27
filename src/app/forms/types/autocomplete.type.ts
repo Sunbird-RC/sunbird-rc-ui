@@ -9,7 +9,7 @@ import { Subject } from 'rxjs';
   <ng-select [items]="options$ | async"
   bindLabel="instituteName"
            autofocus
-           bindValue="osid"
+           bindValue="instituteName"
   [placeholder]="to.placeholder"
   [typeahead]="search$"
   [formControl]="formControl">

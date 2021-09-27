@@ -36,7 +36,7 @@
     </table>
     <table class="mx-5 my-5 w-50">
         <tbody class="fs-5">
-            <tr *ngIf="!tableSchema.items.length">
+            <tr *ngIf="tableSchema.items && !tableSchema.items.length">
               <td class="float-end" [attr.colspan]="tableSchema.items.length">
                 No Records Found!
               </td>

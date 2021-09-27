@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { AppConfig } from '../app.config';
 declare var $: any;
 
 @Component({
@@ -14,12 +15,12 @@ export class HeaderComponent implements OnInit {
   @Input() tab: string;
   logo;
   constructor(
-    public router: Router
+    public router: Router, private config: AppConfig
   ) { 
     
   }
 
   async ngOnInit() {
-    this.logo = environment.logo;
+    this.logo = this.config.getEnv('logoPath');
   }
 }

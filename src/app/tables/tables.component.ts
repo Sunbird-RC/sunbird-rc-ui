@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SchemaService } from '../services/data/schema.service';
 import { GeneralService } from '../services/general/general.service';
-import * as TableSchemas from './tables.json'
+// import * as TableSchemas from './tables.json'
 
 @Component({
   selector: 'app-tables',
@@ -19,27 +20,24 @@ export class TablesComponent implements OnInit {
   property: any[] = [];
   // tr: any[] = [];
 
-  constructor(public router: Router, private route: ActivatedRoute, public generalService: GeneralService) { }
+  constructor(public router: Router, private route: ActivatedRoute, public generalService: GeneralService, public schemaService: SchemaService) { }
 
   ngOnInit(): void {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    
-    console.log("router",this.router.url)
     var tab_url = this.router.url
     this.route.params.subscribe(async params => {
-      console.log("-------------------",params)
       this.table = (params['table']).toLowerCase()
       this.entity = (params['entity']).toLowerCase();
-      this.tab = tab_url.replace(this.table,"").replace(this.entity,"").split("/").join("")
-      console.log("tab",this.tab)
-      var filtered = TableSchemas.tables.filter(obj => {
-        // console.log(Object.keys(obj)[0])
-        return Object.keys(obj)[0] === this.table
+      this.tab = tab_url.replace(this.table, "").replace(this.entity, "").split("/").join("")
+      this.schemaService.getTableJSON().subscribe(async (TableSchemas) => {
+        var filtered = TableSchemas.tables.filter(obj => {
+          return Object.keys(obj)[0] === this.table
+        })
+        this.tableSchema = filtered[0][this.table]
+        this.apiUrl = this.tableSchema.api;
+        await this.getData();
       })
-      // console.log(filtered)
-      this.tableSchema = filtered[0][this.table]
-      this.apiUrl = this.tableSchema.api;
-      await this.getData();
+      
     });
   }
 
@@ -51,7 +49,7 @@ export class TablesComponent implements OnInit {
       console.log("Something went wrong")
     }
     this.generalService.getData(get_url).subscribe((res) => {
-      console.log("get",res );
+      console.log("get", res);
       this.model = res;
       // this.entity = res[0].osid;
       this.addData()
@@ -59,63 +57,56 @@ export class TablesComponent implements OnInit {
   }
 
   addData() {
-    // this.tableSchema.fields.forEach((field)=>{
-      
-    //   var fieldName = ""
-    //   if(field.title){
-    //     fieldName = field.title
-    //   }else{
-    //     fieldName = field.name
-    //   }
-    //   this.tr.push(fieldName)
-    //   console.log("tr",this.tr)
-    // })
-    console.log("model",this.model)
+    console.log("model", this.model)
 
     var temp_array;
+    let temp_object
     this.model.forEach(element => {
-      if(element.status === "OPEN"){
+      if (element.status === "OPEN") {
         temp_array = [];
-      this.tableSchema.fields.forEach((field)=>{
-        // console.log("field",element[field.name])
-
-        // var temp_object = {}
-        if(field.name){
-          field['value'] = element[field.name]
-          field['status'] = element['status']
-          // console.log("field",field)
-        }
-        if(field.formate){
-          field['formate'] = field.formate
-          // console.log("field",field)
-        }
-        if(field.custom){
-          if(field.type == "button"){
-            var redirectUrl;
-            if(field.redirectTo && field.redirectTo.includes(":")){
-              var urlParam = field.redirectTo.split(":")
-              urlParam.forEach((paramVal, index) => {
-                if(paramVal in element){
-                  urlParam[index] = element[paramVal]
-                }
-              });
-              redirectUrl = urlParam.join("/").replace("//","/")
-              field.redirectTo = redirectUrl;
-            }
-            
-            // console.log("redirectUrl",redirectUrl)
+        this.tableSchema.fields.forEach((field) => {
+          temp_object = field;
+          if (temp_object.name) {
+            temp_object['value'] = element[field.name]
+            temp_object['status'] = element['status']
           }
-          field['type'] = field.type
-        }
-        temp_array.push(field)
-      });
-      console.log("temp_array",temp_array)
-      this.property.push(temp_array)
+          if (temp_object.formate) {
+            temp_object['formate'] = field.formate
+          }
+          if (temp_object.custom) {
+            if (temp_object.type == "button") {
+              console.log("ele",element)
+              if (temp_object.redirectTo && temp_object.redirectTo.includes(":")) {
+                let urlParam = temp_object.redirectTo.split(":")
+                console.log("urlParam",urlParam)
+                urlParam.forEach((paramVal, index) => {
+                  if (paramVal in element) {
+                    urlParam[index] = element[paramVal]
+                  }
+                });
+                temp_object.redirectTo = urlParam.join("/").replace("//", "/");
+              }
+            }
+            temp_object['type'] = field.type
+          }
+          temp_array.push(this.pushData(temp_object));
+        });
+        console.log("temp_array", temp_array)
+        this.property.push(temp_array)
       }
     });
-    
+
     this.tableSchema.items = this.property;
-    console.log("main",this.tableSchema)
+    console.log("main", this.tableSchema)
+  }
+
+  pushData(data) {
+    var object = {};
+    for (var key in data) {
+      if (data.hasOwnProperty(key))
+        object[key] = data[key];
+    }
+    return object;
   }
 
 }

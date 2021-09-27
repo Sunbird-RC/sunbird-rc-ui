@@ -1,0 +1,12 @@
+nav {
+    overflow: hidden;
+    /* padding: 1em; */
+    position: fixed;
+    top: 0px;
+    display: block;
+    width: 100%;
+    z-index: 1;
+}
+.container{
+    margin-top: 100px;
+}

@@ -56,10 +56,11 @@ export class FormsComponent implements OnInit {
   dependencies: any;
   privateFields = [];
   internalFields = [];
-  privacyCheck : boolean = false;
+  privacyCheck: boolean = false;
   globalPrivacy;
   searchResult: any[];
   states: any[] = [];
+  fileFields: any[] = [];
   constructor(private route: ActivatedRoute,
     public toastMsg: ToastMessageService, public router: Router, public schemaService: SchemaService, private formlyJsonschema: FormlyJsonschema, public generalService: GeneralService, private location: Location) { }
 
@@ -101,65 +102,66 @@ export class FormsComponent implements OnInit {
         this.type = this.formSchema.type
       }
 
-    this.schemaService.getSchemas().subscribe((res) => {
-      this.responseData = res;
-      this.formSchema.fieldsets.forEach(fieldset => {
+      this.schemaService.getSchemas().subscribe((res) => {
+        this.responseData = res;
+        this.formSchema.fieldsets.forEach(fieldset => {
+          console.log('fieldset',fieldset)
+          if (fieldset.hasOwnProperty('globalPrivacyConfig') && fieldset.globalPrivacyConfig != '') {
+            this.globalPrivacy = fieldset.globalPrivacyConfig;
+          } else
+            if (fieldset.hasOwnProperty('privacyConfig')) {
+              this.privacyCheck = true;
+              this.privateFields = (this.responseData.definitions[fieldset.privacyConfig].hasOwnProperty('privateFields') ? this.responseData.definitions[fieldset.privacyConfig].privateFields : []);
+              this.internalFields = (this.responseData.definitions[fieldset.privacyConfig].hasOwnProperty('internalFields') ? this.responseData.definitions[fieldset.privacyConfig].internalFields : []);
+            }
+          this.getData(fieldset.definition);
 
-        if (fieldset.hasOwnProperty('globalPrivacyConfig') && fieldset.globalPrivacyConfig != '' ) {
-          this.globalPrivacy = fieldset.globalPrivacyConfig;
-        }else
-        if (fieldset.hasOwnProperty('privacyConfig')) {
-          this.privacyCheck = true;
-          this.privateFields = (this.responseData.definitions[fieldset.privacyConfig].hasOwnProperty('privateFields') ? this.responseData.definitions[fieldset.privacyConfig].privateFields : []);
-          this.internalFields = (this.responseData.definitions[fieldset.privacyConfig].hasOwnProperty('internalFields') ? this.responseData.definitions[fieldset.privacyConfig].internalFields : []);
-        }
-        this.getData(fieldset.definition);
+          this.definations[fieldset.definition] = {}
+          this.definations[fieldset.definition]['type'] = "object";
+          if (fieldset.title) {
+            this.definations[fieldset.definition]['title'] = fieldset.title;
+          }
 
-        this.definations[fieldset.definition] = {}
-        this.definations[fieldset.definition]['type'] = "object";
-        if (fieldset.title) {
-          this.definations[fieldset.definition]['title'] = fieldset.title;
-        }
+          if (fieldset.required && fieldset.required.length > 0) {
+            this.definations[fieldset.definition]['required'] = fieldset.required;
+          }
+          if (fieldset.dependencies) {
+            this.dependencies = fieldset.dependencies;
+          }
 
-        if (fieldset.required && fieldset.required.length > 0) {
-          this.definations[fieldset.definition]['required'] = fieldset.required;
-        }
-        if (fieldset.dependencies) {
-          this.dependencies = fieldset.dependencies;
-        }
+          this.definations[fieldset.definition].properties = {}
+          this.property[fieldset.definition] = {}
 
-        this.definations[fieldset.definition].properties = {}
-        this.property[fieldset.definition] = {}
-
-        this.property = this.definations[fieldset.definition].properties;
-        
-	if (fieldset.formclass) {
-          this.schema['widget'] = {};
-          this.schema['widget']['formlyConfig'] = { fieldGroupClassName: fieldset.formclass }
-        }
-
-        if (fieldset.fields[0] === "*") {
-          this.definations = this.responseData.definitions;
           this.property = this.definations[fieldset.definition].properties;
-          fieldset.fields = this.property;
-          this.addFields(fieldset);
-        } else {
-          this.addFields(fieldset);
-        }
 
-        if (fieldset.except) {
-          this.removeFields(fieldset)
-        }
-      });
+          if (fieldset.formclass) {
+            this.schema['widget'] = {};
+            this.schema['widget']['formlyConfig'] = { fieldGroupClassName: fieldset.formclass }
+          }
 
-      this.ordering = this.formSchema.order;
-      this.schema["type"] = "object";
-      this.schema["title"] = this.formSchema.title;
-      this.schema["definitions"] = this.definations;
-      this.schema["properties"] = this.property;
-      this.schema["required"] = this.required;
-      this.schema["dependencies"] = this.dependencies;
-      this.loadSchema();
+          if (fieldset.fields[0] === "*") {
+            this.definations = this.responseData.definitions;
+            this.property = this.definations[fieldset.definition].properties;
+            fieldset.fields = this.property;
+            this.addFields(fieldset);
+          } else {
+            this.addFields(fieldset);
+          }
+
+          if (fieldset.except) {
+            this.removeFields(fieldset)
+          }
+        });
+
+        this.ordering = this.formSchema.order;
+        this.schema["type"] = "object";
+        this.schema["title"] = this.formSchema.title;
+        this.schema["definitions"] = this.definations;
+        this.schema["properties"] = this.property;
+        this.schema["required"] = this.required;
+        this.schema["dependencies"] = this.dependencies;
+        console.log("Schema: " + JSON.stringify(this.schema));
+        this.loadSchema();
       },
         (error) => {
           //Schema Error callback
@@ -252,7 +254,7 @@ export class FormsComponent implements OnInit {
           temp2.children.fields.forEach(reffield => {
             this.addChildWidget(reffield, fieldName, key);
 
-         });
+          });
         } else {
           delete this.responseData.definitions[fieldName.replace(/^./, fieldName[0].toUpperCase())].properties[key];
         }
@@ -274,12 +276,11 @@ export class FormsComponent implements OnInit {
 
       fieldset.fields.forEach(field => {
 
-        if(this.responseData.definitions[fieldset.definition] && this.responseData.definitions[fieldset.definition].hasOwnProperty('properties'))
-        {
+        if (this.responseData.definitions[fieldset.definition] && this.responseData.definitions[fieldset.definition].hasOwnProperty('properties')) {
           let res = this.responseData.definitions[fieldset.definition].properties;
           if (field.children) {
             this.checkProperty(fieldset, field);
-          } else if(this.responseData.definitions[fieldset.definition].properties.hasOwnProperty(field.name) &&  this.responseData.definitions[fieldset.definition].properties[field.name].hasOwnProperty('properties')){
+          } else if (this.responseData.definitions[fieldset.definition].properties.hasOwnProperty(field.name) && this.responseData.definitions[fieldset.definition].properties[field.name].hasOwnProperty('properties')) {
             let res = this.responseData.definitions[fieldset.definition].properties[field.name].properties;
             this.nastedChild(fieldset, field.name, res);
           }
@@ -322,19 +323,19 @@ export class FormsComponent implements OnInit {
   addLockIcon(responseData) {
     if (responseData.access == 'private') {
       responseData.widget.formlyConfig.templateOptions = {
-        addonRight : {
+        addonRight: {
           text: 'Only by consent',
           class: "private-access"
         }
       }
     } else if (responseData.access == 'internal') {
       responseData.widget.formlyConfig.templateOptions = {
-       
-      addonRight : {
-        text: 'Only by me',
-        class: "internal-access"
+
+        addonRight: {
+          text: 'Only by me',
+          class: "internal-access"
+        }
       }
-    }
     }
   }
 
@@ -345,20 +346,21 @@ export class FormsComponent implements OnInit {
     else {
       this.res = this.responseData.definitions[fieldset.definition].properties[field.name];
 
-      if ( this.res != undefined && !this.res.hasOwnProperty('properties')) {
+      if (this.res != undefined && !this.res.hasOwnProperty('properties')) {
         this.responseData.definitions[fieldset.definition].properties[field.name]['widget'] = {
           "formlyConfig": {
             "templateOptions": {
             },
             "validation": {},
-            "expressionProperties": {}
+            "expressionProperties": {},
+            "modelOptions":{}
           }
 
         }
 
-        if(this.privacyCheck){
-          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']= {
-            addonRight : {
+        if (this.privacyCheck) {
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions'] = {
+            addonRight: {
               text: 'Anyone',
               class: "public-access"
             },
@@ -377,17 +379,49 @@ export class FormsComponent implements OnInit {
         if (field.class) {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['className'] = field.class;
         }
+        if (field.enum) {
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = 'select';
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['options'] = field.enum;
+        }
+        if (field.hidden) {
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['type'] = "hidden";
+          delete this.responseData.definitions[fieldset.definition].properties[field.name]['title']
+        }
         if (field.required || field.children) {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['required'] = field.required;
         }
         if (field.children) {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['required'] = true;
         }
-        if (field.format) {
+        if (field.format && field.format === 'file') {
           if (this.type && this.type.includes("property")) {
-            localStorage.setItem('property',this.type.split(":")[1]);
+            localStorage.setItem('property', this.type.split(":")[1]);
           }
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = field.format;
+          if(field.multiple){
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['multiple'] = field.multiple;
+          }
+          this.fileFields.push(field.name);
+          // this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['onChange'] = 
+          // function($viewValue, $modelValue, $scope) {
+          //   console.log('v',$viewValue,'m', $modelValue,'s', $scope);
+          // }
+          // this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['modelOptions'] = {
+          //   updateOn: 'blur'
+          // };
+          // this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'] = {}
+          // this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name] = {}
+          // this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name]['expression'] = (control: FormControl) => {
+          //   console.log('conty--',control)
+          //   if (control.value != null) {
+          //     console.log('conty--',control.value)
+          //   }
+          //   return new Promise((resolve, reject) => {
+          //     setTimeout(() => {fileFields
+          //       resolve(true);
+          //     }, 1000);
+          //   });
+          // }
         }
 
         if (field.validation) {
@@ -404,6 +438,7 @@ export class FormsComponent implements OnInit {
         }
       }
       if (field.autofill) {
+        console.log('f',field.name)
         if (field.autofill.apiURL) {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['modelOptions'] = {
             updateOn: 'blur'
@@ -436,13 +471,20 @@ export class FormsComponent implements OnInit {
                 });
               }
               else if (field.autofill.method === 'POST') {
+                console.log("contr",control.value)
                 var datapath = this.findPath(field.autofill.body, "{{value}}", '')
                 if (datapath) {
                   var dataobject = this.setPathValue(field.autofill.body, datapath, control.value)
                   this.generalService.postPrefillData(field.autofill.apiURL, dataobject).subscribe((res) => {
+                    if (Array.isArray(res)) {
+                      res = res[0]
+                    }
                     if (field.autofill.fields) {
                       field.autofill.fields.forEach(element => {
+                        console.log('1',element)
+
                         for (var [key1, value1] of Object.entries(element)) {
+                          console.log('2',key1, value1, res)
                           this.createPath(this.model, key1, this.ObjectbyString(res, value1))
                           this.form2.get(key1).setValue(this.ObjectbyString(res, value1))
                         }
@@ -451,9 +493,6 @@ export class FormsComponent implements OnInit {
                     if (field.autofill.dropdowns) {
                       field.autofill.dropdowns.forEach(element => {
                         for (var [key1, value1] of Object.entries(element)) {
-                          if (Array.isArray(res)) {
-                            res = res[0]
-                          }
                           this.schema["properties"][key1]['items']['enum'] = this.ObjectbyString(res, value1)
                         }
                       });
@@ -472,7 +511,7 @@ export class FormsComponent implements OnInit {
       }
       if (field.type) {
         if (field.type == "autocomplete") {
-         
+
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = "autocomplete";
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = this.responseData.definitions[fieldset.definition].properties[field.name]['title'];
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['search$'] = (term) => {
@@ -496,27 +535,37 @@ export class FormsComponent implements OnInit {
             return observableOf(this.searchResult);
           }
         }
-        else {
-            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['type'] = field.type
-          }
+        else if(field.type === 'multiselect'){
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = field.type;
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['multiple'] = true;
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = "Select " + field.name;
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['options'] = [];
+          // console.log("this.responseData.definitions[fieldset.definition].properties[field.name]",this.responseData.definitions[fieldset.definition].properties[field.name]['items']['enum'])
+          this.responseData.definitions[fieldset.definition].properties[field.name]['items']['enum'].forEach(enumval => {
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['options'].push({ label: enumval, value: enumval })
+          });
         }
-        if (field.disabled || field.disable) {
-          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['disabled'] = field.disabled
-        };
-
-        let temp_access_field = '$.' + childrenName + '.' + field.name;
-
-        if (this.privateFields.includes(temp_access_field)) {
-          this.responseData.definitions[fieldset.definition].properties[field.name].access = 'private';
-          this.addLockIcon(this.responseData.definitions[fieldset.definition].properties[field.name]);
-
-
-        } else if (this.internalFields.includes(temp_access_field)) {
-          this.responseData.definitions[fieldset.definition].properties[field.name].access = 'internal';
-          this.addLockIcon(this.responseData.definitions[fieldset.definition].properties[field.name]);
+        else {
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['type'] = field.type;
         }
       }
+      if (field.disabled || field.disable) {
+        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['disabled'] = field.disabled
+      };
+
+      let temp_access_field = '$.' + childrenName + '.' + field.name;
+
+      if (this.privateFields.includes(temp_access_field)) {
+        this.responseData.definitions[fieldset.definition].properties[field.name].access = 'private';
+        this.addLockIcon(this.responseData.definitions[fieldset.definition].properties[field.name]);
+
+
+      } else if (this.internalFields.includes(temp_access_field)) {
+        this.responseData.definitions[fieldset.definition].properties[field.name].access = 'internal';
+        this.addLockIcon(this.responseData.definitions[fieldset.definition].properties[field.name]);
+      }
     }
+  }
 
   addChildWidget(field, ParentName, childrenName) {
     this.res = this.responseData.definitions[ParentName.replace(/^./, ParentName[0].toUpperCase())].properties[childrenName];
@@ -528,22 +577,22 @@ export class FormsComponent implements OnInit {
       this.res.properties[field.name]['widget'] = {
         "formlyConfig": {
           "templateOptions": {
-            
+
           },
           "validation": {},
           "expressionProperties": {}
         }
       }
 
-      if(this.privacyCheck){
+      if (this.privacyCheck) {
         this.res.properties[field.name]['widget']['formlyConfig']['templateOptions'] = {
-          addonRight : {
+          addonRight: {
             text: 'Anyone',
             class: "public-access"
           },
           attributes: {
             style: "width: 90%;"
-          }, 
+          },
         }
       }
 
@@ -569,35 +618,134 @@ export class FormsComponent implements OnInit {
   };
 
   submit() {
-    if (this.type && this.type === 'entity') {
-      this.customFields.forEach(element => {
-       // delete this.model[element];
+    if(this.fileFields.length > 0){
+      this.fileFields.forEach(fileField => {
+        if(this.model[fileField]){
+          var formData = new FormData();
+          console.log("Model -- ",this.model[fileField]);
+          for (let i = 0; i < this.model[fileField].length; i++) {
+            const file = this.model[fileField][i]
+            formData.append("files", file);
+          }
+          
+          if (this.type && this.type.includes("property")) {
+            var property = this.type.split(":")[1];
+          }
+          var url = [this.apiUrl, this.identifier, property, 'documents']
+          this.generalService.postData(url.join('/'), formData).subscribe((res) => {
+            console.log('res', res);
+            var documents_list: any[] = [];
+            var documents_obj = {
+              "fileName": "",
+              "format": "file"
+            }
+            res.documentLocations.forEach(element => {
+              documents_obj.fileName = element;
+              documents_list.push(documents_obj);
+            });
+            
+            this.model[fileField] = documents_list;
+            console.log('documents', JSON.stringify(this.model[fileField]));
+            if (this.type && this.type === 'entity') {
+              // this.customFields.forEach(element => {
+              //   delete this.model[element];
+              // });
+              if (this.identifier != null) {
+                this.updateData()
+              } else {
+                this.postData()
+              }
+              // this.getData()
+            }
+            else if (this.type && this.type.includes("property")) {
+              var property = this.type.split(":")[1];
+              var url = [this.apiUrl, this.identifier, property];
+              this.apiUrl = (url.join("/"));
+              if (this.model[property]) {
+                this.model = this.model[property];
+              }
+              if (this.model.hasOwnProperty('attest') && this.model['attest']) {
+                this.apiUrl = (url.join("/")) + '?send=true';
+              } else {
+                this.apiUrl = (url.join("/")) + '?send=false';
+              }
+              // this.customFields.forEach(element => {
+              //   delete this.model[element];
+              // });
+              this.postData()
+              // this.getData()
+            }
+          }, (err) => {
+            console.log(err);
+            this.toastMsg.error('error', 'Something went wrong while uploading files, please try again')
+          });
+        }
+        else{
+          if (this.type && this.type === 'entity') {
+            // this.customFields.forEach(element => {
+            //   delete this.model[element];
+            // });
+            if (this.identifier != null) {
+              this.updateData()
+            } else {
+              this.postData()
+            }
+            // this.getData()
+          }
+          else if (this.type && this.type.includes("property")) {
+            var property = this.type.split(":")[1];
+            var url = [this.apiUrl, this.identifier, property];
+            this.apiUrl = (url.join("/"));
+            if (this.model[property]) {
+              this.model = this.model[property];
+            }
+            if (this.model.hasOwnProperty('attest') && this.model['attest']) {
+              this.apiUrl = (url.join("/")) + '?send=true';
+            } else {
+              this.apiUrl = (url.join("/")) + '?send=false';
+            }
+            // this.customFields.forEach(element => {
+            //   delete this.model[element];
+            // });
+            this.postData()
+            // this.getData()
+          }
+        }
       });
-      if (this.identifier != null) {
-        this.updateData()
-      } else {
+    }
+    else{
+      if (this.type && this.type === 'entity') {
+        // this.customFields.forEach(element => {
+        //   delete this.model[element];
+        // });
+        if (this.identifier != null) {
+          this.updateData()
+        } else {
+          this.postData()
+        }
+        // this.getData()
+      }
+      else if (this.type && this.type.includes("property")) {
+        var property = this.type.split(":")[1];
+        var url = [this.apiUrl, this.identifier, property];
+        this.apiUrl = (url.join("/"));
+        if (this.model[property]) {
+          this.model = this.model[property];
+        }
+        if (this.model.hasOwnProperty('attest') && this.model['attest']) {
+          this.apiUrl = (url.join("/")) + '?send=true';
+        } else {
+          this.apiUrl = (url.join("/")) + '?send=false';
+        }
+        // this.customFields.forEach(element => {
+        //   delete this.model[element];
+        // });
         this.postData()
+        // this.getData()
       }
-      // this.getData()
     }
-    else if (this.type && this.type.includes("property")) {
-      var property = this.type.split(":")[1];
-      var url = [this.apiUrl, this.identifier, property];
-      this.apiUrl = (url.join("/"));
-      if (this.model[property]) {
-        this.model = this.model[property];
-      }
-      if (this.model.hasOwnProperty('attest') && this.model['attest']) {
-        this.apiUrl = (url.join("/")) + '?send=true';
-      } else {
-        this.apiUrl = (url.join("/")) + '?send=false';
-      }
-      this.customFields.forEach(element => {
-       // delete this.model[element];
-      });
-      this.postData()
-      // this.getData()
-    }
+
+    
     // const url = this.router.createUrlTree(['/profile/institute'])
     // window.open(this.router.createUrlTree([this.redirectTo]).toString(), '_blank')
   }
@@ -644,6 +792,7 @@ export class FormsComponent implements OnInit {
     if (Array.isArray(this.model)) {
       this.model = this.model[0];
     }
+    console.log("Modelll",this.model)
     this.generalService.postData(this.apiUrl, this.model).subscribe((res) => {
       if (res.params.status == 'SUCCESSFUL') {
         this.router.navigate([this.redirectTo])
@@ -676,6 +825,7 @@ export class FormsComponent implements OnInit {
     var a = s.split('.');
     for (var i = 0, n = a.length; i < n; ++i) {
       var k = a[i];
+      console.log('k',k,'o',o)
       if (k in o) {
         o = o[k];
       } else {

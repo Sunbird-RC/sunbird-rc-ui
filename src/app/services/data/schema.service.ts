@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AppConfig } from 'src/app/app.config';
 import { environment } from 'src/environments/environment';
 import { DataService } from './data-request.service';
 
@@ -7,9 +8,10 @@ import { DataService } from './data-request.service';
 })
 export class SchemaService {
 
-  schemaUrl = environment.schemaUrl;
+  schemaUrl = this.config.getEnv('schemaUrl');
+  configFolder = this.config.getEnv('configFolder');
 
-  constructor(public dataService: DataService) {
+  constructor(public dataService: DataService,private config: AppConfig) {
   }
 
   getSchemas() {
@@ -22,8 +24,7 @@ export class SchemaService {
   }
 
   getFormJSON() {
-    let url = "./assets/config/forms.json";
-
+    let url = `.${this.configFolder}forms.json`;
     const req = {
       url: url
     };
@@ -32,8 +33,7 @@ export class SchemaService {
   }
 
   getLayoutJSON() {
-    let url = "./assets/config/layouts.json";
-
+    let url = `.${this.configFolder}layouts.json`;
     const req = {
       url: url
     };
@@ -42,8 +42,16 @@ export class SchemaService {
   }
 
   getTableJSON() {
+    let url = `.${this.configFolder}tables.json`;
+    const req = {
+      url: url
+    };
 
-    let url = "./assets/config/tables.json";
+    return this.dataService.get(req);
+  }
+
+  getSearchJSON() {
+    let url = `.${this.configFolder}search.json`;
     const req = {
       url: url
     };
