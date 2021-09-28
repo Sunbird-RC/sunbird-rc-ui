@@ -3,7 +3,8 @@ FROM node as build
 WORKDIR /app
 COPY package*.json /app/
 RUN npm install @angular/cli@10.2.3
-RUN ng --version
+RUN npm install npm@7.24.1
+RUN npm audit fix
 RUN npm install
 COPY . /app
 ARG configuration=production
