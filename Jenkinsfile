@@ -1,7 +1,7 @@
 pipeline {
   environment {
     imagename = "paraspatel1434/sunbird-rc-ui"
-    registryCredential = 'dockerhub'
+    registryCredential = 'dockerhub-ui'
     dockerImage = ''
   }
   agent any
