@@ -1,30 +1,35 @@
 pipeline {
-  agent {
-    dockerfile true
-  }
   environment {
-        registry= "paraspatel1434/sunbird-rc-ui"
-        registryCredential= 'dockerhub'
-    }
-
+    imagename = "paraspatel1434/sunbird-rc-ui"
+    registryCredential = 'dockerhub-ui'
+    dockerImage = ''
+  }
+  agent any
   stages {
-    stage('Install') {
-      steps { sh 'npm install' }
-    }
-
-    stage('Test') {
-      parallel {
-        stage('Static code analysis') {
-            steps { sh 'npm run-script lint' }
-        }
-        stage('Unit tests') {
-            steps { sh 'npm run-script test' }
+    stage('Building image') {
+      steps{
+        script {
+          dockerImage = docker.build imagename
         }
       }
     }
+    stage('Deploy Image') {
+      steps{
+        script {
+          docker.withRegistry( '', registryCredential ) {
+            dockerImage.push("$BUILD_NUMBER")
+             dockerImage.push('latest')
 
-    stage('Build') {
-      steps { sh 'npm run-script build' }
+          }
+        }
+      }
+    }
+    stage('Remove Unused docker image') {
+      steps{
+        sh "docker rmi $imagename:$BUILD_NUMBER"
+         sh "docker rmi $imagename:latest"
+
+      }
     }
   }
 }
