@@ -1,7 +1,7 @@
 node {
     try {
         stage('Build image') {
-            app = docker.build("paraspatel1434/sunbird-rc-ui","latest")
+            app = docker.build("paraspatel1434/sunbird-rc-ui")
         }
 
         stage('Push image') {
