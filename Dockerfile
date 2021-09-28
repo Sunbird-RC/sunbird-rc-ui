@@ -3,7 +3,8 @@ FROM node as build
 WORKDIR /app
 COPY package*.json /app/
 RUN npm cache clean --force
-RUN npm install
+RUN npm install yarn
+RUN yarn install
 COPY . /app
 ARG configuration=production
 RUN npm run build -- --outputPath=./dist/out --configuration $configuration
