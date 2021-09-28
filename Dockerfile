@@ -1,9 +1,9 @@
 # Stage 1: Build an Angular Docker Image
 FROM node as build
 WORKDIR /app
-COPY package*.json /app/
-RUN yarn install
-COPY . /app
+COPY package.json package-lock.json ./
+RUN npm install
+COPY . .
 ARG configuration=production
 RUN npm run build -- --outputPath=./dist/out --configuration $configuration
 # Stage 2, use the compiled app, ready for production with Nginx
