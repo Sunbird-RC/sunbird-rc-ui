@@ -2,6 +2,7 @@
 FROM node as build
 WORKDIR /app
 COPY package*.json /app/
+RUN ng --version
 RUN npm ci
 COPY . /app
 ARG configuration=production
