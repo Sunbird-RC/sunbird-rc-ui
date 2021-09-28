@@ -1,10 +1,5 @@
 pipeline {
-  agent {
-    dockerfile true
-    label 'docker'
-  }
-  environment {
-        registry= "paraspatel1434/sunbird-rc-ui"
-        registryCredential= 'dockerhub'
-    }
+    stage('Build image') {
+            app = docker.build("paraspatel1434/sunbird-rc-ui","target")
+        }
 }
