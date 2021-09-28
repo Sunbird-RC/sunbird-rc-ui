@@ -2,7 +2,7 @@
 FROM node as build
 WORKDIR /app
 COPY package*.json /app/
-RUN npm cache clean --force
+RUN npm i npm@latest -g
 RUN npm install yarn
 RUN yarn install
 COPY . /app
