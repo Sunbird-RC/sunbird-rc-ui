@@ -6,9 +6,9 @@
     <br>
     <div class="d-flex justify-content-center">
         <div class="spinner-border" style="width: 5rem; height: 5rem;" role="status">
-          <span class="sr-only">Loading...</span>
+            <span class="sr-only">Loading...</span>
         </div>
-      </div>
+    </div>
 </ng-template>
 <div [ngClass]="public ? 'container noToBottom' : 'container'" *ngIf="identifier != null && schemaloaded; else loader">
     <ng-template ngFor let-block [ngForOf]="Data" let-blockIndex="index">
@@ -51,7 +51,8 @@
                                                     title="{{element[objectIndex]._osState}} {{element[objectIndex]._osClaimNotes}}"></i>
                                             </ng-template>
                                             <ng-template [ngIf]="element[objectIndex]._osState == 'DRAFT'">
-                                                <img *ngIf="element[objectIndex]._osState == 'DRAFT'" style="width: 16px;"
+                                                <img *ngIf="element[objectIndex]._osState == 'DRAFT'"
+                                                    style="width: 16px;"
                                                     src="https://i.pinimg.com/originals/1e/a6/69/1ea669fd320895bb475da1b222b86d92.png"
                                                     data-mdb-toggle="tooltip" title="Saved to DRAFT" />
                                                 <!-- <a panelEditLink="{{block.editform}}" identity="{{element[objectIndex].osid}}" class="pl-1 fs-7 text-primary-color">edit <i
@@ -64,7 +65,8 @@
                                                 {{element[objectIndex].value}}</div>
                                             <ng-template #greyBlock>
                                                 <div class="fs-7 text-grey-color" data-mdb-toggle="tooltip"
-                                                    title={{element[objectIndex].title}}>{{element[objectIndex].title}} :
+                                                    title={{element[objectIndex].title}}>{{element[objectIndex].title}}
+                                                    :
                                                     {{element[objectIndex].value}}</div>
                                             </ng-template>
 
@@ -127,17 +129,18 @@
                                     <ng-template [ngIf]="elementIndex %2 == 0">
                                         <dl>
                                             <div class="d-flex">
-                                            <div class="w-50 ml-2">
-                                                <dt class="fs-7 text-grey-color">{{item[elementIndex].title}}</dt>
-                                                <dd>{{item[elementIndex].value}}</dd>
+                                                <div class="w-50 ml-2">
+                                                    <dt class="fs-7 text-grey-color">{{item[elementIndex].title}}</dt>
+                                                    <dd>{{item[elementIndex].value}}</dd>
+                                                </div>
+                                                <div class="w-50">
+                                                    <ng-template [ngIf]="elementIndex + 1 != item.length">
+                                                        <dt class="fs-7 text-grey-color">{{item[elementIndex +
+                                                            1].title}}</dt>
+                                                        <dd>{{item[elementIndex + 1].value}}</dd>
+                                                    </ng-template>
+                                                </div>
                                             </div>
-                                            <div class="w-50">
-                                            <ng-template [ngIf]="elementIndex + 1 != item.length">
-                                                <dt class="fs-7 text-grey-color">{{item[elementIndex + 1].title}}</dt>
-                                                <dd>{{item[elementIndex + 1].value}}</dd>
-                                            </ng-template>
-                                            </div>
-                                        </div>
                                         </dl>
                                     </ng-template>
                                 </ng-template>

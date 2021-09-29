@@ -11,11 +11,16 @@ import { AuthGuard } from './utility/app.guard';
 import { DocViewComponent } from './layouts/doc-view/doc-view.component';
 import { InstallComponent } from './install/install.component';
 import { HomeComponent } from './home/home.component';
+import { KeycloakloginComponent } from './authentication/login/keycloaklogin.component';
+import { LogoutComponent } from './authentication/logout/logout.component';
 
 const routes: Routes = [
 // Home
 { path: '', component: HomeComponent },
 
+// Auth
+{ path: 'login', component: KeycloakloginComponent ,  canActivate: [AuthGuard]},
+{ path: 'logout', component: LogoutComponent},
 
 // Forms
 { path: 'form/:form', component: FormsComponent },

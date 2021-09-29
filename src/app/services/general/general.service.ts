@@ -15,7 +15,8 @@ export class GeneralService {
   }
 
   postData(apiUrl,data) {
-    let url = `${this.baseUrl}${apiUrl}`;
+    let url = `${this.baseUrl}/${apiUrl}`;
+    url.replace('//', '/');
     const req = {
       url: url,
       data: data
@@ -35,8 +36,9 @@ export class GeneralService {
       url = apiUrl;
     }
     else{
-      url = `${this.baseUrl}${apiUrl}`;
+      url = `${this.baseUrl}/${apiUrl}`;
     }
+    url.replace('//', '/');
     const req = {
       url: url
     };
@@ -46,6 +48,7 @@ export class GeneralService {
   getPrefillData(apiUrl) {
     var url = apiUrl;
     let headers = new HttpHeaders();
+    url.replace('//', '/');
     const req = {
       url: url,
       headers: headers
@@ -55,6 +58,7 @@ export class GeneralService {
   }
 
   postPrefillData(apiUrl, data) {
+    apiUrl.replace('//', '/');
     const req = {
       url: apiUrl,
       data: data
@@ -64,7 +68,8 @@ export class GeneralService {
   }
 
   putData(apiUrl,id, data) {
-    let url = `${this.baseUrl}${apiUrl}/${id}`;
+    let url = `${this.baseUrl}/${apiUrl}/${id}`;
+    url.replace('//', '/').replace('//', '/');
     const req = {
       url: url,
       data: data
@@ -74,7 +79,6 @@ export class GeneralService {
 
   // Configurations
   getConfigs() {
-    console.log("here")
     let url = "./assets/config/config.json";
     const req = {
       url: url

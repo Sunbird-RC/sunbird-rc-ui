@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AppConfig } from './app.config';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Sunbird-RC-UI';
+  footerText = this.config.getEnv('footerText');
+  constructor(private config: AppConfig) {
+  }
 }

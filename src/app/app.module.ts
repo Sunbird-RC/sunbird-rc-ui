@@ -43,6 +43,7 @@ import { HomeComponent } from './home/home.component';
 import { FormlyHorizontalWrapper } from './forms/types/horizontal.wrapper';
 import { AppConfig } from './app.config';
 import { PanelWrapperComponent } from './forms/types/group.type';
+import { LogoutComponent } from './authentication/logout/logout.component';
 
 
 //form validations
@@ -110,7 +111,8 @@ function initConfig(config: AppConfig){
     DocViewComponent,
     FormlyFieldNgSelect,
     InstallComponent,
-    HomeComponent
+    HomeComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
