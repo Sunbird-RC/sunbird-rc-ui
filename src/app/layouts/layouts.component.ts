@@ -4,6 +4,7 @@ import { SchemaService } from '../services/data/schema.service';
 import { GeneralService } from '../services/general/general.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-layouts',
@@ -28,7 +29,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
   currentDialog = null;
   destroy = new Subject<any>();
   isPreview: boolean = false;
-  constructor(private route: ActivatedRoute, public schemaService: SchemaService, public generalService: GeneralService, private modalService: NgbModal,
+  constructor(private route: ActivatedRoute, public schemaService: SchemaService, private titleService: Title, public generalService: GeneralService, private modalService: NgbModal,
     public router: Router) { }
 
   ngOnChanges(): void {
@@ -45,8 +46,10 @@ export class LayoutsComponent implements OnInit, OnChanges {
 
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.route.params.subscribe(params => {
+      console.log(params);
       if (params['layout'] != undefined) {
         this.layout = params['layout']
+        this.titleService.setTitle(params['layout']);
       }
       if (params['claim']) {
         this.claim = params['claim']

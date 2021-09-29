@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Injectable()
 export class AppConfig {
@@ -11,7 +12,7 @@ export class AppConfig {
     private config: Object = null;
     private environment:    Object = null;
 
-    constructor(private http: HttpClient, public router: Router) {
+    constructor(private http: HttpClient, public router: Router, private titleService: Title) {
 
     }
 
@@ -62,17 +63,21 @@ export class AppConfig {
                     request
                         .subscribe((responseData) => {
                             this.config = responseData;
+                            this.titleService.setTitle(responseData.title);
                             resolve(true);
-                        }, err => {console.log('Error reading config.json configuration file', err),
+                        }, err => {console.log('Error reading config.json configuration file', err);
+                        this.titleService.setTitle("Sunbird RC");
                         this.router.navigate(['install'])});
                 } else {
                     console.error('config.json file is not valid');
+                    this.titleService.setTitle("Sunbird RC");
                     this.router.navigate(['install'])
                     resolve(true);
                 }
             }, 
             
             err => {console.log('Error reading config.json configuration file', err);
+                    this.titleService.setTitle("Sunbird RC");
                     this.router.navigate(['install'])
                     resolve(true);
                     }

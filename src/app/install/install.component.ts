@@ -21,6 +21,18 @@ export class InstallComponent implements OnInit {
 
   fields: FormlyFieldConfig[] = [
     {
+      key: 'title',
+      type: 'input',
+      templateOptions: {
+        placeholder: 'ex: Sunbird RC',
+        required: true,
+        addonLeft: {
+          text: 'title:',
+        },
+        label: 'What is your project name?',
+      },
+    },
+    {
       key: 'environment',
       type: 'select',
       defaultValue: 'development',
@@ -71,7 +83,7 @@ export class InstallComponent implements OnInit {
           placeholder: 'ex: https://example.com/auth',
           required: true,
           type: 'text',
-          label: 'Auth URL',
+          label: 'Authentication service configurations',
           addonLeft: {
             text: 'url:',
           },
@@ -99,12 +111,12 @@ export class InstallComponent implements OnInit {
           },
         },
       }
-    ],
+      ],
     },
     {
       key: 'configFolder',
       type: 'input',
-      defaultValue: '/assets/config/',
+      defaultValue: '/assets/config',
       templateOptions: {
         addonLeft: {
           text: 'configFolder:',
@@ -125,43 +137,62 @@ export class InstallComponent implements OnInit {
         label: 'what is the path of logo file?',
       },
     },
-   
+    {
+      key: 'footerText',
+      type: 'input',
+      templateOptions: {
+        defaultValue: 'Sunbird Registry and Credencials',
+        required: true,
+        addonLeft: {
+          text: 'footerText:',
+        },
+        label: 'Text on footer',
+      },
+    },
+
   ];
 
-  constructor(public router: Router,private httpClient: HttpClient) { }
+  constructor(public router: Router, private httpClient: HttpClient) { }
 
   ngOnInit(): void {
-    this.checkConfig().subscribe((res) => {if(res){this.router.navigate([''])}},
-    (error) => this.installed = false);
+    this.checkConfig().subscribe((res) => { if (res) { this.router.navigate(['']) } },
+      (error) => this.installed = false);
   }
-  
+
   checkConfig(): Observable<boolean> {
     return this.httpClient.get('/assets/config/config.json')
-        .pipe(
-            map(response => {
-                console.log('response',response)
-                this.installed = true;
-                this.router.navigate([''])
-                return true;
-            }),
-            catchError(error => {
-                console.log('error',error)
-                this.installed = false;
-                return of(false);
-            })
-        );
-}
+      .pipe(
+        map(response => {
+          console.log('response', response)
+          this.installed = true;
+          this.router.navigate([''])
+          return true;
+        }),
+        catchError(error => {
+          console.log('error', error)
+          this.installed = false;
+          return of(false);
+        })
+      );
+  }
   async submit() {
+    this.formateData()
     await this.saveConfig('config.json', JSON.stringify(this.model));
     this.installed = true;
   }
 
-  saveConfig(filename, data){
+  saveConfig(filename, data) {
     var a = document.createElement('a');
-    a.setAttribute('href', 'data:text/plain;charset=utf-u,'+encodeURIComponent(data));
+    a.setAttribute('href', 'data:text/plain;charset=utf-u,' + encodeURIComponent(data));
     a.setAttribute('download', filename);
     a.click()
     this.message = true;
+  }
+
+  formateData() {
+    if (this.model.baseUrl.substring(this.model.baseUrl.length - 1) == "/") {
+      this.model.baseUrl = this.model.baseUrl.substring(0, this.model.baseUrl.length - 1);
+    }
   }
 
 }

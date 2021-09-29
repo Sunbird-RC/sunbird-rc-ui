@@ -23,8 +23,19 @@ export class SchemaService {
     return this.dataService.get(req);
   }
 
+  getHeaderJSON() {
+    let url = `.${this.configFolder}/headers.json`;
+    url.replace('//', '/');
+    const req = {
+      url: url
+    };
+
+    return this.dataService.get(req);
+  }
+
   getFormJSON() {
-    let url = `.${this.configFolder}forms.json`;
+    let url = `.${this.configFolder}/forms.json`;
+    url.replace('//', '/');
     const req = {
       url: url
     };
@@ -33,7 +44,8 @@ export class SchemaService {
   }
 
   getLayoutJSON() {
-    let url = `.${this.configFolder}layouts.json`;
+    let url = `.${this.configFolder}/layouts.json`;
+    url.replace('//', '/');
     const req = {
       url: url
     };
@@ -42,7 +54,8 @@ export class SchemaService {
   }
 
   getTableJSON() {
-    let url = `.${this.configFolder}tables.json`;
+    let url = `.${this.configFolder}/tables.json`;
+    url.replace('//', '/');
     const req = {
       url: url
     };
@@ -51,7 +64,8 @@ export class SchemaService {
   }
 
   getSearchJSON() {
-    let url = `.${this.configFolder}search.json`;
+    let url = `.${this.configFolder}/search.json`;
+    url.replace('//', '/');
     const req = {
       url: url
     };
