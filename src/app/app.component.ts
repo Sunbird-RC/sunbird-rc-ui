@@ -7,7 +7,7 @@ import { AppConfig } from './app.config';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  footerText = this.config.getEnv('footerText');
+ // footerText = this.config.getEnv('footerText');
   constructor(private config: AppConfig) {
   }
 }
