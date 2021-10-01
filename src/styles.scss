@@ -146,6 +146,7 @@ button.calendar, button.calendar:active {
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css'; 
 
 
 .display-flex { display: flex; }
@@ -258,6 +259,7 @@ formly-field {
       }
   }
 
+// discovery page
 .selected-list .c-list .c-token {
     background-color: #6495ed99 !important;
 }
@@ -266,6 +268,16 @@ formly-field {
     position: fixed;
     width: 400px !important;
 }
+
+.list-area {
+    background: #fbfbfb;
+    color: black !important;
+}
+
+formly-autocomplete-type .ng-select {
+    margin-top: 25px !important;
+}
+
 
 .logo { 
     width: 50px; 

@@ -7,7 +7,10 @@ import { AppConfig } from './app.config';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  footerText = this.config.getEnv('footerText');
+  footerText = 'Sunbird RC'
   constructor(private config: AppConfig) {
+    if(window.location.pathname != '/install'){
+      this.footerText = this.config.getEnv('footerText');
+    }
   }
 }

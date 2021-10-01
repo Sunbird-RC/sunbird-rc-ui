@@ -10,6 +10,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { APP_INITIALIZER } from '@angular/core';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 // formly
 import { FormlyModule, FormlyFieldConfig } from '@ngx-formly/core';
@@ -126,6 +127,7 @@ function initConfig(config: AppConfig){
     KeycloakAngularModule,
     NgxDocViewerModule,
     Bootstrap4FrameworkModule,
+    NgSelectModule,
     FormlyModule.forRoot({
       extras: { resetFieldOnHide: true },
       wrappers: [{ name: 'form-field-horizontal', component: FormlyHorizontalWrapper },
