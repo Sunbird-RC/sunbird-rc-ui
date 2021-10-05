@@ -9,6 +9,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { APP_INITIALIZER } from '@angular/core';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
 
 // formly
 import { FormlyModule, FormlyFieldConfig } from '@ngx-formly/core';
@@ -32,6 +33,17 @@ import { TablesComponent } from './tables/tables.component';
 import { HeaderComponent } from './header/header.component';
 import { FormlyFieldFile } from './forms/types/file.type';
 import { FileValueAccessor } from './forms/types/file-value-accessor';
+import { DocViewComponent } from './layouts/doc-view/doc-view.component';
+import { FormlyFieldNgSelect } from './forms/types/multiselect.type';
+import { Bootstrap4FrameworkModule } from 'angular6-json-schema-form';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { AttestationComponent } from './tables/attestation/attestation.component';
+import { InstallComponent } from './install/install.component';
+import { HomeComponent } from './home/home.component';
+import { FormlyHorizontalWrapper } from './forms/types/horizontal.wrapper';
+import { AppConfig } from './app.config';
+import { PanelWrapperComponent } from './forms/types/group.type';
+import { LogoutComponent } from './authentication/logout/logout.component';
 
 
 //form validations
@@ -75,6 +87,9 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
   return `should be equal to constant "${field.templateOptions.const}"`;
 }
 
+function initConfig(config: AppConfig){
+  return () => config.load()
+}
 
 @NgModule({
   declarations: [
@@ -90,7 +105,14 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
     PanelsComponent, EditPanelComponent, AddPanelComponent, TablesComponent,
     AutocompleteTypeComponent,
     HeaderComponent,
-    FileValueAccessor
+    AttestationComponent,
+    FileValueAccessor,
+    FormlyFieldFile,
+    DocViewComponent,
+    FormlyFieldNgSelect,
+    InstallComponent,
+    HomeComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
@@ -102,8 +124,12 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
     NgbModule,
     FormlyBootstrapModule,
     KeycloakAngularModule,
+    NgxDocViewerModule,
+    Bootstrap4FrameworkModule,
     FormlyModule.forRoot({
       extras: { resetFieldOnHide: true },
+      wrappers: [{ name: 'form-field-horizontal', component: FormlyHorizontalWrapper },
+      { name: 'panel', component: PanelWrapperComponent }],
       validationMessages: [
         { name: 'required', message: 'This field is required' },
         
@@ -138,7 +164,8 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
           name: 'autocomplete',
           component: AutocompleteTypeComponent
         },
-        { name: 'file', component: FormlyFieldFile, wrappers: ['form-field'] }
+        { name: 'file', component: FormlyFieldFile, wrappers: ['form-field'] },
+        { name: 'multiselect', component: FormlyFieldNgSelect }
       ],
     }),
     ToastrModule.forRoot({
@@ -149,12 +176,16 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   entryComponents: [],
   bootstrap: [AppComponent],
-  providers: [{
+  providers: [
+    AppConfig,
+    { provide: APP_INITIALIZER, useFactory: initConfig, deps: [AppConfig], multi: true },
+    {
     provide: APP_INITIALIZER,
     useFactory: initializeKeycloak,
     multi: true,
     deps: [KeycloakService],
-  },]
+  },
+  { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'always' } }]
 })
 export class AppModule {
 }

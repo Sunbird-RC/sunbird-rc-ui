@@ -1,17 +1,20 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SchemaService } from '../services/data/schema.service';
 import { GeneralService } from '../services/general/general.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-layouts',
   templateUrl: './layouts.component.html',
   styleUrls: ['./layouts.component.scss']
 })
-export class LayoutsComponent implements OnInit {
+export class LayoutsComponent implements OnInit, OnChanges {
   @Input() layout;
+  @Input() publicData;
+
   @Input() identifier;
   @Input() public: boolean = false;
   claim: any;
@@ -25,15 +28,28 @@ export class LayoutsComponent implements OnInit {
   property: any[] = [];
   currentDialog = null;
   destroy = new Subject<any>();
-
-  constructor(private route: ActivatedRoute, public schemaService: SchemaService, public generalService: GeneralService, private modalService: NgbModal,
+  isPreview: boolean = false;
+  constructor(private route: ActivatedRoute, public schemaService: SchemaService, private titleService: Title, public generalService: GeneralService, private modalService: NgbModal,
     public router: Router) { }
 
+  ngOnChanges(): void {
+    this.Data = [];
+    this.ngOnInit();
+  }
+
   ngOnInit(): void {
+    
+    if (this.publicData) {
+      this.model = this.publicData;
+      this.identifier = this.publicData.osid;
+    }
+
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.route.params.subscribe(params => {
+      console.log(params);
       if (params['layout'] != undefined) {
         this.layout = params['layout']
+        this.titleService.setTitle(params['layout']);
       }
       if (params['claim']) {
         this.claim = params['claim']
@@ -58,8 +74,14 @@ export class LayoutsComponent implements OnInit {
         }
         if (this.layoutSchema.api) {
           this.apiUrl = this.layoutSchema.api;
-          await this.getData();
-          
+
+          if (this.publicData) {
+            this.Data = [];
+            this.addData();
+          } else {
+            await this.getData();
+          }
+
         }
       }, (error) => {
         //Layout Error callback
@@ -94,7 +116,8 @@ export class LayoutsComponent implements OnInit {
                     if ('$ref' in this.responseData['definitions'][block.definition]['properties'][element]) {
                       var ref_defination = (this.responseData['definitions'][block.definition]['properties'][element]['$ref']).split('/').pop()
                       temp_object = this.responseData['definitions'][ref_defination]['properties'][key]
-                      if (temp_object != undefined) {
+                      
+                      if (temp_object != undefined && typeof value != 'object') {
                         temp_object['value'] = value
                         this.property.push(temp_object)
                       }
@@ -102,7 +125,8 @@ export class LayoutsComponent implements OnInit {
                     else {
                       if (this.responseData['definitions'][block.definition]['properties'][element]['properties'] != undefined) {
                         temp_object = this.responseData['definitions'][block.definition]['properties'][element]['properties'][key]
-                        if (temp_object != undefined) {
+                        
+                        if (temp_object != undefined  && typeof value != 'object') {
                           temp_object['value'] = value
                           this.property.push(temp_object)
                         }
@@ -127,14 +151,14 @@ export class LayoutsComponent implements OnInit {
                       if ('$ref' in this.responseData['definitions'][block.definition]['properties'][element]) {
                         var ref_defination = (this.responseData['definitions'][block.definition]['properties'][element]['$ref']).split('/').pop()
                         temp_object = this.responseData['definitions'][ref_defination]['properties'][key]
-                        if (temp_object != undefined) {
+                        if (temp_object != undefined  && typeof value != 'object') {
                           temp_object['value'] = value;
                           this.property.push(temp_object);
                         }
                       }
                       else {
                         temp_object = this.responseData['definitions'][block.definition]['properties'][element]['items']['properties'][key];
-                        if (temp_object != undefined) {
+                        if (temp_object != undefined  && typeof value != 'object') {
                           temp_object['value'] = value;
                           this.property.push(temp_object);
                         }
@@ -154,7 +178,7 @@ export class LayoutsComponent implements OnInit {
                   if ('$ref' in this.responseData['definitions'][block.definition]['properties'][element]) {
                     var ref_defination = (this.responseData['definitions'][block.definition]['properties'][element]['$ref']).split('/').pop()
                     temp_object = this.responseData['definitions'][ref_defination]['properties'][key]
-                    if (temp_object != undefined) {
+                    if (temp_object != undefined  && typeof value != 'object') {
                       if (element.osid) {
                         temp_object['osid'] = element.osid
                       }
@@ -172,7 +196,7 @@ export class LayoutsComponent implements OnInit {
                   }
                   else {
                     temp_object = this.responseData['definitions'][block.definition]['properties'][element]['properties'][key];
-                    if (temp_object != undefined) {
+                    if (temp_object != undefined  && typeof value != 'object') {
                       if (element.osid) {
                         temp_object['osid'] = element.osid;
                       }
@@ -198,7 +222,7 @@ export class LayoutsComponent implements OnInit {
                     if ('$ref' in this.responseData['definitions'][block.definition]['properties'][element]) {
                       var ref_defination = (this.responseData['definitions'][block.definition]['properties'][element]['$ref']).split('/').pop()
                       temp_object = this.responseData['definitions'][ref_defination]['properties'][key]
-                      if (temp_object != undefined) {
+                      if (temp_object != undefined  && typeof value != 'object') {
                         if (objects.osid) {
                           temp_object['osid'] = objects.osid;
                         }
@@ -211,7 +235,7 @@ export class LayoutsComponent implements OnInit {
                     }
                     else {
                       temp_object = this.responseData['definitions'][block.definition]['properties'][element]['items']['properties'][key];
-                      if (temp_object != undefined) {
+                      if (temp_object != undefined  && typeof value != 'object') {
                         if (objects.osid) {
                           temp_object['osid'] = objects.osid;
                         }
@@ -242,6 +266,8 @@ export class LayoutsComponent implements OnInit {
       }
       block.items.push(this.property)
       this.Data.push(block)
+      console.log("main",this.Data);
+      this.schemaloaded = true;
     });
   }
 
@@ -269,6 +295,8 @@ export class LayoutsComponent implements OnInit {
         this.model = res[0];
         this.identifier = res[0].osid;
       }
+
+      this.Data = [];
       localStorage.setItem('osid',this.identifier);
       this.addData()
     });
@@ -296,6 +324,10 @@ export class LayoutsComponent implements OnInit {
 
   ngOnDestroy() {
     this.destroy.next();
+  }
+
+  openPreview() {
+    this.isPreview = true;
   }
 
 }

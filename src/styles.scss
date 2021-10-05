@@ -5,11 +5,60 @@
 @import '~@fortawesome/fontawesome-free/scss/brands.scss';
  
 @import '~mdb-angular-ui-kit/assets/scss/mdb.scss';
-// @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import "https://fonts.googleapis.com/css?family=Lato:wght@300@500@600&display=swap";
-@import "//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css";
+@import "https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css";
 
 
+
+.input-group-text{
+    background: none !important;
+    border: none !important;
+    font-size:14px !important;
+    padding-left: 0 !important;
+    padding-right: 5px !important;
+}
+
+.private-access:before {
+    font-family: "Font Awesome 5 Free";
+    content: "\f023";
+    display: inline-block;
+    padding-left: 10px;
+    vertical-align: middle;
+    font-weight:900;
+    font-style: normal;
+    font-size: 12px;
+ }
+
+ .internal-access:before {
+    font-family: "Font Awesome 5 Free";
+    content: "\f023";
+    display: inline-block;
+    padding-left: 10px;
+    vertical-align: middle;
+    font-weight:900;
+    font-size: 12px;
+    font-style: normal;
+
+ }
+
+ .public-access:before {
+    font-family: "Font Awesome 5 Free";
+    content: "\f57c";
+    display: inline-block;
+    padding-left: 10px;
+    vertical-align: middle;
+    font-weight:900;
+    font-size: 12px;
+    font-style: normal;
+
+ }
+
+
+.custom-input-class {
+    color: #2a8bac;
+    background-color: #443df6;
+}
 
 $primary-color: #443df6;
 $gray-color: #8d9091;
@@ -97,7 +146,6 @@ button.calendar, button.calendar:active {
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
-// @import '~@angular/material/prebuilt-themes/deeppurple-amber.css'; 
 
 
 .display-flex { display: flex; }
@@ -135,8 +183,9 @@ button.calendar, button.calendar:active {
     right: 0;
     bottom: 0;
     margin: auto !important;
-    width: 640px !important;
+    width: 600px !important;
     height: 100%;
+    max-width: 700px !important;
     -webkit-transform: translate3d(0%, 0, 0) !important;
     -ms-transform: translate3d(0%, 0, 0) !important;
     -o-transform: translate3d(0%, 0, 0) !important;
@@ -173,4 +222,55 @@ formly-field {
   }
 
 
-//   @import "~@ng-select/ng-select/themes/default.theme.css";
+  @import "~@ng-select/ng-select/themes/default.theme.css";
+
+
+  [type="file"] {
+    height: 0;
+    overflow: hidden;
+    width: 0;
+  }
+  
+  [type="file"] + label {
+    background: white;
+    border: none;
+    border-radius: 5px;
+    color: blue;
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Rubik', sans-serif;
+    font-size: inherit;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    outline: none;
+    position: relative;
+    transition: all 0.3s;
+    vertical-align: middle;
+    
+    &:hover {
+      background-color: darken(white, 5%);
+    }
+
+    #custom-text {
+        margin-left: 10px;
+        font-family: sans-serif;
+        color: #aaa;
+      }
+  }
+
+.selected-list .c-list .c-token {
+    background-color: #6495ed99 !important;
+}
+
+.dropdown-list.tagToBody {
+    position: fixed;
+    width: 400px !important;
+}
+
+.logo { 
+    width: 50px; 
+    height: 50px; 
+    display: block; 
+    text-indent: -9999px;
+}
+

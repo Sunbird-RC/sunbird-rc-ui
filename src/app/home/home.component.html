@@ -1,0 +1,57 @@
+<div *ngIf="myTemplate; else defaultBlock"  [innerHtml]="myTemplate">
+</div>
+<ng-template #defaultBlock>
+  <nav class="item-menu">
+    <h1>Welcome to Sunbird RC</h1>
+    <br>
+    <input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open" />
+    <label id="menu-open-handler" class="menu-open-button" for="menu-open">
+      <span class="mt-20"><img src="/assets/logo.png" alt="image"></span>
+    </label>
+    <div class="real-menu">
+      <a href="https://docs.sunbirdrc.dev/capabilities/enrolment" class="menu-item" data-name="Enrolment"
+        target="_blank"> <i class="fa fa-toggle-on"></i> </a>
+      <a href="https://docs.sunbirdrc.dev/capabilities/athenticate" class="menu-item" data-name="Authenticate"
+        target="_blank"> <i class="fa fa-user"></i> </a>
+      <a href="https://docs.sunbirdrc.dev/capabilities/consent" class="menu-item" data-name="Consent" target="_blank">
+        <i class="fa fa-lock"></i> </a>
+      <a href="https://docs.sunbirdrc.dev/capabilities/claims" class="menu-item" data-name="Claims" target="_blank"> <i
+          class="fa fa-address-card"></i> </a>
+      <a href="https://docs.sunbirdrc.dev/capabilities/attestation" class="menu-item" data-name="Attestation"
+        target="_blank"> <i class="fa fa-check-circle"></i> </a>
+      <a href="https://docs.sunbirdrc.dev/capabilities/discovery" class="menu-item" data-name="Discovery"
+        target="_blank"> <i class="fa fa-search"></i> </a>
+      <a href="https://docs.sunbirdrc.dev/capabilities/update" class="menu-item" data-name="Update" target="_blank"> <i
+          class="fa fa-pencil-square-o"></i> </a>
+    </div>
+    <div class="center">
+      <a class="btn" href="https://github.com/Sunbird-RC/sunbird-rc-ui/blob/main/README.md" target="_blank"><i
+          class="fa fa-github" aria-hidden="true"></i> Learn More on github</a>
+      <p class="mt-20 red">Create <b>home.html</b> file as per your need and place it inside <b>/assets/config/</b> to
+        change this page.</p>
+    </div>
+
+
+  </nav>
+
+  <!-- filters -->
+  <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="width: 0; height: 0;">
+    <defs>
+      <filter id="shadowed-goo">
+        <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="10" />
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+        <feGaussianBlur in="goo" stdDeviation="3" result="shadow" />
+        <feColorMatrix in="shadow" mode="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 -0.2"
+          result="shadow" />
+        <feOffset in="shadow" dx="1" dy="1" result="shadow" />
+        <feBlend in2="shadow" in="goo" result="goo" />
+        <feBlend in2="goo" in="SourceGraphic" result="mix" />
+      </filter>
+      <filter id="goo">
+        <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="10" />
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+        <feBlend in2="goo" in="SourceGraphic" result="mix" />
+      </filter>
+    </defs>
+  </svg>
+</ng-template>
