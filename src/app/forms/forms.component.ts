@@ -105,7 +105,7 @@ export class FormsComponent implements OnInit {
       this.schemaService.getSchemas().subscribe((res) => {
         this.responseData = res;
         this.formSchema.fieldsets.forEach(fieldset => {
-          console.log('fieldset',fieldset)
+          console.log('fieldset', fieldset)
           if (fieldset.hasOwnProperty('globalPrivacyConfig') && fieldset.globalPrivacyConfig != '') {
             this.globalPrivacy = fieldset.globalPrivacyConfig;
           } else
@@ -353,7 +353,7 @@ export class FormsComponent implements OnInit {
             },
             "validation": {},
             "expressionProperties": {},
-            "modelOptions":{}
+            "modelOptions": {}
           }
 
         }
@@ -398,30 +398,10 @@ export class FormsComponent implements OnInit {
             localStorage.setItem('property', this.type.split(":")[1]);
           }
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = field.format;
-          if(field.multiple){
+          if (field.multiple) {
             this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['multiple'] = field.multiple;
           }
           this.fileFields.push(field.name);
-          // this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['onChange'] = 
-          // function($viewValue, $modelValue, $scope) {
-          //   console.log('v',$viewValue,'m', $modelValue,'s', $scope);
-          // }
-          // this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['modelOptions'] = {
-          //   updateOn: 'blur'
-          // };
-          // this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'] = {}
-          // this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name] = {}
-          // this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name]['expression'] = (control: FormControl) => {
-          //   console.log('conty--',control)
-          //   if (control.value != null) {
-          //     console.log('conty--',control.value)
-          //   }
-          //   return new Promise((resolve, reject) => {
-          //     setTimeout(() => {fileFields
-          //       resolve(true);
-          //     }, 1000);
-          //   });
-          // }
         }
 
         if (field.validation) {
@@ -435,10 +415,91 @@ export class FormsComponent implements OnInit {
               this.responseData.definitions[fieldset.definition].properties[field.name]['pattern'] = field.validation.pattern;
             }
           }
+          if (field.validation.lessThan || field.validation.greaterThan) {
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['modelOptions'] = {
+              updateOn: 'blur'
+            };
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'] = {}
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name] = {}
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name]['expression'] = (control: FormControl) => {
+              if (control.value != null) {
+                if (field.type === 'date') {
+                  if (this.model[field.validation.lessThan]) {
+                    if ((new Date(this.model[field.validation.lessThan])).valueOf() > (new Date(control.value)).valueOf()) {
+                      return of(control.value);
+                    }
+                    else {
+                      return of(false);
+                    }
+                  } else if (this.model[field.validation.greaterThan]) {
+                    if ((new Date(this.model[field.validation.greaterThan])).valueOf() < (new Date(control.value)).valueOf()) {
+                      return of(control.value);
+                    }
+                    else {
+                      return of(false);
+                    }
+                  }
+                }
+                else {
+                  if (this.model[field.validation.lessThan]) {
+                    if (this.model[field.validation.lessThan] > control.value) {
+                      return of(control.value);
+                    }
+                    else {
+                      return of(false);
+                    }
+                  }
+                  else if (this.model[field.validation.greaterThan]) {
+                    if (this.model[field.validation.greaterThan] < control.value) {
+                      return of(control.value);
+                    }
+                    else {
+                      return of(false);
+                    }
+                  }
+                  else {
+                    return of(false);
+                  }
+                }
+              }
+              return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  resolve(true);
+                }, 1000);
+              });
+            }
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name]['message'] = field.validation.message;
+          }
+
+          if(field.type === 'date'){
+            if(field.validation && field.validation.future === false){
+              this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['modelOptions'] = {
+                updateOn: 'blur'
+              };
+              this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'] = {}
+              this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name] = {}
+              this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name]['expression'] = (control: FormControl) => {
+                if (control.value != null) {
+                  if ((new Date(control.value)).valueOf() < Date.now()) {
+                    return of(control.value);
+                  }else {
+                    return of(false);
+                  }
+                }
+                return new Promise((resolve, reject) => {
+                  setTimeout(() => {
+                    resolve(true);
+                  }, 1000);
+                });
+              };
+              this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name]['message'] = "The Date must be Bigger or Equal to today date";
+            }
+          }
+
         }
       }
       if (field.autofill) {
-        console.log('f',field.name)
+        console.log('f', field.name)
         if (field.autofill.apiURL) {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['modelOptions'] = {
             updateOn: 'blur'
@@ -471,7 +532,7 @@ export class FormsComponent implements OnInit {
                 });
               }
               else if (field.autofill.method === 'POST') {
-                console.log("contr",control.value)
+                console.log("contr", control.value)
                 var datapath = this.findPath(field.autofill.body, "{{value}}", '')
                 if (datapath) {
                   var dataobject = this.setPathValue(field.autofill.body, datapath, control.value)
@@ -481,10 +542,10 @@ export class FormsComponent implements OnInit {
                     }
                     if (field.autofill.fields) {
                       field.autofill.fields.forEach(element => {
-                        console.log('1',element)
+                        console.log('1', element)
 
                         for (var [key1, value1] of Object.entries(element)) {
-                          console.log('2',key1, value1, res)
+                          console.log('2', key1, value1, res)
                           this.createPath(this.model, key1, this.ObjectbyString(res, value1))
                           this.form2.get(key1).setValue(this.ObjectbyString(res, value1))
                         }
@@ -535,10 +596,15 @@ export class FormsComponent implements OnInit {
             return observableOf(this.searchResult);
           }
         }
-        else if(field.type === 'multiselect'){
+        else if (field.type === 'multiselect') {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = field.type;
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['multiple'] = true;
-          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = "Select " + field.name;
+          if (field.required) {
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = "Select " + field.name + "*";
+          } else {
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = "Select " + field.name;
+          }
+
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['options'] = [];
           // console.log("this.responseData.definitions[fieldset.definition].properties[field.name]",this.responseData.definitions[fieldset.definition].properties[field.name]['items']['enum'])
           this.responseData.definitions[fieldset.definition].properties[field.name]['items']['enum'].forEach(enumval => {
@@ -618,16 +684,16 @@ export class FormsComponent implements OnInit {
   };
 
   submit() {
-    if(this.fileFields.length > 0){
+    if (this.fileFields.length > 0) {
       this.fileFields.forEach(fileField => {
-        if(this.model[fileField]){
+        if (this.model[fileField]) {
           var formData = new FormData();
-          console.log("Model -- ",this.model[fileField]);
+          console.log("Model -- ", this.model[fileField]);
           for (let i = 0; i < this.model[fileField].length; i++) {
             const file = this.model[fileField][i]
             formData.append("files", file);
           }
-          
+
           if (this.type && this.type.includes("property")) {
             var property = this.type.split(":")[1];
           }
@@ -643,7 +709,7 @@ export class FormsComponent implements OnInit {
               documents_obj.fileName = element;
               documents_list.push(documents_obj);
             });
-            
+
             this.model[fileField] = documents_list;
             console.log('documents', JSON.stringify(this.model[fileField]));
             if (this.type && this.type === 'entity') {
@@ -680,7 +746,7 @@ export class FormsComponent implements OnInit {
             this.toastMsg.error('error', 'Something went wrong while uploading files, please try again')
           });
         }
-        else{
+        else {
           if (this.type && this.type === 'entity') {
             // this.customFields.forEach(element => {
             //   delete this.model[element];
@@ -713,7 +779,7 @@ export class FormsComponent implements OnInit {
         }
       });
     }
-    else{
+    else {
       if (this.type && this.type === 'entity') {
         // this.customFields.forEach(element => {
         //   delete this.model[element];
@@ -745,7 +811,7 @@ export class FormsComponent implements OnInit {
       }
     }
 
-    
+
     // const url = this.router.createUrlTree(['/profile/institute'])
     // window.open(this.router.createUrlTree([this.redirectTo]).toString(), '_blank')
   }
@@ -792,7 +858,7 @@ export class FormsComponent implements OnInit {
     if (Array.isArray(this.model)) {
       this.model = this.model[0];
     }
-    console.log("Modelll",this.model)
+    console.log("Modelll", this.model)
     this.generalService.postData(this.apiUrl, this.model).subscribe((res) => {
       if (res.params.status == 'SUCCESSFUL') {
         this.router.navigate([this.redirectTo])
@@ -825,7 +891,7 @@ export class FormsComponent implements OnInit {
     var a = s.split('.');
     for (var i = 0, n = a.length; i < n; ++i) {
       var k = a[i];
-      console.log('k',k,'o',o)
+      console.log('k', k, 'o', o)
       if (k in o) {
         o = o[k];
       } else {

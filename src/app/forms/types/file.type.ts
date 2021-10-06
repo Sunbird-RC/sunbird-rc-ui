@@ -28,7 +28,7 @@ import { DomSanitizer } from '@angular/platform-browser';
           [formlyAttributes]="field"
           (change)="onChange($event)"
           accept=".png,.jpg,.jpeg,.pdf,.doc,.docx,.xls,.xlsx,.xml,.json"
-          style="display: none"
+          style="visibility: hidden;"
         />
       </div>
       <div>

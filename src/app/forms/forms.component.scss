@@ -168,8 +168,8 @@
           justify-content: center;
           align-items: center;
           position: absolute;
-          right: 3%;
-          left: 3%;
+          right: 10%;
+          left: 0%;
           mat-icon {
             color: #3f51c2;
             &:hover {
@@ -191,6 +191,8 @@
         flex: 1;
         border-radius: 5px;
         padding: 0%;
+        width: 90%;
+        height: 72%;
       }
       &:hover {
         .mask {

@@ -8,7 +8,7 @@ export const environment = {
   production: false,
   baseUrl: '',
   schemaUrl: 'assets/config/schema.json', //asset path OR URL
-  logo: 'assets/logo.png', //asset path OR URL
+  logo: 'assets/images/logo.png', //asset path OR URL
   keycloakConfig: {
     url: 'https://ndear.xiv.in/auth',
     realm: 'ndear',

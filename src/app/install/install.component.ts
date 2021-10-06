@@ -128,7 +128,7 @@ export class InstallComponent implements OnInit {
     {
       key: 'logoPath',
       type: 'input',
-      defaultValue: '/assets/logo.png',
+      defaultValue: '/assets/images/logo.png',
       templateOptions: {
         addonLeft: {
           text: 'logoPath:',
