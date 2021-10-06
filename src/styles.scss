@@ -276,6 +276,7 @@ formly-field {
 
 formly-autocomplete-type .ng-select {
     margin-top: 25px !important;
+    margin-bottom: 5px;
 }
 
 
@@ -284,5 +285,11 @@ formly-autocomplete-type .ng-select {
     height: 50px; 
     display: block; 
     text-indent: -9999px;
+}
+
+.ng-select{ 
+    margin-bottom: 15px;
+    margin-top: 15px;
+    width: 90%;
 }
 
