@@ -1,6 +1,6 @@
 # Sunbird-RC UI
 
-Configurable Angular front end with generic forms and layouts for OpenSaber RC
+Configurable Angular front end with generic forms and layouts for Sunbird RC
 
 # Community Discussions & Issue Reporting
 Please use the community repo for reporting issues & participating in discussions
@@ -17,7 +17,7 @@ The application needs to be configured with the appropriate fields to be able to
 
 Key | Value
 ------------          | -------------
-`baseUrl`             | Base URL for the OpenSaber backend. Eg: https://registry.com/api
+`baseUrl`             | Base URL for the Sunbird RC backend. Eg: https://registry.com/api
 `schemaUrl`           | URL to the OpenAPI schema definition. This could be a HTTP path or a path to a local file Eg: https://registry.com/api/schema.json OR /assets/schema.json
 `logo`                | URL to logo. This logo is displayed in the header of the UI
 
