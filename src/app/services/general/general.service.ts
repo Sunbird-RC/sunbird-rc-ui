@@ -15,8 +15,13 @@ export class GeneralService {
   }
 
   postData(apiUrl,data) {
-    let url = `${this.baseUrl}/${apiUrl}`;
-    url.replace('//', '/');
+    var url;
+    if(apiUrl.charAt(0) == '/'){
+      url = `${this.baseUrl}${apiUrl}`
+    }
+    else{
+      url = `${this.baseUrl}/${apiUrl}`;
+    }
     const req = {
       url: url,
       data: data
@@ -68,8 +73,13 @@ export class GeneralService {
   }
 
   putData(apiUrl,id, data) {
-    let url = `${this.baseUrl}/${apiUrl}/${id}`;
-    url.replace('//', '/').replace('//', '/');
+    var url;
+    if(apiUrl.charAt(0) == '/'){
+      url = `${this.baseUrl}${apiUrl}/${id}`
+    }
+    else{
+      url = `${this.baseUrl}/${apiUrl}/${id}`;
+    }
     const req = {
       url: url,
       data: data
