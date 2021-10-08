@@ -34,7 +34,8 @@ export class SearchComponent implements OnInit {
   cardFields = [];
   selectOption = {};
 
-  activeTabIs: string = "institute";
+  activeTabIs: string;
+
   items = [];
   apiUrl: any;
   user: any;

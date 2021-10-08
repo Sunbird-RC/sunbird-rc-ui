@@ -21,7 +21,7 @@
 
 .private-access:before {
     font-family: "Font Awesome 5 Free";
-    content: "\f023";
+    content: "\f023  Only by consent";
     display: inline-block;
     padding-left: 10px;
     vertical-align: middle;
@@ -32,7 +32,7 @@
 
  .internal-access:before {
     font-family: "Font Awesome 5 Free";
-    content: "\f023";
+    content: "\f023  Only by me";
     display: inline-block;
     padding-left: 10px;
     vertical-align: middle;
@@ -44,7 +44,7 @@
 
  .public-access:before {
     font-family: "Font Awesome 5 Free";
-    content: "\f57c";
+    content: "\f57c  Anyone";
     display: inline-block;
     padding-left: 10px;
     vertical-align: middle;
@@ -88,7 +88,7 @@ $primary-color-dark: #000;
 
 
 html, body { height: 100%; }
-body { margin: 0; font-family: "Lato", sans-serif;color: #000; }
+body { margin: 0; font-family: "Lato", sans-serif;color: #000; background: #F6F8FC !important;}
 
 .fs-7{
 	font-size: 0.8rem;

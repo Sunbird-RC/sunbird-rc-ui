@@ -156,3 +156,20 @@ mb-2{
     margin-top: 10px;
     padding-bottom: 40px;
 }
+
+nav {
+    overflow: hidden;
+    // padding: 1em;
+    position: fixed;
+    top: 0px;
+    display: block;
+    width: 100%;
+    z-index: 1;
+    height: 96px;
+    top: 60px
+}
+
+img {
+    display: inline;
+    width: 16px;
+}
