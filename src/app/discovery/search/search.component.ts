@@ -130,7 +130,7 @@ export class SearchComponent implements OnInit {
         fieldset.filters.forEach((filter, index1) => {
           this.filterShow = false;
 
-          if (this.privateFields.length) {
+          if (this.privateFields  != []) {
             this.filterShow = this.privateFields.includes('$.' + filter.propertyPath);
           }
           if (!this.filterShow) {
@@ -191,7 +191,7 @@ export class SearchComponent implements OnInit {
 
         fieldset.results.fields.forEach((fields) => {
           this.fieldShow = false;
-          if (this.privateFields.length) {
+          if (this.privateFields != []) {
             this.fieldShow = this.privateFields.includes('$.' + fields.propertyPath);
           }
 
