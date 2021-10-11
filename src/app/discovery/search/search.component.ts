@@ -53,9 +53,6 @@ export class SearchComponent implements OnInit {
   };
   responseData;
   privateFields;
-  fieldShow: boolean = false;
-  filterShow: boolean = false;
-
   searchFields = {
     tabs: [
       {
@@ -128,12 +125,8 @@ export class SearchComponent implements OnInit {
         }
 
         fieldset.filters.forEach((filter, index1) => {
-          this.filterShow = false;
 
-          if (this.privateFields  != []) {
-            this.filterShow = this.privateFields.includes('$.' + filter.propertyPath);
-          }
-          if (!this.filterShow) {
+          if (this.privateFields != [] && !this.privateFields.includes('$.' + filter.propertyPath)) {
 
             let fieldObj = {
               key: filter.key,
@@ -190,12 +183,8 @@ export class SearchComponent implements OnInit {
         this.fields = [this.data[0]];
 
         fieldset.results.fields.forEach((fields) => {
-          this.fieldShow = false;
-          if (this.privateFields != []) {
-            this.fieldShow = this.privateFields.includes('$.' + fields.propertyPath);
-          }
-
-          if (!this.fieldShow) {
+          if(this.privateFields != [] && !this.privateFields.includes('$.' + fields.property))
+          {
             this.cardFields.push(fields);
           }
         });
