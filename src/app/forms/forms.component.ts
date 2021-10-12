@@ -22,7 +22,6 @@ import { delay, map } from 'rxjs/operators';
   styleUrls: ['./forms.component.scss']
 })
 
-
 export class FormsComponent implements OnInit {
   @Input() form;
   @Input() modal;
@@ -41,7 +40,7 @@ export class FormsComponent implements OnInit {
   property = {};
   ordering;
   required = [];
-
+  entityId: string;
   form2: FormGroup;
   model = {};
   options: FormlyFormOptions;
@@ -61,6 +60,9 @@ export class FormsComponent implements OnInit {
   searchResult: any[];
   states: any[] = [];
   fileFields: any[] = [];
+  propertyName: string;
+  notes: any;
+
   constructor(private route: ActivatedRoute,
     public toastMsg: ToastMessageService, public router: Router, public schemaService: SchemaService, private formlyJsonschema: FormlyJsonschema, public generalService: GeneralService, private location: Location) { }
 
@@ -69,8 +71,10 @@ export class FormsComponent implements OnInit {
       this.add = this.router.url.includes('add');
 
       if (params['form'] != undefined) {
-        this.form = params['form']
+        this.form = params['form'].split('/', 1)[0];
+        this.identifier = params['form'].split('/', 2)[1];
       }
+
       if (params['id'] != undefined) {
         this.identifier = params['id']
       }
@@ -89,6 +93,7 @@ export class FormsComponent implements OnInit {
       if (this.formSchema.api) {
         this.apiUrl = this.formSchema.api;
       }
+
       if (this.formSchema.header) {
         this.header = this.formSchema.header
       }
@@ -98,23 +103,26 @@ export class FormsComponent implements OnInit {
       // if (this.identifier != null) {
       //   this.getData()
       // }
+
       if (this.formSchema.type) {
         this.type = this.formSchema.type
+      }
+
+      if (this.type != 'entity') {
+        this.propertyName = this.type.split(":")[1];
+        this.getEntityData(this.apiUrl);
       }
 
       this.schemaService.getSchemas().subscribe((res) => {
         this.responseData = res;
         this.formSchema.fieldsets.forEach(fieldset => {
-          console.log('fieldset',fieldset)
-          if (fieldset.hasOwnProperty('globalPrivacyConfig') && fieldset.globalPrivacyConfig != '') {
-            this.globalPrivacy = fieldset.globalPrivacyConfig;
-          } else
-            if (fieldset.hasOwnProperty('privacyConfig')) {
-              this.privacyCheck = true;
-              this.privateFields = (this.responseData.definitions[fieldset.privacyConfig].hasOwnProperty('privateFields') ? this.responseData.definitions[fieldset.privacyConfig].privateFields : []);
-              this.internalFields = (this.responseData.definitions[fieldset.privacyConfig].hasOwnProperty('internalFields') ? this.responseData.definitions[fieldset.privacyConfig].internalFields : []);
-            }
-          this.getData(fieldset.definition);
+
+          if (fieldset.hasOwnProperty('privacyConfig')) {
+            this.privacyCheck = true;
+             this.privateFields = (this.responseData.definitions[fieldset.privacyConfig].hasOwnProperty('privateFields') ? this.responseData.definitions[fieldset.privacyConfig].privateFields : []);
+            this.internalFields = (this.responseData.definitions[fieldset.privacyConfig].hasOwnProperty('internalFields') ? this.responseData.definitions[fieldset.privacyConfig].internalFields : []);
+          }
+          this.getData();
 
           this.definations[fieldset.definition] = {}
           this.definations[fieldset.definition]['type'] = "object";
@@ -160,7 +168,6 @@ export class FormsComponent implements OnInit {
         this.schema["properties"] = this.property;
         this.schema["required"] = this.required;
         this.schema["dependencies"] = this.dependencies;
-        console.log("Schema: " + JSON.stringify(this.schema));
         this.loadSchema();
       },
         (error) => {
@@ -180,10 +187,62 @@ export class FormsComponent implements OnInit {
     this.form2 = new FormGroup({});
     this.options = {};
     this.fields = [this.formlyJsonschema.toFieldConfig(this.schema)];
+
+    this.visilibity(this.fields);
     if (this.add) {
       this.model = {};
     }
     this.schemaloaded = true;
+  }
+
+  visilibity(fields) {
+
+    if (fields[0].fieldGroup.length > 1 && fields[0].fieldGroup[0].type == "object") {
+        
+        fields[0].fieldGroup.forEach(fieldObj => {
+
+          if (this.privateFields.length || this.internalFields.length) {
+
+          let label = fieldObj.templateOptions.label;
+          let key = fieldObj.key.replace(/^./, fieldObj.key[0].toUpperCase());
+
+          if (this.schema.definitions[key] && this.schema.definitions[key].hasOwnProperty('description')) {
+            let desc = this.schema.definitions[key]['description'];
+            fieldObj.templateOptions.label = (label ? label : desc);
+          }
+
+          if (this.privateFields.indexOf('$.' + fieldObj.key) >= 0) {
+            fieldObj.templateOptions['addonRight'] = {
+              class: "private-access d-flex flex-column"
+            }
+            fieldObj.templateOptions.description = "(Visibility Attribute Define)";
+          } else if (this.internalFields.indexOf('$.' + fieldObj.key) >= 0) {
+            fieldObj.templateOptions['addonRight'] = {
+              class: "internal-access d-flex flex-column"
+            }
+            fieldObj.templateOptions.description = "(Visibility Attribute Define)";
+          } 
+        }else {
+          fieldObj.templateOptions['addonRight'] = {
+            class: "public-access d-flex flex-column"
+          }
+          fieldObj.templateOptions.description = "(Visibility Attribute Define)";
+        }
+        });
+    } else {
+
+      if (this.privateFields.indexOf('$.' + fields[0].fieldGroup[0].key) >= 0) {
+        this.globalPrivacy = 'private-access';
+
+      } else if (this.internalFields.indexOf('$.' + fields[0].fieldGroup[0].key) >= 0) {
+        this.globalPrivacy = 'internal-access';
+      } else if (!this.privateFields.length && !this.internalFields.length) {
+        this.globalPrivacy = 'public-access';
+
+      }
+    }
+
+
   }
 
   checkProperty(fieldset, field) {
@@ -321,20 +380,27 @@ export class FormsComponent implements OnInit {
   }
 
   addLockIcon(responseData) {
-    if (responseData.access == 'private') {
+    if (responseData.access == 'private' && responseData.widget.formlyConfig.templateOptions['type'] != "hidden") {
       responseData.widget.formlyConfig.templateOptions = {
         addonRight: {
-          text: 'Only by consent',
+          // text: 'Only by consent',
           class: "private-access"
-        }
+        },
+        attributes: {
+          style: "width: 100%;"
+        },
+
       }
-    } else if (responseData.access == 'internal') {
+    } else if (responseData.access == 'internal' && responseData.widget.formlyConfig.templateOptions['type'] != "hidden") {
       responseData.widget.formlyConfig.templateOptions = {
 
         addonRight: {
-          text: 'Only by me',
+          //text: 'Only by me',
           class: "internal-access"
-        }
+        },
+        attributes: {
+          style: "width: 100%;"
+        },
       }
     }
   }
@@ -353,21 +419,9 @@ export class FormsComponent implements OnInit {
             },
             "validation": {},
             "expressionProperties": {},
-            "modelOptions":{}
+            "modelOptions": {}
           }
 
-        }
-
-        if (this.privacyCheck) {
-          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions'] = {
-            addonRight: {
-              text: 'Anyone',
-              class: "public-access"
-            },
-            attributes: {
-              style: "width: 90%;"
-            },
-          }
         }
 
         if (field.classGroup) {
@@ -398,30 +452,24 @@ export class FormsComponent implements OnInit {
             localStorage.setItem('property', this.type.split(":")[1]);
           }
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = field.format;
-          if(field.multiple){
+          if (field.multiple) {
             this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['multiple'] = field.multiple;
           }
           this.fileFields.push(field.name);
-          // this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['onChange'] = 
-          // function($viewValue, $modelValue, $scope) {
-          //   console.log('v',$viewValue,'m', $modelValue,'s', $scope);
-          // }
-          // this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['modelOptions'] = {
-          //   updateOn: 'blur'
-          // };
-          // this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'] = {}
-          // this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name] = {}
-          // this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name]['expression'] = (control: FormControl) => {
-          //   console.log('conty--',control)
-          //   if (control.value != null) {
-          //     console.log('conty--',control.value)
-          //   }
-          //   return new Promise((resolve, reject) => {
-          //     setTimeout(() => {fileFields
-          //       resolve(true);
-          //     }, 1000);
-          //   });
-          // }
+        }
+
+        if (this.privacyCheck && this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['type'] != "hidden" && (this.privateFields.indexOf('$.' + childrenName) < 0) && (this.internalFields.indexOf('$.' + childrenName) < 0)) {
+          if (this.privateFields.length || this.internalFields.length) {
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions'] = {
+              addonRight: {
+                // text: 'Anyone',
+                class: "public-access"
+              },
+              attributes: {
+                style: "width: 90%; "
+              },
+            }
+          }
         }
 
         if (field.validation) {
@@ -435,10 +483,90 @@ export class FormsComponent implements OnInit {
               this.responseData.definitions[fieldset.definition].properties[field.name]['pattern'] = field.validation.pattern;
             }
           }
+          if (field.validation.lessThan || field.validation.greaterThan) {
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['modelOptions'] = {
+              updateOn: 'blur'
+            };
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'] = {}
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name] = {}
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name]['expression'] = (control: FormControl) => {
+              if (control.value != null) {
+                if (field.type === 'date') {
+                  if (this.model[field.validation.lessThan]) {
+                    if ((new Date(this.model[field.validation.lessThan])).valueOf() > (new Date(control.value)).valueOf()) {
+                      return of(control.value);
+                    }
+                    else {
+                      return of(false);
+                    }
+                  } else if (this.model[field.validation.greaterThan]) {
+                    if ((new Date(this.model[field.validation.greaterThan])).valueOf() < (new Date(control.value)).valueOf()) {
+                      return of(control.value);
+                    }
+                    else {
+                      return of(false);
+                    }
+                  }
+                }
+                else {
+                  if (this.model[field.validation.lessThan]) {
+                    if (this.model[field.validation.lessThan] > control.value) {
+                      return of(control.value);
+                    }
+                    else {
+                      return of(false);
+                    }
+                  }
+                  else if (this.model[field.validation.greaterThan]) {
+                    if (this.model[field.validation.greaterThan] < control.value) {
+                      return of(control.value);
+                    }
+                    else {
+                      return of(false);
+                    }
+                  }
+                  else {
+                    return of(false);
+                  }
+                }
+              }
+              return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  resolve(true);
+                }, 1000);
+              });
+            }
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name]['message'] = field.validation.message;
+          }
+
+          if(field.type === 'date'){
+            if(field.validation && field.validation.future === false){
+              this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['modelOptions'] = {
+                updateOn: 'blur'
+              };
+              this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'] = {}
+              this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name] = {}
+              this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name]['expression'] = (control: FormControl) => {
+                if (control.value != null) {
+                  if ((new Date(control.value)).valueOf() < Date.now()) {
+                    return of(control.value);
+                  }else {
+                    return of(false);
+                  }
+                }
+                return new Promise((resolve, reject) => {
+                  setTimeout(() => {
+                    resolve(true);
+                  }, 1000);
+                });
+              };
+              this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name]['message'] = "The Date must be Bigger or Equal to today date";
+            }
+          }
+
         }
       }
       if (field.autofill) {
-        console.log('f',field.name)
         if (field.autofill.apiURL) {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['modelOptions'] = {
             updateOn: 'blur'
@@ -471,7 +599,6 @@ export class FormsComponent implements OnInit {
                 });
               }
               else if (field.autofill.method === 'POST') {
-                console.log("contr",control.value)
                 var datapath = this.findPath(field.autofill.body, "{{value}}", '')
                 if (datapath) {
                   var dataobject = this.setPathValue(field.autofill.body, datapath, control.value)
@@ -481,10 +608,8 @@ export class FormsComponent implements OnInit {
                     }
                     if (field.autofill.fields) {
                       field.autofill.fields.forEach(element => {
-                        console.log('1',element)
 
                         for (var [key1, value1] of Object.entries(element)) {
-                          console.log('2',key1, value1, res)
                           this.createPath(this.model, key1, this.ObjectbyString(res, value1))
                           this.form2.get(key1).setValue(this.ObjectbyString(res, value1))
                         }
@@ -535,10 +660,15 @@ export class FormsComponent implements OnInit {
             return observableOf(this.searchResult);
           }
         }
-        else if(field.type === 'multiselect'){
+        else if (field.type === 'multiselect') {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = field.type;
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['multiple'] = true;
-          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = "Select " + field.name;
+          if (field.required) {
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = "Select " + field.name + "*";
+          } else {
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = "Select " + field.name;
+          }
+
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['options'] = [];
           // console.log("this.responseData.definitions[fieldset.definition].properties[field.name]",this.responseData.definitions[fieldset.definition].properties[field.name]['items']['enum'])
           this.responseData.definitions[fieldset.definition].properties[field.name]['items']['enum'].forEach(enumval => {
@@ -553,16 +683,20 @@ export class FormsComponent implements OnInit {
         this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['disabled'] = field.disabled
       };
 
-      let temp_access_field = '$.' + childrenName + '.' + field.name;
 
-      if (this.privateFields.includes(temp_access_field)) {
-        this.responseData.definitions[fieldset.definition].properties[field.name].access = 'private';
-        this.addLockIcon(this.responseData.definitions[fieldset.definition].properties[field.name]);
+      if ((this.privateFields.indexOf('$.' + childrenName) < 0) || (this.internalFields.indexOf('$.' + childrenName) < 0)) {
+        
+        let temp_access_field = '$.' + childrenName + '.' + field.name;
+
+        if (this.privateFields.includes(temp_access_field) && (this.privateFields.indexOf('$.' + childrenName) < 0)) {
+          this.responseData.definitions[fieldset.definition].properties[field.name].access = 'private';
+          this.addLockIcon(this.responseData.definitions[fieldset.definition].properties[field.name]);
 
 
-      } else if (this.internalFields.includes(temp_access_field)) {
-        this.responseData.definitions[fieldset.definition].properties[field.name].access = 'internal';
-        this.addLockIcon(this.responseData.definitions[fieldset.definition].properties[field.name]);
+        } else if (this.internalFields.includes(temp_access_field) && (this.internalFields.indexOf('$.' + childrenName) < 0)) {
+          this.responseData.definitions[fieldset.definition].properties[field.name].access = 'internal';
+          this.addLockIcon(this.responseData.definitions[fieldset.definition].properties[field.name]);
+        }
       }
     }
   }
@@ -584,10 +718,10 @@ export class FormsComponent implements OnInit {
         }
       }
 
-      if (this.privacyCheck) {
+      if (this.privacyCheck && (this.privateFields.indexOf('$.' + ParentName) < 0) && (this.internalFields.indexOf('$.' + ParentName) < 0)) {
         this.res.properties[field.name]['widget']['formlyConfig']['templateOptions'] = {
           addonRight: {
-            text: 'Anyone',
+            //text: 'Anyone',
             class: "public-access"
           },
           attributes: {
@@ -602,14 +736,16 @@ export class FormsComponent implements OnInit {
 
       let temp_access_field = '$.' + ParentName + '.' + childrenName + '.' + field.name;
 
+      if ((this.privateFields.indexOf('$.' + ParentName) < 0) || (this.privateFields.indexOf('$.' + ParentName) < 0)) {
 
-      if (this.privateFields.includes(temp_access_field)) {
-        this.res.properties[field.name].access = 'private';
-        this.addLockIcon(this.res.properties[field.name]);
+        if (this.privateFields.includes(temp_access_field)) {
+          this.res.properties[field.name].access = 'private';
+          this.addLockIcon(this.res.properties[field.name]);
 
-      } else if (this.internalFields.includes(temp_access_field)) {
-        this.res.properties[field.name].access = 'internal';
-        this.addLockIcon(this.res.properties[field.name]);
+        } else if (this.internalFields.includes(temp_access_field)) {
+          this.res.properties[field.name].access = 'internal';
+          this.addLockIcon(this.res.properties[field.name]);
+        }
       }
 
       this.responseData.definitions[ParentName.replace(/^./, ParentName[0].toUpperCase())].properties[childrenName] = this.res;
@@ -618,22 +754,20 @@ export class FormsComponent implements OnInit {
   };
 
   submit() {
-    if(this.fileFields.length > 0){
+    if (this.fileFields.length > 0) {
       this.fileFields.forEach(fileField => {
-        if(this.model[fileField]){
+        if (this.model[fileField]) {
           var formData = new FormData();
-          console.log("Model -- ",this.model[fileField]);
           for (let i = 0; i < this.model[fileField].length; i++) {
             const file = this.model[fileField][i]
             formData.append("files", file);
           }
-          
+
           if (this.type && this.type.includes("property")) {
             var property = this.type.split(":")[1];
           }
           var url = [this.apiUrl, this.identifier, property, 'documents']
           this.generalService.postData(url.join('/'), formData).subscribe((res) => {
-            console.log('res', res);
             var documents_list: any[] = [];
             var documents_obj = {
               "fileName": "",
@@ -643,9 +777,8 @@ export class FormsComponent implements OnInit {
               documents_obj.fileName = element;
               documents_list.push(documents_obj);
             });
-            
+
             this.model[fileField] = documents_list;
-            console.log('documents', JSON.stringify(this.model[fileField]));
             if (this.type && this.type === 'entity') {
               // this.customFields.forEach(element => {
               //   delete this.model[element];
@@ -680,7 +813,7 @@ export class FormsComponent implements OnInit {
             this.toastMsg.error('error', 'Something went wrong while uploading files, please try again')
           });
         }
-        else{
+        else {
           if (this.type && this.type === 'entity') {
             // this.customFields.forEach(element => {
             //   delete this.model[element];
@@ -694,7 +827,13 @@ export class FormsComponent implements OnInit {
           }
           else if (this.type && this.type.includes("property")) {
             var property = this.type.split(":")[1];
-            var url = [this.apiUrl, this.identifier, property];
+
+            if (this.identifier != null && this.entityId != undefined) {
+              var url = [this.apiUrl, this.entityId, property, this.identifier];
+            } else {
+              var url = [this.apiUrl, this.identifier, property];
+            }
+
             this.apiUrl = (url.join("/"));
             if (this.model[property]) {
               this.model = this.model[property];
@@ -704,16 +843,18 @@ export class FormsComponent implements OnInit {
             } else {
               this.apiUrl = (url.join("/")) + '?send=false';
             }
-            // this.customFields.forEach(element => {
-            //   delete this.model[element];
-            // });
-            this.postData()
-            // this.getData()
+
+            if (this.identifier != null && this.entityId != undefined) {
+              this.updateClaims()
+            } else {
+              this.postData()
+            }
+
           }
         }
       });
     }
-    else{
+    else {
       if (this.type && this.type === 'entity') {
         // this.customFields.forEach(element => {
         //   delete this.model[element];
@@ -727,7 +868,13 @@ export class FormsComponent implements OnInit {
       }
       else if (this.type && this.type.includes("property")) {
         var property = this.type.split(":")[1];
-        var url = [this.apiUrl, this.identifier, property];
+
+        if (this.identifier != null && this.entityId != undefined) {
+          var url = [this.apiUrl, this.entityId, property, this.identifier];
+        } else {
+          var url = [this.apiUrl, this.identifier, property];
+        }
+
         this.apiUrl = (url.join("/"));
         if (this.model[property]) {
           this.model = this.model[property];
@@ -740,12 +887,18 @@ export class FormsComponent implements OnInit {
         // this.customFields.forEach(element => {
         //   delete this.model[element];
         // });
-        this.postData()
+
+        if (this.identifier != null && this.entityId != undefined) {
+          this.updateClaims()
+        } else {
+          this.postData()
+        }
+
         // this.getData()
       }
     }
 
-    
+
     // const url = this.router.createUrlTree(['/profile/institute'])
     // window.open(this.router.createUrlTree([this.redirectTo]).toString(), '_blank')
   }
@@ -773,17 +926,29 @@ export class FormsComponent implements OnInit {
     }
   }
 
-  getData(definition) {
+  async getNotes(claimId) {
+    await this.generalService.getData("Teacher/claims/" + claimId).subscribe((res) => {
+      console.log("res", res)
+      this.notes = res.notes;
+    })
+  }
+
+  getData() {
     var get_url;
     if (this.identifier) {
-      get_url = this.apiUrl + '/' + this.identifier
+      get_url = this.propertyName + '/' + this.identifier;
     } else {
       get_url = this.apiUrl
     }
     this.generalService.getData(get_url).subscribe((res) => {
       // if(this.property[definition])
-      this.model = res[0];
-      this.identifier = res[0].osid;
+      res = (res[0]) ? res[0] : res;
+      if (this.propertyName && this.entityId) {
+        this.getNotes(res._osClaimId);
+      }
+
+      this.model = res;
+      this.identifier = res.osid;
       this.loadSchema()
     });
   }
@@ -792,7 +957,6 @@ export class FormsComponent implements OnInit {
     if (Array.isArray(this.model)) {
       this.model = this.model[0];
     }
-    console.log("Modelll",this.model)
     this.generalService.postData(this.apiUrl, this.model).subscribe((res) => {
       if (res.params.status == 'SUCCESSFUL') {
         this.router.navigate([this.redirectTo])
@@ -825,7 +989,6 @@ export class FormsComponent implements OnInit {
     var a = s.split('.');
     for (var i = 0, n = a.length; i < n; ++i) {
       var k = a[i];
-      console.log('k',k,'o',o)
       if (k in o) {
         o = o[k];
       } else {
@@ -893,6 +1056,28 @@ export class FormsComponent implements OnInit {
     }
     propertyParent[propertyName] = value;
     return obj;
+  }
+
+  getEntityData(apiUrl) {
+    if (this.identifier !== undefined) {
+      this.generalService.getData(apiUrl).subscribe((res) => {
+        this.entityId = res[0].osid;
+      });
+    }
+
+  }
+
+  updateClaims() {
+    this.generalService.updateclaims(this.apiUrl, this.model).subscribe((res) => {
+      if (res.params.status == 'SUCCESSFUL') {
+        this.router.navigate([this.redirectTo])
+      }
+      else if (res.params.errmsg != '' && res.params.status == 'UNSUCCESSFUL') {
+        this.toastMsg.error('error', res.params.errmsg)
+      }
+    }, (err) => {
+      this.toastMsg.error('error', err.error.params.errmsg)
+    });
   }
 
 }

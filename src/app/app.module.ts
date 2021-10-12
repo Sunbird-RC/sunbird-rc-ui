@@ -10,7 +10,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { APP_INITIALIZER } from '@angular/core';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
-
+import { NgSelectModule } from '@ng-select/ng-select';
+import {NgxPaginationModule} from 'ngx-pagination';
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 // formly
 import { FormlyModule, FormlyFieldConfig } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
@@ -44,7 +46,7 @@ import { FormlyHorizontalWrapper } from './forms/types/horizontal.wrapper';
 import { AppConfig } from './app.config';
 import { PanelWrapperComponent } from './forms/types/group.type';
 import { LogoutComponent } from './authentication/logout/logout.component';
-
+import { SearchComponent } from '../app/discovery/search/search.component';
 
 //form validations
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
@@ -95,6 +97,7 @@ function initConfig(config: AppConfig){
   declarations: [
     AppComponent,
     FormsComponent,
+    SearchComponent,
     ArrayTypeComponent,
     ObjectTypeComponent,
     MultiSchemaTypeComponent,
@@ -126,6 +129,8 @@ function initConfig(config: AppConfig){
     KeycloakAngularModule,
     NgxDocViewerModule,
     Bootstrap4FrameworkModule,
+    AngularMultiSelectModule,
+    NgSelectModule,
     FormlyModule.forRoot({
       extras: { resetFieldOnHide: true },
       wrappers: [{ name: 'form-field-horizontal', component: FormlyHorizontalWrapper },
@@ -172,6 +177,7 @@ function initConfig(config: AppConfig){
       positionClass: 'toast-bottom-center',
     preventDuplicates: true,
     }),
+    NgxPaginationModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   entryComponents: [],

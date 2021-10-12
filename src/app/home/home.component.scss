@@ -49,15 +49,10 @@ h1 {
         display: inline-block;
         position: relative;
     }
-  
+
   .mt-20{
     margin-top: 20px;
   }
-
-.red{
-    color: red;
-    font-size: large;
-}
 
     .menu-open-button {
         background: #75eeac;
@@ -221,6 +216,7 @@ h1 {
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+    margin-top: 3%;
   }
 
   .btn{
@@ -228,4 +224,3 @@ h1 {
       font-weight: bold;
       border-radius: 10px;
   }
-

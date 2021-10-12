@@ -16,8 +16,8 @@ export class EditPanelComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      console.log('params',params)
-      this.form = params['form']
+      this.form = params['form'].split('/', 1)[0];
+      this.identifier = params['form'].split('/', 1)[1];
     });
     if(localStorage.getItem('entity-osid')){
       this.identifier = localStorage.getItem('entity-osid')

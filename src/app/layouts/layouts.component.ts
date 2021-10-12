@@ -49,7 +49,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
       console.log(params);
       if (params['layout'] != undefined) {
         this.layout = params['layout']
-        this.titleService.setTitle(params['layout']);
+        this.titleService.setTitle(params['layout'].charAt(0).toUpperCase() + params['layout'].slice(1));
       }
       if (params['claim']) {
         this.claim = params['claim']
