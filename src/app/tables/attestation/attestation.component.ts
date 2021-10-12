@@ -205,10 +205,10 @@ export class AttestationComponent implements OnInit {
 
   onAttestApproveReject(action,event) {
     // console.log("event--",JSON.stringify(event));
-    // if(action == 'GRANT_CLAIM')
-    // {
-    //   this.note = event.note
-    // }
+    if(action == 'REJECT_CLAIM')
+    {
+      this.note = event.note
+    }
 
     let data = {
       "action": action,

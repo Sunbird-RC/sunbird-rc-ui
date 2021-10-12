@@ -68,16 +68,18 @@
                     <dd class="w-70">
                         <div *ngFor="let item of propertyData">
                             <div *ngIf="item?.title == 'FileName'; else noFile">
-                                {{item?.title}} : <a href="" style="color:#1266f1" >{{item?.value}}</a>
+                                {{item?.title}} : <a href="" style="color:#1266f1">{{item?.value}}</a>
                             </div>
                             <ng-template #noFile>
-                                 {{item?.title}} : <b>{{item?.value}}</b>
+                                {{item?.title}} : <b>{{item?.value}}</b>
                             </ng-template>
                         </div>
                         <div *ngIf="documents != null" class="mb-3">
                             <ng-template ngFor let-document [ngForOf]="documents" let-i="index">
-                                <a href="/document/view?u={{document.fileName}}" class="badge badge-pill badge-primary mr-1" target="_blank"><i class="fa fa-paperclip" aria-hidden="true"></i> Document {{i + 1}}</a>
-                            </ng-template >
+                                <a href="/document/view?u={{document.fileName}}"
+                                    class="badge badge-pill badge-primary mr-1" target="_blank"><i
+                                        class="fa fa-paperclip" aria-hidden="true"></i> Document {{i + 1}}</a>
+                            </ng-template>
                         </div>
                     </dd>
                     <dd style="text-align-last: right;" class="float-end">
@@ -89,41 +91,23 @@
                             data-toggle="modal" data-target="#deny"><i
                                 class="fa fa-exclamation-circle red"></i>Deny</button>
                     </dd>
-                    
+
                 </dl>
-                
+
                 <div class="card" style="background-color: #eef3f399;">
 
-                    <ul class="nav nav-tabs">
-                        <li class="nav-item">
-                            <a href="#comment" class="nav-link active" data-toggle="tab">Comments</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#note" class="nav-link" data-toggle="tab">Notes</a>
-                        </li>
-
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane fade show active" id="comment">
-                            <div class="px-3">
-                                    <json-schema-form [schema]="commentSchema" [layout]="form1" framework="bootstrap-4"
-                                        (onSubmit)="saveComments($event)">
-                                    </json-schema-form>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="note">
-                            <div class="px-3">
-                                    <json-schema-form [schema]="approveNoteSchema" [layout]="form"
-                                        framework="bootstrap-4" (onSubmit)="saveNote($event)">
-                                    </json-schema-form>
-                            </div>
-                        </div>
+                    <div class="px-3">
+                        <json-schema-form [schema]="approveNoteSchema" [layout]="form" framework="bootstrap-4"
+                            (onSubmit)="saveNote($event)">
+                        </json-schema-form>
                     </div>
-
-                    <div class="px-3 mb-3" *ngFor="let noteData of notes">
+                    <div class="px-3 mb-2" *ngFor="let noteData of notes">
                         <ng-template [ngIf]="noteData.notes != ''">
                             <h6 class="mb-1">{{noteData.notes}}</h6>
-                            <span class="fs-7 text-grey-color">By {{noteData.addedBy}}, {{noteData.createdAt | date}}</span>
+                            <span class="fs-7 text-grey-color"> 
+                                 <span *ngIf="noteData.addedBy"> By {{noteData.addedBy}}, </span>
+                            <span *ngIf="noteData.createdAt"> {{noteData.createdAt | date : 'd MMM y'}} </span>
+                      </span>
                         </ng-template>
                     </div>
 
@@ -155,23 +139,24 @@
     </div>
 </div> -->
 
-<!-- deny Modal -->
-<div class="modal right fade" id="deny" tabindex="-1" role="dialog" aria-labelledby="deny">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
+    <!-- deny Modal -->
+    <div class="modal right fade" id="deny" tabindex="-1" role="dialog" aria-labelledby="deny">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
 
-            <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel2">Deny {{type}}</h5>
-                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myModalLabel2">Deny {{type}}</h5>
+                    <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button> -->
-            </div>
+                </div>
 
-            <div class="modal-body">
-                <json-schema-form [schema]="denyNoteSchema" [layout]="form" framework="bootstrap-4"
-                    (onSubmit)="onAttestApproveReject('REJECT_CLAIM',$event)">
-                </json-schema-form>
-            </div>
+                <div class="modal-body">
+                    <json-schema-form [schema]="denyNoteSchema" [layout]="form" framework="bootstrap-4"
+                        (onSubmit)="onAttestApproveReject('REJECT_CLAIM',$event)">
+                    </json-schema-form>
+                </div>
 
+            </div>
         </div>
     </div>
 </div>

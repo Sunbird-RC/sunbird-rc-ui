@@ -1,103 +1,65 @@
 <app-header *ngIf="header != null" [headerFor]='header'></app-header>
 <ng-template #noModal>
-    <div class="col-md-6 offset-md-3 mt-5">
-        <div class="card p-4">
-            <div *ngIf="schemaloaded; else loader" class="card-body">
-                <div>
-                    <!-- <sf-form [schema]="schema"></sf-form> -->
-                    <form [formGroup]="form2" (ngSubmit)="submit()" *ngIf="fields">
-                        <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form2"></formly-form>
-                        <button type="submit" class="btn btn-primary submit-button"
-                            [disabled]="!form2.valid">Submit</button>
-                    </form>
-                </div>
-            </div>
-           
+  <div class="col-md-6 offset-md-3 mt-5">
+    <div class="card p-4">
+      <div *ngIf="schemaloaded; else loader" class="card-body">
+        <div>
+          <form [formGroup]="form2" (ngSubmit)="submit()" *ngIf="fields">
+            <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form2"></formly-form>
+            <button type="submit" class="btn btn-primary submit-button" [disabled]="!form2.valid">Submit</button>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
 </ng-template>
 
 <!-- Modal -->
 
-<!-- <div  class="modal-header"> -->
-    <!-- <h3 class="modal-title float-left">Panel</h3> -->
 <div *ngIf="schemaloaded; else loader" class="card-body">
   <div *ngIf="modal==='true'; else noModal" class="modal-body">
     <form [formGroup]="form2" (ngSubmit)="submit()" *ngIf="fields">
-       <div *ngIf="globalPrivacy" class="mb-3">
+     <div *ngIf="globalPrivacy" class="mb-3">
         <h6 class="mb-1">Visibility</h6>
-        <span class="fs-7"> Privacy Attribute Define <span class="float-end {{globalPrivacy}}"> {{globalPrivacy}}</span></span> 
-       </div>
-         <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form2"></formly-form>
-        <button type="submit" id="btn-one" class="btn btn-primary submit-button"
-            [disabled]="!form2.valid">Submit</button>
+        <span class="fs-7"> Privacy Attribute Define <span class="float-end {{globalPrivacy}}">
+           </span></span>
+      </div>
+      <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form2"></formly-form>
+      <button type="submit" id="btn-one" class="btn btn-primary submit-button" [disabled]="!form2.valid">Submit</button>
     </form>
+
+
+
+    <div class="notes-div my-5" *ngIf="notes">
+      <h6>Notes</h6>
+      <div class=" p-3">
+        <!-- multiple note -->
+        <div class="mb-3" *ngFor="let note of notes">
+          <div *ngIf="note?.notes" class=" border-bottom"> 
+            <h6 class="mb-1">{{note.notes}}</h6>
+            <span class="fs-7  text-grey-color">
+              <span *ngIf="note.addedBy"> By {{note.addedBy}}, </span>
+              <span *ngIf="note.createdAt"> {{note.createdAt | date : 'd MMM y'}}</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
 <ng-template #loader>
-    <!-- <div class="spinner-border" style="width: 6rem; height: 6rem; align-self: center;" role="status">
-        <span class="sr-only">Loading...</span>
-    </div> -->
-    <br>
-    <div class="d-flex justify-content-center">
-        <div class="spinner-border" style="width: 5rem; height: 5rem;" role="status">
-          <span class="sr-only">Loading...</span>
-        </div>
-      </div>
-</ng-template>
-<!-- </div> -->
-
-
-    <!-- <div *ngIf="modal; else noModal" class="modal-header">
-      <h4 class="modal-title">Modal title</h4>
+  <br>
+  <div class="d-flex justify-content-center">
+    <div class="spinner-border" style="width: 5rem; height: 5rem;" role="status">
+      <span class="sr-only">Loading...</span>
     </div>
-    <div class="modal-body">
-        <form [formGroup]="form2" (ngSubmit)="submit()" *ngIf="fields">
-            <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form2"></formly-form>
-            <button type="submit" class="btn btn-primary submit-button"
-                [disabled]="!form2.valid">Submit</button>
-        </form>
-    </div> -->
-
-
-<!-- <div *ngIf="modal==true; else noModal" class="modal-header">
-    <h4 class="modal-title">Edit</h4>
-  <div class="modal-body">
-    <form [formGroup]="form2" (ngSubmit)="submit()" *ngIf="fields">
-        <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form2"></formly-form>
-        <button type="submit" class="btn btn-primary submit-button"
-            [disabled]="!form2.valid">Submit</button>
-    </form>
   </div>
-</div> -->
+</ng-template>
 
-<!-- <div *ngIf="modal; else noModal" class="modal right fade right-l-modal" id="editProfile" tabindex="-1" role="dialog"
-    aria-labelledby="myModalLabel2">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content h-100vh">
-
-            <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel2">Edit Institute Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-            </div>
-
-            <div class="modal-body h-100">
-
-                <form [formGroup]="form2" (ngSubmit)="submit()" *ngIf="fields">
-                    <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form2"></formly-form>
-                    <button type="submit" class="btn btn-primary submit-button"
-                        [disabled]="!form2.valid">Submit</button>
-                </form>
-            </div>
-
-        </div>
-    </div>
-</div> -->
 
 <script>
-    $('#btn-one').click(function() {
-  $('#btn-one').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
-});
+    $('#btn-one').click(function () {
+        $('#btn-one').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+    });
 </script>
