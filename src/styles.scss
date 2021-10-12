@@ -10,6 +10,45 @@
 @import "https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css";
 
 
+.btn-primary{
+background-color: #1987B6 !important;
+border-color: #1987B6 !important;
+border-radius: 8px !important;
+height: 40px;
+}
+
+.text-primary-color {
+    color: #443DF6 !important;
+}
+
+.p14{
+    font-size: 14px !important;
+}
+
+.label-primary {
+    color: #0098AB !important;
+}
+
+.btn-bg {
+    background-color: #c0e3eb6b !important;
+    }
+
+    .badge-secondary{
+        border: 1px solid #CCCCCC !important;
+        background-color: #F6F8FC !important;
+        color: #8D9091 !important;
+    }
+
+.marker-pointer{
+        font-family: "Font Awesome 5 Free";
+        content: "\f3c5";
+        display: inline-block;
+        padding-left: 10px;
+        vertical-align: middle;
+        font-weight:900;
+        font-style: normal;
+        font-size: 12px;
+}
 
 .input-group-text{
     background: none !important;
@@ -17,6 +56,14 @@
     font-size:14px !important;
     padding-left: 0 !important;
     padding-right: 5px !important;
+}
+
+form-group {
+    color: #000000;
+}
+
+.text-primary-color{
+    color: #1987B6 !important;
 }
 
 .private-access:before {
@@ -75,9 +122,9 @@ $primary-color-dark: #000;
     background-color: $gray-color!important;
 }
 
-.text-primary-color{
-    color: $primary-color;
-}
+// .text-primary-color{
+//     color: $primary-color;
+// }
 
 .text-grey-color{
     color: $gray-color;

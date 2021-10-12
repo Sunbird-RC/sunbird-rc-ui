@@ -29,6 +29,10 @@ export class LayoutsComponent implements OnInit, OnChanges {
   currentDialog = null;
   destroy = new Subject<any>();
   isPreview: boolean = false;
+  name: string;
+  address: string;
+  headerName: any;
+  subHeadername = [];
   constructor(private route: ActivatedRoute, public schemaService: SchemaService, private titleService: Title, public generalService: GeneralService, private modalService: NgbModal,
     public router: Router) { }
 
@@ -38,7 +42,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    
+
     if (this.publicData) {
       this.model = this.publicData;
       this.identifier = this.publicData.osid;
@@ -116,7 +120,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
                     if ('$ref' in this.responseData['definitions'][block.definition]['properties'][element]) {
                       var ref_defination = (this.responseData['definitions'][block.definition]['properties'][element]['$ref']).split('/').pop()
                       temp_object = this.responseData['definitions'][ref_defination]['properties'][key]
-                      
+
                       if (temp_object != undefined && typeof value != 'object') {
                         temp_object['value'] = value
                         this.property.push(temp_object)
@@ -125,8 +129,8 @@ export class LayoutsComponent implements OnInit, OnChanges {
                     else {
                       if (this.responseData['definitions'][block.definition]['properties'][element]['properties'] != undefined) {
                         temp_object = this.responseData['definitions'][block.definition]['properties'][element]['properties'][key]
-                        
-                        if (temp_object != undefined  && typeof value != 'object') {
+
+                        if (temp_object != undefined && typeof value != 'object') {
                           temp_object['value'] = value
                           this.property.push(temp_object)
                         }
@@ -151,14 +155,14 @@ export class LayoutsComponent implements OnInit, OnChanges {
                       if ('$ref' in this.responseData['definitions'][block.definition]['properties'][element]) {
                         var ref_defination = (this.responseData['definitions'][block.definition]['properties'][element]['$ref']).split('/').pop()
                         temp_object = this.responseData['definitions'][ref_defination]['properties'][key]
-                        if (temp_object != undefined  && typeof value != 'object') {
+                        if (temp_object != undefined && typeof value != 'object') {
                           temp_object['value'] = value;
                           this.property.push(temp_object);
                         }
                       }
                       else {
                         temp_object = this.responseData['definitions'][block.definition]['properties'][element]['items']['properties'][key];
-                        if (temp_object != undefined  && typeof value != 'object') {
+                        if (temp_object != undefined && typeof value != 'object') {
                           temp_object['value'] = value;
                           this.property.push(temp_object);
                         }
@@ -178,7 +182,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
                   if ('$ref' in this.responseData['definitions'][block.definition]['properties'][element]) {
                     var ref_defination = (this.responseData['definitions'][block.definition]['properties'][element]['$ref']).split('/').pop()
                     temp_object = this.responseData['definitions'][ref_defination]['properties'][key]
-                    if (temp_object != undefined  && typeof value != 'object') {
+                    if (temp_object != undefined && typeof value != 'object') {
                       if (element.osid) {
                         temp_object['osid'] = element.osid
                       }
@@ -196,7 +200,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
                   }
                   else {
                     temp_object = this.responseData['definitions'][block.definition]['properties'][element]['properties'][key];
-                    if (temp_object != undefined  && typeof value != 'object') {
+                    if (temp_object != undefined && typeof value != 'object') {
                       if (element.osid) {
                         temp_object['osid'] = element.osid;
                       }
@@ -222,7 +226,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
                     if ('$ref' in this.responseData['definitions'][block.definition]['properties'][element]) {
                       var ref_defination = (this.responseData['definitions'][block.definition]['properties'][element]['$ref']).split('/').pop()
                       temp_object = this.responseData['definitions'][ref_defination]['properties'][key]
-                      if (temp_object != undefined  && typeof value != 'object') {
+                      if (temp_object != undefined && typeof value != 'object') {
                         if (objects.osid) {
                           temp_object['osid'] = objects.osid;
                         }
@@ -235,7 +239,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
                     }
                     else {
                       temp_object = this.responseData['definitions'][block.definition]['properties'][element]['items']['properties'][key];
-                      if (temp_object != undefined  && typeof value != 'object') {
+                      if (temp_object != undefined && typeof value != 'object') {
                         if (objects.osid) {
                           temp_object['osid'] = objects.osid;
                         }
@@ -296,6 +300,8 @@ export class LayoutsComponent implements OnInit, OnChanges {
         this.identifier = res[0].osid;
       }
 
+      this.getHeadingTitle(this.model);
+
       this.Data = [];
       localStorage.setItem('osid',this.identifier);
       this.addData()
@@ -328,6 +334,85 @@ export class LayoutsComponent implements OnInit, OnChanges {
 
   openPreview() {
     this.isPreview = true;
+  }
+
+  getHeadingTitle(item) {
+
+    var propertySplit = this.layoutSchema.headerName.split(".");
+
+    let fieldValue = [];
+
+    for (let j = 0; j < propertySplit.length; j++) {
+      let a = propertySplit[j];
+
+      if (j == 0 && item.hasOwnProperty(a)) {
+        fieldValue = item[a];
+      } else if (fieldValue.hasOwnProperty(a)) {
+
+        fieldValue = fieldValue[a];
+
+      } else if (fieldValue[0]) {
+        let arryItem = []
+        if (fieldValue.length > 0) {
+          for (let i = 0; i < fieldValue.length; i++) {
+            //  arryItem.push({ 'value': fieldValue[i][a], "status": fieldValue[i][key.attest] });
+          }
+
+          fieldValue = arryItem;
+
+        } else {
+          fieldValue = fieldValue[a];
+        }
+
+      } else {
+        fieldValue = [];
+      }
+    }
+
+    this.headerName = fieldValue;
+    this.getSubHeadername(item);
+  }
+
+
+
+  getSubHeadername(item) {
+
+    var propertySplit = this.layoutSchema.subHeadername.split(",");
+
+    let fieldValue = [];
+
+    for (let k = 0; k < propertySplit.length; k++) {
+      var propertyKSplit = propertySplit[k].split(".");
+
+      for (let j = 0; j < propertyKSplit.length; j++) {
+
+        let a = propertyKSplit[j];
+
+        if (j == 0 && item.hasOwnProperty(a)) {
+          fieldValue = item[a];
+        } else if (fieldValue.hasOwnProperty(a)) {
+
+          fieldValue = fieldValue[a];
+
+        } else if (fieldValue[0]) {
+          let arryItem = []
+          if (fieldValue.length > 0) {
+
+            fieldValue = arryItem;
+
+          } else {
+            fieldValue = fieldValue[a];
+          }
+
+        } else {
+          fieldValue = [];
+        }
+      }
+
+       this.subHeadername.push(fieldValue);
+    }
+
+    console.log(this.subHeadername);
   }
 
 }
