@@ -409,7 +409,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
         }
       }
 
-       this.subHeadername.push(fieldValue);
+      fieldValue.length ? this.subHeadername.push(fieldValue) : [];
     }
 
     console.log(this.subHeadername);

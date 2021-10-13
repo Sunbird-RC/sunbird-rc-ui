@@ -10,7 +10,7 @@
                     <h3 class="mb-1 text-body">
                         {{headerName}}
                     </h3>
-                    <p *ngIf="subHeadername"> <i class="fa fa-map-marker"></i> <span
+                    <p *ngIf="subHeadername.length"> <i class="fa fa-map-marker"></i> <span
                             *ngFor="let a of subHeadername;let i = index">
                             {{a}}
                             <span *ngIf="subHeadername.length > 1 && subHeadername.length != i+1">, </span>
@@ -46,14 +46,14 @@
                 <div class="">
                     <p class="d-inline-block fs-6 font-weight-bold mb-2">{{block.title}}</p>
                     <ng-template [ngIf]="block.edit">
-                        <a *ngIf="!public" panelEditLink="{{block.editform}}" class="pl-1 fs-7 text-primary-color">edit
+                        <a *ngIf="!public" panelEditLink="{{block.editform}}" class="pl-1 fs-7 text-secondary-color">edit
                             <!-- <i class="fa fa-pencil-square-o" aria-hidden="true"></i> -->
                         </a>
                     </ng-template>
                 </div>
                 <ng-template [ngIf]="block.add">
-                    <a *ngIf="!public" panelAddLink="{{block.addform}}" class="fs-7 text-primary-color"><i
-                            class="fa fa-plus pr-1" aria-hidden="true"></i>{{block.title}} </a>
+                    <a *ngIf="!public" panelAddLink="{{block.addform}}" class="fs-7 text-secondary-color"><i
+                            class="fa fa-plus pr-1" aria-hidden="true"></i><span class="text-secondary-color p12">{{block.title}}</span></a>
                 </ng-template>
                 <!-- <a *ngIf="!public" class="text-end d-block text-primary-color blue-shade-btn float-end" data-toggle="modal"
                 data-target="#prewiewProfile">Preview Public Profile</a> -->
