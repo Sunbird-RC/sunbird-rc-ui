@@ -11,7 +11,7 @@ import { DomSanitizer } from '@angular/platform-browser';
   template: `
       <div class="upload-wrapper">
       <div class="upload-container" (click)="openFileInput()">
-        <div class="mask"></div>
+        <div></div>
         <div class="helper-text">
           <div class="absolute-div">
             <div>
