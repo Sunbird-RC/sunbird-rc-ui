@@ -154,22 +154,22 @@
     .upload-container {
       display: flex;
       flex-direction: row;
-      justify-content: center;
-      height: 50px;
-      width: 90%;
-      border: 1px dashed #3f51c2;
-      border-radius: 5px;
+      // justify-content: center;
+      // height: 50px;
+      // width: 90%;
+      // border: 1px dashed #3f51c2;
+      // border-radius: 5px;
       .helper-text {
         display: flex;
-        justify-content: center;
-        align-items: center;
+        justify-content: left;
+        align-items: left;
         .absolute-div {
           display: flex;
-          justify-content: center;
-          align-items: center;
+          justify-content: left;
+          align-items: left;
           position: absolute;
-          right: 10%;
-          left: 0%;
+          right: 3%;
+          left: 3%;
           mat-icon {
             color: #3f51c2;
             &:hover {

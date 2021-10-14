@@ -124,7 +124,7 @@ export class FormsComponent implements OnInit {
 
           if (fieldset.hasOwnProperty('privacyConfig')) {
             this.privacyCheck = true;
-             this.privateFields = (this.responseData.definitions[fieldset.privacyConfig].hasOwnProperty('privateFields') ? this.responseData.definitions[fieldset.privacyConfig].privateFields : []);
+            this.privateFields = (this.responseData.definitions[fieldset.privacyConfig].hasOwnProperty('privateFields') ? this.responseData.definitions[fieldset.privacyConfig].privateFields : []);
             this.internalFields = (this.responseData.definitions[fieldset.privacyConfig].hasOwnProperty('internalFields') ? this.responseData.definitions[fieldset.privacyConfig].internalFields : []);
           }
           this.getData();
@@ -210,10 +210,10 @@ export class FormsComponent implements OnInit {
   visilibity(fields) {
 
     if (fields[0].fieldGroup.length > 1 && fields[0].fieldGroup[0].type == "object") {
-        
-        fields[0].fieldGroup.forEach(fieldObj => {
 
-          if (this.privateFields.length || this.internalFields.length) {
+      fields[0].fieldGroup.forEach(fieldObj => {
+
+        if (this.privateFields.length || this.internalFields.length) {
 
           let label = fieldObj.templateOptions.label;
           let key = fieldObj.key.replace(/^./, fieldObj.key[0].toUpperCase());
@@ -233,14 +233,14 @@ export class FormsComponent implements OnInit {
               class: "internal-access d-flex flex-column"
             }
             fieldObj.templateOptions.description = "(Visibility Attribute Define)";
-          } 
-        }else {
+          }
+        } else {
           fieldObj.templateOptions['addonRight'] = {
             class: "public-access d-flex flex-column"
           }
           fieldObj.templateOptions.description = "(Visibility Attribute Define)";
         }
-        });
+      });
     } else {
 
       if (this.privateFields.indexOf('$.' + fields[0].fieldGroup[0].key) >= 0) {
@@ -393,26 +393,33 @@ export class FormsComponent implements OnInit {
 
   addLockIcon(responseData) {
     if (responseData.access == 'private' && responseData.widget.formlyConfig.templateOptions['type'] != "hidden") {
-      responseData.widget.formlyConfig.templateOptions = {
-        addonRight: {
-          // text: 'Only by consent',
-          class: "private-access"
-        },
-        attributes: {
-          style: "width: 100%;"
-        },
-
+      if (!responseData.widget.formlyConfig.templateOptions['addonRight']) {
+        responseData.widget.formlyConfig.templateOptions['addonRight'] = {}
       }
-    } else if (responseData.access == 'internal' && responseData.widget.formlyConfig.templateOptions['type'] != "hidden") {
-      responseData.widget.formlyConfig.templateOptions = {
+      if (!responseData.widget.formlyConfig.templateOptions['attributes']) {
+        responseData.widget.formlyConfig.templateOptions['attributes'] = {}
+      }
+      responseData.widget.formlyConfig.templateOptions['addonRight'] = {
+        // text: 'Only by consent',
+        class: "private-access"
+      }
+      responseData.widget.formlyConfig.templateOptions['attributes'] = {
+        style: "width: 100%;"
+      }
 
-        addonRight: {
-          //text: 'Only by me',
-          class: "internal-access"
-        },
-        attributes: {
-          style: "width: 100%;"
-        },
+    } else if (responseData.access == 'internal' && responseData.widget.formlyConfig.templateOptions['type'] != "hidden") {
+      if (!responseData.widget.formlyConfig.templateOptions['addonRight']) {
+        responseData.widget.formlyConfig.templateOptions['addonRight'] = {}
+      }
+      if (!responseData.widget.formlyConfig.templateOptions['attributes']) {
+        responseData.widget.formlyConfig.templateOptions['attributes'] = {}
+      }
+      responseData.widget.formlyConfig.templateOptions['addonRight'] = {
+        //text: 'Only by me',
+        class: "internal-access"
+      }
+      responseData.widget.formlyConfig.templateOptions['attributes'] = {
+        style: "width: 100%;"
       }
     }
   }
@@ -558,32 +565,6 @@ export class FormsComponent implements OnInit {
             }
             this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name]['message'] = field.validation.message;
           }
-
-          if(field.type === 'date'){
-            if(field.validation && field.validation.future === false){
-              this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['modelOptions'] = {
-                updateOn: 'blur'
-              };
-              this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'] = {}
-              this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name] = {}
-              this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name]['expression'] = (control: FormControl) => {
-                if (control.value != null) {
-                  if ((new Date(control.value)).valueOf() < Date.now()) {
-                    return of(control.value);
-                  }else {
-                    return of(false);
-                  }
-                }
-                return new Promise((resolve, reject) => {
-                  setTimeout(() => {
-                    resolve(true);
-                  }, 1000);
-                });
-              };
-              this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name]['message'] = "The Date must be Bigger or Equal to today date";
-            }
-          }
-
         }
       }
       if (field.autofill) {
@@ -695,6 +676,31 @@ export class FormsComponent implements OnInit {
             this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['options'].push({ label: enumval, value: enumval })
           });
         }
+        else if (field.type === 'date') {
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['type'] = 'date';
+          if (field.validation && field.validation.future == false) {
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['modelOptions'] = {
+              updateOn: 'blur'
+            };
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'] = {}
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name] = {}
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name]['expression'] = (control: FormControl) => {
+              if (control.value != null) {
+                if ((new Date(control.value)).valueOf() < Date.now()) {
+                  return of(control.value);
+                } else {
+                  return of(false);
+                }
+              }
+              return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  resolve(true);
+                }, 1000);
+              });
+            };
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name]['message'] = "The Date must be Bigger or Equal to today date";
+          }
+        }
         else {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['type'] = field.type;
         }
@@ -705,7 +711,7 @@ export class FormsComponent implements OnInit {
 
 
       if ((this.privateFields.indexOf('$.' + childrenName) < 0) || (this.internalFields.indexOf('$.' + childrenName) < 0)) {
-        
+
         let temp_access_field = '$.' + childrenName + '.' + field.name;
 
         if (this.privateFields.includes(temp_access_field) && (this.privateFields.indexOf('$.' + childrenName) < 0)) {
@@ -739,14 +745,18 @@ export class FormsComponent implements OnInit {
       }
 
       if (this.privacyCheck && (this.privateFields.indexOf('$.' + ParentName) < 0) && (this.internalFields.indexOf('$.' + ParentName) < 0)) {
-        this.res.properties[field.name]['widget']['formlyConfig']['templateOptions'] = {
-          addonRight: {
-            //text: 'Anyone',
-            class: "public-access"
-          },
-          attributes: {
-            style: "width: 90%;"
-          },
+        if (!this.res.properties[field.name]['widget']['formlyConfig']['templateOptions']['addonRight']) {
+          this.res.properties[field.name]['widget']['formlyConfig']['templateOptions']['addonRight'] = {}
+        }
+        if (!this.res.properties[field.name]['widget']['formlyConfig']['templateOptions']['attributes']) {
+          this.res.properties[field.name]['widget']['formlyConfig']['templateOptions']['attributes'] = {}
+        }
+        this.res.properties[field.name]['widget']['formlyConfig']['templateOptions']['addonRight'] = {
+          //text: 'Anyone',
+          class: "public-access"
+        }
+        this.res.properties[field.name]['widget']['formlyConfig']['templateOptions']['attributes'] = {
+          style: "width: 90%;"
         }
       }
 
