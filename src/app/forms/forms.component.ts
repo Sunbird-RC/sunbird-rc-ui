@@ -62,7 +62,7 @@ export class FormsComponent implements OnInit {
   fileFields: any[] = [];
   propertyName: string;
   notes: any;
-
+  headingTitle;
   constructor(private route: ActivatedRoute,
     public toastMsg: ToastMessageService, public router: Router, public schemaService: SchemaService, private formlyJsonschema: FormlyJsonschema, public generalService: GeneralService, private location: Location) { }
 
@@ -97,6 +97,11 @@ export class FormsComponent implements OnInit {
       if (this.formSchema.header) {
         this.header = this.formSchema.header
       }
+
+      if (this.formSchema.title) {
+        this.headingTitle = this.formSchema.title
+      }
+
       if (this.formSchema.redirectTo) {
         this.redirectTo = this.formSchema.redirectTo;
       }
@@ -187,8 +192,15 @@ export class FormsComponent implements OnInit {
     this.form2 = new FormGroup({});
     this.options = {};
     this.fields = [this.formlyJsonschema.toFieldConfig(this.schema)];
-    console.log("form--", this.schema)
-    this.visilibity(this.fields);
+
+    if(this.privacyCheck){
+      this.visilibity(this.fields);
+    }
+
+    if(this.headingTitle){
+      this.fields[0].templateOptions.label = '';
+    }
+    
     if (this.add) {
       this.model = {};
     }
@@ -429,6 +441,14 @@ export class FormsComponent implements OnInit {
             "modelOptions": {}
           }
 
+        }
+
+        if (field.placeholder) {
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = field.placeholder;
+        }
+
+        if (field.description) {
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['description'] = field.description;
         }
 
         if (field.classGroup) {
