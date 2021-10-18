@@ -16,12 +16,17 @@ export class GeneralService {
 
   postData(apiUrl,data) {
     var url;
-    if(apiUrl.charAt(0) == '/'){
-      url = `${this.baseUrl}${apiUrl}`
+    if(apiUrl.indexOf('http') > -1){
+      url = apiUrl
+    }else{
+      if(apiUrl.charAt(0) == '/'){
+        url = `${this.baseUrl}${apiUrl}`
+      }
+      else{
+        url = `${this.baseUrl}/${apiUrl}`;
+      }
     }
-    else{
-      url = `${this.baseUrl}/${apiUrl}`;
-    }
+    
     const req = {
       url: url,
       data: data

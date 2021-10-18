@@ -7,19 +7,19 @@ import { Subject } from 'rxjs';
   selector: 'formly-autocomplete-type',
   template: `
   <ng-select [items]="options$ | async"
-  bindLabel="instituteName"
-           autofocus
-           bindValue="instituteName"
+  [bindLabel]="to.label"
+  autofocus
+  [bindValue]="to.label"
   [placeholder]="to.placeholder"
   [typeahead]="search$"
   [formControl]="formControl">
-</ng-select>
 <br>
   `,
 })
 export class AutocompleteTypeComponent extends FieldType implements OnDestroy {
   onDestroy$ = new Subject<void>();
   search$ = new EventEmitter();
+  bind$;
   options$;
 
   ngOnInit() {

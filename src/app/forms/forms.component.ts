@@ -615,33 +615,39 @@ export class FormsComponent implements OnInit {
           }
         }
       }
-      if (field.type) {
-        if (field.type == "autocomplete") {
+      if (field.autocomplete) {
 
-          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = "autocomplete";
-          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = this.responseData.definitions[fieldset.definition].properties[field.name]['title'];
-          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['search$'] = (term) => {
-            if (term || term != '') {
-              var formData = {
-                "filters": {},
-                "limit": 20,
-                "offset": 0
+        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = "autocomplete";
+        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = this.responseData.definitions[fieldset.definition].properties[field.name]['title'];
+        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['label'] = field.autocomplete.responseKey;
+        var dataval = "{{value}}"
+        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['search$'] = (term) => {
+          if (term || term != '') {
+            var datapath = this.findPath(field.autocomplete.body, dataval, '')
+            this.setPathValue(field.autocomplete.body, datapath, term)
+            // var formData = {
+            //   "filters": {},
+            //   "limit": 20,
+            //   "offset": 0
+            // }
+            // formData.filters[field.key] = {};
+            // formData.filters[field.key]["contains"] = term
+            dataval = term;
+            this.generalService.postData(field.autocomplete.apiURL, field.autocomplete.body).subscribe(async (res) => {
+              let items = res;
+              items = items.filter(x => x[field.autocomplete.responseKey].toLocaleLowerCase().indexOf(term.toLocaleLowerCase()) > -1);
+              if (items) {
+                this.searchResult = items;
+                return observableOf(this.searchResult);
               }
-              formData.filters[field.key] = {};
-              formData.filters[field.key]["contains"] = term
-              this.generalService.postData(field.api, formData).subscribe(async (res) => {
-                let items = res;
-                items = items.filter(x => x[field.key].toLocaleLowerCase().indexOf(term.toLocaleLowerCase()) > -1);
-                if (items) {
-                  this.searchResult = items;
-                  return observableOf(this.searchResult);
-                }
-              });
-            }
-            return observableOf(this.searchResult);
+            });
           }
+          return observableOf(this.searchResult);
         }
-        else if (field.type === 'multiselect') {
+      }
+      if (field.type) {
+        
+        if (field.type === 'multiselect') {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = field.type;
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['multiple'] = true;
           if (field.required) {
