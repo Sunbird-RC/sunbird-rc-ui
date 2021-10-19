@@ -117,6 +117,6 @@
   },
   "homepage": "https://github.com/code-blooded-guy/sunbird-rc-ui#readme",
   "publishConfig": {
-    "@code-blooded-guy/sunbird-rc-ui": "https://npm.pkg.github.com"
+    "@code-blooded-guy:registry": "https://npm.pkg.github.com"
   }
 }
