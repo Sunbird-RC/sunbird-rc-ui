@@ -1,6 +1,6 @@
 {
-  "name": "@code-blooded-guy/sunbird-rc-ui",
-  "version": "0.0.2",
+  "name": "opensaber-rc-ui",
+  "version": "0.0.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -11,7 +11,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
-  "private": false,
+  "private": true,
   "proxy": "https://ndear.xiv.in",
   "dependencies": {
     "@ajsf/bootstrap4": "^0.4.0-beta.1",
@@ -91,32 +91,5 @@
   "browser": {
     "http": false,
     "https": false
-  },
-  "description": "Configurable Angular front end with generic forms and layouts for Sunbird RC",
-  "main": "karma.conf.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/code-blooded-guy/sunbird-rc-ui.git"
-  },
-  "keywords": [
-    "sunbird",
-    "sunbird",
-    "ui",
-    "sunbird",
-    "rc",
-    "sunbird",
-    "rc",
-    "ui",
-    "registry",
-    "and",
-    "credencials"
-  ],
-  "author": "Sunbird",
-  "bugs": {
-    "url": "https://github.com/code-blooded-guy/sunbird-rc-ui/issues"
-  },
-  "homepage": "https://github.com/code-blooded-guy/sunbird-rc-ui#readme",
-  "publishConfig": {
-    "@code-blooded-guy:registry": "https://npm.pkg.github.com"
   }
 }
