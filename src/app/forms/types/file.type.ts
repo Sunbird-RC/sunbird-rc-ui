@@ -11,7 +11,7 @@ import { DomSanitizer } from '@angular/platform-browser';
   template: `
       <div>
       <div (click)="openFileInput()">
-        <div class="mask"></div>
+        <div></div>
           
            <label class="p12 text-primary-color"> + Upload </label>
           
