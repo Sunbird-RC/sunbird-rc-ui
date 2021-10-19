@@ -25,7 +25,7 @@ height: 40px;
     color: #443DF6 !important;
 }
 
-.p14{
+.p14, formly-field-select select, formly-autocomplete-type, .form-group{
     font-size: 14px !important;
 }
 
@@ -70,9 +70,9 @@ form-group {
     color: #000000;
 }
 
-.form-group{
-    font-size: 14px;
-}
+// .form-group{
+//     font-size: 14px;
+// }
 
 .form-group label{
     font-size: 12px;
@@ -85,9 +85,6 @@ padding-top: 5px !important ;
 
 }
 
-formly-autocomplete-type {
-    font-size: 14px;
-}
 
 // .text-primary-color{
 //     color: #1987B6 !important;
