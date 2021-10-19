@@ -63,6 +63,7 @@ export class FormsComponent implements OnInit {
   propertyName: string;
   notes: any;
   headingTitle;
+  isSignupForm: boolean = false;
   constructor(private route: ActivatedRoute,
     public toastMsg: ToastMessageService, public router: Router, public schemaService: SchemaService, private formlyJsonschema: FormlyJsonschema, public generalService: GeneralService, private location: Location) { }
 
@@ -96,6 +97,10 @@ export class FormsComponent implements OnInit {
 
       if (this.formSchema.header) {
         this.header = this.formSchema.header
+      }
+
+      if (this.formSchema.isSignupForm) {
+        this.isSignupForm = this.formSchema.isSignupForm;
       }
 
       if (this.formSchema.title) {
