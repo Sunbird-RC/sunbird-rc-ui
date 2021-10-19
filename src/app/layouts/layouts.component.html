@@ -1,7 +1,7 @@
 <div>
     <app-header *ngIf="!public" [headerFor]='layout' [tab]='tab'></app-header>
 </div>
-<div>
+<div *ngIf="params?.layout"> 
     <div>
         <br />
         <nav class="navbar navbar-expand-lg navbar-light bg-white">

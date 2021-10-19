@@ -33,8 +33,10 @@ export class LayoutsComponent implements OnInit, OnChanges {
   address: string;
   headerName: any;
   subHeadername = [];
+  params: any;
   constructor(private route: ActivatedRoute, public schemaService: SchemaService, private titleService: Title, public generalService: GeneralService, private modalService: NgbModal,
-    public router: Router) { }
+    public router: Router) {
+     }
 
   ngOnChanges(): void {
     this.Data = [];
@@ -43,6 +45,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
 
+    this.subHeadername = [];
     if (this.publicData) {
       this.model = this.publicData;
       this.identifier = this.publicData.osid;
@@ -51,6 +54,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.route.params.subscribe(params => {
       console.log(params);
+    this.params = params;
       if (params['layout'] != undefined) {
         this.layout = params['layout']
         this.titleService.setTitle(params['layout'].charAt(0).toUpperCase() + params['layout'].slice(1));
