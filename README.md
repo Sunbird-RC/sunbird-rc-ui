@@ -92,7 +92,7 @@ Key | Value
 
 # Examples
 
-Please config files examples [here](https://github.com/ref-registries)
+You can find examples of config files [here](https://github.com/ref-registries)
 
 
 # FAQs
