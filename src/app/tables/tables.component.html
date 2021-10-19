@@ -19,12 +19,12 @@
                     <!-- {{td | json}} -->
                     <ng-template ngFor let-td [ngForOf]="item">
                         <td *ngIf="td.type && td.type === 'button'; else normalTd">
-                            <a [routerLink]="[td.redirectTo]" class="btn btn-primary text-end fw-bold text-capitalize">{{td?.buttonText}}</a>
+                            <a [routerLink]="[td.redirectToUrl]" class="btn btn-primary text-end fw-bold text-capitalize">{{td?.buttonText}}</a>
                         </td>
                         <ng-template #normalTd>
-                            <td *ngIf="td?.formate && td.formate == 'date'; else notFormate">{{td?.value | date: 'dd/MM/yyyy'}}</td>
+                            <td *ngIf="td?.formate && td.formate == 'date'; else notFormate"><b>{{td?.value | date : 'd MMM y'}}</b></td>
                             <ng-template #notFormate>
-                                <td>{{td?.value}}</td>
+                                <td><b>{{td?.value}} </b></td>
                             </ng-template>
                         </ng-template>
                         
