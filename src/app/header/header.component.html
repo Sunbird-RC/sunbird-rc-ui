@@ -10,7 +10,7 @@
                     <a href=""><img class="logo" src={{logo}} /></a>
                 </div>
                 <ng-template [ngIf]="headerSchema?.left">
-                    <ul *ngFor="let header of headerSchema.left" class="navbar-nav  mb-2 mb-lg-0">
+                    <ul *ngFor="let header of headerSchema.left" class="navbar-nav nav-tabs-line mb-2 mb-lg-0">
                         <li class="nav-item active">
                             <a *ngIf="header?.title" class="nav-link active" [routerLink]="[header.redirectTo]">{{header?.title}}</a>
                             <a *ngIf="header?.image" class="nav-link" [routerLink]="[header.redirectTo]">

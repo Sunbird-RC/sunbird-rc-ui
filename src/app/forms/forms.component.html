@@ -20,8 +20,8 @@
   <div *ngIf="modal==='true'; else noModal" class="modal-body">
     <form [formGroup]="form2" (ngSubmit)="submit()" *ngIf="fields">
      <div *ngIf="globalPrivacy" class="mb-3">
-        <h6 class="mb-1">Visibility</h6>
-        <span class="fs-7"> Privacy Attribute Define <span class="float-end {{globalPrivacy}}">
+        <h6 class="mb-1 p12 font-weight-bold">Visibility</h6>
+        <span class="p12"> Privacy Attribute Define <span class="float-end {{globalPrivacy}}">
            </span></span>
       </div>
       <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form2"></formly-form>
@@ -48,6 +48,9 @@
   </div>
 </div>
 
+<div class="text-center text-secondary-color p14 font-weight-bold" *ngIf="isSignupForm">
+ <a  href="/login"> Already Registered? Login </a>
+</div>
 <ng-template #loader>
   <br>
   <div class="d-flex justify-content-center">
@@ -56,7 +59,6 @@
     </div>
   </div>
 </ng-template>
-
 
 <script>
     $('#btn-one').click(function () {

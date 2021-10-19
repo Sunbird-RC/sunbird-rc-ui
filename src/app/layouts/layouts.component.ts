@@ -377,44 +377,43 @@ export class LayoutsComponent implements OnInit, OnChanges {
 
 
 
-  getSubHeadername(item) {
+ getSubHeadername(item) {
 
-    var propertySplit = this.layoutSchema.subHeadername.split(",");
+    if (this.layoutSchema.hasOwnProperty('subHeadername')) {
+      var propertySplit = this.layoutSchema.subHeadername.split(",");
 
-    let fieldValue = [];
+      let fieldValue = [];
 
-    for (let k = 0; k < propertySplit.length; k++) {
-      var propertyKSplit = propertySplit[k].split(".");
+      for (let k = 0; k < propertySplit.length; k++) {
+        var propertyKSplit = propertySplit[k].split(".");
 
-      for (let j = 0; j < propertyKSplit.length; j++) {
+        for (let j = 0; j < propertyKSplit.length; j++) {
 
-        let a = propertyKSplit[j];
+          let a = propertyKSplit[j];
 
-        if (j == 0 && item.hasOwnProperty(a)) {
-          fieldValue = item[a];
-        } else if (fieldValue.hasOwnProperty(a)) {
+          if (j == 0 && item.hasOwnProperty(a)) {
+            fieldValue = item[a];
+          } else if (fieldValue.hasOwnProperty(a)) {
 
-          fieldValue = fieldValue[a];
+            fieldValue = fieldValue[a];
 
-        } else if (fieldValue[0]) {
-          let arryItem = []
-          if (fieldValue.length > 0) {
+          } else if (fieldValue[0]) {
+            let arryItem = []
+            if (fieldValue.length > 0) {
 
-            fieldValue = arryItem;
+              fieldValue = arryItem;
+
+            } else {
+              fieldValue = fieldValue[a];
+            }
 
           } else {
-            fieldValue = fieldValue[a];
+            fieldValue = [];
           }
-
-        } else {
-          fieldValue = [];
         }
+
+        fieldValue.length ? this.subHeadername.push(fieldValue) : [];
       }
-
-      fieldValue.length ? this.subHeadername.push(fieldValue) : [];
     }
-
-    console.log(this.subHeadername);
   }
-
 }

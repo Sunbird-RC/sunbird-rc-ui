@@ -9,16 +9,12 @@ import { DomSanitizer } from '@angular/platform-browser';
   selector: 'formly-field-file',
   styleUrls: ["../forms.component.scss"],
   template: `
-      <div class="upload-wrapper">
-      <div class="upload-container" (click)="openFileInput()">
-        <div></div>
-        <div class="helper-text">
-          <div class="absolute-div">
-            <div>
-            + Upload File
-            </div>
-          </div>
-        </div>
+      <div>
+      <div (click)="openFileInput()">
+        <div class="mask"></div>
+          
+           <label class="p12 text-primary-color"> + Upload </label>
+          
         <input
           #fileinput
           [multiple]="to.multiple"

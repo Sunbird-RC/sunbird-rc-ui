@@ -211,7 +211,7 @@ export class FormsComponent implements OnInit {
 
     if (fields[0].fieldGroup.length > 1 && fields[0].fieldGroup[0].type == "object") {
 
-      fields[0].fieldGroup.forEach(fieldObj => {
+     fields[0].fieldGroup.forEach(fieldObj => {
 
         if (this.privateFields.length || this.internalFields.length) {
 

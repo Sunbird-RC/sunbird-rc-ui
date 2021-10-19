@@ -18,11 +18,19 @@ height: 40px;
 }
 
 .text-primary-color {
+    color: #1987B6 !important;
+}
+
+.text-secondary-color {
     color: #443DF6 !important;
 }
 
 .p14{
     font-size: 14px !important;
+}
+
+.p12{
+    font-size: 12px !important;
 }
 
 .label-primary {
@@ -62,9 +70,28 @@ form-group {
     color: #000000;
 }
 
-.text-primary-color{
-    color: #1987B6 !important;
+.form-group{
+    font-size: 14px;
 }
+
+.form-group label{
+    font-size: 12px;
+font-weight: 700;}
+
+.custom-control-label{
+    font-size: 14px;
+font-weight: 400 !important;
+padding-top: 5px !important ;
+
+}
+
+formly-autocomplete-type {
+    font-size: 14px;
+}
+
+// .text-primary-color{
+//     color: #1987B6 !important;
+// }
 
 .private-access:before {
     font-family: "Font Awesome 5 Free";
