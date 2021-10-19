@@ -337,8 +337,8 @@ export class LayoutsComponent implements OnInit, OnChanges {
   }
 
   getHeadingTitle(item) {
-
-    var propertySplit = this.layoutSchema.headerName.split(".");
+    if (this.layoutSchema.hasOwnProperty('headerName')) {
+      var propertySplit = this.layoutSchema.headerName.split(".");
 
     let fieldValue = [];
 
@@ -371,6 +371,8 @@ export class LayoutsComponent implements OnInit, OnChanges {
 
     this.headerName = fieldValue;
     this.getSubHeadername(item);
+    }
+    
   }
 
 
