@@ -326,7 +326,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
   }
 
   removeCommonFields() {
-    var commonFields = ['osCreatedAt', 'osCreatedBy', 'osUpdatedAt', 'osUpdatedBy', 'osid'];
+    var commonFields = ['osCreatedAt', 'osCreatedBy', 'osUpdatedAt', 'osUpdatedBy', 'osid', 'OsUpdatedBy'];
     const filteredArray = this.property.filter(function (x, i) {
       return commonFields.indexOf(x[i]) < 0;
     });

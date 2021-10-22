@@ -1,7 +1,7 @@
 <div>
     <app-header *ngIf="!public" [headerFor]='layout' [tab]='tab'></app-header>
 </div>
-<div *ngIf="params?.layout"> 
+<div *ngIf="params?.layout && !public"> 
     <div>
         <br />
         <nav class="navbar navbar-expand-lg navbar-light bg-white">
@@ -16,8 +16,8 @@
                             <span *ngIf="subHeadername.length > 1 && subHeadername.length != i+1">, </span>
                         </span></p>
                 </div>
-                <!-- <a *ngIf="!public" class="text-end float-end d-block text-primary-color blue-shade-btn float-end"
-                data-toggle="modal" data-target="#prewiewProfile" (click)="openPreview()">Preview Public Profile</a> -->
+                <a *ngIf="!public" class="text-end float-end d-block text-primary-color blue-shade-btn float-end"
+                data-toggle="modal" data-target="#prewiewProfile" (click)="openPreview()">Preview Public Profile</a>
             </div>
         </nav>
     </div>
@@ -42,8 +42,8 @@
 <div [ngClass]="public ? 'container noToBottom' : 'container'" *ngIf="identifier != null && schemaloaded; else loader">
     <ng-template ngFor let-block [ngForOf]="Data" let-blockIndex="index">
         <div *ngIf="block.items[0].length > 0; else noData">
-            <div [ngClass]="public ? 'd-flex flex-justify-between' : 'd-flex flex-justify-between mt-5'">
-                <div class="">
+            <div [ngClass]="public ? 'd-flex flex-justify-between' : 'd-flex flex-justify-between mt-3'">
+                <div>
                     <p class="d-inline-block fs-6 font-weight-bold mb-2">{{block.title}}</p>
                     <ng-template [ngIf]="block.edit">
                         <a *ngIf="!public" panelEditLink="{{block.editform}}" class="pl-1 fs-7 text-secondary-color">edit
@@ -122,7 +122,7 @@
 
                 </div>
                 <ng-template #publicMultiBlock>
-                    <div class="card-body">
+                    <div class="card-body mt-4">
                         <ng-template ngFor let-item [ngForOf]="block.items" let-itemIndex="index">
                             <ng-template ngFor let-element [ngForOf]="item" let-elementIndex="index">
                                 <ng-template ngFor let-objects [ngForOf]="element" let-objectIndex="index">
@@ -131,7 +131,8 @@
                                         [ngIf]="element[objectIndex].value && element[objectIndex]._osState == 'PUBLISHED'">
                                         <!-- <div class="fs-7 text-grey-color">{{element[objectIndex].title}}</div> -->
                                         <h6 data-mdb-toggle="tooltip" title={{element[objectIndex].title}}
-                                            *ngIf="objectIndex == 0; else smallBlock">{{element[objectIndex].value}}
+                                            *ngIf="objectIndex == 0; else smallBlock">
+                                            <h7 class="font-weight-bold">{{element[objectIndex].value}} </h7>
 
                                             <i *ngIf="element[objectIndex]._osState == 'PUBLISHED'"
                                                 class="fa fa-check-circle text-success" data-mdb-toggle="tooltip"
@@ -140,13 +141,16 @@
                                         <ng-template #smallBlock>
                                             <div *ngIf="objectIndex + 1 != element.length; else greyBlock"
                                                 data-mdb-toggle="tooltip" title={{element[objectIndex].title}}>
-                                                {{element[objectIndex].value}}</div>
+                                               
+                                                <span class="text-grey-color p14">{{element[objectIndex].title}}: 
+                                                </span> <span class="p14">{{element[objectIndex].value}}</span>
+                                            </div>
+
                                             <ng-template #greyBlock>
-                                                <div class="fs-7 text-grey-color" data-mdb-toggle="tooltip"
+                                                <div class="fs-7" data-mdb-toggle="tooltip"
                                                     title={{element[objectIndex].title}}>
-                                                    {{element[objectIndex].title}}
-                                                    :
-                                                    {{element[objectIndex].value}}</div>
+                                                    <span class="text-grey-color p14">{{element[objectIndex].title}}:
+                                                    </span> <span class="p14">{{element[objectIndex].value}}</span></div>
                                                 <hr>
                                             </ng-template>
 
@@ -163,19 +167,19 @@
                 </ng-template>
             </div>
             <ng-template #singleBlock>
-                <div class="card">
+                <div class="card mb-3">
                     <div class="card-body">
                         <ng-template ngFor let-item [ngForOf]="block.items" let-itemIndex="index">
                             <ng-template ngFor let-element [ngForOf]="item" let-elementIndex="index">
                                 <ng-template [ngIf]="item[elementIndex].value">
                                     <ng-template [ngIf]="elementIndex %2 == 0">
-                                        <dl>
-                                            <div class="d-flex">
-                                                <div class="w-50 ml-2">
+                                        <dl class="d-inline">
+                                            <div class="row">
+                                                <div class="col ml-2">
                                                     <dt class="fs-7 text-muted">{{item[elementIndex].title}}</dt>
                                                     <dd class="text-body ">{{item[elementIndex].value}}</dd>
                                                 </div>
-                                                <div class="w-50">
+                                                <div class="col">
                                                     <ng-template [ngIf]="elementIndex + 1 != item.length">
                                                         <dt class="fs-7 text-muted">{{item[elementIndex +
                                                             1].title}}</dt>

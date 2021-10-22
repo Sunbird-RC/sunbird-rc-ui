@@ -18,8 +18,11 @@ export class TablesComponent implements OnInit {
   model: any;
   Data: string[] = [];
   property: any[] = [];
-  // tr: any[] = [];
   field;
+
+  page: number = 1;
+  limit: number = 10;
+
   constructor(public router: Router, private route: ActivatedRoute, public generalService: GeneralService, public schemaService: SchemaService) { }
 
   ngOnInit(): void {
@@ -35,6 +38,7 @@ export class TablesComponent implements OnInit {
         })
         this.tableSchema = filtered[0][this.table]
         this.apiUrl = this.tableSchema.api;
+        this.limit = filtered[0].hasOwnProperty(this.limit) ? filtered[0].limit : this.limit;
         await this.getData();
       })
       

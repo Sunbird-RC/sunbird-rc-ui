@@ -11,8 +11,8 @@
                 </div>
                 <ng-template [ngIf]="headerSchema?.left">
                     <ul *ngFor="let header of headerSchema.left" class="navbar-nav nav-tabs-line mb-2 mb-lg-0">
-                        <li class="nav-item active">
-                            <a *ngIf="header?.title" class="nav-link active" [routerLink]="[header.redirectTo]">{{header?.title}}</a>
+                        <li class="nav-item">
+                            <a *ngIf="header?.title" id="{{header?.title}}" class="nav-link  p14 {{header?.activeTab}} {{header?.className}}" [routerLink]="[header.redirectTo]">{{header?.title}}</a>
                             <a *ngIf="header?.image" class="nav-link" [routerLink]="[header.redirectTo]">
                                 <img style="width: 25px;" src={{header?.image}} />
                             </a>
@@ -26,7 +26,7 @@
                 <ng-template [ngIf]="headerSchema?.right">
                     <ul *ngFor="let header of headerSchema.right" class="navbar-nav ms-auto">
                         <li class="nav-item active">
-                            <a *ngIf="header?.title" class="nav-link active" [routerLink]="[header.redirectTo]">{{header?.title}}</a>
+                            <a *ngIf="header?.title" class="nav-link active p14 {{header?.className}}" [routerLink]="[header.redirectTo]">{{header?.title}}</a>
                             <a *ngIf="header?.image" class="nav-link" [routerLink]="[header.redirectTo]">
                                 <img style="width: 25px;" src={{header?.image}} />
                             </a>

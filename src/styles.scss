@@ -9,11 +9,44 @@
 @import "https://fonts.googleapis.com/css?family=Lato:wght@300@500@600&display=swap";
 @import "https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css";
 
+body {
+    font-family: 'Lato', sans-serif !important;
+  }
+
+
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: #F6F8FC !important;
+}
+  
+.btn-success {
+    background-color: #88ecb226 !important;
+    color: #22B02E !important;
+    border: 0 !important;
+}
+
+.ngx-pagination .current {
+    background: #1987B6 !important;
+}
+
+.btn-deny {
+    background-color: #f3c2c24f !important;
+    color: #C5292A !important;
+    border: 0 !important;
+}
+
+textarea.form-control {
+    height: 100px !important;
+    font-size: 12px;
+}
 
 .btn-primary{
 background-color: #1987B6 !important;
 border-color: #1987B6 !important;
-border-radius: 8px !important;
+border: 0 !important;
+}
+
+.btn-style{
+    border-radius: 8px !important;
 height: 40px;
 }
 
@@ -27,6 +60,15 @@ height: 40px;
 
 .p14, formly-field-select select, formly-autocomplete-type, .form-group{
     font-size: 14px !important;
+}
+
+.p16 {
+    font-size: 16px !important;
+ 
+}
+
+.img16{
+    width: 16px
 }
 
 .p12{
@@ -68,6 +110,10 @@ height: 40px;
 
 form-group {
     color: #000000;
+}
+
+.mb30 {
+    margin-top: -30px;
 }
 
 // .form-group{
@@ -257,7 +303,7 @@ button.calendar, button.calendar:active {
     margin: auto !important;
     width: 600px !important;
     height: 100%;
-    max-width: 700px !important;
+    max-width: 800px !important;
     -webkit-transform: translate3d(0%, 0, 0) !important;
     -ms-transform: translate3d(0%, 0, 0) !important;
     -o-transform: translate3d(0%, 0, 0) !important;

@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { SchemaService } from '../../services/data/schema.service';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
-import { JSONSchema7 } from "json-schema";
-import { filter, isEmpty } from 'rxjs/operators';
 import { GeneralService } from '../../services/general/general.service';
 import { ChangeDetectionStrategy } from '@angular/core';
 import { of as observableOf } from 'rxjs';
@@ -12,7 +10,7 @@ import { of as observableOf } from 'rxjs';
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.css'],
+  styleUrls: ['./search.component.scss'],
   changeDetection: ChangeDetectionStrategy.Default
 
 })
@@ -131,7 +129,7 @@ export class SearchComponent implements OnInit {
             let fieldObj = {
               key: filter.key,
               type: 'input',
-              className: 'col-6',
+              className: 'col-4',
               templateOptions: {
                 label: filter.title,
               }
