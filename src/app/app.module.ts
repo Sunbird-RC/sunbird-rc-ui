@@ -47,6 +47,7 @@ import { AppConfig } from './app.config';
 import { PanelWrapperComponent } from './forms/types/group.type';
 import { LogoutComponent } from './authentication/logout/logout.component';
 import { SearchComponent } from '../app/discovery/search/search.component';
+import { IssueCertificateComponent } from './issue-certificate/issue-certificate.component';
 
 //form validations
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
@@ -115,7 +116,8 @@ function initConfig(config: AppConfig){
     FormlyFieldNgSelect,
     InstallComponent,
     HomeComponent,
-    LogoutComponent
+    LogoutComponent,
+    IssueCertificateComponent
   ],
   imports: [
     BrowserModule,
