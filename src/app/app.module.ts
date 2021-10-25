@@ -48,6 +48,8 @@ import { PanelWrapperComponent } from './forms/types/group.type';
 import { LogoutComponent } from './authentication/logout/logout.component';
 import { SearchComponent } from '../app/discovery/search/search.component';
 import { IssueCertificateComponent } from './issue-certificate/issue-certificate.component';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { VerifyComponent } from './verify/verify.component';
 
 //form validations
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
@@ -117,7 +119,8 @@ function initConfig(config: AppConfig){
     InstallComponent,
     HomeComponent,
     LogoutComponent,
-    IssueCertificateComponent
+    IssueCertificateComponent,
+    VerifyComponent
   ],
   imports: [
     BrowserModule,
@@ -179,7 +182,8 @@ function initConfig(config: AppConfig){
       positionClass: 'toast-bottom-center',
     preventDuplicates: true,
     }),
-    NgxPaginationModule
+    NgxPaginationModule,
+    ZXingScannerModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   entryComponents: [],

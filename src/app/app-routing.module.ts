@@ -15,6 +15,7 @@ import { KeycloakloginComponent } from './authentication/login/keycloaklogin.com
 import { LogoutComponent } from './authentication/logout/logout.component';
   import { SearchComponent } from './discovery/search/search.component';
 import { IssueCertificateComponent } from './issue-certificate/issue-certificate.component';
+import { VerifyComponent } from './verify/verify.component';
 const routes: Routes = [
 // Home
 { path: '', component: HomeComponent },
@@ -76,6 +77,8 @@ const routes: Routes = [
 
 // Custom
 { path: 'issue-certificate', component: IssueCertificateComponent },
+{ path: 'verify', component: VerifyComponent }
+
 ];
 
 @NgModule({

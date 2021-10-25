@@ -110,4 +110,6 @@ export class IssueCertificateComponent implements OnInit {
     alert(JSON.stringify(this.model));
   }
 
+ 
+  
 }

@@ -1,0 +1,13 @@
+<div class="h-25 m-5 text-capitalise" style="text-align: center">
+
+    <div class="h-25">
+        <zxing-scanner  *ngIf="scannerEnabled" #scanner (scanSuccess)="scanSuccessHandler($event)">
+        </zxing-scanner>
+        <button (click)="enableScanner()" *ngIf="!scannerEnabled" type="button" class="btn btn-success">
+            Scan Certificate QR Code
+
+        </button>
+        <button (click)="enableScanner()" *ngIf="scannerEnabled" type="button" class="btn btn-success">Stop
+            Scanner</button>
+    </div>
+</div>
