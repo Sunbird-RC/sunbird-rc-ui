@@ -1,6 +1,6 @@
-<div class="h-25 m-5 text-capitalise" style="text-align: center">
+<div class="h-25 mt-5 text-capitalize" style="text-align: center">
 
-    <div class="h-25">
+    <div class="h-25 mt-5">
         <zxing-scanner  *ngIf="scannerEnabled" #scanner (scanSuccess)="scanSuccessHandler($event)">
         </zxing-scanner>
         <button (click)="enableScanner()" *ngIf="!scannerEnabled" type="button" class="btn btn-success">
@@ -10,4 +10,23 @@
         <button (click)="enableScanner()" *ngIf="scannerEnabled" type="button" class="btn btn-success">Stop
             Scanner</button>
     </div>
+</div>
+
+<div style=" margin-left: 25%;" class="card w-50" *ngIf="!scannerEnabled && success">
+
+    {{qrString}}
+
+    <div class="card-body contain ">
+    <h3>Verify Certificate </h3>
+    <h7><i class="fa fa-check btn-success m-4" aria-hidden="true"></i>
+         This Certificate is valid
+    </h7>
+    <div *ngFor="let item of items" class="row lh-lg">
+        <span class="col">{{item.title}} </span>
+        <span class="col">{{item.value}}</span>
+    </div>
+</div>
+
+
+
 </div>
