@@ -16,7 +16,7 @@
                             <span *ngIf="subHeadername.length > 1 && subHeadername.length != i+1">, </span>
                         </span></p>
                 </div>
-                <a *ngIf="!public" class="text-end float-end d-block text-primary-color blue-shade-btn float-end"
+                <a *ngIf="!public" class=" p-2 p14 btn-bg label-primary btn-style float-end"
                 data-toggle="modal" data-target="#prewiewProfile" (click)="openPreview()">Preview Public Profile</a>
             </div>
         </nav>
@@ -52,8 +52,8 @@
                     </ng-template>
                 </div>
                 <ng-template [ngIf]="block.add">
-                    <a *ngIf="!public" panelAddLink="{{block.addform}}" class="fs-7 text-secondary-color"><i
-                            class="fa fa-plus pr-1" aria-hidden="true"></i><span class="text-secondary-color p12">{{block.title}}</span></a>
+                    <a *ngIf="!public" panelAddLink="{{block.addform}}" class="fs-7 text-primary-color"><i
+                            class="fa fa-plus pr-1" aria-hidden="true"></i><span class="text-primary-color p12">{{block.title}}</span></a>
                 </ng-template>
                 <!-- <a *ngIf="!public" class="text-end d-block text-primary-color blue-shade-btn float-end" data-toggle="modal"
                 data-target="#prewiewProfile">Preview Public Profile</a> -->

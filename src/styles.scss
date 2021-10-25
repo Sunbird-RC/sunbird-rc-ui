@@ -13,6 +13,9 @@ body {
     font-family: 'Lato', sans-serif !important;
   }
 
+.text-body{
+    color: #000000 !important;
+}
 
   .table-striped tbody tr:nth-of-type(odd) {
     background-color: #F6F8FC !important;
@@ -58,13 +61,21 @@ height: 40px;
     color: #443DF6 !important;
 }
 
-.p14, formly-field-select select, formly-autocomplete-type, .form-group{
+.label-primary {
+    color: #0098AB !important;
+}
+
+.p14, formly-field-select select, formly-autocomplete-type, .form-group, .form-control{
     font-size: 14px !important;
 }
 
-.p16 {
+.p16, legend {
     font-size: 16px !important;
  
+}
+
+legend{
+    font-weight: 700;
 }
 
 .img16{
@@ -75,9 +86,7 @@ height: 40px;
     font-size: 12px !important;
 }
 
-.label-primary {
-    color: #0098AB !important;
-}
+
 
 .btn-bg {
     background-color: #c0e3eb6b !important;
