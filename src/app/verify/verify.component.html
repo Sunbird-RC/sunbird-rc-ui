@@ -1,11 +1,13 @@
-<div class="h-25 mt-5 text-capitalize" style="text-align: center">
+<div class="h-25 mt-5 text-capitalize">
 
-    <div class="h-25 mt-5">
-        <zxing-scanner  *ngIf="scannerEnabled" #scanner (scanSuccess)="scanSuccessHandler($event)">
+    <div class="h-25 mt-5" style="text-align:-webkit-center">
+        <img *ngIf="!scannerEnabled" style="height:150px" src="/assets/images/verify.png">
+        <h3 *ngIf="!scannerEnabled" class="text-center">Verify a certificate</h3>
+        <zxing-scanner  *ngIf="scannerEnabled" #scanner (scanSuccess)="scanSuccessHandler($event)" style="width: 50%">
         </zxing-scanner>
         <button (click)="enableScanner()" *ngIf="!scannerEnabled" type="button" class="btn btn-success">
-            Scan Certificate QR Code
-
+            <span>Scan QR code </span>
+            <img style="display: inline; height: 20px;margin-left: 5px;" src="https://cdn-icons-png.flaticon.com/512/3126/3126504.png" alt="">
         </button>
         <button (click)="enableScanner()" *ngIf="scannerEnabled" type="button" class="btn btn-success">Stop
             Scanner</button>
