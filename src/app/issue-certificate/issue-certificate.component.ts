@@ -62,8 +62,10 @@ export class IssueCertificateComponent implements OnInit {
   accessToken;
   did;
   signedCredential: any;
-  generated: boolean=false;
+  generated: boolean = false;
   qrCode: any;
+  blob: Blob;
+  institute: any;
   constructor(private formlyJsonschema: FormlyJsonschema, public generalService: GeneralService) { }
 
   ngOnInit(): void {
@@ -115,7 +117,10 @@ export class IssueCertificateComponent implements OnInit {
     this.form2 = new FormGroup({});
     this.options = {};
     this.fields = [this.formlyJsonschema.toFieldConfig(this.schema)];
-
+    this.generalService.getData('Institute').subscribe((res) => {
+      this.institute = res[0].instituteName;
+      console.log(this.institute);
+    });
     // this.getData();
   }
 
@@ -202,40 +207,28 @@ export class IssueCertificateComponent implements OnInit {
     myHeaders.append("Content-Type", "application/json");
 
     this.formData = {
-      "type": "LeanEntityCredentialOrganizationV1",
+      "type": "EducationCredentialPersonV1",
       "data": {
         "@type": [
-          "Organization",
-          "OrganizationE",
-          "LeanEntityOrganization"
+          "Person",
+          "PersonE",
+          "EducationPerson"
         ],
-        "name": this.model['course'],
-        "hasCredential": [
-          {
+        "name": this.model['student'],
+        "hasCredential": {
+          "@type": "EducationalOcupationalCredential",
+          "credentialCategory": this.model['type'],
+          "educationalLevel": this.model['course'],
+          "recognizedBy": {
             "@type": [
-              "EducationalOccupationalCredential",
-              "Credential"
+              "Organization",
+              "OrganizationE"
             ],
-            "dateRevoked": this.model['date'],
-            "recognizedBy": {
-              "@type": "State",
-              "name": this.model['student']
-            }
+            "name": this.institute
           },
-          {
-            "@type": [
-              "EducationalOccupationalCredential",
-              "Credential",
-              "OrganizationalCredential"
-            ],
-            "credentialCategory": this.model['type'],
-            "active": true,
-            "recognizedBy": {
-              "@type": "State",
-              "name": this.model['student']
-            }
-          }
-        ]
+          "dateCreated": this.model['date'],
+          "url": `${window.location.protocol + "//" + window.location.host}/credentials`
+        }
       },
       "holderDid": this.did
     }
@@ -310,7 +303,7 @@ export class IssueCertificateComponent implements OnInit {
       .then(response => response.json())
       .then(result => {
         console.log('store-', result);
-        if(result['credentialIds']) {
+        if (result['credentialIds']) {
           this.share(result['credentialIds'][0])
         }
       })
@@ -331,26 +324,27 @@ export class IssueCertificateComponent implements OnInit {
       redirect: 'follow'
     };
 
-    fetch("https://cloud-wallet-api.prod.affinity-project.org/api/v1/wallet/credentials/"+claimId+"/share", this.requestOptions)
+    fetch("https://cloud-wallet-api.prod.affinity-project.org/api/v1/wallet/credentials/" + claimId + "/share", this.requestOptions)
       .then(response => response.json())
       .then(result => {
-        console.log('share-',result);
-        if(result['qrCode']){
+        console.log('share-', result);
+        if (result['qrCode']) {
           this.generated = true;
           this.qrCode = result['qrCode'];
+          var shareUrl = result['sharingUrl'].split('?key=')[0];
+          var key = result['sharingUrl'].split('?key=')[1];
           var templateParams: any = {
-            name: 'James',
-            notes: 'Check this out!',
+            name: this.model['student'],
+            code: result['qrCode'],
             reply_to: 'paraspatel1434@gmail.com',
-            code:result['qrCode']
-        };
-        
-          emailjs.send('service_mihqxlf','template_heqihvf', templateParams, 'user_AB0BwpSVS4CHaQvPGkYsQ')
-          .then(function(response) {
-            console.log('SUCCESS!', response.status, response.text);
-          }, function(err) {
-            console.log('FAILED...', err);
-          });
+            link: `${window.location.protocol + "//" + window.location.host}/credentials?vcURL=${shareUrl}&key=${key}`,
+          };
+          emailjs.send('service_mihqxlf', 'template_heqihvf', templateParams, 'user_AB0BwpSVS4CHaQvPGkYsQ')
+            .then(function (response) {
+              console.log('SUCCESS!', response.status, response.text);
+            }, function (err) {
+              console.log('FAILED...', err);
+            });
         }
       })
       .catch(error => console.log('error', error));

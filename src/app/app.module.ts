@@ -50,6 +50,8 @@ import { SearchComponent } from '../app/discovery/search/search.component';
 import { IssueCertificateComponent } from './issue-certificate/issue-certificate.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { VerifyComponent } from './verify/verify.component';
+import { QrCodeComponent } from './qr-code/qr-code.component';
+import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 
 //form validations
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
@@ -120,7 +122,8 @@ function initConfig(config: AppConfig){
     HomeComponent,
     LogoutComponent,
     IssueCertificateComponent,
-    VerifyComponent
+    VerifyComponent,
+    QrCodeComponent
   ],
   imports: [
     BrowserModule,
@@ -136,6 +139,7 @@ function initConfig(config: AppConfig){
     Bootstrap4FrameworkModule,
     AngularMultiSelectModule,
     NgSelectModule,
+    NgxQRCodeModule,
     FormlyModule.forRoot({
       extras: { resetFieldOnHide: true },
       wrappers: [{ name: 'form-field-horizontal', component: FormlyHorizontalWrapper },
