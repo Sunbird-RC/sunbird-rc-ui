@@ -1,5 +1,5 @@
 {
-    "environment": "development",
+    "environment": "production",
     "keycloak": {
         "url": "https://ndear.xiv.in/auth",
         "realm": "ndear",
@@ -8,7 +8,7 @@
     "configFolder": "/assets/config/ui-config",
     "logoPath": "/assets/images/logo.png",
     "title": "Education",
-    "baseUrl": "http://localhost:4200/registry/api/v1",
-    "schemaUrl": "http://localhost:4200/registry/api/docs/swagger.json",
+    "baseUrl": "https://ndear.xiv.in/registry/api/v1",
+    "schemaUrl": "https://ndear.xiv.in/registry/api/docs/swagger.json",
     "footerText": "Sunbird RC - Education"
 }
