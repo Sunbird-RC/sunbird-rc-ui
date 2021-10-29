@@ -17,6 +17,7 @@ import { LogoutComponent } from './authentication/logout/logout.component';
 import { IssueCertificateComponent } from './issue-certificate/issue-certificate.component';
 import { VerifyComponent } from './verify/verify.component';
 import { QrCodeComponent } from './qr-code/qr-code.component';
+import { CoursesComponent } from './courses/courses.component';
 const routes: Routes = [
 // Home
 { path: '', component: HomeComponent },
@@ -80,6 +81,7 @@ const routes: Routes = [
 { path: 'issue-certificate', component: IssueCertificateComponent },
 { path: 'verify', component: VerifyComponent },
 { path: 'credentials', component: QrCodeComponent },
+{ path: ':entity/courses', component: CoursesComponent },
 
 ];
 

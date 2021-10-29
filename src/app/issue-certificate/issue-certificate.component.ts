@@ -6,6 +6,7 @@ import { JSONSchema7 } from "json-schema";
 import { GeneralService } from '../services/general/general.service';
 import { of as observableOf } from 'rxjs';
 import emailjs from 'emailjs-com';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-issue-certificate',
@@ -29,13 +30,7 @@ export class IssueCertificateComponent implements OnInit {
       },
       "course": {
         "type": "string",
-        "title": "Choose Course",
-        "enum": [
-          "Javascript",
-          "JAVA",
-          "PHP",
-          "Python"
-        ]
+        "title": "Course"
       },
       "type": {
         "type": "string",
@@ -66,9 +61,22 @@ export class IssueCertificateComponent implements OnInit {
   qrCode: any;
   blob: Blob;
   institute: any;
-  constructor(private formlyJsonschema: FormlyJsonschema, public generalService: GeneralService) { }
+  course;
+  constructor(private formlyJsonschema: FormlyJsonschema, public generalService: GeneralService,private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      console.log(params);
+      this.course = params['course']
+      this.schema.properties.course['widget'] = {
+        "formlyConfig": {
+          "templateOptions": {
+          }
+        }
+      }
+      this.schema.properties.course['widget']['formlyConfig']['defaultValue'] = this.course;
+      this.schema.properties.course['widget']['formlyConfig']['templateOptions']['desabled'] = true;
+    });
     this.schema.properties.student['widget'] = {
       "formlyConfig": {
         "templateOptions": {

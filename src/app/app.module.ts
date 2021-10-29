@@ -52,6 +52,7 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { VerifyComponent } from './verify/verify.component';
 import { QrCodeComponent } from './qr-code/qr-code.component';
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
+import { CoursesComponent } from './courses/courses.component';
 
 //form validations
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
@@ -123,7 +124,8 @@ function initConfig(config: AppConfig){
     LogoutComponent,
     IssueCertificateComponent,
     VerifyComponent,
-    QrCodeComponent
+    QrCodeComponent,
+    CoursesComponent
   ],
   imports: [
     BrowserModule,
