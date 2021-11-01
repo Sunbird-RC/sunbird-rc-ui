@@ -17,14 +17,16 @@
     </nav>
 </div>
 <div class="container" style="margin-top: 20px;">
-    <div class=" mb-3">
-        <div class="card-body" style="text-align: -webkit-center;">
-            <h2>{{certificate.data.course ? certificate.data.course : certificate.data.skill}}</h2>
-            <img style="width: 30%;" src="{{certificate.qrCode}}">
+    <div class="card mb-3">
+        <div class="card-body">
+            
             <dl class="d-inline">
                 <div class="row">
-                   
-                    <div class="col ml-2">
+                    <h2  style="text-align: -webkit-center;">{{certificate.data.course ? certificate.data.course : certificate.data.skill}}</h2>
+                    <img style="width: 30%;" src="{{certificate.qrCode}}">
+                    <div class="col ml-2" style="
+                    margin-top: 25px;
+                ">
                         <dt class="fs-7 text-muted">Name</dt>
                         <dd class="text-body "><b>{{certificate.data.student}}</b></dd>
                        

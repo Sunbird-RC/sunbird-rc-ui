@@ -4,7 +4,7 @@
 /dist
 /tmp
 /out-tsc
-# /src/assets/config/*
+/src/assets/config/*
 # Only exists if Bazel was run
 /bazel-oauth
 
