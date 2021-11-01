@@ -18,6 +18,8 @@ import { IssueCertificateComponent } from './issue-certificate/issue-certificate
 import { VerifyComponent } from './verify/verify.component';
 import { QrCodeComponent } from './qr-code/qr-code.component';
 import { CoursesComponent } from './courses/courses.component';
+import { CertificatesComponent } from './certificates/certificates.component';
+import { ViewCertificateComponent } from './certificates/view/view.component';
 const routes: Routes = [
 // Home
 { path: '', component: HomeComponent },
@@ -78,10 +80,13 @@ const routes: Routes = [
 
 
 // Custom
-{ path: 'issue-certificate', component: IssueCertificateComponent },
+{ path: 'issue-certificate', component: IssueCertificateComponent, canActivate: [AuthGuard] },
 { path: 'verify', component: VerifyComponent },
 { path: 'credentials', component: QrCodeComponent },
 { path: ':entity/courses', component: CoursesComponent },
+{ path: ':entity/skills', component: CoursesComponent },
+{ path: ':entity/certificates', component: CertificatesComponent},
+{ path: ':entity/certificates/:id', component: ViewCertificateComponent}
 
 ];
 

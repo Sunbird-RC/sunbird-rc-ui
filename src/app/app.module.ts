@@ -53,6 +53,8 @@ import { VerifyComponent } from './verify/verify.component';
 import { QrCodeComponent } from './qr-code/qr-code.component';
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 import { CoursesComponent } from './courses/courses.component';
+import { CertificatesComponent } from './certificates/certificates.component';
+import { ViewCertificateComponent } from './certificates/view/view.component';
 
 //form validations
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
@@ -125,7 +127,9 @@ function initConfig(config: AppConfig){
     IssueCertificateComponent,
     VerifyComponent,
     QrCodeComponent,
-    CoursesComponent
+    CoursesComponent,
+    CertificatesComponent,
+    ViewCertificateComponent
   ],
   imports: [
     BrowserModule,

@@ -28,17 +28,29 @@ export class IssueCertificateComponent implements OnInit {
         "type": "string",
         "title": "Choose Student"
       },
-      "course": {
-        "type": "string",
-        "title": "Course"
-      },
       "type": {
         "type": "string",
         "title": "Certification Type",
         "enum": [
           "Attendance",
-          "Merit"
+          "Skill",
+          "Work",
+          "Reputation"
         ]
+      },
+      "course": {
+        "type": "string",
+        "title": "Course",
+        "enum": []
+      },
+      "skill": {
+        "type": "string",
+        "title": "Skill",
+        "enum": []
+      },
+      "grade": {
+        "type": "string",
+        "title": "Grade"
       },
       "date": {
         "type": "string",
@@ -62,21 +74,52 @@ export class IssueCertificateComponent implements OnInit {
   blob: Blob;
   institute: any;
   course;
+  skill: any;
+  certificates: any = [];
   constructor(private formlyJsonschema: FormlyJsonschema, public generalService: GeneralService,private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       console.log(params);
-      this.course = params['course']
-      this.schema.properties.course['widget'] = {
-        "formlyConfig": {
-          "templateOptions": {
-          }
+      if(params['course']){
+        this.course = params['course']
+      }
+      if(params['skill']){
+        this.skill = params['skill']
+      }
+    });
+    if(localStorage.getItem('certificates')){
+      this.certificates = JSON.parse(localStorage.getItem('certificates'));
+    }
+    this.schema.properties.course['widget'] = {
+      "formlyConfig": {
+        "templateOptions": {
         }
       }
-      this.schema.properties.course['widget']['formlyConfig']['defaultValue'] = this.course;
-      this.schema.properties.course['widget']['formlyConfig']['templateOptions']['desabled'] = true;
-    });
+    }
+    // this.schema.properties.course['widget']['formlyConfig']['defaultValue'] = this.course;
+    this.schema.properties.course['widget']['formlyConfig']['hideExpression'] = (model) => this.model['type'] != 'Attendance'
+    if(localStorage.getItem('course')){
+      this.schema.properties.course['enum'].push(JSON.parse(localStorage.getItem('course'))['course']);
+    }
+    this.schema.properties.skill['widget'] = {
+      "formlyConfig": {
+        "templateOptions": {
+        }
+      }
+    }
+    // this.schema.properties.skill['widget']['formlyConfig']['defaultValue'] = this.skill;
+    this.schema.properties.skill['widget']['formlyConfig']['hideExpression'] = (model) => this.model['type'] != 'Skill'
+    if(localStorage.getItem('skill')){
+      this.schema.properties.skill['enum'].push(JSON.parse(localStorage.getItem('skill'))['course']);
+    }
+    this.schema.properties.grade['widget'] = {
+      "formlyConfig": {
+        "templateOptions": {
+        }
+      }
+    }
+    this.schema.properties.grade['widget']['formlyConfig']['hideExpression'] = (model) => this.model['type'] != 'Skill'
     this.schema.properties.student['widget'] = {
       "formlyConfig": {
         "templateOptions": {
@@ -125,7 +168,7 @@ export class IssueCertificateComponent implements OnInit {
     this.form2 = new FormGroup({});
     this.options = {};
     this.fields = [this.formlyJsonschema.toFieldConfig(this.schema)];
-    this.generalService.getData('Institute').subscribe((res) => {
+    this.generalService.getData('/Institute').subscribe((res) => {
       this.institute = res[0].instituteName;
       console.log(this.institute);
     });
@@ -335,24 +378,28 @@ export class IssueCertificateComponent implements OnInit {
     fetch("https://cloud-wallet-api.prod.affinity-project.org/api/v1/wallet/credentials/" + claimId + "/share", this.requestOptions)
       .then(response => response.json())
       .then(result => {
-        console.log('share-', result);
+        console.log('share-', result,this.institute);
         if (result['qrCode']) {
           this.generated = true;
           this.qrCode = result['qrCode'];
           var shareUrl = result['sharingUrl'].split('?key=')[0];
           var key = result['sharingUrl'].split('?key=')[1];
-          var templateParams: any = {
-            name: this.model['student'],
-            code: result['qrCode'],
-            reply_to: 'paraspatel1434@gmail.com',
-            link: `${window.location.protocol + "//" + window.location.host}/credentials?vcURL=${shareUrl}&key=${key}`,
-          };
-          emailjs.send('service_mihqxlf', 'template_heqihvf', templateParams, 'user_AB0BwpSVS4CHaQvPGkYsQ')
-            .then(function (response) {
-              console.log('SUCCESS!', response.status, response.text);
-            }, function (err) {
-              console.log('FAILED...', err);
-            });
+          result['data'] = this.model;
+          result['data']['issuer'] = this.institute;
+          this.certificates.push(result);
+          localStorage.setItem('certificates', JSON.stringify(this.certificates));
+          // var templateParams: any = {
+          //   name: this.model['student'],
+          //   code: result['qrCode'],
+          //   reply_to: 'paraspatel1434@gmail.com',
+          //   link: `${window.location.protocol + "//" + window.location.host}/credentials?vcURL=${shareUrl}&key=${key}`,
+          // };
+          // emailjs.send('service_mihqxlf', 'template_heqihvf', templateParams, 'user_AB0BwpSVS4CHaQvPGkYsQ')
+          //   .then(function (response) {
+          //     console.log('SUCCESS!', response.status, response.text);
+          //   }, function (err) {
+          //     console.log('FAILED...', err);
+          //   });
         }
       })
       .catch(error => console.log('error', error));
