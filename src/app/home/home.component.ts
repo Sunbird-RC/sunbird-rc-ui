@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit {
     return this.httpClient.get('/assets/config/home.html',{responseType:'text'})
       .pipe(
         map((html: any) => {
-          console.log('html',html);
+          // console.log('html',html);
           return html;
         }),
         catchError(error => {

@@ -21,7 +21,7 @@ import { ObjectTypeComponent } from '../app/forms/types/object.type';
 import { MultiSchemaTypeComponent } from '../app/forms/types/multischema.type';
 import { NullTypeComponent } from '../app/forms/types/null.type';
 import { AutocompleteTypeComponent } from '../app/forms/types/autocomplete.type';
-import { initializeKeycloak } from '../app/utility/app.init';
+import { initializeKeycloak } from './utility/app.init';
 
 //Local imports
 import { FormsComponent } from './forms/forms.component';
@@ -47,6 +47,7 @@ import { AppConfig } from './app.config';
 import { PanelWrapperComponent } from './forms/types/group.type';
 import { LogoutComponent } from './authentication/logout/logout.component';
 import { SearchComponent } from '../app/discovery/search/search.component';
+import { AuthConfigService } from './authentication/auth-config.service';
 
 //form validations
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
@@ -189,9 +190,10 @@ function initConfig(config: AppConfig){
     provide: APP_INITIALIZER,
     useFactory: initializeKeycloak,
     multi: true,
-    deps: [KeycloakService],
+    deps: [KeycloakService,AuthConfigService],
   },
   { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'always' } }]
 })
 export class AppModule {
+  
 }
