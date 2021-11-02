@@ -154,19 +154,19 @@
     .upload-container {
       display: flex;
       flex-direction: row;
-      justify-content: center;
-      height: 50px;
-      width: 90%;
-      border: 1px dashed #3f51c2;
-      border-radius: 5px;
+      // justify-content: center;
+      // height: 50px;
+      // width: 90%;
+      // border: 1px dashed #3f51c2;
+      // border-radius: 5px;
       .helper-text {
         display: flex;
-        justify-content: center;
-        align-items: center;
+        justify-content: left;
+        align-items: left;
         .absolute-div {
           display: flex;
-          justify-content: center;
-          align-items: center;
+          justify-content: left;
+          align-items: left;
           position: absolute;
           right: 3%;
           left: 3%;
@@ -191,6 +191,8 @@
         flex: 1;
         border-radius: 5px;
         padding: 0%;
+        width: 90%;
+        height: 72%;
       }
       &:hover {
         .mask {

@@ -34,7 +34,7 @@
     "@ng-bootstrap/ng-bootstrap": "^8.0.4",
     "@ng-select/ng-select": "^7.2.0",
     "@ngx-formly/bootstrap": "^5.10.21",
-    "@ngx-formly/core": "^5.10.21",
+    "@ngx-formly/core": "^5.10.22",
     "@ngx-formly/material": "^5.10.22",
     "ajv": "^6.10.2",
     "angular-ng-autocomplete": "^2.0.5",

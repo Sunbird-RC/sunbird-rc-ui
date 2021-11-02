@@ -8,7 +8,7 @@
     margin-left: 10px;
 }
 .navbar-light .navbar-nav .active{
-    color: #443df6;
+    color: #1f8ddf;
 }
 .card-body {
     flex: 1 1 auto;
@@ -16,7 +16,7 @@
 }
 .btn-primary {
     color: #fff;
-    background-color: #443df6;
+    background-color: #288ebc;
     width: -webkit-fill-available;
 }
 .card {
@@ -85,4 +85,5 @@ nav {
     display: block;
     width: 100%;
     z-index: 1;
+    height: 60px;
 }

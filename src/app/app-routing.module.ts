@@ -13,7 +13,7 @@ import { InstallComponent } from './install/install.component';
 import { HomeComponent } from './home/home.component';
 import { KeycloakloginComponent } from './authentication/login/keycloaklogin.component';
 import { LogoutComponent } from './authentication/logout/logout.component';
-
+  import { SearchComponent } from './discovery/search/search.component';
 const routes: Routes = [
 // Home
 { path: '', component: HomeComponent },
@@ -67,7 +67,7 @@ const routes: Routes = [
 { path: ':entity/attestation/:table', component: TablesComponent, canActivate: [AuthGuard] },
 { path: ':entity/attestation/:table/:id', component: AttestationComponent, canActivate: [AuthGuard] },
 { path: 'document/view', component: DocViewComponent, canActivate: [AuthGuard] },
-
+{ path: 'discovery', component: SearchComponent },
 
 // Installation
 { path: 'install', component: InstallComponent },

@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GeneralService } from 'src/app/services/general/general.service';
 
+import { FormGroup } from '@angular/forms';
+import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
+
 @Component({
   selector: 'app-form-detail',
   templateUrl: './attestation.component.html',
@@ -9,6 +12,37 @@ import { GeneralService } from 'src/app/services/general/general.service';
 })
 export class AttestationComponent implements OnInit {
 
+  noteForm = new FormGroup({});
+  denyForm = new FormGroup({});
+
+  model: any = {};
+  options: FormlyFormOptions = {};
+
+  denyFields: FormlyFieldConfig[] = [
+    {
+      key: 'note',
+      type: 'textarea',
+      templateOptions: {
+        label: 'Reason for denied',
+        required: true,
+        description: "This note will be sent to user",
+        placeholder: "Type message here"
+      }
+    }
+  ];
+
+  noteFields: FormlyFieldConfig[] = [
+    {
+      key: 'note',
+      type: 'textarea',
+      templateOptions: {
+        label: 'Note',
+        required: true,
+        description: "note sent on user"
+      }
+    }
+  ];
+  
   entityId: string;
   user: any;
   education: any;
@@ -52,7 +86,7 @@ export class AttestationComponent implements OnInit {
     "properties": {
       "note": {
         "title": "Reason for deny",
-        "type": "string",
+        "type": "textarea",
       },
     }
   }
@@ -61,7 +95,7 @@ export class AttestationComponent implements OnInit {
     {
       "key": "note",
       "type": "textarea",
-      "placeholder": "Type your note.."
+      "placeholder": "Type message here.. "
     },
     {
       "type": "submit",
@@ -136,14 +170,19 @@ export class AttestationComponent implements OnInit {
         this.claimEntity = res.claim.entity;
         this.claimData = res.claim;
         this.notes = res.notes;
+        let noteDesc = 'This note will be sent to ' + this.claimData?.requestorName;
+        this.denyFields[0].templateOptions.description = noteDesc;
+        this.noteFields[0].templateOptions.description = noteDesc;
+
         this.generalService.getData("/"+this.claimData.propertyURI).subscribe((res) => {
           console.log("res2",res)
           this.attestationData = res;
           this.removeCommonFields();
           this.generateData()
         })
-        this.generalService.getData("/"+this.claimEntity+"/"+this.claimEntityId).subscribe((res) => {
-          console.log("profileData",res)
+        this.generalService.getData(this.claimEntity+"/"+this.claimEntityId).subscribe((res) => {
+          console.log("profileData",res);
+
           this.profileData = res;
           this.profile = true
           // this.removeCommonFields();
@@ -193,7 +232,7 @@ export class AttestationComponent implements OnInit {
   removeCommonFields() {
     var commonFields = ['osCreatedAt', 'osCreatedBy', 'osUpdatedAt', 'osUpdatedBy','OsUpdatedBy','_osAttestedData', 'osid','_osClaimId','_osState','Osid'];
     commonFields.forEach(element => {
-      if(this.attestationData[element]){
+      if(this.attestationData.hasOwnProperty(element)){
         delete this.attestationData[element]
       }
       
@@ -204,18 +243,19 @@ export class AttestationComponent implements OnInit {
   }
 
   onAttestApproveReject(action,event) {
-    // console.log("event--",JSON.stringify(event));
-    // if(action == 'GRANT_CLAIM')
+    console.log(this.form);
+    // if(action == 'REJECT_CLAIM')
     // {
     //   this.note = event.note
     // }
 
+    //this.note = this.denyForm.value.note ? this.denyForm.value.note : this.note;
     let data = {
       "action": action,
-      "notes": this.note
+      "notes": this.denyForm.value.note ? this.denyForm.value.note : this.note
   }
   console.log("data--",data);
-    var url = "/"+this.entity+"/claims/"+this.claimId+"/attest"
+    var url = this.entity+"/claims/"+this.claimId+"/attest"
     this.generalService.postData(url, data).subscribe((res) => {
       // alert('success');
       console.log(res);

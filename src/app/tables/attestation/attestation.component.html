@@ -19,20 +19,23 @@
         </div>
     </nav>
 </header>
-<div class="container">
+<div class="container ">
+    <h3>Attestation Claim of {{claimData?.requestorName}}</h3>
 
-    <div class="mt-5">
+    <div class="row">
+    <div class="col">
+        <p class="p14 font-weight-bold">Review and attest claim</p>
 
-        <h5>Claims by {{claimData?.requestorName}}</h5>
-    </div>
-    <!-- <button style="margin: 8px;" class="btn btn-primary text-end pr-20 fw-bold text-capitalize"
+        <div class="">
+        </div>
+        <!-- <button style="margin: 8px;" class="btn btn-primary text-end pr-20 fw-bold text-capitalize"
                         (click)="onAttestApproveReject()"><i class="fa fa-check-circle text-success"
                                 data-mdb-toggle="tooltip" title="Attested"></i>Approve</button>
                         <button style="margin: 8px;" class="btn btn-primary text-end fw-bold pr-20 text-capitalize"
                             data-toggle="modal" data-target="#deny"><i
                                 class="fa fa-exclamation-circle red"></i>Deny</button> -->
 
-    <!-- <ng-template [ngIf]="type == 'experience'">
+        <!-- <ng-template [ngIf]="type == 'experience'">
         <h6>Experience</h6>
         <div class="card">
             <div class="card-body" style="height: 128px;">
@@ -60,88 +63,95 @@
         <hr>
     </ng-template> -->
 
-    <div>
-        <!-- <h6>Attestations </h6> -->
-        <div class="card">
-            <div class="card-body">
-                <dl class="d-flex">
-                    <dd class="w-70">
-                        <div *ngFor="let item of propertyData">
-                            <div *ngIf="item?.title == 'FileName'; else noFile">
-                                {{item?.title}} : <a href="" style="color:#1266f1" >{{item?.value}}</a>
+        <div>
+            <!-- <h6>Attestations </h6> -->
+            <div class="card">
+                <div class="card-body">
+                    <dl class="row">
+                        <dd class="col col-lg-7">
+                            <div *ngFor="let item of propertyData">
+                                <div *ngIf="item?.title == 'FileName'; else noFile">
+                                    {{item?.title}} : <a href="" style="color:#1266f1">{{item?.value}}</a>
+                                </div>
+                                <ng-template #noFile>
+                                    <div class="lh-lg"> <span class="p14 text-grey-color"> {{item?.title}}: </span>
+                                        <span class="p14 text-dark"> {{item?.value}}
+                                        </span>
+                                    </div>
+                                </ng-template>
                             </div>
-                            <ng-template #noFile>
-                                 {{item?.title}} : <b>{{item?.value}}</b>
+                            <div *ngIf="documents != null" class="mb-3">
+                                <ng-template ngFor let-document [ngForOf]="documents" let-i="index">
+                                    <a href="/document/view?u={{document.fileName}}"
+                                        class="badge badge-pill badge-primary mr-1" target="_blank"><i
+                                            class="fa fa-paperclip" aria-hidden="true"></i> Document {{i + 1}}</a>
+                                </ng-template>
+                            </div>
+                        </dd>
+                        <dd class="float-end col col-lg-5">
+                            <button
+                                class="btn btn-style m-1 text-end pr-20  px-2 fw-bold p14 text-capitalize btn-success"
+                                (click)="onAttestApproveReject('GRANT_CLAIM',$event)"><i
+                                    class="fa fa-check text-success" data-mdb-toggle="tooltip" title="Attested"></i>
+                                &nbsp; Approve</button>
+                            <button class="m-1 btn btn-deny btn-style text-end fw-bold pr-20 p14  px-2 text-capitalize"
+                                data-toggle="modal" data-target="#deny"><i class="fa fa-times red"></i> &nbsp;
+                                Deny</button>
+                        </dd>
+
+                    </dl>
+
+                    <div class="card" style="background-color: #F6F8FC;">
+
+                        <div class="p-4">
+
+                            <ng-template [ngIf]="noteAdded">
+                                <div class="text-success p14"><i class="fa fa-check"></i> Note Added!
+                                </div>
                             </ng-template>
-                        </div>
-                        <div *ngIf="documents != null" class="mb-3">
-                            <ng-template ngFor let-document [ngForOf]="documents" let-i="index">
-                                <a href="/document/view?u={{document.fileName}}" class="badge badge-pill badge-primary mr-1" target="_blank"><i class="fa fa-paperclip" aria-hidden="true"></i> Document {{i + 1}}</a>
-                            </ng-template >
-                        </div>
-                    </dd>
-                    <dd style="text-align-last: right;" class="float-end">
-                        <button style="margin: 8px;" class="btn btn-primary text-end pr-20 fw-bold text-capitalize"
-                            (click)="onAttestApproveReject('GRANT_CLAIM',$event)"><i
-                                class="fa fa-check-circle text-success" data-mdb-toggle="tooltip"
-                                title="Attested"></i>Approve</button>
-                        <button style="margin: 8px;" class="btn btn-primary text-end fw-bold pr-20 text-capitalize"
-                            data-toggle="modal" data-target="#deny"><i
-                                class="fa fa-exclamation-circle red"></i>Deny</button>
-                    </dd>
-                    
-                </dl>
-                
-                <div class="card" style="background-color: #eef3f399;">
+                            <form [formGroup]="noteForm">
+                                <formly-form [model]="model" [fields]="noteFields" [options]="options"
+                                    [form]="noteForm">
+                                </formly-form>
+                                <button type="button" [disabled]="!noteForm.valid"
+                                    class="btn btn-primary text-capitalize font-weight-bold submit-button"
+                                    (click)="saveNote($event)">Save note</button>
+                            </form>
 
-                    <ul class="nav nav-tabs">
-                        <li class="nav-item">
-                            <a href="#comment" class="nav-link active" data-toggle="tab">Comments</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#note" class="nav-link" data-toggle="tab">Notes</a>
-                        </li>
-
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane fade show active" id="comment">
-                            <div class="px-3">
-                                    <json-schema-form [schema]="commentSchema" [layout]="form1" framework="bootstrap-4"
-                                        (onSubmit)="saveComments($event)">
-                                    </json-schema-form>
+                            <div class="pt-4 mb-1" *ngFor="let noteData of notes">
+                                <ng-template [ngIf]="noteData.notes != ''">
+                                    <h6 class="mb-1 p14 text-dark">{{noteData.notes}}</h6>
+                                    <span class="fs-7 text-grey-color">
+                                        <span *ngIf="noteData.addedBy"> By {{noteData.addedBy}}, </span>
+                                        <span *ngIf="noteData.createdAt"> {{noteData.createdAt | date : 'd MMM y'}}
+                                        </span>
+                                    </span>
+                                </ng-template>
                             </div>
-                        </div>
-                        <div class="tab-pane fade" id="note">
-                            <div class="px-3">
-                                    <json-schema-form [schema]="approveNoteSchema" [layout]="form"
-                                        framework="bootstrap-4" (onSubmit)="saveNote($event)">
-                                    </json-schema-form>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="px-3 mb-3" *ngFor="let noteData of notes">
-                        <ng-template [ngIf]="noteData.notes != ''">
-                            <h6 class="mb-1">{{noteData.notes}}</h6>
-                            <span class="fs-7 text-grey-color">By {{noteData.addedBy}}, {{noteData.createdAt | date}}</span>
-                        </ng-template>
-                    </div>
 
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <hr>
-    <div class="mt-5">
-        <h5>Public Profile of {{claimData?.requestorName}}</h5>
-    </div>
-    <ng-template [ngIf]="profile">
-        <app-layouts layout={{claimEntity}} identifier={{claimEntityId}} public={{profile}}></app-layouts>
-    </ng-template>
+  
+    <div class="col ml-2">
+        <!-- <div class="mt-2"> -->
+        <!-- </div> -->
+        <!-- <h5>Public Profile of {{claimData?.requestorName}}</h5> -->
+        <p class="p14 font-weight-bold">Public Profile of {{claimData?.requestorName}}</p>
+        <div class="card">
+            <div class="card-body mb30">
+                <ng-template [ngIf]="profile">
+                    <app-layouts layout={{claimEntity}} identifier={{claimEntityId}} public={{profile}}></app-layouts>
+                </ng-template>
 
 
 
-    <!-- <div class="card" style="background-color: #f2e39c99;">
+                <!-- <div class="card" style="background-color: #f2e39c99;">
         <div class="card-body">
             <h5>Add a Note for {{claimData?.requestorName}}</h5>
             <ng-template [ngIf]="noteAdded">
@@ -155,23 +165,45 @@
     </div>
 </div> -->
 
-<!-- deny Modal -->
-<div class="modal right fade" id="deny" tabindex="-1" role="dialog" aria-labelledby="deny">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
+                <!-- deny Modal -->
+                <div class="modal right fade" id="deny" tabindex="-1" role="dialog" aria-labelledby="deny">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
 
-            <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel2">Deny {{type}}</h5>
-                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            <div class="modal-header">
+                                <h3 class="modal-title font-weight-bold" id="myModalLabel2">Deny {{type}}</h3>
+                                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button> -->
-            </div>
+                            </div>
 
-            <div class="modal-body">
-                <json-schema-form [schema]="denyNoteSchema" [layout]="form" framework="bootstrap-4"
-                    (onSubmit)="onAttestApproveReject('REJECT_CLAIM',$event)">
-                </json-schema-form>
-            </div>
+                            <div class="modal-body">
+                                <!-- <json-schema-form [schema]="denyNoteSchema" [layout]="form" framework="bootstrap-4"
+                        (onSubmit)="onAttestApproveReject('REJECT_CLAIM', $event)">
+                    </json-schema-form> -->
 
+
+                                <form [formGroup]="denyForm" class="p-3">
+                                    <formly-form [model]="model" [fields]="denyFields" [options]="options"
+                                        [form]="denyForm">
+                                    </formly-form>
+                                    <button type="button" class="btn large btn-style btn-bg submit-button">
+                                        <span aria-hidden="true" ata-dismiss="modal" aria-label="Close"
+                                            class="label-primary font-weight-bold text-capitalize">Cancel</span></button>
+
+                                    <button type="button" [disabled]="!denyForm.valid"
+                                        class="btn btn-primary btn-style float-end submit-button"
+                                        (click)="onAttestApproveReject('REJECT_CLAIM',$event)"><span
+                                            class="font-weight-bold text-capitalize">Yes, Deny</span></button>
+
+
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+</div>
 </div>
