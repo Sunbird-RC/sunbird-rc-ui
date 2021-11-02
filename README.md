@@ -92,26 +92,7 @@ Key | Value
 
 # Examples
 
-## Professional Registry
-Let's create a registry of employees and employers, where the employees are able to add work experience at each employer. Consider the below cases
-
-- Employees sign up for an account
-- Employers sign up for an account
-- Employees add and edit their Experience claim
-- Employers attest the experience claim
-
-The `src/examples/professional-registry` [folder](https://github.com/Sunbird-RC/sunbird-rc-ui/tree/main/src/examples/professional-registry) has the forms and layouts files to enable this use case
-
-## Insurance Registry
-Let's create a registry for insurance, which lets users maintain their policies in the electronic format
-
-- Users sign up for an account
-- Insurance companies sign up for an account
-- User adds their policy details as a claim
-- Insurance companies attest the claim
-
-The `src/examples/insurance-registry` [folder](https://github.com/Sunbird-RC/sunbird-rc-ui/tree/main/src/examples/insurance-registry) has the forms and layouts files to enable this use case
-
+You can find examples of config files [here](https://github.com/ref-registries)
 
 
 # FAQs
