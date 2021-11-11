@@ -27,7 +27,7 @@ export class DocViewComponent implements OnInit {
   extension;
   public bearerToken: string | undefined = undefined;
   constructor(private route: ActivatedRoute,
-    private keycloakService: KeycloakService, private config: AppConfig) { }
+    private keycloakService: KeycloakService, private config: AppConfig, public generalService: GeneralService) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(async params => {
@@ -36,6 +36,9 @@ export class DocViewComponent implements OnInit {
       this.docUrl = this.baseUrl +'/'+ params.u;
       this.extension = params.u.split('.').slice(-1);
       console.log("d",this.docUrl)
+      this.generalService.getData(this.docUrl,true).subscribe((res) => {
+          console.log("rrr",res)
+      })
     })
     
   }
