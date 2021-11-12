@@ -136,36 +136,8 @@ export class SearchComponent implements OnInit {
             }
 
 
-            if (filter.type == 'autocomplete') {
-              fieldObj.type = 'autocomplete';
-              fieldObj['templateOptions']['label'] = filter.title;
-              fieldObj['templateOptions']['placeholder'] = filter.placeholder;
-
-
-              fieldObj['templateOptions']['search$'] = (term) => {
-                if (term || term != '') {
-                  var formData = {
-                    "filters": {},
-                    "limit": 20,
-                    "offset": 0
-                  }
-
-                  formData.filters[filter.key] = {};
-                  formData.filters[filter.key]["contains"] = term;
-
-                  this.generalService.postData(filter.api, formData).subscribe(async (res) => {
-                    let items = res;
-                    items = items.filter(x => x[filter.key].toLocaleLowerCase().indexOf(term.toLocaleLowerCase()) > -1);
-                    if (items) {
-                      this.searchResult = items;
-                      return observableOf(this.searchResult);
-                    }
-                  });
-                }
-
-                return observableOf(this.searchResult);
-
-              }
+            if (filter.autocomplete) {
+              this.autoList(fieldObj, filter);
             }
 
             this.dropdownList.push({ "id": filter.key, "itemName": filter.title, "data": fieldObj });
@@ -181,8 +153,7 @@ export class SearchComponent implements OnInit {
         this.fields = [this.data[0]];
 
         fieldset.results.fields.forEach((fields) => {
-          if(this.privateFields != [] && !this.privateFields.includes('$.' + fields.property))
-          {
+          if (this.privateFields != [] && !this.privateFields.includes('$.' + fields.property)) {
             this.cardFields.push(fields);
           }
         });
@@ -231,6 +202,92 @@ export class SearchComponent implements OnInit {
     });
   }
 
+  autoList(fieldObj, filter) {
+
+    fieldObj.type = 'autocomplete';
+    fieldObj['templateOptions']['label'] = filter.key;
+    fieldObj['templateOptions']['placeholder'] = filter.placeholder;
+
+    var dataval = "{{value}}"
+
+    fieldObj['templateOptions']['search$'] = (term) => {
+      if (term || term != '') {
+
+        var datapath = this.findPath(filter.autocomplete.body, dataval, '')
+        this.setPathValue(filter.autocomplete.body, datapath, term);
+        dataval = term;
+
+        // var formData = {
+        //   "filters": {},
+        //   "limit": 20,
+        //   "offset": 0
+        // }
+
+       // formData.filters[filter.key] = {};
+        //formData.filters[filter.key]["contains"] = term;
+
+        this.generalService.postData(filter.autocomplete.apiURL, filter.autocomplete.body).subscribe(async (res) => {
+          let items = res;
+          items = items.filter(x => x[filter.key].toLocaleLowerCase().indexOf(term.toLocaleLowerCase()) > 1);
+          if (items) {
+            this.searchResult = items;
+            console.log({items});
+            return observableOf(this.searchResult);
+          }
+        });
+      }
+
+      return observableOf(this.searchResult);
+
+    }
+
+  }
+
+  findPath = (obj, value, path) => {
+    if (typeof obj !== 'object') {
+      return false;
+    }
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        var t = path;
+        var v = obj[key];
+        var newPath = path ? path.slice() : [];
+        newPath.push(key);
+        if (v === value) {
+          return newPath;
+        } else if (typeof v !== 'object') {
+          newPath = t;
+        }
+        var res = this.findPath(v, value, newPath);
+        if (res) {
+          return res;
+        }
+      }
+    }
+    return false;
+  }
+
+  setPathValue(obj, path, value) {
+    var keys;
+    if (typeof path === 'string') {
+      keys = path.split(".");
+    }
+    else {
+      keys = path;
+    }
+    const propertyName = keys.pop();
+    let propertyParent = obj;
+    while (keys.length > 0) {
+      const key = keys.shift();
+      if (!(key in propertyParent)) {
+        propertyParent[key] = {};
+      }
+      propertyParent = propertyParent[key];
+    }
+    propertyParent[propertyName] = value;
+    return obj;
+  }
+  
   async mapFieldsdata(res) {
     this.items = [];
 
