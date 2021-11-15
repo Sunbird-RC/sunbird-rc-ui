@@ -21,7 +21,7 @@ import { ObjectTypeComponent } from '../app/forms/types/object.type';
 import { MultiSchemaTypeComponent } from '../app/forms/types/multischema.type';
 import { NullTypeComponent } from '../app/forms/types/null.type';
 import { AutocompleteTypeComponent } from '../app/forms/types/autocomplete.type';
-import { initializeKeycloak } from '../app/utility/app.init';
+import { initializeKeycloak } from './utility/app.init';
 
 //Local imports
 import { FormsComponent } from './forms/forms.component';
@@ -55,6 +55,9 @@ import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 import { CoursesComponent } from './courses/courses.component';
 import { CertificatesComponent } from './certificates/certificates.component';
 import { ViewCertificateComponent } from './certificates/view/view.component';
+import { AuthConfigService } from './authentication/auth-config.service';
+import { DocumentComponent } from './document/document.component';
+import { ElockerDashboardComponent } from './elocker-dashboard/elocker-dashboard.component';
 
 //form validations
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
@@ -124,12 +127,17 @@ function initConfig(config: AppConfig){
     InstallComponent,
     HomeComponent,
     LogoutComponent,
+
     IssueCertificateComponent,
     VerifyComponent,
     QrCodeComponent,
     CoursesComponent,
     CertificatesComponent,
     ViewCertificateComponent
+
+    DocumentComponent,
+    ElockerDashboardComponent
+
   ],
   imports: [
     BrowserModule,
@@ -205,9 +213,10 @@ function initConfig(config: AppConfig){
     provide: APP_INITIALIZER,
     useFactory: initializeKeycloak,
     multi: true,
-    deps: [KeycloakService],
+    deps: [KeycloakService,AuthConfigService],
   },
   { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'always' } }]
 })
 export class AppModule {
+  
 }
