@@ -14,6 +14,8 @@ import { HomeComponent } from './home/home.component';
 import { KeycloakloginComponent } from './authentication/login/keycloaklogin.component';
 import { LogoutComponent } from './authentication/logout/logout.component';
   import { SearchComponent } from './discovery/search/search.component';
+import { DocumentComponent } from './document/document.component';
+import { ElockerDashboardComponent } from './elocker-dashboard/elocker-dashboard.component';
 const routes: Routes = [
 // Home
 { path: '', component: HomeComponent },
@@ -68,6 +70,8 @@ const routes: Routes = [
 { path: ':entity/attestation/:table/:id', component: AttestationComponent, canActivate: [AuthGuard] },
 { path: 'document/view', component: DocViewComponent, canActivate: [AuthGuard] },
 { path: 'discovery', component: SearchComponent },
+{ path: 'documents', component: DocumentComponent },
+{ path: 'dashboard', component: ElockerDashboardComponent },
 
 // Installation
 { path: 'install', component: InstallComponent },

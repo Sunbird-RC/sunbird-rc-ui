@@ -48,6 +48,8 @@ import { PanelWrapperComponent } from './forms/types/group.type';
 import { LogoutComponent } from './authentication/logout/logout.component';
 import { SearchComponent } from '../app/discovery/search/search.component';
 import { AuthConfigService } from './authentication/auth-config.service';
+import { DocumentComponent } from './document/document.component';
+import { ElockerDashboardComponent } from './elocker-dashboard/elocker-dashboard.component';
 
 //form validations
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
@@ -116,7 +118,9 @@ function initConfig(config: AppConfig){
     FormlyFieldNgSelect,
     InstallComponent,
     HomeComponent,
-    LogoutComponent
+    LogoutComponent,
+    DocumentComponent,
+    ElockerDashboardComponent
   ],
   imports: [
     BrowserModule,
