@@ -17,17 +17,17 @@
 
                 <tr>
                     <!-- {{td | json}} -->
-                    <ng-template ngFor let-td [ngForOf]="item">
-                        <td width="10%" *ngIf="td.type && td.type === 'button'; else normalTd">
+                    <ng-template ngFor let-td [ngForOf]="item" class="row">
+                        <td class="col-4" *ngIf="td.type && td.type === 'button'; else normalTd">
                             <a [routerLink]="[td.redirectToUrl]" class="btn btn-bg btn-style text-primary-color text-end fw-bold text-capitalize">{{td?.buttonText}}</a>
                         </td>
                         <ng-template #normalTd>
-                            <td width="15%" *ngIf="td?.formate && td.formate == 'date' && td?.type !== 'name'; else notFormate"><b>{{td?.value | date : 'd MMM y'}}</b></td>
-                            <ng-template #notFormate>
+                            <td class="col-3" *ngIf="td?.formate && td.formate == 'date' && td?.type !== 'name'; else notFormate"><b>{{td?.value | date : 'd MMM y'}}</b></td>
+                            <ng-template  class="col-5" #notFormate>
                                 <td><b>{{td?.value}} </b></td>
                             </ng-template>
-                            <ng-template  *ngIf="td?.type === 'name'">
-                                <td width="70%"><b>{{td?.value}} </b></td>
+                            <ng-template class="col-5" *ngIf="td?.type === 'name'">
+                                <td ><b>{{td?.value}} </b></td>
                             </ng-template>
                         </ng-template>
                         
