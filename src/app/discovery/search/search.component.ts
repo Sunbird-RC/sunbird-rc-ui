@@ -217,15 +217,6 @@ export class SearchComponent implements OnInit {
         this.setPathValue(filter.autocomplete.body, datapath, term);
         dataval = term;
 
-        // var formData = {
-        //   "filters": {},
-        //   "limit": 20,
-        //   "offset": 0
-        // }
-
-       // formData.filters[filter.key] = {};
-        //formData.filters[filter.key]["contains"] = term;
-
         this.generalService.postData(filter.autocomplete.apiURL, filter.autocomplete.body).subscribe(async (res) => {
           let items = res;
           items = items.filter(x => x[filter.key].toLocaleLowerCase().indexOf(term.toLocaleLowerCase()) > 1);
