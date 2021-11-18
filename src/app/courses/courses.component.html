@@ -1,0 +1,109 @@
+<div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container my-2" style="
+        padding-bottom: 2px;
+    ">
+            <div class=" d-inline ">
+                <h3 class="mb-1 text-body">
+                    {{catagory | titlecase}}s
+                </h3>
+            </div>
+            <a *ngIf="institute" class=" p-2 p14 btn-bg label-primary btn-style float-end"
+            data-toggle="modal" data-target="#prewiewProfile">Add {{catagory}}</a>
+        </div>
+        <div>
+            <button type="button" (click)="close()" class="close float-right"><span _ngcontent-fni-c481=""
+                aria-hidden="true">×</span></button>
+        </div>
+        
+    </nav>
+</div>
+<div *ngIf="course && catagory == 'course'" class="container">
+    <div class="card mb-3">
+        <div class="card-body">
+            <dl class="d-inline">
+                <div class="row">
+                    <div class="col ml-2">
+                        <dt class="fs-7 text-muted">{{catagory | titlecase}} Name</dt>
+                        <dd class="text-body ">{{course.course}}</dd>
+                    </div>
+                    <!-- <div class="col ml-2">
+                        <dt class="fs-7 text-muted">Course Type</dt>
+                        <dd class="text-body ">{{course.type}}</dd>
+                    </div> -->
+                    <div *ngIf="student && enrolled != 'true'" class="col ml-2">
+                        <dt></dt>
+                        <button style="
+                        margin-top: 8px;
+                    " class=" p-2 p14 btn-bg label-primary btn-style float-end" (click)="enroll()">Enroll</button>
+                    </div>
+                    <div *ngIf="institute" class="col ml-2">
+                        <dt></dt>
+                        <button style="
+                        margin-top: 8px;
+                    " class=" p-2 p14 btn-bg label-primary btn-style float-end" [routerLink]="['/issue-certificate']">Issue Certificate</button>
+                    </div>
+                </div>
+            </dl>   
+        </div>
+    </div>
+</div>
+
+<div *ngIf="skill && catagory == 'skill'" class="container">
+    <div class="card mb-3">
+        <div class="card-body">
+            <dl class="d-inline">
+                <div class="row">
+                    <div class="col ml-2">
+                        <dt class="fs-7 text-muted">{{catagory | titlecase}} Name</dt>
+                        <dd class="text-body ">{{skill.course}}</dd>
+                    </div>
+                    <!-- <div class="col ml-2">
+                        <dt class="fs-7 text-muted">Course Type</dt>
+                        <dd class="text-body ">{{course.type}}</dd>
+                    </div> -->
+                    <!-- <div *ngIf="student && enrolled != 'true'" class="col ml-2">
+                        <dt></dt>
+                        <button style="
+                        margin-top: 8px;
+                    " class=" p-2 p14 btn-bg label-primary btn-style float-end" (click)="enroll()">Enroll</button>
+                    </div> -->
+                    <div *ngIf="institute" class="col ml-2">
+                        <dt></dt>
+                        <button style="
+                        margin-top: 8px;
+                    " class=" p-2 p14 btn-bg label-primary btn-style float-end" [routerLink]="['/issue-certificate']">Issue Certificate</button>
+                    </div>
+                </div>
+            </dl>   
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal right fade right-xl-modal" id="prewiewProfile" tabindex="-1" role="dialog"
+            aria-labelledby="prewiewProfile">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h6 class="modal-title">Add {{catagory | titlecase}}</h6>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <form id="IssueForm" [formGroup]="form2" (ngSubmit)="submit()" *ngIf="fields">
+                              <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form2"></formly-form>
+                              <!-- <div *ngIf="generated">
+                                <input type="hidden" id="hidden" name="upload" value={{blob}}>
+                              </div> -->
+                              <button type="submit" class="btn btn-primary submit-button right" [disabled]="!form2.valid">Create</button>
+                            </form>
+                          </div>
+                        <!-- <app-layouts layout={{layout}} identifier={{identifier}} public="true"></app-layouts> -->
+                    </div>
+                </div>
+            </div>
+        </div>

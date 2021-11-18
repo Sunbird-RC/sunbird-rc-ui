@@ -1,0 +1,14 @@
+{
+    "environment": "development",
+    "keycloak": {
+        "url": "https://ndear.xiv.in/auth",
+        "realm": "ndear",
+        "clientId": "registry-frontend"
+    },
+    "configFolder": "/assets/config/ui-config",
+    "logoPath": "/assets/images/logo.png",
+    "title": "Education Use Case",
+    "baseUrl": "http://localhost:4200/registry/api/v1",
+    "schemaUrl": "http://localhost:4200/registry/api/docs/swagger.json",
+    "footerText": "Sunbird RC"
+}
