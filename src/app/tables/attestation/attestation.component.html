@@ -68,7 +68,7 @@
                 <div class="card">
                     <div class="card-body">
                         <dl class="row">
-                            <dd class="col col-lg-7">
+                            <dd class="col">
                                 <div *ngFor="let item of propertyData">
                                     <div *ngIf="item?.title == 'FileName'; else noFile">
                                         {{item?.title}} : <a href="" style="color:#1266f1">{{item?.value}}</a>
@@ -105,7 +105,7 @@
                                     </ng-template>
                                 </div>
                             </dd>
-                            <dd class="float-end col col-lg-5">
+                            <dd class="float-end col">
                                 <button
                                     class="btn btn-style m-1 text-end pr-20  px-2 fw-bold p14 text-capitalize btn-success"
                                     (click)="onAttestApproveReject('GRANT_CLAIM',$event)"><i
