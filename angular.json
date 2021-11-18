@@ -32,9 +32,14 @@
             ],
             "styles": [
               "src/styles.scss",
-              "src/mediaQuery.scss"
+              "src/mediaQuery.scss",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css"
+
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js"
+
+            ]
           },
           "configurations": {
             "production": {

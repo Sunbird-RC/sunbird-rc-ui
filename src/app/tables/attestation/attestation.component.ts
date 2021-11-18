@@ -238,7 +238,7 @@ export class AttestationComponent implements OnInit {
         console.log("documents", this.documents)
       }
       else {
-        if (Array.isArray(value)) {
+       /* if (Array.isArray(value)) {
           var temp_value = [];
           value.forEach(element => {
             for (var [index2, [key2, value2]] of Object.entries(Object.entries(element))) {
@@ -265,7 +265,7 @@ export class AttestationComponent implements OnInit {
 
 
           value = JSON.stringify(temp_value)
-        }
+        }*/
         // }else{
         //   var temp_object = {};
         //   temp_object['title'] = (key).charAt(0).toUpperCase() + key.slice(1);
