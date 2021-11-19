@@ -8,7 +8,7 @@
     "configFolder": "/assets/config/ui-config",
     "logoPath": "/assets/images/logo.png",
     "title": "Education Use Case",
-    "baseUrl": "http://localhost:4200/registry/api/v1",
-    "schemaUrl": "http://localhost:4200/registry/api/docs/swagger.json",
+    "baseUrl": "http://localhost:4200/skills/api/v1",
+    "schemaUrl": "http://localhost:4200/skills/api/docs/swagger.json",
     "footerText": "Sunbird RC"
 }

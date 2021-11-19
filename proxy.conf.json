@@ -1,5 +1,5 @@
 {
-    "/registry/api/v1": {
+    "/skills/api/v1": {
       "target": "https://ndear.xiv.in",
       "changeOrigin": true,
       "logLevel": "debug",
@@ -7,7 +7,7 @@
 
     },
 
-    "/registry/api": {
+    "/skills/api": {
       "target": "https://ndear.xiv.in",
       "changeOrigin": true,
       "logLevel": "debug",
@@ -15,7 +15,7 @@
 
     },
 
-    "/registry/api/docs": {
+    "/skills/api/docs": {
       "target": "https://ndear.xiv.in",
       "changeOrigin": true,
       "logLevel": "debug",

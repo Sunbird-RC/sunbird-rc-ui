@@ -147,7 +147,7 @@ export class IssueCertificateComponent implements OnInit {
         // formData.filters[field.key] = {};
         // formData.filters[field.key]["contains"] = term
         dataval = term;
-        this.generalService.postData("https://ndear.xiv.in/registry/api/v1/Student/search", formData).subscribe(async (res) => {
+        this.generalService.postData("https://ndear.xiv.in/skills/api/v1/Student/search", formData).subscribe(async (res) => {
           let items = res;
           items = items.filter(x => x['identityDetails']['fullName'].toLocaleLowerCase().indexOf(term.toLocaleLowerCase()) > -1);
           if (items) {

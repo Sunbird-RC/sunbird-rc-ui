@@ -295,6 +295,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
       get_url = this.apiUrl
     }
     this.generalService.getData(get_url).subscribe((res) => {
+      localStorage.setItem('institute',JSON.stringify(res));
       if (this.identifier) {
         this.model = res
       }

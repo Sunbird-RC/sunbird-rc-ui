@@ -446,9 +446,32 @@ export class FormsComponent implements OnInit {
             "expressionProperties": {},
             "modelOptions": {}
           }
-
         }
-
+        if (field.name == "course") {
+          var instituteData = JSON.parse(localStorage.getItem('institute'))[0]
+          var courses = [];
+          if(instituteData['courses']){
+            instituteData['courses'].forEach(element => {
+              courses.push(element.name)
+            });
+            this.responseData.definitions[fieldset.definition].properties[field.name]['enum'] = courses;
+          }
+        }
+        if (field.name == "skill") {
+          var instituteData = JSON.parse(localStorage.getItem('institute'))[0]
+          var skills = [];
+          if(instituteData['skills']){
+            instituteData['skills'].forEach(element => {
+              skills.push(element.name)
+            });
+            this.responseData.definitions[fieldset.definition].properties[field.name]['enum'] = skills;
+          }
+          
+          // this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = field.placeholder;
+        }
+        if (field.placeholder) {
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = field.placeholder;
+        }
         if (field.placeholder) {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = field.placeholder;
         }
@@ -722,6 +745,9 @@ export class FormsComponent implements OnInit {
       }
       if (field.disabled || field.disable) {
         this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['disabled'] = field.disabled
+      };
+      if (field.hideExpression) {
+        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['hideExpression'] = field.hideExpression
       };
 
 
