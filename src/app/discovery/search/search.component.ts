@@ -153,8 +153,7 @@ export class SearchComponent implements OnInit {
         this.fields = [this.data[0]];
 
         fieldset.results.fields.forEach((fields) => {
-          if(this.privateFields != [] && !this.privateFields.includes('$.' + fields.property))
-          {
+          if (this.privateFields != [] && !this.privateFields.includes('$.' + fields.property)) {
             this.cardFields.push(fields);
           }
         });
@@ -217,15 +216,6 @@ export class SearchComponent implements OnInit {
         var datapath = this.findPath(filter.autocomplete.body, dataval, '')
         this.setPathValue(filter.autocomplete.body, datapath, term);
         dataval = term;
-
-        // var formData = {
-        //   "filters": {},
-        //   "limit": 20,
-        //   "offset": 0
-        // }
-
-       // formData.filters[filter.key] = {};
-        //formData.filters[filter.key]["contains"] = term;
 
         this.generalService.postData(filter.autocomplete.apiURL, filter.autocomplete.body).subscribe(async (res) => {
           let items = res;

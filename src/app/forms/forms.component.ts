@@ -607,7 +607,6 @@ export class FormsComponent implements OnInit {
               }
               else if (field.autofill.method === 'POST') {
                 var datapath = this.findPath(field.autofill.body, "{{value}}", '') ;
-
                 datapath = (datapath == false) ? this.findPath(field.autofill.body, this.oldVal, '') : this.findPath(field.autofill.body, "{{value}}", '');
 
                 if (datapath) {
