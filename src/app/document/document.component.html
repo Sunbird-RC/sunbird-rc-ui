@@ -1,0 +1,46 @@
+<div class="contain m-5 ">
+
+    <!-- Add Document -->
+    <div *ngIf="layout == 'add'">
+        <button  class="btn-bg text-primary-color btn-style float-end p14">Upload</button></div>
+
+
+    <!-- My document  -->
+    <div *ngIf="layout == 'mydoc'">
+        <div class="row">
+            <div class="col-8">
+                <span class="text-primary-color p14 font-weight-bold"><a href="/dashboard"><i class="fas fa-chevron-left text-dark"></i></a>  My Documents</span> / <span
+                    class="p14 font-weight-bold">All (2)</span>
+            </div>
+            <div data-target="#mydocument" class="col-4"><button
+                    class="btn-bg text-primary-color btn-style float-end p14"><a href="/document">Add</a></button></div>
+        </div>
+        <div class="card lh-lg mt-3 p-3 p14">
+            <span class=" font-weight-bold mb-2">Country ID Card <i class="fas fa-award text-primary-color"></i></span>
+            <div> <span class="text-grey">Issued by: </span> <span class="font-weight-bold ml-2">Issued Name</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Issue  -->
+    <div *ngIf="layout == 'issue'">
+
+        <h4 class="font-weight-bold"><a href="/dashboard"><i class="fas fa-chevron-left text-dark"></i></a>   Class 10 Certificate</h4>
+        <span class="p14 font-weight-bold">Select Issuer to fetch documents</span> <br />
+        <span class="p14 ">Your documents will be verified by the issuer selected</span>
+        <div class="row mt-3">
+            <div class="col">
+                <input class=" w-100" type="text" placeholder="Search Documents" aria-label="Search">
+                <i class="fas fa-search" style="margin-left: -50px;
+                margin-top: 3px;" aria-hidden="true"></i>
+            </div>
+        </div>
+
+        <div class="card lh-lg mt-3 p-3 p14" *ngFor="let item of items; let i = index">
+            <span class=" mb-2 text-dark">State {{i + 1}} Board of Examination</span>
+             <span class="text-grey  mb-2">State Name {{i + 1}} </span> 
+             <span class="text-grey">  <i class="fas fa-award text-primary-color"></i> Digital Verification Supported </span> 
+
+        </div>
+    </div>
+</div>

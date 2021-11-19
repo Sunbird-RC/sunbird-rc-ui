@@ -14,6 +14,16 @@ import { HomeComponent } from './home/home.component';
 import { KeycloakloginComponent } from './authentication/login/keycloaklogin.component';
 import { LogoutComponent } from './authentication/logout/logout.component';
   import { SearchComponent } from './discovery/search/search.component';
+
+import { IssueCertificateComponent } from './issue-certificate/issue-certificate.component';
+import { VerifyComponent } from './verify/verify.component';
+import { QrCodeComponent } from './qr-code/qr-code.component';
+import { CoursesComponent } from './courses/courses.component';
+import { CertificatesComponent } from './certificates/certificates.component';
+import { ViewCertificateComponent } from './certificates/view/view.component';
+import { DocumentComponent } from './document/document.component';
+import { ElockerDashboardComponent } from './elocker-dashboard/elocker-dashboard.component';
+
 const routes: Routes = [
 // Home
 { path: '', component: HomeComponent },
@@ -68,9 +78,22 @@ const routes: Routes = [
 { path: ':entity/attestation/:table/:id', component: AttestationComponent, canActivate: [AuthGuard] },
 { path: 'document/view', component: DocViewComponent, canActivate: [AuthGuard] },
 { path: 'discovery', component: SearchComponent },
+{ path: 'documents', component: DocumentComponent },
+{ path: 'dashboard', component: ElockerDashboardComponent },
 
 // Installation
 { path: 'install', component: InstallComponent },
+
+
+// Custom
+{ path: 'issue-certificate', component: IssueCertificateComponent, canActivate: [AuthGuard] },
+{ path: 'verify', component: VerifyComponent },
+{ path: 'credentials', component: QrCodeComponent },
+{ path: ':entity/courses', component: CoursesComponent },
+{ path: ':entity/skills', component: CoursesComponent },
+{ path: ':entity/certificates', component: CertificatesComponent},
+{ path: ':entity/certificates/:id', component: ViewCertificateComponent}
+
 ];
 
 @NgModule({

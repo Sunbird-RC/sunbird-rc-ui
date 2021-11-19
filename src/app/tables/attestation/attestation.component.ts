@@ -132,7 +132,7 @@ export class AttestationComponent implements OnInit {
   table: any;
   documents = null;
   notes: any[] = [];
-  commonFields = ['osCreatedAt', 'osCreatedBy', 'osUpdatedAt', 'osUpdatedBy', 'OsUpdatedBy', '_osAttestedData', 'osid', '_osClaimId', '_osState', 'Osid', 'OsUpdatedAt','Attest'];
+  commonFields = ['osCreatedAt', 'osCreatedBy', 'osUpdatedAt', 'osUpdatedBy', 'OsUpdatedBy', '_osAttestedData', 'osid', '_osClaimId', '_osState', 'Osid', 'OsUpdatedAt', 'Attest'];
   isObject(val): boolean {
     try {
       JSON.parse(val);
@@ -142,7 +142,7 @@ export class AttestationComponent implements OnInit {
     return true;
   }
   listObject(val): object {
-     return JSON.parse(val);
+    return JSON.parse(val);
   }
   constructor(
     public router: Router,
@@ -240,28 +240,34 @@ export class AttestationComponent implements OnInit {
       else {
        /* if (Array.isArray(value)) {
           var temp_value = [];
-          value.forEach(element => {
-            for (var [index2, [key2, value2]] of Object.entries(Object.entries(element))) {
-              if (Array.isArray(value2)) {
-                var temp_value2 = [];
-                value2.forEach(element2 => {
-                  for (var [index3, [key3, value3]] of Object.entries(Object.entries(element2))) {
-                    var temp_object3 = {};
-                    temp_object3['title'] = (key3).charAt(0).toUpperCase() + key3.slice(1);
-                    temp_object3['value'] = value3;
-                    temp_value2.push(temp_object3);
-                  }
-                });
+          if (typeof value[0] === 'object') {
+            value.forEach(element => {
+              for (var [index2, [key2, value2]] of Object.entries(Object.entries(element))) {
+                if (Array.isArray(value2)) {
+                  var temp_value2 = [];
+                  value2.forEach(element2 => {
+                    for (var [index3, [key3, value3]] of Object.entries(Object.entries(element2))) {
+                      var temp_object3 = {};
+                      temp_object3['title'] = (key3).charAt(0).toUpperCase() + key3.slice(1);
+                      temp_object3['value'] = value3;
+                      temp_value2.push(temp_object3);
+                    }
+                  });
 
 
-                temp_value.push(temp_value2)
+                  temp_value.push(temp_value2)
+                }
+                var temp_object2 = {};
+                temp_object2['title'] = (key2).charAt(0).toUpperCase() + key2.slice(1);
+                temp_object2['value'] = value2;
+                temp_value.push(temp_object2);
               }
-              var temp_object2 = {};
-              temp_object2['title'] = (key2).charAt(0).toUpperCase() + key2.slice(1);
-              temp_object2['value'] = value2;
-              temp_value.push(temp_object2);
-            }
-          });
+            });
+          }
+          // } else {
+          //   value = value.join(', ');
+          // }
+
 
 
           value = JSON.stringify(temp_value)

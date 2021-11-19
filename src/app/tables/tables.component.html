@@ -1,16 +1,16 @@
 <app-header [headerFor]='entity' [tab]='tab'></app-header>
 <div class="container">
-    <h6 class="d-inline-block p16 font-weight-bold">{{tableSchema.title}}</h6>
+    <h6 class="d-inline-block p16 font-weight-bold">{{tableSchema?.title}}</h6>
     <table class="table table-striped">
         <thead>
             <tr>
-                <th class="p12 text-grey-color" *ngFor="let th of tableSchema.fields;" scope="col">{{th?.title}}</th>
+                <th class="p12 text-grey-color" *ngFor="let th of tableSchema?.fields;" scope="col">{{th?.title}}</th>
                 <!-- <th scope="col">Name</th>
         <th scope="col"></th> -->
             </tr>
         </thead>
         <tbody>
-            <ng-template ngFor let-item [ngForOf]="tableSchema.items | paginate: { itemsPerPage: limit, currentPage: page }" let-i="index">
+            <ng-template ngFor let-item [ngForOf]="tableSchema?.items | paginate: { itemsPerPage: limit, currentPage: page }" let-i="index">
                 <!-- {{i}}
         {{item | json}}
         <hr> -->
@@ -42,8 +42,8 @@
 
     <table class="mx-5 my-5 w-50">
         <tbody class="fs-5">
-            <tr *ngIf="tableSchema.items && !tableSchema.items.length">
-              <td class="float-end" [attr.colspan]="tableSchema.items.length">
+            <tr *ngIf="tableSchema?.items && !tableSchema?.items.length">
+              <td class="float-end" [attr.colspan]="tableSchema?.items.length">
                 No Records Found!
               </td>
             </tr>
