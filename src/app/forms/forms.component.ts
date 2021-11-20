@@ -1055,8 +1055,9 @@ export class FormsComponent implements OnInit {
             "t&c": true
         }
           this.generalService.postData(passportTo+"/invite", formdata).subscribe((res) => {
-            this.router.navigate([this.redirectTo])
+            
           })
+          this.router.navigate([this.redirectTo])
         }
         
       }
