@@ -922,6 +922,7 @@ export class FormsComponent implements OnInit {
             }
 
           }
+          
         }
       });
     }
@@ -965,6 +966,17 @@ export class FormsComponent implements OnInit {
           this.postData()
         }
 
+        // this.getData()
+      }
+      else if (this.type && this.type.includes('passport')) {
+        // this.customFields.forEach(element => {
+        //   delete this.model[element];
+        // });
+        if (this.identifier != null) {
+          this.updateData()
+        } else {
+          this.postData(this.type)
+        }
         // this.getData()
       }
     }
@@ -1024,13 +1036,29 @@ export class FormsComponent implements OnInit {
     });
   }
 
-  postData() {
+  postData(type=null) {
     if (Array.isArray(this.model)) {
       this.model = this.model[0];
     }
     this.generalService.postData(this.apiUrl, this.model).subscribe((res) => {
       if (res.params.status == 'SUCCESSFUL') {
-        this.router.navigate([this.redirectTo])
+        if(type.includes("passport")){
+          var passportTo = type.split(":")[1];
+          var formdata = {
+            "identityDetails": {
+                "fullName": this.model['name']
+            },
+            "contactDetails": {
+                "email": this.model['email'],
+                "mobile": this.model['mobile']
+            },
+            "t&c": true
+        }
+          this.generalService.postData(passportTo+"/invite", formdata).subscribe((res) => {
+            this.router.navigate([this.redirectTo])
+          })
+        }
+        
       }
       else if (res.params.errmsg != '' && res.params.status == 'UNSUCCESSFUL') {
         this.toastMsg.error('error', res.params.errmsg)

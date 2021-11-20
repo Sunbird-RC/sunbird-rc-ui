@@ -24,7 +24,7 @@ export class VerifyComponent implements OnInit {
   }
 
   public scanSuccessHandler($event: any) {
-    this.getData($event)
+    // this.getData($event)
 
     this.qrString = $event;
     console.log($event);

@@ -36,7 +36,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
   params: any;
   constructor(private route: ActivatedRoute, public schemaService: SchemaService, private titleService: Title, public generalService: GeneralService, private modalService: NgbModal,
     public router: Router) {
-     }
+  }
 
   ngOnChanges(): void {
     this.Data = [];
@@ -53,7 +53,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
 
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.route.params.subscribe(params => {
-    this.params = params;
+      this.params = params;
       if (params['layout'] != undefined) {
         this.layout = params['layout']
         this.titleService.setTitle(params['layout'].charAt(0).toUpperCase() + params['layout'].slice(1));
@@ -64,11 +64,10 @@ export class LayoutsComponent implements OnInit, OnChanges {
       if (params['tab']) {
         this.tab = params['tab']
       }
-      localStorage.setItem('entity',this.layout);
+      localStorage.setItem('entity', this.layout);
       this.layout = this.layout.toLowerCase()
     });
-    this.schemaService.getSchemas().subscribe(async (res) => 
-    {
+    this.schemaService.getSchemas().subscribe(async (res) => {
       this.responseData = res;
       this.schemaService.getLayoutJSON().subscribe(async (LayoutSchemas) => {
         var filtered = LayoutSchemas.layouts.filter(obj => {
@@ -95,10 +94,10 @@ export class LayoutsComponent implements OnInit, OnChanges {
         console.error('layouts.json not found in src/assets/config/ - You can refer to examples folder to create the file')
       });
     },
-    (error) => {
-      //Schema Error callback
-      console.error('Something went wrong with Schema URL or Path not found')
-    });
+      (error) => {
+        //Schema Error callback
+        console.error('Something went wrong with Schema URL or Path not found')
+      });
   }
 
 
@@ -106,33 +105,73 @@ export class LayoutsComponent implements OnInit, OnChanges {
     this.layoutSchema.blocks.forEach(block => {
       this.property = []
       block['items'] = [];
-      var temp_object;
-      if (block.fields.includes && block.fields.includes.length > 0) {
-        if (block.fields.includes == "*") {
-          for (var element in this.model) {
-            if (!Array.isArray(this.model[element])) {
-              if (typeof this.model[element] == 'string') {
-                temp_object = this.responseData['definitions'][block.definition]['properties'][element]
-                if (temp_object != undefined) {
-                  temp_object['value'] = this.model[element]
-                  this.property.push(temp_object)
-                }
-              }
-              else {
-                for (const [key, value] of Object.entries(this.model[element])) {
-                  if (this.responseData['definitions'][block.definition]['properties'][element]) {
-                    if ('$ref' in this.responseData['definitions'][block.definition]['properties'][element]) {
-                      var ref_defination = (this.responseData['definitions'][block.definition]['properties'][element]['$ref']).split('/').pop()
-                      temp_object = this.responseData['definitions'][ref_defination]['properties'][key]
-
-                      if (temp_object != undefined && typeof value != 'object') {
-                        temp_object['value'] = value
-                        this.property.push(temp_object)
-                      }
+      if (block.type && block.type === "passport") { 
+        console.log("Passport");
+        if(block.apiURL){
+          var formData = (JSON.stringify(block.body)).replace("{{value}}",localStorage.getItem("loggedInUser"))
+          this.generalService.postData(block.apiURL, JSON.parse(formData)).subscribe((res) => {
+            if (res.length > 0) {
+              var items = [];
+              console.log("certs",res)
+              res.forEach(element => {
+                var temp_list = [];
+                if (block.fields && block.fields.length > 0) {
+                  block.fields.forEach(item => {
+                    var temp_obj = {
+                      "title": item.title,
+                      "value": element[item.field]
                     }
-                    else {
-                      if (this.responseData['definitions'][block.definition]['properties'][element]['properties'] != undefined) {
-                        temp_object = this.responseData['definitions'][block.definition]['properties'][element]['properties'][key]
+                    if(block.button){
+                      var src = block.button.redirectTo.replace("{{value}}",element[block.button.value])
+                      temp_obj['button'] = src
+                    }
+                    console.log(temp_obj);
+                    temp_list.push(temp_obj);
+                  });
+                  // temp_list.forEach(element => {
+                  //   items.push(element);
+                  // });
+                  this.property.push(temp_list);
+                }
+              });
+              // this.property.push(items);
+              // items.forEach(item_list => {
+              //   console.log("item_list.length",item_list.length);
+              //   if(item_list.length > 0) {
+              //     block.items.push(items);
+              //    }
+              // });
+             
+              
+            }
+            // else if (res.params.errmsg != '' && res.params.status == 'UNSUCCESSFUL') {
+            //   this.toastMsg.error('error', res.params.errmsg)
+            // }
+          }, (err) => {
+            console.error('error', err.error.params.errmsg)
+          });
+        }
+        
+      }
+      else {
+        var temp_object;
+        if (block.fields.includes && block.fields.includes.length > 0) {
+          if (block.fields.includes == "*") {
+            for (var element in this.model) {
+              if (!Array.isArray(this.model[element])) {
+                if (typeof this.model[element] == 'string') {
+                  temp_object = this.responseData['definitions'][block.definition]['properties'][element]
+                  if (temp_object != undefined) {
+                    temp_object['value'] = this.model[element]
+                    this.property.push(temp_object)
+                  }
+                }
+                else {
+                  for (const [key, value] of Object.entries(this.model[element])) {
+                    if (this.responseData['definitions'][block.definition]['properties'][element]) {
+                      if ('$ref' in this.responseData['definitions'][block.definition]['properties'][element]) {
+                        var ref_defination = (this.responseData['definitions'][block.definition]['properties'][element]['$ref']).split('/').pop()
+                        temp_object = this.responseData['definitions'][ref_defination]['properties'][key]
 
                         if (temp_object != undefined && typeof value != 'object') {
                           temp_object['value'] = value
@@ -140,141 +179,153 @@ export class LayoutsComponent implements OnInit, OnChanges {
                         }
                       }
                       else {
-                        temp_object = this.responseData['definitions'][block.definition]['properties'][element]
-                        if (temp_object != undefined) {
-                          temp_object['value'] = this.model[element]
-                          this.property.push(temp_object)
+                        if (this.responseData['definitions'][block.definition]['properties'][element]['properties'] != undefined) {
+                          temp_object = this.responseData['definitions'][block.definition]['properties'][element]['properties'][key]
+
+                          if (temp_object != undefined && typeof value != 'object') {
+                            temp_object['value'] = value
+                            this.property.push(temp_object)
+                          }
+                        }
+                        else {
+                          temp_object = this.responseData['definitions'][block.definition]['properties'][element]
+                          if (temp_object != undefined) {
+                            temp_object['value'] = this.model[element]
+                            this.property.push(temp_object)
+                          }
                         }
                       }
                     }
                   }
                 }
               }
+              else {
+                if (block.fields.excludes && block.fields.excludes.length > 0 && !block.fields.excludes.includes(element)) {
+                  this.model[element].forEach(objects => {
+                    for (const [key, value] of Object.entries(objects)) {
+                      if (this.responseData['definitions'][block.definition]['properties'][element]) {
+                        if ('$ref' in this.responseData['definitions'][block.definition]['properties'][element]) {
+                          var ref_defination = (this.responseData['definitions'][block.definition]['properties'][element]['$ref']).split('/').pop()
+                          temp_object = this.responseData['definitions'][ref_defination]['properties'][key]
+                          if (temp_object != undefined && typeof value != 'object') {
+                            temp_object['value'] = value;
+                            this.property.push(temp_object);
+                          }
+                        }
+                        else {
+                          temp_object = this.responseData['definitions'][block.definition]['properties'][element]['items']['properties'][key];
+                          if (temp_object != undefined && typeof value != 'object') {
+                            temp_object['value'] = value;
+                            this.property.push(temp_object);
+                          }
+                        }
+                      }
+                    }
+                  });
+                }
+              }
             }
-            else {
-              if (block.fields.excludes && block.fields.excludes.length > 0 && !block.fields.excludes.includes(element)) {
-                this.model[element].forEach(objects => {
-                  for (const [key, value] of Object.entries(objects)) {
-                    if (this.responseData['definitions'][block.definition]['properties'][element]) {
+          }
+          else {
+            block.fields.includes.forEach(element => {
+              if (this.model[element] && !Array.isArray(this.model[element])) {
+                for (const [key, value] of Object.entries(this.model[element])) {
+                  if (this.responseData['definitions'][block.definition]['properties'][element]) {
+                    if ('$ref' in this.responseData['definitions'][block.definition]['properties'][element]) {
+                      var ref_defination = (this.responseData['definitions'][block.definition]['properties'][element]['$ref']).split('/').pop()
+                      temp_object = this.responseData['definitions'][ref_defination]['properties'][key]
+                      if (temp_object != undefined && typeof value != 'object') {
+                        if (element.osid) {
+                          temp_object['osid'] = element.osid
+                        }
+                        if (element.osid) {
+                          temp_object['_osState'] = element._osState;
+                          // if(element.hasOwnProperty("_osClaimNotes")){
+                          //   temp_object['_osClaimNotes'] = element._osClaimNotes;
+                          // }
+                        }
+                        temp_object['value'] = value
+                        this.property.push(temp_object)
+                      }
+
+
+                    }
+                    else {
+                      temp_object = this.responseData['definitions'][block.definition]['properties'][element]['properties'][key];
+                      if (temp_object != undefined && typeof value != 'object') {
+                        if (element.osid) {
+                          temp_object['osid'] = element.osid;
+                        }
+                        if (element.osid) {
+                          temp_object['_osState'] = element._osState;
+                        }
+                        temp_object['value'] = value;
+                        this.property.push(temp_object);
+                      }
+
+                    }
+                  }
+                }
+              }
+              else {
+                if (this.model[element]) {
+                  this.model[element].forEach((objects, i) => {
+                    var osid;
+                    var osState;
+                    var temp_array = [];
+
+                    for (const [index, [key, value]] of Object.entries(Object.entries(objects))) {
                       if ('$ref' in this.responseData['definitions'][block.definition]['properties'][element]) {
                         var ref_defination = (this.responseData['definitions'][block.definition]['properties'][element]['$ref']).split('/').pop()
                         temp_object = this.responseData['definitions'][ref_defination]['properties'][key]
                         if (temp_object != undefined && typeof value != 'object') {
+                          if (objects.osid) {
+                            temp_object['osid'] = objects.osid;
+                          }
+                          if (objects.osid) {
+                            temp_object['_osState'] = objects._osState;
+                          }
                           temp_object['value'] = value;
-                          this.property.push(temp_object);
+                          temp_array.push(this.pushData(temp_object))
                         }
                       }
                       else {
                         temp_object = this.responseData['definitions'][block.definition]['properties'][element]['items']['properties'][key];
                         if (temp_object != undefined && typeof value != 'object') {
+                          if (objects.osid) {
+                            temp_object['osid'] = objects.osid;
+                          }
+                          if (objects.osid) {
+                            temp_object['_osState'] = objects._osState;
+                          }
                           temp_object['value'] = value;
-                          this.property.push(temp_object);
+                          temp_array.push(this.pushData(temp_object));
                         }
-                      }
-                    }
-                  }
-                });
-              }
-            }
-          }
-        }
-        else {
-          block.fields.includes.forEach(element => {
-            if (this.model[element] && !Array.isArray(this.model[element])) {
-              for (const [key, value] of Object.entries(this.model[element])) {
-                if (this.responseData['definitions'][block.definition]['properties'][element]) {
-                  if ('$ref' in this.responseData['definitions'][block.definition]['properties'][element]) {
-                    var ref_defination = (this.responseData['definitions'][block.definition]['properties'][element]['$ref']).split('/').pop()
-                    temp_object = this.responseData['definitions'][ref_defination]['properties'][key]
-                    if (temp_object != undefined && typeof value != 'object') {
-                      if (element.osid) {
-                        temp_object['osid'] = element.osid
-                      }
-                      if (element.osid) {
-                        temp_object['_osState'] = element._osState;
-                        // if(element.hasOwnProperty("_osClaimNotes")){
-                        //   temp_object['_osClaimNotes'] = element._osClaimNotes;
                         // }
+
+
                       }
-                      temp_object['value'] = value
-                      this.property.push(temp_object)
                     }
-
-
-                  }
-                  else {
-                    temp_object = this.responseData['definitions'][block.definition]['properties'][element]['properties'][key];
-                    if (temp_object != undefined && typeof value != 'object') {
-                      if (element.osid) {
-                        temp_object['osid'] = element.osid;
-                      }
-                      if (element.osid) {
-                        temp_object['_osState'] = element._osState;
-                      }
-                      temp_object['value'] = value;
-                      this.property.push(temp_object);
-                    }
-
-                  }
+                    this.property.push(temp_array);
+                  });
                 }
               }
-            }
-            else {
-              if (this.model[element]) {
-                this.model[element].forEach((objects, i) => {
-                  var osid;
-                  var osState;
-                  var temp_array = [];
-
-                  for (const [index, [key, value]] of Object.entries(Object.entries(objects))) {
-                    if ('$ref' in this.responseData['definitions'][block.definition]['properties'][element]) {
-                      var ref_defination = (this.responseData['definitions'][block.definition]['properties'][element]['$ref']).split('/').pop()
-                      temp_object = this.responseData['definitions'][ref_defination]['properties'][key]
-                      if (temp_object != undefined && typeof value != 'object') {
-                        if (objects.osid) {
-                          temp_object['osid'] = objects.osid;
-                        }
-                        if (objects.osid) {
-                          temp_object['_osState'] = objects._osState;
-                        }
-                        temp_object['value'] = value;
-                        temp_array.push(this.pushData(temp_object))
-                      }
-                    }
-                    else {
-                      temp_object = this.responseData['definitions'][block.definition]['properties'][element]['items']['properties'][key];
-                      if (temp_object != undefined && typeof value != 'object') {
-                        if (objects.osid) {
-                          temp_object['osid'] = objects.osid;
-                        }
-                        if (objects.osid) {
-                          temp_object['_osState'] = objects._osState;
-                        }
-                        temp_object['value'] = value;
-                        temp_array.push(this.pushData(temp_object));
-                      }
-                      // }
-
-
-                    }
-                  }
-                  this.property.push(temp_array);
-                });
-              }
+            });
+          }
+        }
+        if (block.fields.excludes && block.fields.excludes.length > 0) {
+          block.fields.excludes.forEach(element => {
+            if (this.property.hasOwnProperty(element)) {
+              delete this.property[element];
             }
           });
         }
-      }
-      if (block.fields.excludes && block.fields.excludes.length > 0) {
-        block.fields.excludes.forEach(element => {
-          if (this.property.hasOwnProperty(element)) {
-            delete this.property[element];
-          }
-        });
+        
       }
       block.items.push(this.property)
       this.Data.push(block)
       this.schemaloaded = true;
+      console.log('data',this.Data)
     });
   }
 
@@ -295,7 +346,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
       get_url = this.apiUrl
     }
     this.generalService.getData(get_url).subscribe((res) => {
-      localStorage.setItem('institute',JSON.stringify(res));
+      localStorage.setItem('institute', JSON.stringify(res));
       if (this.identifier) {
         this.model = res
       }
@@ -307,7 +358,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
       this.getHeadingTitle(this.model);
 
       this.Data = [];
-      localStorage.setItem('osid',this.identifier);
+      localStorage.setItem('osid', this.identifier);
       this.addData()
     });
   }
@@ -344,44 +395,44 @@ export class LayoutsComponent implements OnInit, OnChanges {
     if (this.layoutSchema.hasOwnProperty('headerName')) {
       var propertySplit = this.layoutSchema.headerName.split(".");
 
-    let fieldValue = [];
+      let fieldValue = [];
 
-    for (let j = 0; j < propertySplit.length; j++) {
-      let a = propertySplit[j];
+      for (let j = 0; j < propertySplit.length; j++) {
+        let a = propertySplit[j];
 
-      if (j == 0 && item.hasOwnProperty(a)) {
-        fieldValue = item[a];
-      } else if (fieldValue.hasOwnProperty(a)) {
+        if (j == 0 && item.hasOwnProperty(a)) {
+          fieldValue = item[a];
+        } else if (fieldValue.hasOwnProperty(a)) {
 
-        fieldValue = fieldValue[a];
+          fieldValue = fieldValue[a];
 
-      } else if (fieldValue[0]) {
-        let arryItem = []
-        if (fieldValue.length > 0) {
-          for (let i = 0; i < fieldValue.length; i++) {
-            //  arryItem.push({ 'value': fieldValue[i][a], "status": fieldValue[i][key.attest] });
+        } else if (fieldValue[0]) {
+          let arryItem = []
+          if (fieldValue.length > 0) {
+            for (let i = 0; i < fieldValue.length; i++) {
+              //  arryItem.push({ 'value': fieldValue[i][a], "status": fieldValue[i][key.attest] });
+            }
+
+            fieldValue = arryItem;
+
+          } else {
+            fieldValue = fieldValue[a];
           }
 
-          fieldValue = arryItem;
-
         } else {
-          fieldValue = fieldValue[a];
+          fieldValue = [];
         }
-
-      } else {
-        fieldValue = [];
       }
+
+      this.headerName = fieldValue;
+      this.getSubHeadername(item);
     }
 
-    this.headerName = fieldValue;
-    this.getSubHeadername(item);
-    }
-    
   }
 
 
 
- getSubHeadername(item) {
+  getSubHeadername(item) {
 
     if (this.layoutSchema.hasOwnProperty('subHeadername')) {
       var propertySplit = this.layoutSchema.subHeadername.split(",");

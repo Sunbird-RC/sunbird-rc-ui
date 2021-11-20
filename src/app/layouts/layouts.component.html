@@ -91,6 +91,13 @@
                                                     class="pl-1 fs-7 text-primary-color float-end">
                                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                                             </span>
+                                            <span *ngIf="element[objectIndex].button"
+                                                class="float-end">
+                                                <a 
+                                                    href="{{element[objectIndex].button}}"
+                                                    class="pl-1 fs-7 text-primary-color float-end">
+                                                    <i class="fa fa-qrcode fa-2x" aria-hidden="true"></i></a>
+                                            </span>
                                         </h7>
 
                                         <ng-template #smallBlock>
