@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import * as JSZip from 'jszip';
 
 @Component({
   selector: 'app-verify',
@@ -28,6 +29,16 @@ export class VerifyComponent implements OnInit {
 
     this.qrString = $event;
     console.log($event);
+    const CERTIFICATE_FILE = "certificate.json";
+    const zip = new JSZip();
+    zip.loadAsync($event).then((contents) => {
+      return contents.files[CERTIFICATE_FILE].async('text')
+    }).then(function (contents) {
+      console.log('con',contents)
+    }).catch(err => {
+      console.log('err',err)
+    }
+    );
   }
 
   getData(url) {
@@ -45,11 +56,11 @@ export class VerifyComponent implements OnInit {
       .then(result => {
         console.log('get-', result);
         this.loader = true;
-        if(result['credentialSubject']){
+        if (result['credentialSubject']) {
           this.validate(result)
           this.item = result['credentialSubject']['data']['hasCredential'];
           this.name = result['credentialSubject']['data']['name'];
-        }else{
+        } else {
           console.log('else-');
           this.loader = false;
           this.scannerEnabled = false;
@@ -76,15 +87,15 @@ export class VerifyComponent implements OnInit {
     fetch("https://affinity-verifier.prod.affinity-project.org/api/v1/verifier/verify-vcs", requestOptions)
       .then(response => response.json())
       .then(result => {
-        console.log('validate-',result);
-        if(result['isValid'] && result['isValid'] == true) {
+        console.log('validate-', result);
+        if (result['isValid'] && result['isValid'] == true) {
           this.success = true;
-        }else{
+        } else {
           this.notValid = true;
         }
         this.loader = false;
         this.scannerEnabled = false;
-      
+
       })
       .catch(error => console.log('error', error));
   }
