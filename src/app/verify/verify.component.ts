@@ -28,20 +28,22 @@ export class VerifyComponent implements OnInit {
     // this.getData($event)
 
     this.qrString = $event;
-    console.log($event);
+    // console.log($event);
     const CERTIFICATE_FILE = "certificate.json";
     const zip = new JSZip();
     zip.loadAsync($event).then((contents) => {
       return contents.files[CERTIFICATE_FILE].async('text')
     }).then(contents => {
-      console.log('con', contents)
+      // console.log('con', contents)
       this.loader = true;
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("Cookie", "JSESSIONID=BEE076F2D0801811396549DCC158F429; OAuth_Token_Request_State=1ef52fae-6e1a-4395-af75-beb03e9f8bc3");
       var signedData = JSON.parse(contents)
-      var context = { "signedCredentials": { signedData }}
-      var raw = context;
+      console.log('-----s',signedData)
+      var context = {}
+      context['signedCredentials'] = signedData
+      var raw = JSON.stringify(context);
 
       var requestOptions: any = {
         method: 'POST',
@@ -55,6 +57,7 @@ export class VerifyComponent implements OnInit {
         .then(result => {
           console.log('res', { "signedCredentials": { result } })
           if (result.verified) {
+            this.loader = false;
             this.success = true;
             this.enableScanner()
           }
