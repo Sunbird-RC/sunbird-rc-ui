@@ -39,8 +39,9 @@ export class VerifyComponent implements OnInit {
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("Cookie", "JSESSIONID=BEE076F2D0801811396549DCC158F429; OAuth_Token_Request_State=1ef52fae-6e1a-4395-af75-beb03e9f8bc3");
-
-      var raw = JSON.stringify({"signedCredentials": {contents}});
+      var signedData = JSON.parse(contents)
+      var context = { "signedCredentials": { signedData }}
+      var raw = context;
 
       var requestOptions: any = {
         method: 'POST',
@@ -52,12 +53,12 @@ export class VerifyComponent implements OnInit {
       fetch("https://ndear.xiv.in/skills/api/v1/verify", requestOptions)
         .then(response => response.json())
         .then(result => {
-          console.log('res',{"signedCredentials": {result}} )
+          console.log('res', { "signedCredentials": { result } })
           if (result.verified) {
             this.success = true;
             this.enableScanner()
           }
-          else{
+          else {
             this.loader = false;
             // this.scannerEnabled = false;
             this.notValid = true;
