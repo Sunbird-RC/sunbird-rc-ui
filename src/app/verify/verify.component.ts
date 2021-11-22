@@ -40,7 +40,7 @@ export class VerifyComponent implements OnInit {
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("Cookie", "JSESSIONID=BEE076F2D0801811396549DCC158F429; OAuth_Token_Request_State=1ef52fae-6e1a-4395-af75-beb03e9f8bc3");
 
-      var raw = JSON.stringify(contents);
+      var raw = JSON.stringify({"signedCredentials": {contents}});
 
       var requestOptions: any = {
         method: 'POST',
