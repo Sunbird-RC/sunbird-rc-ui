@@ -33,49 +33,83 @@ export class VerifyComponent implements OnInit {
     const zip = new JSZip();
     zip.loadAsync($event).then((contents) => {
       return contents.files[CERTIFICATE_FILE].async('text')
-    }).then(function (contents) {
-      console.log('con',contents)
+    }).then(contents => {
+      console.log('con', contents)
+      this.loader = true;
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Cookie", "JSESSIONID=BEE076F2D0801811396549DCC158F429; OAuth_Token_Request_State=1ef52fae-6e1a-4395-af75-beb03e9f8bc3");
+
+      var raw = JSON.stringify(contents);
+
+      var requestOptions: any = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
+
+      fetch("https://ndear.xiv.in/skills/api/v1/verify", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+          console.log('res', result)
+          if (result.verified) {
+            this.success = true;
+            this.enableScanner()
+          }
+          else{
+            this.loader = false;
+            // this.scannerEnabled = false;
+            this.notValid = true;
+            this.enableScanner()
+          }
+        })
+        .catch(error => console.log('error', error));
     }).catch(err => {
-      console.log('err',err)
+      console.log('err', err)
+      // this.loader = false;
+      // this.scannerEnabled = false;
+      // this.notValid = true;
+      // this.enableScanner()
     }
     );
   }
 
-  getData(url) {
-    var myHeaders = new Headers();
-    myHeaders.append("Api-Key", "93fca97900d72d45cb1d0b24e47eea09c9fa5301158a53341e20bcd8bfed71cb");
-    myHeaders.append("Content-Type", "application/json");
-    var requestOptions: any = {
-      method: 'GET',
-      headers: myHeaders,
-      redirect: 'follow'
-    };
+  // getData(url) {
+  //   var myHeaders = new Headers();
+  //   myHeaders.append("Api-Key", "93fca97900d72d45cb1d0b24e47eea09c9fa5301158a53341e20bcd8bfed71cb");
+  //   myHeaders.append("Content-Type", "application/json");
+  //   var requestOptions: any = {
+  //     method: 'GET',
+  //     headers: myHeaders,
+  //     redirect: 'follow'
+  //   };
 
-    fetch(url, requestOptions)
-      .then(response => response.json())
-      .then(result => {
-        console.log('get-', result);
-        this.loader = true;
-        if (result['credentialSubject']) {
-          this.validate(result)
-          this.item = result['credentialSubject']['data']['hasCredential'];
-          this.name = result['credentialSubject']['data']['name'];
-        } else {
-          console.log('else-');
-          this.loader = false;
-          this.scannerEnabled = false;
-          this.notValid = true;
-        }
-      })
-      .catch(error => console.log('error', error));
-  }
+  //   fetch(url, requestOptions)
+  //     .then(response => response.json())
+  //     .then(result => {
+  //       console.log('get-', result);
+  //       this.loader = true;
+  //       if (result['credentialSubject']) {
+  //         this.validate(result)
+  //         this.item = result['credentialSubject']['data']['hasCredential'];
+  //         this.name = result['credentialSubject']['data']['name'];
+  //       } else {
+  //         console.log('else-');
+  //         this.loader = false;
+  //         this.scannerEnabled = false;
+  //         this.notValid = true;
+  //       }
+  //     })
+  //     .catch(error => console.log('error', error));
+  // }
 
   validate(result) {
     var myHeaders = new Headers();
-    myHeaders.append("Api-Key", "93fca97900d72d45cb1d0b24e47eea09c9fa5301158a53341e20bcd8bfed71cb");
     myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Cookie", "JSESSIONID=BEE076F2D0801811396549DCC158F429; OAuth_Token_Request_State=1ef52fae-6e1a-4395-af75-beb03e9f8bc3");
 
-    var raw = JSON.stringify({ "verifiableCredentials": [result] });
+    var raw = JSON.stringify(result);
 
     var requestOptions: any = {
       method: 'POST',
@@ -84,19 +118,9 @@ export class VerifyComponent implements OnInit {
       redirect: 'follow'
     };
 
-    fetch("https://affinity-verifier.prod.affinity-project.org/api/v1/verifier/verify-vcs", requestOptions)
+    fetch("https://ndear.xiv.in/skills/api/v1/verify", requestOptions)
       .then(response => response.json())
-      .then(result => {
-        console.log('validate-', result);
-        if (result['isValid'] && result['isValid'] == true) {
-          this.success = true;
-        } else {
-          this.notValid = true;
-        }
-        this.loader = false;
-        this.scannerEnabled = false;
-
-      })
+      .then(result => console.log('res', result))
       .catch(error => console.log('error', error));
   }
 
