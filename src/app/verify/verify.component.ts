@@ -52,7 +52,7 @@ export class VerifyComponent implements OnInit {
       fetch("https://ndear.xiv.in/skills/api/v1/verify", requestOptions)
         .then(response => response.json())
         .then(result => {
-          console.log('res', result)
+          console.log('res',{"signedCredentials": {result}} )
           if (result.verified) {
             this.success = true;
             this.enableScanner()
