@@ -14,13 +14,13 @@
   "private": true,
   "proxy": "https://ndear.xiv.in",
   "dependencies": {
-    "@angular/cli": "^10.0.0",
-    "@angular/compiler-cli": "^10.0.1",
     "@ajsf/bootstrap4": "^0.4.0-beta.1",
     "@angular/animations": "^10.0.1",
     "@angular/cdk": "^10.0.1",
+    "@angular/cli": "^10.0.0",
     "@angular/common": "^10.0.1",
     "@angular/compiler": "^10.0.1",
+    "@angular/compiler-cli": "^10.0.1",
     "@angular/core": "^10.0.1",
     "@angular/fire": "^6.1.5",
     "@angular/flex-layout": "^10.0.0-beta.32",
@@ -54,6 +54,7 @@
     "firebase": "^7.0 || ^8.0",
     "jexl": "^2.3.0",
     "json-refs": "^3.0.4",
+    "jsonpack": "^1.1.5",
     "keycloak-angular": "^8.1.0",
     "keycloak-js": "^11.0.3",
     "libphonenumber-js": "^1.6.8",
@@ -70,10 +71,10 @@
     "redux": "4.0.1",
     "rxjs": "^6.5.4",
     "tslib": "^2.0.0",
+    "typescript": "3.9.5",
     "write-json-file": "^5.0.0",
     "z-schema": "^5.0.0",
-    "zone.js": "~0.10.3",
-    "typescript": "3.9.5"
+    "zone.js": "~0.10.3"
   },
   "devDependencies": {
     "@angular-devkit/architect": ">= 0.900 < 0.1300",

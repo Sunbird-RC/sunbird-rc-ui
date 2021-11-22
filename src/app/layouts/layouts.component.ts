@@ -117,16 +117,19 @@ export class LayoutsComponent implements OnInit, OnChanges {
                 var temp_list = [];
                 if (block.fields && block.fields.length > 0) {
                   block.fields.forEach(item => {
-                    var temp_obj = {
-                      "title": item.title,
-                      "value": element[item.field]
+                    if(element[item.field] && element[item.field] != null && element[item.field] != undefined) {
+                      var temp_obj = {
+                        "title": item.title,
+                        "value": element[item.field]
+                      }
+                      if(block.button){
+                        var src = block.button.redirectTo.replace("{{value}}",element[block.button.value])
+                        temp_obj['button'] = src
+                      }
+                      console.log(temp_obj);
+                      temp_list.push(temp_obj);
                     }
-                    if(block.button){
-                      var src = block.button.redirectTo.replace("{{value}}",element[block.button.value])
-                      temp_obj['button'] = src
-                    }
-                    console.log(temp_obj);
-                    temp_list.push(temp_obj);
+                    
                   });
                   // temp_list.forEach(element => {
                   //   items.push(element);
