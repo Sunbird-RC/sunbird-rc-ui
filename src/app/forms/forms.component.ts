@@ -184,13 +184,13 @@ export class FormsComponent implements OnInit {
         (error) => {
           //Schema Error callback
           console.error('Something went wrong with Schema URL or Path not found')
-          this.toastMsg.error('error', 'Something went wrong with Schema URL or Path not found')
+          this.toastMsg.error('Error', 'Something went wrong with Schema URL or Path not found')
         });
 
     }, (error) => {
       //Form Error callback
       console.error('forms.json not found in src/assets/config/ - You can refer to examples folder to create the file')
-      this.toastMsg.error('error', 'forms.json not found in src/assets/config/ - You can refer to examples folder to create the file')
+      this.toastMsg.error('Error', 'forms.json not found in src/assets/config/ - You can refer to examples folder to create the file')
     })
   }
 
@@ -881,7 +881,7 @@ export class FormsComponent implements OnInit {
             }
           }, (err) => {
             console.log(err);
-            this.toastMsg.error('error', 'Something went wrong while uploading files, please try again')
+            this.toastMsg.error('Error', 'Something went wrong while uploading files, please try again')
           });
         }
         else {
@@ -1063,10 +1063,10 @@ export class FormsComponent implements OnInit {
         
       }
       else if (res.params.errmsg != '' && res.params.status == 'UNSUCCESSFUL') {
-        this.toastMsg.error('error', res.params.errmsg)
+        this.toastMsg.error('Error', res.params.errmsg)
       }
     }, (err) => {
-      this.toastMsg.error('error', err.error.params.errmsg)
+      this.toastMsg.error('Error', err.error.params.errmsg)
     });
 
   }
@@ -1077,10 +1077,10 @@ export class FormsComponent implements OnInit {
         this.router.navigate([this.redirectTo])
       }
       else if (res.params.errmsg != '' && res.params.status == 'UNSUCCESSFUL') {
-        this.toastMsg.error('error', res.params.errmsg)
+        this.toastMsg.error('Error', res.params.errmsg)
       }
     }, (err) => {
-      this.toastMsg.error('error', err.error.params.errmsg)
+      this.toastMsg.error('Error', err.error.params.errmsg)
     });
   }
 
@@ -1174,10 +1174,10 @@ export class FormsComponent implements OnInit {
         this.router.navigate([this.redirectTo])
       }
       else if (res.params.errmsg != '' && res.params.status == 'UNSUCCESSFUL') {
-        this.toastMsg.error('error', res.params.errmsg)
+        this.toastMsg.error('Error', res.params.errmsg)
       }
     }, (err) => {
-      this.toastMsg.error('error', err.error.params.errmsg)
+      this.toastMsg.error('Error', err.error.params.errmsg)
     });
   }
 
