@@ -1042,7 +1042,7 @@ export class FormsComponent implements OnInit {
     }
     this.generalService.postData(this.apiUrl, this.model).subscribe((res) => {
       if (res.params.status == 'SUCCESSFUL') {
-        if(type.includes("passport")){
+        if(type && type.includes("passport")){
           var passportTo = type.split(":")[1];
           var formdata = {
             "identityDetails": {
@@ -1057,8 +1057,9 @@ export class FormsComponent implements OnInit {
           this.generalService.postData(passportTo+"/invite", formdata).subscribe((res) => {
             
           })
-          this.router.navigate([this.redirectTo])
+          
         }
+        this.router.navigate([this.redirectTo])
         
       }
       else if (res.params.errmsg != '' && res.params.status == 'UNSUCCESSFUL') {
