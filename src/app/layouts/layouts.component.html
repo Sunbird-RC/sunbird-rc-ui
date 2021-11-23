@@ -38,7 +38,7 @@
     <ng-template ngFor let-block [ngForOf]="Data" let-blockIndex="index">
         <div *ngIf="block.items[0].length > 0; else noData">
             <div [ngClass]="public ? 'd-flex flex-justify-between' : 'd-flex flex-justify-between mt-3'">
-                <div>
+                <div class="mt-3">
                     <p class="d-inline-block fs-6 font-weight-bold mb-2">{{block.title}}</p>
                     <ng-template [ngIf]="block.edit">
                         <a *ngIf="!public" panelEditLink="{{block.editform}}"
@@ -126,10 +126,12 @@
 
                 </div>
                 <ng-template #publicMultiBlock>
-                    <div class="card-body mt-4">
+                    <div class="card-body my-4">
+                        <div class="d-flex justify-content-center"> No Data Found</div>
                         <ng-template ngFor let-item [ngForOf]="block.items" let-itemIndex="index">
                             <ng-template ngFor let-element [ngForOf]="item" let-elementIndex="index">
-                                <ng-template ngFor let-objects [ngForOf]="element" let-objectIndex="index">
+                                <div class="noDataMsg" >                                 
+				<ng-template ngFor let-objects [ngForOf]="element" let-objectIndex="index">
                                     <!-- {{element[objectIndex]}} {{objectIndex}} -->
                                     <ng-template
                                         [ngIf]="element[objectIndex].value && element[objectIndex]._osState == 'PUBLISHED'">
@@ -156,13 +158,13 @@
                                                     <span class="text-grey-color p14">{{element[objectIndex].title}}:
                                                     </span> <span class="p14">{{element[objectIndex].value}}</span>
                                                 </div>
-                                                <hr>
+                                                    <hr class="mb-5">
                                             </ng-template>
 
                                         </ng-template>
                                     </ng-template>
                                 </ng-template>
-
+                                </div>
                                 <!-- <hr *ngIf="elementIndex + 1 != item.length "> -->
                             </ng-template>
 
