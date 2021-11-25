@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { DataService } from '../data/data-request.service';
-import { environment} from '../../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable, Subscriber } from 'rxjs';
 import { AppConfig } from 'src/app/app.config';
+import { KeycloakService } from 'keycloak-angular';
 
 @Injectable({
   providedIn: 'root'
@@ -11,22 +12,23 @@ import { AppConfig } from 'src/app/app.config';
 export class GeneralService {
   baseUrl = this.config.getEnv('baseUrl');
 
-  constructor(public dataService: DataService, private config: AppConfig) {
+  constructor(public dataService: DataService, private config: AppConfig,
+    public keycloakService: KeycloakService) {
   }
 
-  postData(apiUrl,data) {
+  postData(apiUrl, data) {
     var url;
-    if(apiUrl.indexOf('http') > -1){
+    if (apiUrl.indexOf('http') > -1) {
       url = apiUrl
-    }else{
-      if(apiUrl.charAt(0) == '/'){
+    } else {
+      if (apiUrl.charAt(0) == '/') {
         url = `${this.baseUrl}${apiUrl}`
       }
-      else{
+      else {
         url = `${this.baseUrl}/${apiUrl}`;
       }
     }
-    
+
     const req = {
       url: url,
       data: data
@@ -37,15 +39,15 @@ export class GeneralService {
 
   getDocument(url: string): Observable<any> {
     return this.dataService.getDocument(url);
-}
+  }
 
 
   getData(apiUrl, outside: boolean = false) {
     var url;
-    if(outside) {
+    if (outside) {
       url = apiUrl;
     }
-    else{
+    else {
       url = `${this.baseUrl}/${apiUrl}`;
     }
     url.replace('//', '/');
@@ -77,12 +79,12 @@ export class GeneralService {
     return this.dataService.post(req);
   }
 
-  putData(apiUrl,id, data) {
+  putData(apiUrl, id, data) {
     var url;
-    if(apiUrl.charAt(0) == '/'){
+    if (apiUrl.charAt(0) == '/') {
       url = `${this.baseUrl}${apiUrl}/${id}`
     }
-    else{
+    else {
       url = `${this.baseUrl}/${apiUrl}/${id}`;
     }
     const req = {
@@ -102,13 +104,17 @@ export class GeneralService {
     return this.dataService.get(req);
   }
 
-updateclaims(apiUrl, data) {
+  updateclaims(apiUrl, data) {
     let url = `${this.baseUrl}${apiUrl}`;
     const req = {
       url: url,
       data: data
     };
     return this.dataService.put(req);
+  }
+
+  getUsername(){
+    return this.keycloakService.getUsername();
   }
 
 }

@@ -108,7 +108,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
       if (block.type && block.type === "passport") { 
         console.log("Passport");
         if(block.apiURL){
-          var formData = (JSON.stringify(block.body)).replace("{{value}}",localStorage.getItem("loggedInUser"))
+          var formData = (JSON.stringify(block.body)).replace("{{value}}", this.generalService.getUsername())
           this.generalService.postData(block.apiURL, JSON.parse(formData)).subscribe((res) => {
             if (res.length > 0) {
               var items = [];
