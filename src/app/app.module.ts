@@ -127,14 +127,12 @@ function initConfig(config: AppConfig){
     InstallComponent,
     HomeComponent,
     LogoutComponent,
-
     IssueCertificateComponent,
     VerifyComponent,
     QrCodeComponent,
     CoursesComponent,
     CertificatesComponent,
     ViewCertificateComponent,
-
     DocumentComponent,
     ElockerDashboardComponent
 
@@ -197,7 +195,7 @@ function initConfig(config: AppConfig){
       ],
     }),
     ToastrModule.forRoot({
-      positionClass: 'toast-bottom-center',
+      positionClass: 'toast-bottom-full-width',
     preventDuplicates: true,
     }),
     NgxPaginationModule,
