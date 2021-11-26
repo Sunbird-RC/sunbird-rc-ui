@@ -56,7 +56,6 @@ import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 import { CoursesComponent } from './courses/courses.component';
 import { CertificatesComponent } from './certificates/certificates.component';
 import { ViewCertificateComponent } from './certificates/view/view.component';
-import { AuthConfigService } from './authentication/auth-config.service';
 import { DocumentComponent } from './document/document.component';
 import { ElockerDashboardComponent } from './elocker-dashboard/elocker-dashboard.component';
 
