@@ -222,7 +222,6 @@ export class SearchComponent implements OnInit {
           items = items.filter(x => x[filter.key].toLocaleLowerCase().indexOf(term.toLocaleLowerCase()) > 1);
           if (items) {
             this.searchResult = items;
-            console.log({items});
             return observableOf(this.searchResult);
           }
         });

@@ -30,8 +30,6 @@ dl,dt{
     margin-top: 0.4rem;
 }
 
-
-
 .modal.left .modal-dialog,
 .modal.right .modal-dialog {
     position: fixed;
@@ -118,9 +116,11 @@ outline: 0;
     bottom: 0px;
     width: 100%;
 }
+
 #content, #sidebar { 
     margin-bottom: 5em; 
 }
+
 .demo-footer {
 position: fixed;
 bottom: 0;
@@ -143,6 +143,7 @@ color: #fff;
 mb-2{ 
     margin: bottom 2px;
 }
+
 .noToBottom{
     margin-top: 10px;
     padding-bottom: 40px;
