@@ -18,9 +18,7 @@ export class HeaderComponent implements OnInit {
   headerSchema
   constructor(
     public router: Router, private config: AppConfig, public schemaService: SchemaService
-  ) {
-
-  }
+  ) {}
 
   async ngOnInit() {
     this.logo = this.config.getEnv('logoPath');
@@ -30,7 +28,6 @@ export class HeaderComponent implements OnInit {
       });
       this.headerSchema = filtered[0][this.headerFor];
     }, (error) => {
-      //Layout Error callback
       console.error('headers.json not found in src/assets/config/ - You can refer to examples folder to create the file')
     });
   }
