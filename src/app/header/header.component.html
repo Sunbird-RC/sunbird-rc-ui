@@ -36,54 +36,9 @@
                         </li>
                     </ul>
                 </ng-template>
-
-<<<<<<< HEAD
             </div>
         </div>
     </nav>
 </header>
-=======
-            <div class="nav-item active logo-text">
-                <a href=""><img class="logo" src={{logo}} /></a>
-            </div>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
 
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 
-                <ng-template [ngIf]="headerSchema?.left">
-                    <ul *ngFor="let header of headerSchema.left" class="navbar-nav nav-tabs-line mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a *ngIf="header?.title" id="{{header?.title}}"
-                                class="nav-link  p14 {{header?.activeTab}} {{header?.className}}"
-                                [routerLink]="[header.redirectTo]">{{header?.title}}</a>
-                            <a *ngIf="header?.image" class="nav-link" [routerLink]="[header.redirectTo]">
-                                <img style="width: 25px;" src={{header?.image}} />
-                            </a>
-                            <ng-template [ngIf]="header?.title && tab === header?.title">
-                                <hr>
-                            </ng-template>
-                        </li>
-                    </ul>
-                </ng-template>
-                <ng-template [ngIf]="headerSchema?.right">
-                    <ul *ngFor="let header of headerSchema.right" class="navbar-nav ms-auto">
-                        <li class="nav-item active">
-                            <a *ngIf="header?.title" class="nav-link active p14 {{header?.className}}"
-                                [routerLink]="[header.redirectTo]">{{header?.title}}</a>
-                            <a *ngIf="header?.image" class="nav-link" [routerLink]="[header.redirectTo]">
-                                <img style="width: 25px;" src={{header?.image}} />
-                            </a>
-                            <ng-template [ngIf]="header?.title && tab === header?.title">
-                                <hr>
-                            </ng-template>
-                        </li>
-                    </ul>
-                </ng-template>
-            </div>
-        </div>
-    </nav>
-</header>
->>>>>>> parent of 0df6352... Task #1 feat: UI changes
