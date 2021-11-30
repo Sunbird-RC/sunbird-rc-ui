@@ -160,7 +160,7 @@ mb-2{
 nav {
     overflow: hidden;
     // padding: 1em;
-    position: fixed;
+    position: inherit;
     top: 0px;
     display: block;
     width: 100%;
@@ -173,3 +173,11 @@ img {
     display: inline;
     width: 16px;
 }
+
+
+.noDataMsg {
+    background-color: white !important;
+    margin-top: -33px !important;
+    position: relative !important;
+}
+

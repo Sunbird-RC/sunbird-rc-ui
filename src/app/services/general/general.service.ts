@@ -4,6 +4,7 @@ import { environment} from '../../../environments/environment';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable, Subscriber } from 'rxjs';
 import { AppConfig } from 'src/app/app.config';
+import { KeycloakService } from 'keycloak-angular';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ import { AppConfig } from 'src/app/app.config';
 export class GeneralService {
   baseUrl = this.config.getEnv('baseUrl');
 
-  constructor(public dataService: DataService, private config: AppConfig) {
+  constructor(public dataService: DataService, private config: AppConfig,
+    public keycloakService: KeycloakService) {
   }
 
   postData(apiUrl,data) {
@@ -109,6 +111,10 @@ updateclaims(apiUrl, data) {
       data: data
     };
     return this.dataService.put(req);
+  }
+
+  getUsername(){
+    return this.keycloakService.getUsername();
   }
 
 }
