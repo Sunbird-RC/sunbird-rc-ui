@@ -79,6 +79,7 @@
                                         </span>
                                     </div>
                                 </ng-template>
+<<<<<<< HEAD
                             </div>
                             <div *ngIf="documents != null" class="mb-3">
                                 <ng-template ngFor let-document [ngForOf]="documents" let-i="index">
@@ -107,6 +108,26 @@
 
                             <ng-template [ngIf]="noteAdded">
                                 <div class="text-success p14"><i class="fa fa-check"></i> Note Added!
+=======
+                                <form [formGroup]="noteForm">
+                                    <formly-form [model]="model" [fields]="noteFields" [options]="options"
+                                        [form]="noteForm">
+                                    </formly-form>
+                                    <button type="button" [disabled]="!noteForm.valid"
+                                        class="btn btn-primary text-capitalize font-weight-bold submit-button"
+                                        (click)="saveNote($event)">Save note</button>
+                                </form>
+
+                                <div class="pt-4 mb-1" *ngFor="let noteData of notes">
+                                    <ng-template [ngIf]="noteData.notes != ''">
+                                        <h6 class="mb-1 p14 text-dark">{{noteData.notes}}</h6>
+                                        <span class="fs-7 text-grey-color">
+                                            <span *ngIf="noteData.addedBy"> By {{noteData.addedBy}}, </span>
+                                            <span *ngIf="noteData.createdAt"> {{noteData.createdAt | date : 'd MMM y'}}
+                                            </span>
+                                        </span>
+                                    </ng-template>
+>>>>>>> parent of 0df6352... Task #1 feat: UI changes
                                 </div>
                             </ng-template>
                             <form [formGroup]="noteForm">
