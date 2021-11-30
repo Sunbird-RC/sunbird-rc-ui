@@ -35,7 +35,6 @@ export class FormsComponent implements OnInit {
   property = {};
   ordering;
   required = [];
-  oldVal: string;
   entityId: string;
   form2: FormGroup;
   model = {};
@@ -581,12 +580,9 @@ export class FormsComponent implements OnInit {
                 });
               }
               else if (field.autofill.method === 'POST') {
-                var datapath = this.findPath(field.autofill.body, "{{value}}", '');
-                datapath = (datapath == false) ? this.findPath(field.autofill.body, this.oldVal, '') : this.findPath(field.autofill.body, "{{value}}", '');
-
+                var datapath = this.findPath(field.autofill.body, "{{value}}", '')
                 if (datapath) {
-                  var dataobject = this.setPathValue(field.autofill.body, datapath, control.value);
-                  this.oldVal = control.value;
+                  var dataobject = this.setPathValue(field.autofill.body, datapath, control.value)
                   this.generalService.postPrefillData(field.autofill.apiURL, dataobject).subscribe((res) => {
                     if (Array.isArray(res)) {
                       res = res[0]

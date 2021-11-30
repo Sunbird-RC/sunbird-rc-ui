@@ -42,7 +42,7 @@ export class AttestationComponent implements OnInit {
       }
     }
   ];
-
+  
   entityId: string;
   user: any;
   education: any;
@@ -132,18 +132,6 @@ export class AttestationComponent implements OnInit {
   table: any;
   documents = null;
   notes: any[] = [];
-  commonFields = ['osCreatedAt', 'osCreatedBy', 'osUpdatedAt', 'osUpdatedBy', 'OsUpdatedBy', '_osAttestedData', 'osid', '_osClaimId', '_osState', 'Osid', 'OsUpdatedAt', 'Attest'];
-  isObject(val): boolean {
-    try {
-      JSON.parse(val);
-    } catch (e) {
-      return false;
-    }
-    return true;
-  }
-  listObject(val): object {
-    return JSON.parse(val);
-  }
   constructor(
     public router: Router,
     private route: ActivatedRoute,
@@ -153,16 +141,16 @@ export class AttestationComponent implements OnInit {
 
   ngOnInit(): void {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    console.log("router", this.router.url)
+    console.log("router",this.router.url)
     // var tab_url = this.router.url
     this.route.params.subscribe(async params => {
-      console.log("-------------------", params)
+      console.log("-------------------",params)
       this.table = (params['table']).toLowerCase()
       // this.entity = (params['entity']).charAt(0).toUpperCase() + params['entity'].slice(1);
-      this.entity = params['entity'];
+      this.entity = params['entity']
       this.claimId = params['id']
-      if ((params['entity']).includes('board')) {
-        console.log("board--", params['entity'])
+      if((params['entity']).includes('board')){
+        console.log("board--",params['entity'])
         this.entity = params['entity']
       }
       this.apiUrl = `/${this.entity}/claims/${this.claimId}`;
@@ -176,8 +164,8 @@ export class AttestationComponent implements OnInit {
 
     this.generalService.getData(this.apiUrl).subscribe((res) => {
       // this.entityIdt = res[0].osid;
-      console.log("res1", res)
-      if (res.claim) {
+      console.log("res1",res)
+      if(res.claim){
         this.claimEntityId = res.claim.entityId
         this.claimEntity = res.claim.entity;
         this.claimData = res.claim;
@@ -186,36 +174,14 @@ export class AttestationComponent implements OnInit {
         this.denyFields[0].templateOptions.description = noteDesc;
         this.noteFields[0].templateOptions.description = noteDesc;
 
-        this.generalService.getData("/" + this.claimData.propertyURI).subscribe((res) => {
-          console.log("res2", res)
-          this.attestationData = this.removeCommonFields(res);
+        this.generalService.getData("/"+this.claimData.propertyURI).subscribe((res) => {
+          console.log("res2",res)
+          this.attestationData = res;
+          this.removeCommonFields();
           this.generateData()
         })
-        this.generalService.getData(this.claimEntity + "/" + this.claimEntityId).subscribe((res) => {
-          console.log("profileData", res);
-
-          this.profileData = res;
-          this.profile = true
-          // this.removeCommonFields();
-          // this.generateData()
-        })
-      } else {
-        this.claimEntityId = res.entityId
-        this.claimEntity = res.entity;
-        this.claimData = res;
-        this.notes = res.notes;
-        let noteDesc = 'This note will be sent to ' + this.claimData?.requestorName;
-        this.denyFields[0].templateOptions.description = noteDesc;
-        this.noteFields[0].templateOptions.description = noteDesc;
-
-        this.generalService.getData("/" + this.claimData.propertyURI).subscribe((res) => {
-          console.log("res2", res)
-          this.attestationData = this.removeCommonFields(res);
-
-          this.generateData()
-        })
-        this.generalService.getData(this.claimEntity + "/" + this.claimEntityId).subscribe((res) => {
-          console.log("profileData", res);
+        this.generalService.getData(this.claimEntity+"/"+this.claimEntityId).subscribe((res) => {
+          console.log("profileData",res);
 
           this.profileData = res;
           this.profile = true
@@ -225,53 +191,29 @@ export class AttestationComponent implements OnInit {
       }
     })
 
-
+    
     //history.state;
     // this.getStudentData();
   }
 
-  generateData() {
-    for (var [index, [key, value]] of Object.entries(Object.entries(this.attestationData))) {
-      console.log("att", key, typeof value)
-      if (key === 'documents') {
+  generateData(){
+    for (const [index, [key, value]] of Object.entries(Object.entries(this.attestationData))) {
+      console.log("att", key, value)
+      if(key === 'documents'){
         this.documents = value;
         console.log("documents", this.documents)
       }
-      else {
-       /* if (Array.isArray(value)) {
-          var temp_value = [];
-          if (typeof value[0] === 'object') {
-            value.forEach(element => {
-              for (var [index2, [key2, value2]] of Object.entries(Object.entries(element))) {
-                if (Array.isArray(value2)) {
-                  var temp_value2 = [];
-                  value2.forEach(element2 => {
-                    for (var [index3, [key3, value3]] of Object.entries(Object.entries(element2))) {
-                      var temp_object3 = {};
-                      temp_object3['title'] = (key3).charAt(0).toUpperCase() + key3.slice(1);
-                      temp_object3['value'] = value3;
-                      temp_value2.push(temp_object3);
-                    }
-                  });
-
-
-                  temp_value.push(temp_value2)
-                }
-                var temp_object2 = {};
-                temp_object2['title'] = (key2).charAt(0).toUpperCase() + key2.slice(1);
-                temp_object2['value'] = value2;
-                temp_value.push(temp_object2);
-              }
-            });
-          }
-          // } else {
-          //   value = value.join(', ');
-          // }
-
-
-
-          value = JSON.stringify(temp_value)
-        }*/
+      else{
+        // if(Array.isArray(value)){
+        //   value.forEach(element => {
+        //     for (const [index2, [key2, value2]] of Object.entries(Object.entries(element))) {
+        //       var temp_object2 = {};
+        //       temp_object2['title'] = (key2).charAt(0).toUpperCase() + key2.slice(1);
+        //       temp_object2['value'] = value2;
+        //       this.propertyData.push(temp_object2);
+        //     }
+        //   });
+          
         // }else{
         //   var temp_object = {};
         //   temp_object['title'] = (key).charAt(0).toUpperCase() + key.slice(1);
@@ -279,36 +221,28 @@ export class AttestationComponent implements OnInit {
         //   this.propertyData.push(temp_object);
         // }
         var temp_object = {};
-        // if (Array.isArray(value)) {
-        //   console.log("arrry",value);
-        //   value = value.join(', ');
-        // }
-        // if (typeof value === 'object') {
-        //   value = JSON.stringify(value);
-        //   console.log("objjj",value);
-        // };
-        temp_object['title'] = (key).charAt(0).toUpperCase() + key.slice(1);
-        temp_object['value'] = value;
-        this.propertyData.push(temp_object);
+          temp_object['title'] = (key).charAt(0).toUpperCase() + key.slice(1);
+          temp_object['value'] = value;
+          this.propertyData.push(temp_object);
       }
     }
-    console.log("propertyData", this.propertyData)
+    console.log("propertyData",this.propertyData)
   }
 
-  removeCommonFields(data) {
-    this.commonFields.forEach(element => {
-      if (data.hasOwnProperty(element)) {
-        delete data[element]
+  removeCommonFields() {
+    var commonFields = ['osCreatedAt', 'osCreatedBy', 'osUpdatedAt', 'osUpdatedBy','OsUpdatedBy','_osAttestedData', 'osid','_osClaimId','_osState','Osid'];
+    commonFields.forEach(element => {
+      if(this.attestationData.hasOwnProperty(element)){
+        delete this.attestationData[element]
       }
-
+      
     });
-    return data;
     // const filteredArray = this.attestationData.filter(function (x, i) {
     //   return commonFields.indexOf(x[i]) < 0;
     // });
   }
 
-  onAttestApproveReject(action, event) {
+  onAttestApproveReject(action,event) {
     console.log(this.form);
     // if(action == 'REJECT_CLAIM')
     // {
@@ -319,15 +253,15 @@ export class AttestationComponent implements OnInit {
     let data = {
       "action": action,
       "notes": this.denyForm.value.note ? this.denyForm.value.note : this.note
-    }
-    console.log("data--", data);
-    var url = this.entity + "/claims/" + this.claimId + "/attest"
+  }
+  console.log("data--",data);
+    var url = this.entity+"/claims/"+this.claimId+"/attest"
     this.generalService.postData(url, data).subscribe((res) => {
       // alert('success');
       console.log(res);
-
+      
     });
-    this.router.navigate([this.entity, 'attestation', this.table]).then(() => {
+    this.router.navigate([this.entity,'attestation',this.table]).then(() => {
       window.location.reload();
     });
 
@@ -339,20 +273,20 @@ export class AttestationComponent implements OnInit {
 
   onConsent() { }
 
-  saveNote(event) {
+  saveNote(event){
     // localStorage.setItem('note', JSON.stringify(event));
-    console.log('evv', event.note);
+    console.log('evv',event.note);
     this.note = event.note
     this.noteAdded = true;
   }
 
-  saveComments(event) {
-    console.log('evv ', event.comment);
+  saveComments(event){
+    console.log('evv ',event.comment);
   }
 
-  close() {
+  close(){
     console.log('here')
-    this.router.navigate([this.entity, 'attestation', this.table]);
+    this.router.navigate([this.entity,'attestation',this.table]);
   }
 
 }

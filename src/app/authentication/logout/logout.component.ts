@@ -13,7 +13,7 @@ export class LogoutComponent implements OnInit {
   constructor(public keycloakService: KeycloakService,private config: AppConfig, public router: Router) { }
 
   ngOnInit(): void {
-    // localStorage.clear();
+    localStorage.clear();
 
     this.keycloakService.clearToken();
     this.keycloakService.logout(window.location.origin);
