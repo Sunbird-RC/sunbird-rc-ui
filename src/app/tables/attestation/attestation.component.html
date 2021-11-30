@@ -136,7 +136,7 @@
                                         (click)="saveNote($event)">Save note</button>
                                 </form>
 
-                                <div class="mt-4 mb-1" *ngFor="let noteData of notes">
+                                <div class="pt-4 mb-1" *ngFor="let noteData of notes">
                                     <ng-template [ngIf]="noteData.notes != ''">
                                         <h6 class="mb-1 p14 text-dark">{{noteData.notes}}</h6>
                                         <span class="fs-7 text-grey-color">
