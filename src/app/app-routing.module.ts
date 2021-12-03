@@ -78,6 +78,7 @@ const routes: Routes = [
 { path: ':entity/attestation/:table/:id', component: AttestationComponent, canActivate: [AuthGuard] },
 { path: 'document/view', component: DocViewComponent, canActivate: [AuthGuard] },
 { path: 'discovery', component: SearchComponent },
+{ path: 'discovery/:form', component: SearchComponent, canActivate: [AuthGuard] },
 { path: 'documents', component: DocumentComponent },
 { path: 'dashboard', component: ElockerDashboardComponent },
 

@@ -6,6 +6,7 @@ import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 import { GeneralService } from '../../services/general/general.service';
 import { ChangeDetectionStrategy } from '@angular/core';
 import { of as observableOf } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -16,7 +17,7 @@ import { of as observableOf } from 'rxjs';
 })
 
 export class SearchComponent implements OnInit {
-  header: string = null;
+  header: string;
   searchSchemas: any;
   filtered = [];
   searchString: any;
@@ -29,14 +30,17 @@ export class SearchComponent implements OnInit {
   options: FormlyFormOptions = {};
   isLoading: boolean = true;
   searchJson;
+  privateTabsJson;
   cardFields = [];
   selectOption = {};
 
   activeTabIs: string;
+  params: any;
 
   items = [];
   apiUrl: any;
   user: any;
+  entity: string = '';
   searchResult: any;
   dropdownList = [];
   selectedItems = [];
@@ -69,29 +73,59 @@ export class SearchComponent implements OnInit {
   constructor(
     public schemaService: SchemaService,
     private formlyJsonschema: FormlyJsonschema,
-    public generalService: GeneralService
+    public generalService: GeneralService,
+    private route: ActivatedRoute
   ) { }
 
 
   ngOnInit(): void {
+
+    this.route.params.subscribe(params => {
+      this.params = params;
+      if (params['form'] != undefined) {
+        this.entity = params['form'].toLowerCase();
+      }
+    });
+
+
     this.schemaService.getSearchJSON().subscribe((searchSchemas) => {
       this.searchSchemas = searchSchemas;
 
       let _self = this;
       Object.keys(_self.searchSchemas.searches).forEach(function (key) {
+
         _self.searchJson = _self.searchSchemas.searches[key];
 
 
         Object.keys(_self.searchJson).forEach(function (key1) {
 
-          _self.filtered.push(_self.searchJson[key1]);
+          if (key1 == _self.entity) {
+            _self.privateTabsJson = _self.searchJson[key1].tabs;
 
-          if (_self.searchJson[key1].hasOwnProperty('activeTab') && _self.searchJson[key1].activeTab == 'active') {
-            _self.activeTabIs = _self.searchJson[key1].tab;
-            _self.apiUrl = _self.searchJson[key1].api;
+            Object.keys(_self.privateTabsJson).forEach(function (key2) {
+              _self.searchJson = _self.privateTabsJson[key2];
+
+              Object.keys(_self.searchJson).forEach(function (key3) {
+                _self.filtered.push(_self.searchJson[key3]);
+
+                if (_self.searchJson[key3].hasOwnProperty('activeTab') && _self.searchJson[key3].activeTab == 'active') {
+                  _self.activeTabIs = _self.searchJson[key3].tab;
+                  _self.apiUrl = _self.searchJson[key3].api;
+                }
+              });
+            });
+
+
+          } else if (_self.entity == '') {
+            _self.filtered.push(_self.searchJson[key1]);
+
+            if (_self.searchJson[key1].hasOwnProperty('activeTab') && _self.searchJson[key1].activeTab == 'active') {
+              _self.activeTabIs = _self.searchJson[key1].tab;
+              _self.apiUrl = _self.searchJson[key1].api;
+            }
           }
-
         })
+
       })
 
       if (this.searchSchemas.header) {
@@ -222,7 +256,7 @@ export class SearchComponent implements OnInit {
           items = items.filter(x => x[filter.key].toLocaleLowerCase().indexOf(term.toLocaleLowerCase()) > 1);
           if (items) {
             this.searchResult = items;
-            console.log({items});
+            console.log({ items });
             return observableOf(this.searchResult);
           }
         });
@@ -278,7 +312,7 @@ export class SearchComponent implements OnInit {
     propertyParent[propertyName] = value;
     return obj;
   }
-  
+
   async mapFieldsdata(res) {
     this.items = [];
 

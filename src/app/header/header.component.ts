@@ -19,10 +19,13 @@ export class HeaderComponent implements OnInit {
   constructor(
     public router: Router, private config: AppConfig, public schemaService: SchemaService
   ) {
-
   }
 
   async ngOnInit() {
+    if(this.headerFor == ''){
+      this.headerFor = 'default';
+    }
+
     this.logo = this.config.getEnv('logoPath');
     this.schemaService.getHeaderJSON().subscribe(async (HeaderSchemas) => {
       var filtered = HeaderSchemas.headers.filter(obj => {
