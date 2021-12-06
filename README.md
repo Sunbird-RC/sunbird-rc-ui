@@ -89,6 +89,37 @@ Key | Value
 `fields.includes` | Array/list of Included Fields from response or `[*]` for all fields
 `fields.excludes` | Array/list of Excluded Fields from response
 
+### Search
+The `search.json` needs to be placed in `src/assets/config`. In this file defines the tabs, filters and result cards attribute names which are displayed on the discovery page.
+
+
+In this file `searches` is an array with key/value pairs. Each search definition will have the below fields -
+
+Key | Value
+------------    | -------------
+`search.tab`    |  Key name of tab
+`search.tabTitle`  | Title of tab
+`search.api`    | URL Path of API
+`search.activeTab` | Set active tab as a default.
+
+**filters**
+
+Key | Value
+------------ | -------------
+`filters.key` | unique key of filter/property
+`filters.title` | Title of filter
+`filters.type` | Type of filter
+`filters.propertyPath` | Actul path of property in your api responce
+`filters.default` | Set filter as default
+`filters.placeholder` | Set placeholder in the filter input box
+
+**fields**
+
+Key | Value
+------------ | -------------
+`fields.title` | Title of field 
+`fields.property` | Set property path in you api responce (eg : "address.district" )
+`fields.attest` | Set state check property key name 
 
 # Examples
 

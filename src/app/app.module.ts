@@ -175,7 +175,7 @@ function initConfig(config: AppConfig){
       ],
     }),
     ToastrModule.forRoot({
-      positionClass: 'toast-bottom-center',
+      positionClass: 'toast-bottom-full-width',
     preventDuplicates: true,
     }),
     NgxPaginationModule
