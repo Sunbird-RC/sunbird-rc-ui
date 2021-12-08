@@ -209,9 +209,9 @@ function initConfig(config: AppConfig){
 })
 export class AppModule {
   constructor(translate: TranslateService) {
-    translate.addLangs(['en', 'ru']);
+    translate.addLangs(['en', 'hi']);
     const browserLang = translate.getBrowserLang();
-    translate.use(browserLang.match(/en|ru/) ? browserLang : 'en');
+    translate.use(browserLang.match(/en|hi/) ? browserLang : 'en');
   }
 }
 

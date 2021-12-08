@@ -22,6 +22,9 @@
                             <a *ngIf="header?.image" class="nav-link" [routerLink]="[header.redirectTo]">
                                 <img style="width: 25px;" src={{header?.image}} />
                             </a>
+                            <a *ngIf="header?.icon" class="nav-link" [routerLink]="[header.redirectTo]">
+                                <i style="font-size: 25px;" class="{{header?.icon}}" aria-hidden="true"></i>
+                            </a>
                             <ng-template [ngIf]="header?.title && tab === header?.title">
                                 <hr>
                             </ng-template>
@@ -36,13 +39,28 @@
                             <a *ngIf="header?.image" class="nav-link" [routerLink]="[header.redirectTo]">
                                 <img style="width: 25px;" src={{header?.image}} />
                             </a>
+                            <a *ngIf="header?.icon" class="nav-link" [routerLink]="[header.redirectTo]">
+                                <i style="font-size: 25px;" class="{{header?.icon}}" aria-hidden="true"></i>
+                            </a>
                             <ng-template [ngIf]="header?.title && tab === header?.title">
                                 <hr>
                             </ng-template>
                         </li>
                     </ul>
                 </ng-template>
+                <span>
+                   <i style="font-size: 25px;" class="fa fa-language text-primary-color mt-3"
+                        aria-hidden="true"></i>
+                    <label for="cars"> 
+                    <select name="cars" id="cars" class="lang-btn text-primary-color" (change)="languagechange($event)" >
+                        <option   value="{{lang}}" *ngFor="let lang of translate.getLangs()" > {{lang}}</option>
+                    </select>
+                </label>
+                   </span>
+                
             </div>
         </div>
     </nav>
+    <p>{{'compA' | translate}}</p>
+
 </header>

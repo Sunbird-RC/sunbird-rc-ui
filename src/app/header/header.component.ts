@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { AppConfig } from '../app.config';
 import { SchemaService } from '../services/data/schema.service';
+import { TranslateService } from '@ngx-translate/core';
+
 declare var $: any;
 
 @Component({
@@ -17,10 +19,12 @@ export class HeaderComponent implements OnInit {
   logo;
   headerSchema
   constructor(
-    public router: Router, private config: AppConfig, public schemaService: SchemaService
+    public router: Router, private config: AppConfig, public schemaService: SchemaService,
+    public translate: TranslateService
   ) {}
 
   async ngOnInit() {
+
     this.logo = this.config.getEnv('logoPath');
     this.schemaService.getHeaderJSON().subscribe(async (HeaderSchemas) => {
       var filtered = HeaderSchemas.headers.filter(obj => {
@@ -30,5 +34,10 @@ export class HeaderComponent implements OnInit {
     }, (error) => {
       console.error('headers.json not found in src/assets/config/ - You can refer to examples folder to create the file')
     });
+  }
+
+  languagechange(lang){
+  
+    this.translate.use(lang.target.value)
   }
 }
