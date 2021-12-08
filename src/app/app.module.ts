@@ -49,6 +49,10 @@ import { LogoutComponent } from './authentication/logout/logout.component';
 import { SearchComponent } from '../app/discovery/search/search.component';
 import { AuthConfigService } from './authentication/auth-config.service';
 
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
+
 //form validations
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
   return `should NOT have fewer than ${field.templateOptions.minItems} items`;
@@ -132,6 +136,14 @@ function initConfig(config: AppConfig){
     Bootstrap4FrameworkModule,
     AngularMultiSelectModule,
     NgSelectModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: translateLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
     FormlyModule.forRoot({
       extras: { resetFieldOnHide: true },
       wrappers: [{ name: 'form-field-horizontal', component: FormlyHorizontalWrapper },
@@ -180,6 +192,7 @@ function initConfig(config: AppConfig){
     }),
     NgxPaginationModule
   ],
+  exports: [TranslateModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   entryComponents: [],
   bootstrap: [AppComponent],
@@ -195,5 +208,13 @@ function initConfig(config: AppConfig){
   { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'always' } }]
 })
 export class AppModule {
-  
+  constructor(translate: TranslateService) {
+    translate.addLangs(['en', 'ru']);
+    const browserLang = translate.getBrowserLang();
+    translate.use(browserLang.match(/en|ru/) ? browserLang : 'en');
+  }
+}
+
+export function translateLoaderFactory(httpClient: HttpClient) {
+  return new TranslateHttpLoader(httpClient);
 }
