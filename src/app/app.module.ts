@@ -216,7 +216,7 @@ export class AppModule {
       },
       {
         'code': 'hi',
-        'name': "Hindi"
+        'name': "हिंदी"
       }];
 
     localStorage.setItem('languages', JSON.stringify(installed_languages));

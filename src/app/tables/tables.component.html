@@ -44,7 +44,7 @@
         <tbody class="fs-5">
             <tr *ngIf="tableSchema.items && !tableSchema.items.length">
               <td class="float-end" [attr.colspan]="tableSchema.items.length">
-                No Records Found!
+                {{NO_RECORDS_FOUND| translate }}
               </td>
             </tr>
           </tbody>

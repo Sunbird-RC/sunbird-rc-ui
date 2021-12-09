@@ -7,7 +7,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarExample01">
                 <div class="nav-item active logo-text">
-                    <a class="nav-link" aria-current="page" style="color: black;">Attest Details</a>
+                    <a class="nav-link" aria-current="page" style="color: black;">{{'ATTEST_DETAILS' | translate}}</a>
                 </div>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
@@ -20,11 +20,11 @@
     </nav>
 </header>
 <div class="container ">
-    <h3>Attestation Claim of {{claimData?.requestorName}}</h3>
+    <h3>{{'ATTESTATION_CLAIM_OF' | translate}} {{claimData?.requestorName}}</h3>
 
     <div class="row">
     <div class="col">
-        <p class="p14 font-weight-bold">Review and attest claim</p>
+        <p class="p14 font-weight-bold">{{'REVIEW_AND_ATTEST_CLAIM' | translate}}</p>
 
         <div class="">
         </div>
@@ -84,7 +84,7 @@
                                 <ng-template ngFor let-document [ngForOf]="documents" let-i="index">
                                     <a href="/document/view?u={{document.fileName}}"
                                         class="badge badge-pill badge-primary mr-1" target="_blank"><i
-                                            class="fa fa-paperclip" aria-hidden="true"></i> Document {{i + 1}}</a>
+                                            class="fa fa-paperclip" aria-hidden="true"></i>{{'DOCUMENT' | translate}} {{i + 1}}</a>
                                 </ng-template>
                             </div>
                         </dd>
@@ -93,10 +93,10 @@
                                 class="btn btn-style m-1 text-end pr-20  px-2 fw-bold p14 text-capitalize btn-success"
                                 (click)="onAttestApproveReject('GRANT_CLAIM',$event)"><i
                                     class="fa fa-check text-success" data-mdb-toggle="tooltip" title="Attested"></i>
-                                &nbsp; Approve</button>
+                                &nbsp; {{'APPROVE' | translate}}</button>
                             <button class="m-1 btn btn-deny btn-style text-end fw-bold pr-20 p14  px-2 text-capitalize"
                                 data-toggle="modal" data-target="#deny"><i class="fa fa-times red"></i> &nbsp;
-                                Deny</button>
+                               {{'DENY' | translate}}</button>
                         </dd>
 
                     </dl>
@@ -106,7 +106,7 @@
                         <div class="p-4">
 
                             <ng-template [ngIf]="noteAdded">
-                                <div class="text-success p14"><i class="fa fa-check"></i> Note Added!
+                                <div class="text-success p14"><i class="fa fa-check"></i> {{'NOTE_ADDED' | translate}}
                                 </div>
                             </ng-template>
                             <form [formGroup]="noteForm">
@@ -115,14 +115,14 @@
                                 </formly-form>
                                 <button type="button" [disabled]="!noteForm.valid"
                                     class="btn btn-primary text-capitalize font-weight-bold submit-button"
-                                    (click)="saveNote($event)">Save note</button>
+                                    (click)="saveNote($event)">{{'SAVE_NOTE' | translate}}</button>
                             </form>
 
                             <div class="pt-4 mb-1" *ngFor="let noteData of notes">
                                 <ng-template [ngIf]="noteData.notes != ''">
                                     <h6 class="mb-1 p14 text-dark">{{noteData.notes}}</h6>
                                     <span class="fs-7 text-grey-color">
-                                        <span *ngIf="noteData.addedBy"> By {{noteData.addedBy}}, </span>
+                                        <span *ngIf="noteData.addedBy"> {{'BY' | translate}} {{noteData.addedBy}}, </span>
                                         <span *ngIf="noteData.createdAt"> {{noteData.createdAt | date : 'd MMM y'}}
                                         </span>
                                     </span>
@@ -142,7 +142,7 @@
         <!-- <div class="mt-2"> -->
         <!-- </div> -->
         <!-- <h5>Public Profile of {{claimData?.requestorName}}</h5> -->
-        <p class="p14 font-weight-bold">Public Profile of {{claimData?.requestorName}}</p>
+        <p class="p14 font-weight-bold">{{'PUBLIC_PROFILE_OF' | translate}} {{claimData?.requestorName}}</p>
         <div class="card">
             <div class="card-body mb30">
                 <ng-template [ngIf]="profile">
@@ -171,7 +171,7 @@
                         <div class="modal-content">
 
                             <div class="modal-header">
-                                <h3 class="modal-title font-weight-bold" id="myModalLabel2">Deny {{type}}</h3>
+                                <h3 class="modal-title font-weight-bold" id="myModalLabel2">{{'DENY' | translate}} {{type}}</h3>
                                 <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button> -->
                             </div>
@@ -188,12 +188,12 @@
                                     </formly-form>
                                     <button type="button" class="btn large btn-style btn-bg submit-button">
                                         <span aria-hidden="true" ata-dismiss="modal" aria-label="Close"
-                                            class="label-primary font-weight-bold text-capitalize">Cancel</span></button>
+                                            class="label-primary font-weight-bold text-capitalize">{{'CANCEL' | translate}}</span></button>
 
                                     <button type="button" [disabled]="!denyForm.valid"
                                         class="btn btn-primary btn-style float-end submit-button"
                                         (click)="onAttestApproveReject('REJECT_CLAIM',$event)"><span
-                                            class="font-weight-bold text-capitalize">Yes, Deny</span></button>
+                                            class="font-weight-bold text-capitalize">{{'YES_DENY' | translate}}</span></button>
 
 
                                 </form>

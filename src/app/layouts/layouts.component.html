@@ -13,7 +13,7 @@
                     </span></p>
             </div>
             <a *ngIf="!public" class=" p-2 p14 btn-bg label-primary btn-style float-end" data-toggle="modal"
-                data-target="#prewiewProfile" (click)="openPreview()">Preview Public Profile</a>
+                data-target="#prewiewProfile" (click)="openPreview()">{{'PREVIEW_PUBLIC_PROFILE' | translate}}</a>
         </div>
     </nav>
 </div>
@@ -26,7 +26,7 @@
     <br>
     <div class="d-flex justify-content-center">
         <div class="spinner-border" style="width: 5rem; height: 5rem;" role="status">
-            <span class="sr-only">Loading...</span>
+            <span class="sr-only">{{'LOADING' | translate}}...</span>
         </div>
     </div>
 </ng-template>
@@ -42,7 +42,7 @@
                     <p class="d-inline-block fs-6 font-weight-bold mb-2">{{block.title}}</p>
                     <ng-template [ngIf]="block.edit">
                         <a *ngIf="!public" panelEditLink="{{block.editform}}"
-                            class="pl-1 fs-7 text-secondary-color">edit
+                            class="pl-1 fs-7 text-secondary-color">{{'EDIT'| translate}}
                             <!-- <i class="fa fa-pencil-square-o" aria-hidden="true"></i> -->
                         </a>
                     </ng-template>
@@ -78,7 +78,7 @@
                                             <ng-template [ngIf]="element[objectIndex]._osState == 'DRAFT'">
 
                                                 <span class="badge font-weight-normal badge-secondary"
-                                                    data-mdb-toggle="tooltip" title="Saved to DRAFT">Draft</span>
+                                                    data-mdb-toggle="tooltip" title="Saved to DRAFT">{{'DRAFT' | translate}}</span>
 
 
                                                 <!-- <a panelEditLink="{{block.editform}}" identity="{{element[objectIndex].osid}}" class="pl-1 fs-7 text-primary-color">edit <i
@@ -120,7 +120,7 @@
                 </div>
                 <ng-template #publicMultiBlock>
                     <div class="card-body my-4">
-                        <div class="d-flex justify-content-center"> No Data Found</div>
+                        <div class="d-flex justify-content-center"> {{'NO_DATA_FOUND' | translate}}</div>
                         <ng-template ngFor let-item [ngForOf]="block.items" let-itemIndex="index">
                             <ng-template ngFor let-element [ngForOf]="item" let-elementIndex="index">
                                 <div class="noDataMsg" >                                 
@@ -204,7 +204,7 @@
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h6 class="modal-title">Preview of Public Profile</h6>
+                        <h6 class="modal-title">{{'PREVIEW_PUBLIC_PROFILE' | translate}}</h6>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
                     </div>

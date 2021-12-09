@@ -1,6 +1,143 @@
-
 {
-  "compA": "hindi", 
-  "compB": "Component B works" 
+  "compA": "हिंदी", 
+
+
+      "VIEW_CERTIFICATE":"प्रमाणपत्र देखें",
   
-}
+      "CERTIFICATES":"प्रमाणपत्र",
+      "MY_CERTIFICATE":"मेरे प्रमाणपत्र",
+      "ISSUED_BY":"द्वारा जारी किया गया",                                
+      
+      "ADD":"जोड़ें",                                            
+      "ENROLL":"नामांकन करें",
+      "ISSUE_CERTIFICATE":"जारी प्रमाणपत्र",
+      "NAME":"नाम",
+      "CREATE":"बनाएँ",                                       
+  
+      "COURSE_NAME":"पाठ्यक्रम का नाम",
+  
+      "SEARCH":"खोज",
+      "RESET":"रीसेट",
+      "DATA_NOT_FOUND":"डेटा नहीं मिला!",
+      "LOADING": "लोड हो रहा है...",                                   
+      "PUBLIC_PROFILE":"सार्वजनिक प्रोफ़ाइल",                      
+      "FILTER_NOT_AVAILABLE":"फ़िल्टर उपलब्ध नहीं है",
+      "UNSELECT_ALL":"सभी को अचयनित कर",
+      "SELECT_ALL":"सभी का चयन कर",
+      "SELECT_FILTER":"फ़िल्टर चुन",
+  
+      "UPLOAD":"अपलोड करें",
+      "MY_DOCUMENTS":"मेरे दस्तावेज़",                          
+      "COUNTRY_ID_CARD":"देश का आईडी कार्ड",
+      "ISSUED_NAME":"जारी किया गया नाम",
+      "SELECT_ISSUER_TO_FETCH_DOCUMENTS":"दस्तावेज़ लाने के लिए जारीकर्ता चुन",
+      "YOUR_DOCUMCERTIFICATE_IS_ISSUED_SUCCESSFULLYENTS_WILL_BE_VERIFIED_BY_THE_ISSUER_SELECTED":"आपके दस्तावेज़ चयनित जारीकर्ता द्वारा सत्यापित किए जाएंग",
+      "STATE":"राज्य",
+      "BOARD_OF_EXAMINATION":"परीक्षा बोर्ड",
+      "STATE_NAME":"राज्य का नाम",
+      "DIGITAL_VERIFICATION_SUPPORTED":"डिजिटल सत्यापन समर्थित",
+  
+      "ALL":"सब",
+      "BROWSE_ISSUED_DOCUMENTS":"जारी किए गए दस्तावेज़ ब्राउज़ करें",
+      "BY_CATEGORY":"श्रेणी के अनुसार",
+      "BY_STATE":"राज्य द्वारा",
+      "SELECT_AND_DOWNLOAD_ISSUED_DOCUMENTS":"जारी किए गए दस्तावेज़ चुनें और डाउनलोड करें",
+      "EDUCATION":"शिक्षा",
+      "VIEW_ALL":"सभी देख",
+      "CLASS_10_CERTIFICATE":"कक्षा 10 प्रमाणपत्र",
+      "CLASS_12_CERTIFICATE":"कक्षा 12 प्रमाणपत्र",
+      "HEALTH":"स्वास्थ्य",
+      "EMPLOYMENT":"रोजगार",
+      "PRIVATE":"निजी",
+      "GOVERNMENT":"सरकार",
+      "FINANCE":"वित्त",
+      "BANKING":"बैंकिंग",
+      "INSURANCE":"बीमा",
+      "VEHICLE":"वाहन",
+      "DRIVING_LICENCE":"ड्राइविंग लाइसेंस",
+      "REGISTRATION":"पंजीकरण",
+      "PUC":"पीयूसी",
+      "OTHERS":"अन्य",
+      "RESIDENCE":"निवास",
+      "MARRIAGE_CERTIFICATE":"विवाह प्रमाणपत्र",
+  
+      "REMOVE":"निकालें",
+  
+      "SUBMIT":"सबमिट करें",          
+      "VISIBILITY":"दृश्यता",
+      "PRIVACY_ATTRIBUTE_DEFINE":"गोपनीयता विशेषता परिभाषित कर",
+      "ALREADY_REGISTERED_LOGIN":"पहले से रजिस्टर्ड है? लॉगिन",
+      "LOGIN":"लॉगिन",
+      "NOTES":"नोट्स",
+  
+      "WELCOME_TO_SUNBIRD_RC":"Sunbird RC में आपका स्वागत ह",
+      "LEARN_MORE_ON_GITHUB":"github पर अधिक जानें",
+      "FILE_AS_PER_YOUR_NEED_AND_PLACE_IT_INSIDE":"अपनी आवश्यकता के अनुसार फ़ाइल करें और उसे अंदर रख",
+      "TO_CHANGE_THIS_PAGE":"इस पेज को बदलने के लिए",
+  
+      "INSTALLATION":"स्थापना",
+      "INSTALL":"इंस्टॉल कर",
+      "INSTALLATION_COMPLETED":"इंस्टॉलेशन पूर्ण",
+      "ADD_DOWNLOADED":"डाउनलोड किया गया जोड़ें",
+      "FILE_TO":"इसमें फ़ाइल करें",
+      "FOLDER_TO_COMPLETE_INITIAL_CONFIGURATION":"प्रारंभिक कॉन्फ़िगरेशन पूर्ण करने के लिए फ़ोल्डर",
+      "I_HAVE_YOU_ADDED_THE_CONFIG_FILE":"मैंने आपने कॉन्फ़िग फ़ाइल जोड़ ली ह",
+      "FINISH":"फिनिश",
+  
+      "WHAT_IS_YOUR_PROJECT_NAME":"आपके प्रोजेक्ट का नाम क्या है",
+      "SELECT_ENVIRONMENT":"पर्यावरण चुन",
+      "DEVELOPMENT":"विकास",
+      "PRODUCTION":"उत्पादन",
+      "WHAT_IS_YOUR_BASE_API_URL":"आपका मूल API URL क्या ह",
+      "WHAT_IS_YOUR_SCHEMA_URL":"आपका स्कीमा URL क्या ह",
+      "AUTHENTICATION_SERVICE_CONFIGURATIONS":"प्रमाणीकरण सेवा कॉन्फ़िगरेशन",
+      "READ_CONFIG_FILES(forms.json,etc.)_FROM_WHICH_FOLDER":"किस फोल्डर से कॉन्फिग फाइल्स (फॉर्म्स.जेसन, आदि) पढ़",
+      "WHAT_IS_THE_PATH_OF_LOGO_FILE":"लोगो फ़ाइल का पथ क्या ह",
+      "TEXT_ON_FOOTER":"पाद पर लेख",
+  
+      "ISSUE":"मुद्दा",
+      "CERTIFICATE_IS_ISSUED_SUCCESSFULLY":"प्रमाण पत्र सफलतापूर्वक जारी किया गया",
+     
+         "ADD_DETAILS": "विवरण जोड़ें",
+     
+         "EDIT_DETAILS":"विवरण संपादित करें",
+     
+         "PREVIEW_PUBLIC_PROFILE":"सार्वजनिक प्रोफ़ाइल का पूर्वावलोकन करें",
+         "EDIT":"संपादित करें",
+         "DRAFT":"ड्राफ्ट",
+         "NO_DATA_FOUND":"कोई डेटा नहीं मिला",
+     
+         "PROFILE": "प्रोफाइल",
+     
+         "ATTEST_DETAILS":"विवरण सत्यापित करें",
+         "ATTESTATION_CLAIM_OF":"प्रमाणीकरण का दावा",
+         "REVIEW_AND_ATTEST_CLAIM":"समीक्षा करें और दावा प्रमाणित करें",
+         "DOCUMENT":"नोट जोड़ा गया!",
+         "NOTE_ADDED":"नोट जोड़ा गया!",
+         "PUBLIC_PROFILE_OF":"सार्वजनिक प्रोफ़ाइल",
+         "APPROVE":"स्वीकार करें",
+         "DENY":"अस्वीकार करें",
+         "CANCEL":"रद्द करें",
+         "YES_DENY":"हां, इनकार करें",
+         "BY":"द्वारा",
+         "SAVE_NOTE":"नोट सहेजें",
+     
+         "REASON_FOR_DENIAL":"अस्वीकार करने का कारण",
+         "THIS_NOTE_WILL_BE_SENT_TO_USER":"यह नोट उपयोगकर्ता को भेजा जाएगा",
+         "TYPE_MESSAGE_HERE":"यहां संदेश लिखें",
+         "NOTE":"नोट",
+         "NOTE_SENT_ON_USER":"उपयोगकर्ता को नोट भेजा गया",
+         "INVITE":"आमंत्रित करें",
+         "COMMENTS":"टिप्पणियाँ",
+         "ADD_A_COMMENT":"एक टिप्पणी जोड़ें",
+         "SAVE":"सहेजें",
+     
+         "NO_RECORDS_FOUND":"कोई रिकॉर्ड नहीं मिला!",
+     
+         
+         "VERIFY_A_CERTIFICATE":"एक प्रमाणपत्र सत्यापित करें",
+         "SCAN_QR_CODE":"QR कोड स्कैन करें",
+         "STOP_SCANNER":"StopScanner",
+         "THIS_CERTIFICATE_IS_VALID":"यह प्रमाणपत्र मान्य है",
+         "THIS_CERTIFICATE_IS_NOT_VALID":"यह प्रमाणपत्र मान्य नहीं है"
+   }
