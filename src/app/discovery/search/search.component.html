@@ -26,9 +26,9 @@
           <form [formGroup]="form" (ngSubmit)="submit()">
             <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form"></formly-form>
             <button type="submit" class="btn btn-primary text-capitalize btn-style float-end mt-2 submit-button"
-              [disabled]="!form.valid">Search</button>
+              [disabled]="!form.valid">{{'SEARCH' | translate}}</button>
             <button type="button" class="btn btn-bg text-capitalize btn-style ml-2 mt-2 label-primary"
-              (click)="resetModel(index)">Reset</button>
+              (click)="resetModel(index)">{{'RESET' | translate}}</button>
           </form>
         </div>
       </div>
@@ -80,7 +80,7 @@
       <tbody class="fs-5" *ngIf="!isLoading && !items?.length">
         <tr>
           <td class="float-end" [attr.colspan]="items?.length">
-            Data Not Found!
+            {{'DATA_NOT_FOUND' | translate}}
           </td>
         </tr>
       </tbody>
@@ -90,7 +90,7 @@
     <div *ngIf="isLoading && !items?.length">
       <div class="d-flex justify-content-center">
         <div class="spinner-border" role="status">
-          <span class="sr-only">Loading...</span>
+          <span class="sr-only">{{'LOADING' | translate}}</span>
         </div>
       </div>
     </div>
@@ -104,7 +104,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h6 class="modal-title" id="prewiewProfile">Public Profile</h6>
+        <h6 class="modal-title" id="prewiewProfile">{{'PUBLIC_PROFILE' | translate}}</h6>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
             aria-hidden="true">&times;</span></button>
       </div>

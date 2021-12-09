@@ -1,6 +1,137 @@
-
 {
-  "compA": "English", 
-  "compB": "Component B works" 
-  
+    "compA": "English", 
+
+    "VIEW_CERTIFICATE":"View Certificate",
+
+    "CERTIFICATES":"Certificates",
+    "MY_CERTIFICATE":"My Certificates",
+    "ISSUED_BY":"Issued by",                                
+    
+    "ADD":"Add",                                            
+    "ENROLL":"Enroll",
+    "ISSUE_CERTIFICATE":"Issue Certificate",
+    "NAME":"Name",
+    "CREATE":"Create",                                       
+
+    "COURSE_NAME":"Course Name",
+
+    "SEARCH":"Search",
+    "RESET":"Reset",
+    "DATA_NOT_FOUND":"Data Not Found!",
+    "LOADING": "Loading...",                                   
+    "PUBLIC_PROFILE":"Public Profile",
+    "FILTER_NOT_AVAILABLE":"Filter Not Available",
+    "UNSELECT_ALL":"Unselect All",
+    "SELECT_ALL":"Select All",
+    "SELECT_FILTER":"Select filter",
+
+    "UPLOAD":"Upload",
+    "MY_DOCUMENTS":"My Documents",                         
+    "COUNTRY_ID_CARD":"Country ID Card",
+    "ISSUED_NAME":"Issued Name",
+    "SELECT_ISSUER_TO_FETCH_DOCUMENTS":"Select Issuer to fetch documents",
+    "YOUR_DOCUMENTS_WILL_BE_VERIFIED_BY_THE_ISSUER_SELECTED":"Your documents will be verified by the issuer selected",
+    "STATE":"State",
+    "BOARD_OF_EXAMINATION":"Board of Examination",
+    "STATE_NAME":"State Name",
+    "DIGITAL_VERIFICATION_SUPPORTED":"Digital Verification Supported",
+
+    "ALL":"All",
+    "BROWSE_ISSUED_DOCUMENTS":"Browse Issued Documents",
+    "BY_CATEGORY":"By Category",
+    "BY_STATE":"By State",
+    "SELECT_AND_DOWNLOAD_ISSUED_DOCUMENTS":"Select and download issued documents",
+    "EDUCATION":"Education",
+    "VIEW_ALL":"View All",
+    "CLASS_10_CERTIFICATE":"Class 10 Certificate",
+    "CLASS_12_CERTIFICATE":"Class 12 Certificate",
+    "HEALTH":"Health",
+    "EMPLOYMENT":"Employment",
+    "PRIVATE":"Private",
+    "GOVERNMENT":"Government",
+    "FINANCE":"Finance",
+    "BANKING":"Banking",
+    "INSURANCE":"Insurance",
+    "VEHICLE":"Vehicle",
+    "DRIVING_LICENCE":"Driving Licence",
+    "REGISTRATION":"Registration",
+    "PUC":"PUC",
+    "OTHERS":"Others",
+    "RESIDENCE":"Residence",
+    "MARRIAGE_CERTIFICATE":"Marriage Certificate",
+
+    "REMOVE":"Remove",
+
+    "SUBMIT":"Submit",          
+    "VISIBILITY":"Visibility",
+    "PRIVACY_ATTRIBUTE_DEFINE":"Privacy Attribute Define",
+    "NOTES":"Notes",
+
+    "ISSUE":"Issue",
+    "CERTIFICATE":"Certificate is issued successfully",
+
+    "ADD_DETAILS":"Add Details",
+
+    "EDIT_DETAILS":"Edit Details",
+
+    "PREVIEW PUBLIC PROFILE":"Preview Public Profile",
+    "EDIT":"edit",
+    "DRAFT":"Draft",
+
+    "PROFILE":"profile",
+
+    "ATTEST_DETAILS":"Attest Details",
+    "ATTESTATION_CLAIM_OF":"Attestation Claim of",
+    "REVIEW_AND_ATTEST_CLAIM":"Review and attest claim",
+    "DOCUMENT":"Document",
+    "NOTE_ADDED":"Note Added",
+    "PUBLIC_PROFILE_OF":"Public Profile of",
+    "DENY":"Deny",
+    "CANCEL":"Cancel",
+    "YES, DENY":"Yes, Deny",
+    "BY":"By",
+    "SAVE_NOTE":"Save note",
+
+    "REASON_FOR_DENIAL":"Reason for denial",
+    "THIS_NOTE_WILL_BE_SENT_TO_USER":"This note will be sent to user",
+    "TYPE_MESSAGE_HERE":"Type message here",
+    "NOTE":"Note",
+    "NOTE_SENT_ON_USER":"note sent on user",
+    "INVITE":"Invite",
+    "COMMENTS":"Comments",
+    "ADD_A_COMMENT":"Add a Comment",
+    "SAVE":"Save",
+
+    "NO_RECORDS_FOUND":"No Records Found",
+
+    "VERIFY_A_CERTIFICATE":"Verify a certificate",
+    "SCAN_QR_CODE":"Scan QR code",
+    "STOP_SCANNER":"StopScanner",
+    "THIS_CERTIFICATE_IS_VALID":"This Certificate is valid",
+    "THIS_CERTIFICATE_IS_NOT_VALID":"This Certificate is not valid",
+    
+    "WELCOME_TO_SUNBIRD_RC":"Welcome to Sunbird RC",
+    "LEARN_MORE_ON_GITHUB":"Learn More on github",
+    "FILE_AS_PER_YOUR_NEED_AND_PLACE_IT_INSIDE":"file as per your need and place it inside",
+
+    "INSTALLATION":"Installation",
+    "INSTALL":"Install",
+    "INSTALLATION_COMPLETED":"Installation Completed",
+    "ADD_DOWNLOADED":"Add downloaded",
+    "FILE_TO":"file to",
+    "FOLDER_TO_COMPLETE_INITIAL_CONFIGURATION":"folder to complete initial configuration",
+    "I_HAVE_YOU_ADDED_THE_CONFIG_FILE":"I have you added the config file",
+    "FINISH":"Finish",
+
+    "WHAT_IS_YOUR_PROJECT_NAME":"What is your project name",
+    "SELECT_ENVIRONMENT":"Select environment",
+    "DEVELOPMENT":"Development",
+    "PRODUCTION":"Production",
+    "WHAT_IS_YOUR_BASE_API_URL":"What is your base API URL",
+    "WHAT_IS_YOUR_SCHEMA_URL":"What is your schema URL",
+    "AUTHENTICATION_SERVICE_CONFIGURATIONS":"Authentication service configurations",
+    "READ_CONFIG_FILES(forms.json,etc.)_FROM_WHICH_FOLDER":"Read config files(forms.json,etc.) from which folder",
+    "WHAT_IS_THE_PATH_OF_LOGO_FILE":"what is the path of logo file",
+    "TEXT_ON_FOOTER":"Text on footer"
+
 }

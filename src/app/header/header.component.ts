@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  languagechange(lang){
+  languageChange(lang){
   
     this.translate.use(lang.target.value)
   }
