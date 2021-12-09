@@ -14,6 +14,8 @@ import { HomeComponent } from './home/home.component';
 import { KeycloakloginComponent } from './authentication/login/keycloaklogin.component';
 import { LogoutComponent } from './authentication/logout/logout.component';
   import { SearchComponent } from './discovery/search/search.component';
+import { DocumentsComponent } from './documents/documents.component';
+import { AddDocumentComponent } from './documents/add-document/add-document.component';
 const routes: Routes = [
 // Home
 { path: '', component: HomeComponent },
@@ -66,6 +68,9 @@ const routes: Routes = [
 // Tables
 { path: ':entity/attestation/:table', component: TablesComponent, canActivate: [AuthGuard] },
 { path: ':entity/attestation/:table/:id', component: AttestationComponent, canActivate: [AuthGuard] },
+{ path: ':entity/documents', component: DocumentsComponent, canActivate: [AuthGuard] },
+{ path: ':entity/documents/add/:type', component: AddDocumentComponent, canActivate: [AuthGuard] },
+{ path: ':entity/documents/add/:type/:id', component: AddDocumentComponent, canActivate: [AuthGuard] },
 { path: 'document/view', component: DocViewComponent, canActivate: [AuthGuard] },
 { path: 'discovery', component: SearchComponent },
 

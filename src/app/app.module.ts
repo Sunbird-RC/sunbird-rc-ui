@@ -48,6 +48,10 @@ import { PanelWrapperComponent } from './forms/types/group.type';
 import { LogoutComponent } from './authentication/logout/logout.component';
 import { SearchComponent } from '../app/discovery/search/search.component';
 import { AuthConfigService } from './authentication/auth-config.service';
+import { DocumentsComponent } from './documents/documents.component';
+import { AddDocumentComponent } from './documents/add-document/add-document.component';
+import {WebcamModule} from 'ngx-webcam';
+import { ScanDocumentComponent } from './documents/scan-document/scan-document.component';
 
 //form validations
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
@@ -116,7 +120,10 @@ function initConfig(config: AppConfig){
     FormlyFieldNgSelect,
     InstallComponent,
     HomeComponent,
-    LogoutComponent
+    LogoutComponent,
+    DocumentsComponent,
+    AddDocumentComponent,
+    ScanDocumentComponent
   ],
   imports: [
     BrowserModule,
@@ -132,6 +139,7 @@ function initConfig(config: AppConfig){
     Bootstrap4FrameworkModule,
     AngularMultiSelectModule,
     NgSelectModule,
+    WebcamModule,
     FormlyModule.forRoot({
       extras: { resetFieldOnHide: true },
       wrappers: [{ name: 'form-field-horizontal', component: FormlyHorizontalWrapper },

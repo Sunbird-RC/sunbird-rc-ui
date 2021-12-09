@@ -1,11 +1,11 @@
-<ngx-doc-viewer
+<!-- <ngx-doc-viewer
   [url]="docUrl"
   viewer="url"
   style="width:100%;height:100%;"
   [authorization]="bearerToken"
 >
-</ngx-doc-viewer>
+</ngx-doc-viewer> -->
 
 <ng-template [ngIf]="extension === 'jpg' || extension === 'png' || extension === 'jpeg'">
-  <img src="docUrl | secure | async" />
+  <img src="docUrl | authImage | async" />
 </ng-template>
