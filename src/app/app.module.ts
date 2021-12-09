@@ -11,7 +11,7 @@ import { APP_INITIALIZER } from '@angular/core';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import { NgSelectModule } from '@ng-select/ng-select';
-import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 // formly
 import { FormlyModule, FormlyFieldConfig } from '@ngx-formly/core';
@@ -94,7 +94,7 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
   return `should be equal to constant "${field.templateOptions.const}"`;
 }
 
-function initConfig(config: AppConfig){
+function initConfig(config: AppConfig) {
   return () => config.load()
 }
 
@@ -150,7 +150,7 @@ function initConfig(config: AppConfig){
       { name: 'panel', component: PanelWrapperComponent }],
       validationMessages: [
         { name: 'required', message: 'This field is required' },
-        
+
       ],
       types: [
         { name: 'string', extends: 'input' },
@@ -188,7 +188,7 @@ function initConfig(config: AppConfig){
     }),
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-full-width',
-    preventDuplicates: true,
+      preventDuplicates: true,
     }),
     NgxPaginationModule
   ],
@@ -200,18 +200,45 @@ function initConfig(config: AppConfig){
     AppConfig,
     { provide: APP_INITIALIZER, useFactory: initConfig, deps: [AppConfig], multi: true },
     {
-    provide: APP_INITIALIZER,
-    useFactory: initializeKeycloak,
-    multi: true,
-    deps: [KeycloakService,AuthConfigService],
-  },
-  { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'always' } }]
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService, AuthConfigService],
+    },
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'always' } }]
 })
 export class AppModule {
   constructor(translate: TranslateService) {
-    translate.addLangs(['en', 'hi']);
+    var installed_languages = [
+      {
+        'code': 'en',
+        'name': "English"
+      },
+      {
+        'code': 'hi',
+        'name': "Hindi"
+      }];
+
+    localStorage.setItem('languages', JSON.stringify(installed_languages));
+
+    var languages = [];
+    // const browserLang = translate.getBrowserLang();
+    //translate.use(browserLang.match(/en|hi/) ? browserLang : 'en');
+
+for(let i =0; i< installed_languages.length; i++)
+{
+  languages.push(installed_languages[i].code);
+}
+    /*installed_languages.forEach((lang, index) => {
+      console.log(Object.keys(lang)[0]);
+      languages.push(Object.keys(lang)[0]);
+
+    });*/
+    translate.addLangs(languages);
+
     const browserLang = translate.getBrowserLang();
-    translate.use(browserLang.match(/en|hi/) ? browserLang : 'en');
+    translate.use(languages.includes(browserLang) ? browserLang : 'en');
+
   }
 }
 

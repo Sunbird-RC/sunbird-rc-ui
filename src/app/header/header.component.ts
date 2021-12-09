@@ -17,6 +17,7 @@ export class HeaderComponent implements OnInit {
   @Input() headerFor: string = 'default';
   @Input() tab: string;
   logo;
+  languages: any;
   headerSchema
   constructor(
     public router: Router, private config: AppConfig, public schemaService: SchemaService,
@@ -24,6 +25,7 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
+   this.languages =  JSON.parse(localStorage.getItem('languages'));
 
     this.logo = this.config.getEnv('logoPath');
     this.schemaService.getHeaderJSON().subscribe(async (HeaderSchemas) => {
@@ -37,7 +39,8 @@ export class HeaderComponent implements OnInit {
   }
 
   languageChange(lang){
-  
+    console.log(this.languages);
+    
     this.translate.use(lang.target.value)
   }
 }

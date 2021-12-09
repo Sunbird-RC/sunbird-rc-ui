@@ -53,7 +53,7 @@
                         aria-hidden="true"></i>
                     <label for="cars"> 
                     <select name="cars" id="cars" class="lang-btn text-primary-color" (change)="languageChange($event)" >
-                        <option   value="{{lang}}" *ngFor="let lang of translate.getLangs()" > {{lang}}</option>
+                        <option   value="{{lang.code}}" *ngFor="let lang of languages" > {{lang.name}}</option>
                     </select>
                 </label>
                    </span>
