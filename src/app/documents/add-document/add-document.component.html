@@ -1,0 +1,110 @@
+<app-header [headerFor]='header'></app-header>
+<div class="container">
+
+    <div class="col-md-6 offset-md-3 mt-5">
+        <!-- <div style="text-align-last: center;color: #1987B6 !important">
+            <h3> <img style="display: -webkit-inline-box;" class="logo" src="assets/images/logo.png" />Sunbird eLocker</h3>
+        </div> -->
+        <ng-template [ngIf]="isScan">
+            <!-- <webcam (initError)="handleInitError($event)" [width]="width" (imageCapture)="handleImage($event)"
+            [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
+            [videoOptions]="videoOptions"
+            [imageQuality]="1"
+            (cameraSwitched)="cameraWasSwitched($event)"
+            (initError)="handleInitError($event)"
+            ></webcam>
+            <div style="text-align: center;">
+                <button class="actionBtn" (click)="triggerSnapshot();">Capture</button>
+              
+                <button class="actionBtn" (click)="showNextWebcam(true);" [disabled]="!multipleWebcamsAvailable">Switch Camera</button>
+            </div>
+            <div class="snapshot" *ngIf="webcamImage">
+                <h2>Nice one!</h2>
+                <img [src]="webcamImage.imageAsDataUrl"/>
+              </div> -->
+
+              <app-scan-document [width]="width" (pictureTaken)="handleImage($event)"></app-scan-document>
+          
+        </ng-template>
+
+        <div class="card p-4" #myIdentifier>
+            <div *ngIf="schemaloaded; else loader" class="card-body">
+                <div>
+                    <form [formGroup]="form2" (ngSubmit)="submit()" *ngIf="fields">
+                        <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form2"></formly-form>
+                        <ng-template [ngIf]="verify && osid">
+                            <button style="
+                            float: right;
+                            margin-top: -49px;
+                            position: relative;
+                        " type="button" class="btn btn-primary" data-toggle="modal" data-target="#verifyModal">
+                                Verify
+                            </button>
+                        </ng-template>
+                        <ng-template [ngIf]="verified  && osid">
+                            <i class="fa fa-check-circle text-success" style="
+                            float: right;
+                            margin-top: -49px;
+                            position: relative;
+                        ">
+                            </i>
+                        </ng-template>
+                        <div *ngIf="webcamImage">
+                            <img width="100"[src]="webcamImage.imageAsDataUrl" />
+                            </div>
+                        <button type="submit" class="btn btn-primary w-100 submit-button"
+                            [disabled]="!verified">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #loader>
+        <br>
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border" style="width: 5rem; height: 5rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </ng-template>
+
+
+</div>
+
+<!-- Modal -->
+<ng-template [ngIf]="verify">
+    <div class="modal right fade" id="verifyModal" tabindex="-1" role="dialog" aria-labelledby="verifyModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h3 class="modal-title font-weight-bold" id="myModalLabel2">Confirm OTP</h3>
+                </div>
+
+                <div class="modal-body">
+                    Enter the code sent to mobile number
+                    <div class="form-group"><label for="formly_18_number_otp_0"> Enter OTP
+                        </label>
+                        <formly-field-input><input type="password"
+                                class="form-control ng-untouched ng-pristine ng-valid">
+
+                        </formly-field-input>
+                        <a src="/cf/sluid">Resend OTP?</a>
+                    </div>
+                    <button type="button" aria-hidden="true" data-dismiss="modal" aria-label="Close"
+                        (click)="verifyFn()" class="btn btn-primary w-100 submit-button">Confirm OTP</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</ng-template>
+<script>
+    $('#button').submit(function (e) {
+        e.preventDefault();
+        // Coding
+        $('#verifyModal').modal('toggle'); //or  $('#IDModal').modal('hide');
+        return false;
+    });
+</script>
