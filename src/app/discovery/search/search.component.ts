@@ -6,6 +6,7 @@ import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 import { GeneralService } from '../../services/general/general.service';
 import { ChangeDetectionStrategy } from '@angular/core';
 import { of as observableOf } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-search',
@@ -69,7 +70,8 @@ export class SearchComponent implements OnInit {
   constructor(
     public schemaService: SchemaService,
     private formlyJsonschema: FormlyJsonschema,
-    public generalService: GeneralService
+    public generalService: GeneralService,
+    public translate: TranslateService
   ) { }
 
 
@@ -131,14 +133,14 @@ export class SearchComponent implements OnInit {
               type: 'input',
               className: 'col-4',
               templateOptions: {
-                label: filter.title,
+                label: this.translate.instant(filter.title),
               }
             }
 
 
             if (filter.type == 'autocomplete') {
               fieldObj.type = 'autocomplete';
-              fieldObj['templateOptions']['label'] = filter.title;
+              fieldObj['templateOptions']['label'] = this.translate.instant(filter.title);
               fieldObj['templateOptions']['placeholder'] = filter.placeholder;
 
 
@@ -168,11 +170,11 @@ export class SearchComponent implements OnInit {
               }
             }
 
-            this.dropdownList.push({ "id": filter.key, "itemName": filter.title, "data": fieldObj });
+            this.dropdownList.push({ "id": filter.key, "itemName": this.translate.instant(filter.title), "data": fieldObj });
 
             if (filter.default) {
               this.data[0].fieldGroup.push(fieldObj);
-              this.selectedItems.push({ "id": filter.key, "itemName": filter.title });
+              this.selectedItems.push({ "id": filter.key, "itemName": this.translate.instant(filter.title) });
             }
           }
         });
@@ -240,7 +242,7 @@ export class SearchComponent implements OnInit {
       this.cardFields.forEach((key, i) => {
 
         var property = key.property;
-        var title = key.title;
+        var title = this.translate.instant(key.title);
         var propertySplit = property.split(".");
 
         let fieldValue = [];
@@ -274,7 +276,7 @@ export class SearchComponent implements OnInit {
         }
 
 
-        this.fieldsTemp.push({ 'title': title, "value": fieldValue });
+        this.fieldsTemp.push({ 'title': this.translate.instant(title), "value": fieldValue });
 
       });
 

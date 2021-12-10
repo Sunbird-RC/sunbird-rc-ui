@@ -10,12 +10,14 @@ import { Location } from '@angular/common'
 import { of } from 'rxjs';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
 import { of as observableOf } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-forms',
   templateUrl: './forms.component.html',
   styleUrls: ['./forms.component.scss']
 })
+
 
 export class FormsComponent implements OnInit {
   @Input() form;
@@ -60,6 +62,7 @@ export class FormsComponent implements OnInit {
   headingTitle;
   isSignupForm: boolean = false;
   constructor(private route: ActivatedRoute,
+    public translate: TranslateService,
     public toastMsg: ToastMessageService, public router: Router, public schemaService: SchemaService, private formlyJsonschema: FormlyJsonschema, public generalService: GeneralService, private location: Location) { }
 
   ngOnInit(): void {
@@ -99,7 +102,7 @@ export class FormsComponent implements OnInit {
       }
 
       if (this.formSchema.title) {
-        this.headingTitle = this.formSchema.title
+        this.headingTitle = this.translate.instant(this.formSchema.title);
       }
 
       if (this.formSchema.redirectTo) {
@@ -129,7 +132,7 @@ export class FormsComponent implements OnInit {
           this.definations[fieldset.definition] = {}
           this.definations[fieldset.definition]['type'] = "object";
           if (fieldset.title) {
-            this.definations[fieldset.definition]['title'] = fieldset.title;
+            this.definations[fieldset.definition]['title'] = this.translate.instant(fieldset.title);
           }
 
           if (fieldset.required && fieldset.required.length > 0) {
@@ -173,7 +176,7 @@ export class FormsComponent implements OnInit {
         this.loadSchema();
       },
         (error) => {
-          this.toastMsg.error('error', 'Something went wrong with Schema URL or Path not found')
+          this.toastMsg.error('error', this.translate.instant('SOMETHING_WENT_WRONG_WITH_SCHEMA_URL'))
         });
 
     }, (error) => {
@@ -220,18 +223,18 @@ export class FormsComponent implements OnInit {
             fieldObj.templateOptions['addonRight'] = {
               class: "private-access d-flex flex-column"
             }
-            fieldObj.templateOptions.description = "(Visibility Attribute Define)";
+            fieldObj.templateOptions.description = this.translate.instant('VISIBILITY_ATTRIBUTE_DEFINE');
           } else if (this.internalFields.indexOf('$.' + fieldObj.key) >= 0) {
             fieldObj.templateOptions['addonRight'] = {
               class: "internal-access d-flex flex-column"
             }
-            fieldObj.templateOptions.description = "(Visibility Attribute Define)";
+            fieldObj.templateOptions.description = this.translate.instant('VISIBILITY_ATTRIBUTE_DEFINE');
           }
         } else {
           fieldObj.templateOptions['addonRight'] = {
             class: "public-access d-flex flex-column"
           }
-          fieldObj.templateOptions.description = "(Visibility Attribute Define)";
+          fieldObj.templateOptions.description = this.translate.instant('VISIBILITY_ATTRIBUTE_DEFINE');
         }
       });
     } else {
@@ -442,6 +445,10 @@ export class FormsComponent implements OnInit {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['className'] = field.class;
         }
         if (field.enum) {
+          for(let i =0; i < field.enum.length; i++)
+          {
+            field.enum[i].label = this.translate.instant(field.enum[i].label);
+          }
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = 'select';
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['options'] = field.enum;
         }
@@ -618,7 +625,7 @@ export class FormsComponent implements OnInit {
       if (field.autocomplete) {
 
         this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = "autocomplete";
-        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = this.responseData.definitions[fieldset.definition].properties[field.name]['title'];
+        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = this.translate.instant(this.translate.instant(this.responseData.definitions[fieldset.definition].properties[field.name]['title']));
         this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['label'] = field.autocomplete.responseKey;
         var dataval = "{{value}}"
         this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['search$'] = (term) => {
@@ -677,7 +684,7 @@ export class FormsComponent implements OnInit {
                 }, 1000);
               });
             };
-            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name]['message'] = "The Date must be Bigger or Equal to today date";
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name]['message'] = this.translate.instant('DATE_MUST_BIGGER_TO_TODAY_DATE');
           }
         }
         else {

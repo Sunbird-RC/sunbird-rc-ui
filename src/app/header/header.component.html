@@ -18,7 +18,7 @@
                         <li class="nav-item">
                             <a *ngIf="header?.title" id="{{header?.title}}"
                                 class="nav-link  p14 {{header?.activeTab}} {{header?.className}}"
-                                [routerLink]="[header.redirectTo]">{{header?.title}}</a>
+                                [routerLink]="[header.redirectTo]">{{header?.title | translate}}</a>
                             <a *ngIf="header?.image" class="nav-link" [routerLink]="[header.redirectTo]">
                                 <img style="width: 25px;" src={{header?.image}} />
                             </a>
@@ -35,7 +35,7 @@
                     <ul *ngFor="let header of headerSchema.right" class="navbar-nav ms-auto">
                         <li class="nav-item active">
                             <a *ngIf="header?.title" class="nav-link active p14 {{header?.className}}"
-                                [routerLink]="[header.redirectTo]">{{header?.title}}</a>
+                                [routerLink]="[header.redirectTo]">{{header?.title | translate}}</a>
                             <a *ngIf="header?.image" class="nav-link" [routerLink]="[header.redirectTo]">
                                 <img style="width: 25px;" src={{header?.image}} />
                             </a>

@@ -7,7 +7,7 @@
       <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item" *ngFor="let tab of filtered;let index = index;">
           <a class="nav-link {{tab?.activeTab}} text-capitalize p14" (click)="onTabChange($event, tab?.tab);"
-            data-toggle="tab" href="#{{tab?.tab}}"><b>{{tab?.tabTitle}}</b></a>
+            data-toggle="tab" href="#{{tab?.tab}}"><b>{{tab?.tabTitle | translate}}</b></a>
         </li>
       </ul>
 
@@ -43,7 +43,7 @@
       <div *ngFor="let field of item.fields">
         <div data-toggle="modal" data-target="#prewiewProfile" (click)="showDetails(item?.data)">
           <div *ngIf="field?.value" class="p14">
-            <span *ngIf="field?.title"> {{field?.title}} : </span>
+            <span *ngIf="field?.title"> {{field?.title | translate}} : </span>
             <span class="" *ngIf="typeOf(field?.value) != 'object'"><b>{{field?.value}} </b> </span>
             <span class="" *ngIf="typeOf(field?.value) === 'object'"><b>
 
