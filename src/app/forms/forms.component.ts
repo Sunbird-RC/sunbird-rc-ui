@@ -409,6 +409,13 @@ export class FormsComponent implements OnInit {
   }
 
   addWidget(fieldset, field, childrenName) {
+
+    this.translate.get(field.name).subscribe(res=>{
+      if(res != field.name) {
+        this.responseData.definitions[fieldset.definition].properties[field.name].title = this.translate.instant(field.name);
+      }
+  })
+  
     if (field.widget) {
       this.responseData.definitions[fieldset.definition].properties[field.name]['widget'] = field.widget;
     }
@@ -445,8 +452,7 @@ export class FormsComponent implements OnInit {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['className'] = field.class;
         }
         if (field.enum) {
-          for(let i =0; i < field.enum.length; i++)
-          {
+          for (let i = 0; i < field.enum.length; i++) {
             field.enum[i].label = this.translate.instant(field.enum[i].label);
           }
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = 'select';
