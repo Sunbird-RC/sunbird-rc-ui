@@ -451,13 +451,19 @@ export class FormsComponent implements OnInit {
         if (field.class) {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['className'] = field.class;
         }
-        if (field.enum) {
-          for (let i = 0; i < field.enum.length; i++) {
-            field.enum[i].label = this.translate.instant(field.enum[i].label);
+
+      if (field.enum || this.responseData.definitions[fieldset.definition].properties[field.name].enum) {
+          if (field.enum) {
+            for (let i = 0; i < field.enum.length; i++) {
+              field.enum[i].label = this.translate.instant(field.enum[i].label);
+            }
+          } else {
+            for (let i = 0; i < this.responseData.definitions[fieldset.definition].properties[field.name].enum.length; i++) {
+              this.responseData.definitions[fieldset.definition].properties[field.name].enum[i] = this.translate.instant(this.responseData.definitions[fieldset.definition].properties[field.name].enum[i]);
+            }
           }
-          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = 'select';
-          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['options'] = field.enum;
         }
+
         if (field.hidden) {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['type'] = "hidden";
           delete this.responseData.definitions[fieldset.definition].properties[field.name]['title']

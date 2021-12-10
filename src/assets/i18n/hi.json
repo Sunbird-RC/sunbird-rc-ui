@@ -8,6 +8,7 @@
     "district": "जिल्ला",
     "village": "गाउँ/नगर/शहर",
     "pincode": "पिनकोड",
+    "instituteName":"संस्थान का नाम",
     "establishmentYear": "संस्था स्थापना वर्",
     "gstnId": "GSTN ID",
     "contactNumber": "ल्याण्डलाइन / मोबाइल",
