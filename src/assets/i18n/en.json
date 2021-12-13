@@ -273,6 +273,7 @@
     "PUBLISHED":"Published",
     "SELECT" : "Select",
     "PREVIOUS": "Privious",
-    "NEXT": "Next"
+    "NEXT": "Next",
+    "FIELD_IS_REQUIRED": "This field is required"
 
 }

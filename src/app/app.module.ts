@@ -149,7 +149,7 @@ function initConfig(config: AppConfig) {
       wrappers: [{ name: 'form-field-horizontal', component: FormlyHorizontalWrapper },
       { name: 'panel', component: PanelWrapperComponent }],
       validationMessages: [
-        { name: 'required', message: 'This field is required' },
+        { name: 'required', message: '' },
 
       ],
       types: [

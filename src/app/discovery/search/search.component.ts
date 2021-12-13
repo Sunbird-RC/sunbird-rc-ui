@@ -41,15 +41,7 @@ export class SearchComponent implements OnInit {
   searchResult: any;
   dropdownList = [];
   selectedItems = [];
-  dropdownSettings = {
-    singleSelection: false,
-    text: "Select filter",
-    selectAllText: 'Select All',
-    unSelectAllText: 'Unselect All',
-    enableSearchFilter: true,
-    noDataLabel: 'Filter Not Available',
-    classes: "myclass custom-class"
-  };
+  dropdownSettings = {};
   responseData;
   privateFields;
   searchFields = {
@@ -72,10 +64,24 @@ export class SearchComponent implements OnInit {
     private formlyJsonschema: FormlyJsonschema,
     public generalService: GeneralService,
     public translate: TranslateService
-  ) { }
+  ) { 
+    this.dropdownSettings = {
+      singleSelection: false,
+      text: this.translate.instant("SELECT_FILTER"),
+      selectAllText: this.translate.instant("SELECT_ALL"),
+      unSelectAllText:this.translate.instant("UNSELECT_ALL"),
+      searchPlaceholderText : this.translate.instant("SEARCH"),
+      enableSearchFilter: true,
+      noDataLabel: this.translate.instant("FILTER_NOT_AVAILABLE"),
+      classes: "myclass custom-class"
+    };
+  }
 
 
   ngOnInit(): void {
+
+   
+
     this.schemaService.getSearchJSON().subscribe((searchSchemas) => {
       this.searchSchemas = searchSchemas;
 

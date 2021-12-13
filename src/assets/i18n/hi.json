@@ -264,6 +264,8 @@
   "SAVED_TO_DRAFT": "DRAFT मध्ये सेव्ह केले",
   "PUBLISHED": "Published",
   "SELECT" : "चयन करें",
-  "PREVIOUS": "पिछला",
-  "NEXT": "अगला"
+  "PREVIOUS": "प्रिविअस",
+  "NEXT": "अगला",
+  "FIELD_IS_REQUIRED": "यह फ़ील्ड आवश्यक है"
+
 }
