@@ -38,7 +38,8 @@
             </ng-template>
         </tbody>
     </table>
-    <pagination-controls class="my-1 float-end" (pageChange)="page = $event"></pagination-controls>
+    <pagination-controls class="my-1 float-end" (pageChange)="page = $event" previousLabel="{{'PREVIOUS' | translate}}"
+    nextLabel="{{'NEXT' | translate}}"></pagination-controls>
 
     <table class="mx-5 my-5 w-50">
         <tbody class="fs-5">

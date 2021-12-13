@@ -72,7 +72,8 @@
 
     <!-- pagination-controls -->
     <div class="my-1 float-end" *ngIf="!isLoading && items?.length">
-      <pagination-controls (pageChange)="page = $event"></pagination-controls>
+      <pagination-controls (pageChange)="page = $event" previousLabel="{{'PREVIOUS' | translate}}"
+      nextLabel="{{'NEXT' | translate}}"></pagination-controls>
     </div>
 
     <!-- Data Not Found -->

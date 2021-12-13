@@ -456,15 +456,21 @@ export class FormsComponent implements OnInit {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['className'] = field.class;
         }
 
-      if (field.enum || this.responseData.definitions[fieldset.definition].properties[field.name].enum) {
+      if (field.enum || this.responseData.definitions[fieldset.definition].properties[field.name].enum || this.responseData.definitions[fieldset.definition].properties[field.name].hasOwnProperty('items')) {
           if (field.enum) {
             for (let i = 0; i < field.enum.length; i++) {
               field.enum[i].label = this.translate.instant(field.enum[i].label);
             }
-          } else {
+          } else if(this.responseData.definitions[fieldset.definition].properties[field.name].enum){
+            
             for (let i = 0; i < this.responseData.definitions[fieldset.definition].properties[field.name].enum.length; i++) {
               this.responseData.definitions[fieldset.definition].properties[field.name].enum[i] = this.translate.instant(this.responseData.definitions[fieldset.definition].properties[field.name].enum[i]);
             }
+          }else {
+            for (let i = 0; i < this.responseData.definitions[fieldset.definition].properties[field.name].items.enum.length; i++) {
+              this.responseData.definitions[fieldset.definition].properties[field.name].items.enum[i] = this.translate.instant(this.responseData.definitions[fieldset.definition].properties[field.name].items.enum[i]);
+            }
+
           }
         }
 
@@ -668,9 +674,9 @@ export class FormsComponent implements OnInit {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = field.type;
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['multiple'] = true;
           if (field.required) {
-            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = "Select " + field.name + "*";
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = this.translate.instant("SELECT") + ' ' + this.translate.instant(field.name) + "*";
           } else {
-            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = "Select " + field.name;
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = this.translate.instant("SELECT") + ' ' + this.translate.instant(field.name);
           }
 
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['options'] = [];

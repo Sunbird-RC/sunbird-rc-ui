@@ -58,6 +58,43 @@
     "graduationYear":"Year of Graduation",
     "marks":"Marks / Ranking / GPA, etc",
     "academicQualifications":"Education Details",
+    
+    "identityDetails": "Identity Details",
+    "contactDetails":"Contact Details",
+    "employmentType":"Employment Type",
+    "Permanent":"Permanent",
+    "Contract":"Contract",
+    "start":"Start Date",
+    "end":"End Date",
+    "teacherType":"Teacher Type",
+    "Acting head teacher":"Acting head teacher",
+    "Instructor positioned as per RTE":"Instructor positioned as per RTE",
+    "Principal":"Principal",
+    "VicePrincipal":"VicePrincipal",
+    "Lecturer":"Lecturer",
+    "subjectsTaught":"Subjects Taught",
+    "subjects":"Subject",
+    "Kannada":"Kannada",
+    "Mathematics":"Mathematics",
+    "Science":"Science",
+    "Social Science":"Social Science",
+    "Art":"Art",
+    "grades":"Grades",
+    "class":"Current Enrollment Class / Std.",
+    "fileName":"Education related documents",
+    "Pre-Pri.":"Pre-Pri.",
+    "Class I":"Class I",
+     "Class II":"Class II",
+     "Class III":"Class III",
+     "Class IV":"Class IV",
+     "Class V":"Class V",
+     "Class VI":"Class VII",
+    "Class VIII":"Class VIII",
+    "Class IX":"Class IX",
+    "Class X":"Class X",
+    "Class XI":"Class XI",
+    "Class XII":"Class XII",
+   
   
 
 
@@ -233,6 +270,9 @@
     "SOMETHING_WENT_WRONG_WITH_SCHEMA_URL": "Something went wrong with Schema URL or Path not found",
     "ATTESTATION_REQUESTED": "Attestation Requested",
     "SAVED_TO_DRAFT":"Saved to DRAFT",
-    "PUBLISHED":"Published"
+    "PUBLISHED":"Published",
+    "SELECT" : "Select",
+    "PREVIOUS": "Privious",
+    "NEXT": "Next"
 
 }

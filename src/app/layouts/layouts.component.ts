@@ -5,6 +5,7 @@ import { GeneralService } from '../services/general/general.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 import { Title } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-layouts',
@@ -35,7 +36,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
   subHeadername = [];
   params: any;
   constructor(private route: ActivatedRoute, public schemaService: SchemaService, private titleService: Title, public generalService: GeneralService, private modalService: NgbModal,
-    public router: Router) {
+    public router: Router, public translate: TranslateService,) {
      }
 
   ngOnChanges(): void {
@@ -114,7 +115,9 @@ export class LayoutsComponent implements OnInit, OnChanges {
               if (typeof this.model[element] == 'string') {
                 temp_object = this.responseData['definitions'][block.definition]['properties'][element]
                 if (temp_object != undefined) {
-                  temp_object['value'] = this.model[element]
+                 temp_object.title = this.translate.instant(element);
+
+                  temp_object['value'] = this.model[element];
                   this.property.push(temp_object)
                 }
               }
@@ -243,6 +246,12 @@ export class LayoutsComponent implements OnInit, OnChanges {
                     }
                     else {
                       temp_object = this.responseData['definitions'][block.definition]['properties'][element]['items']['properties'][key];
+                      
+                      if(temp_object != undefined && temp_object.hasOwnProperty('title'))
+                      {
+                        temp_object.title = this.translate.instant(key);
+                      }
+
                       if (temp_object != undefined && typeof value != 'object') {
                         if (objects.osid) {
                           temp_object['osid'] = objects.osid;
