@@ -49,15 +49,25 @@
                     </ul>
                 </ng-template>
                 <span>
-                   <i style="font-size: 25px;" class="fa fa-language text-primary-color mt-3"
-                        aria-hidden="true"></i>
-                    <label for="cars"> 
-                    <select name="cars" id="cars" class="lang-btn text-primary-color" (change)="languageChange($event)" >
-                        <option   value="{{lang.code}}" *ngFor="let lang of languages" > {{lang.name}}</option>
-                    </select>
-                </label>
-                   </span>
-                
+                    <i style="font-size: 25px;" class="fa fa-language text-primary-color mt-3" aria-hidden="true"></i>
+                    <label for="cars">
+                        <select class="lang-btn text-primary-color" name="language"  ngModel
+                            (ngModelChange)="languageChange($event)">
+                            <option *ngFor="let lang of languages" [ngValue]="lang.code">{{lang.name}}</option>
+                        </select>
+                    </label>
+                </span>
+
+                <!-- <select class="lang-btn text-primary-color" name="language" [selected]="hi" ngModel (ngModelChange)="languageChange($event)">
+                    <option *ngFor="let lang of languages" [ngValue]="lang.code">{{lang.name}}</option>
+                </select> -->
+
+                <!-- <select class='form-control' (change)="languageChange1($event)" [value]='hi'>
+                    <option *ngFor="let lang of languages" [ngValue]="lang.code">{{lang.name}}</option>
+                </select> -->
+
+
+
             </div>
         </div>
     </nav>

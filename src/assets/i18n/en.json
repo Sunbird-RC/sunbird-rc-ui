@@ -39,6 +39,26 @@
     "classes": "Classes / Grades",
     "employeeName": "Employee Full name",
 
+    "fullName":"Full name",
+    "gender" : "Gender",
+    "Male": "Male",
+    "Female": "Female",
+    "Other": "Other",
+    "dob": "DOB",
+    "type": "ID Type",
+    "value": "ID Value",
+    "AADHAR": "AADHAR",
+    "PAN": "PAN",
+    "LICENSE": "LICENSE",
+    "OTHER": "OTHER",
+    "mobile": "Mobile",
+    "instituteOSID": "Institute OSID",
+    "qualification":"Qualification",
+    "program":"Program of Study",
+    "graduationYear":"Year of Graduation",
+    "marks":"Marks / Ranking / GPA, etc",
+    "academicQualifications":"Education Details",
+  
 
 
 
@@ -46,10 +66,11 @@
     "LOGIN": "Login",
     "LOGOUT": "Logout",
     "HOME": "Home",
+    "INSTITUTE": "Institute",
     "ATTESTATIONS": "Attestations",
     "REGISTER": "Register",
     "EMAILT_NOT_VALID": "Email is not valid.",
-    "ACCEOT_TERMS_CONDITIONS": "I accept Terms & Conditions",
+    "ACCEPT_TERMS_CONDITIONS": "I accept Terms & Conditions",
     "INSTITUTE_SETUP": "Institute Setup",
     "BASIC_DETAILS": "Basic details",
     "GSTIN_NOT_VALID": "GSTIN is not valid. Ex: 06BZAHM6385P6Z2",
@@ -209,5 +230,9 @@
     "STOP_SCANNER": "StopScanner",
     "THIS_CERTIFICATE_IS_VALID": "This Certificate is valid",
     "THIS_CERTIFICATE_IS_NOT_VALID": "This Certificate is not valid",
-    "SOMETHING_WENT_WRONG_WITH_SCHEMA_URL": "Something went wrong with Schema URL or Path not found"
+    "SOMETHING_WENT_WRONG_WITH_SCHEMA_URL": "Something went wrong with Schema URL or Path not found",
+    "ATTESTATION_REQUESTED": "Attestation Requested",
+    "SAVED_TO_DRAFT":"Saved to DRAFT",
+    "PUBLISHED":"Published"
+
 }

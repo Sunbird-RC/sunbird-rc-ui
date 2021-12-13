@@ -18,14 +18,17 @@ export class HeaderComponent implements OnInit {
   @Input() tab: string;
   logo;
   languages: any;
-  headerSchema
+  headerSchema;
+  langCode : string;
   constructor(
     public router: Router, private config: AppConfig, public schemaService: SchemaService,
     public translate: TranslateService
-  ) {}
+  ) { }
 
   async ngOnInit() {
-   this.languages =  JSON.parse(localStorage.getItem('languages'));
+    this.languages = JSON.parse(localStorage.getItem('languages'));
+    this.langCode = localStorage.getItem('setLanguage');
+
 
     this.logo = this.config.getEnv('logoPath');
     this.schemaService.getHeaderJSON().subscribe(async (HeaderSchemas) => {
@@ -38,9 +41,19 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  languageChange(lang){
+  languageChange(lang) {
+    if(this.langCode != lang){
     console.log(this.languages);
-    
-    this.translate.use(lang.target.value)
+    this.translate.use(lang);
+    window.location.reload();
+    localStorage.setItem('setLanguage', lang);
   }
+  }
+
+  // languageChange1(lang) {
+  //   console.log(this.languages);
+  //   this.translate.use(lang.target.value);
+  //   window.location.reload();
+  //   localStorage.setItem('setLanguage', lang.target.value);
+  // }
 }

@@ -348,6 +348,10 @@ export class FormsComponent implements OnInit {
 
         if (field.custom && field.element) {
           this.responseData.definitions[fieldset.definition].properties[field.name] = field.element;
+          if(field.element.hasOwnProperty('title'))
+          {
+            this.responseData.definitions[fieldset.definition].properties[field.name]['title'] = this.translate.instant(field.element.title);
+          }
           this.customFields.push(field.name);
         } else {
           this.addWidget(fieldset, field, '')
@@ -435,11 +439,11 @@ export class FormsComponent implements OnInit {
         }
 
         if (field.placeholder) {
-          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = field.placeholder;
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = this.translate.instant(field.placeholder);
         }
 
         if (field.description) {
-          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['description'] = field.description;
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['description'] = this.translate.instant(field.description);
         }
 
         if (field.classGroup) {

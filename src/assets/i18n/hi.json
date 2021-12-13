@@ -1,5 +1,6 @@
 {
   
+  
     "plot": "प्लॉट",
     "street": "सडक",
     "landmark": "ल्यान्डमार्क",
@@ -39,6 +40,26 @@
     "medium": "शिक्षा का माध्यम",
     "classes": "कक्षाएं / ग्रेड",
     "employeeName": "कर्मचारी का पूरा नाम",
+
+    "fullName":"पूरा नाम",
+    "gender" : "लिंग",
+    "Male": "पुरूष",
+    "Female": "महिला",
+    "Other": "अन्य",
+    "dob": "जन्म की तारीख",
+    "type": "ID टाइप",
+    "value": "ID मान",
+    "AADHAR": "आधार",
+    "PAN": "पैन",
+    "LICENSE": "लाइसेंस",
+    "OTHER": "अन्य",
+    "mobile": "मोबाइल",
+    "instituteOSID": "इंस्टीट्यूट OSID",
+    "qualification":"योग्यता",
+    "program":"अध्ययन का कार्यक्रम",
+    "graduationYear":"स्नातक वर्",
+    "marks":"अंक / रैंकिंग / जीपीए, आदि",
+    "academicQualifications":"शिक्षा विवरण",
   
   "LOGIN": "लॉग इन",
   "LOGOUT": "लॉगआउट",
@@ -46,7 +67,7 @@
   "ATTESTATIONS": "प्रमाणीकरण",
   "REGISTER": "रजिस्टर",
   "EMAILT_NOT_VALID": "ईमेल मान्य नहीं है।",
-  "ACCEOT_TERMS_CONDITIONS": "मुझे नियम और शर्तें स्वीकार हैं",
+  "ACCEPT_TERMS_CONDITIONS": "मुझे नियम और शर्तें स्वीकार हैं",
   "INSTITUTE_SETUP": "संस्थान सेटअप",
   "BASIC_DETAILS": "मूल विवरण",
   "GSTIN_NOT_VALID": "GSTIN मान्य नहीं है। उदा: 06BZAHM6385P6Z2",
@@ -204,5 +225,8 @@
   "SCAN_QR_CODE": "QR कोड स्कैन करें",
   "STOP_SCANNER": "StopScanner",
   "THIS_CERTIFICATE_IS_VALID": "यह प्रमाणपत्र मान्य है",
-  "THIS_CERTIFICATE_IS_NOT_VALID": "यह प्रमाणपत्र मान्य नहीं है"
+  "THIS_CERTIFICATE_IS_NOT_VALID": "यह प्रमाणपत्र मान्य नहीं है",
+  "ATTESTATION_REQUESTED": "प्रमाणीकरण विनंती",
+    "SAVED_TO_DRAFT":"DRAFT मध्ये सेव्ह केले",
+    "PUBLISHED":"Published"
 }

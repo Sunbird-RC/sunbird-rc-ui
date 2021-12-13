@@ -18,7 +18,7 @@
                 <tr>
                     <!-- {{td | json}} -->
                     <ng-template ngFor let-td [ngForOf]="item" class="row">
-                        <td  width="10%" *ngIf="td.type && td.type === 'button'; else normalTd">
+                        <td  width="20%" *ngIf="td.type && td.type === 'button'; else normalTd">
                             <a [routerLink]="[td.redirectToUrl]" class="btn btn-bg btn-style text-primary-color text-end fw-bold text-capitalize">{{td?.buttonText | translate}}</a>
                         </td>
                         <ng-template #normalTd>

@@ -225,20 +225,30 @@ export class AppModule {
     // const browserLang = translate.getBrowserLang();
     //translate.use(browserLang.match(/en|hi/) ? browserLang : 'en');
 
-for(let i =0; i< installed_languages.length; i++)
-{
-  languages.push(installed_languages[i].code);
-}
+    for (let i = 0; i < installed_languages.length; i++) {
+      languages.push(installed_languages[i].code);
+    }
     /*installed_languages.forEach((lang, index) => {
       console.log(Object.keys(lang)[0]);
       languages.push(Object.keys(lang)[0]);
 
     });*/
+
     translate.addLangs(languages);
 
-    const browserLang = translate.getBrowserLang();
-    translate.use(languages.includes(browserLang) ? browserLang : 'en');
+    if(localStorage.getItem('setLanguage'))
+    {
+      translate.use(localStorage.getItem('setLanguage'));
 
+    } else {
+      const browserLang = translate.getBrowserLang();
+      let lang = languages.includes(browserLang) ? browserLang : 'en';
+      translate.use(lang);
+      localStorage.setItem('setLanguage', lang);
+    }
+
+
+   
   }
 }
 
