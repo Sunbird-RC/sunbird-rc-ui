@@ -38,9 +38,6 @@ export class ScanQrCodeComponent implements OnInit {
     }).then(contents => {
       // console.log('con', contents)
       this.loader = true;
-      var myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Cookie", "JSESSIONID=BEE076F2D0801811396549DCC158F429; OAuth_Token_Request_State=1ef52fae-6e1a-4395-af75-beb03e9f8bc3");
       var signedData = JSON.parse(contents)
       console.log('-----s',signedData)
       var context = {}
@@ -49,7 +46,7 @@ export class ScanQrCodeComponent implements OnInit {
       this.generalService.getData(this.entity).subscribe((res) => {
         console.log('res', res)
         var attest = {
-          "name": "attestation-MOSIP",
+          "name": "attestation-DIVOC",
           "entityName": "User",
           "entityId": res[0]['osid'],
           "additionalInput": this.model

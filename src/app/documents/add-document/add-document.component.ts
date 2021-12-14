@@ -91,7 +91,6 @@ export class AddDocumentComponent implements OnInit {
         this.docType = params['type'];
         if (this.docType === 'scan') {
           this.isScan = true;
-
         }
       }
       if (params['entity']) {
