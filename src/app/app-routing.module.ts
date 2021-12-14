@@ -16,6 +16,7 @@ import { LogoutComponent } from './authentication/logout/logout.component';
   import { SearchComponent } from './discovery/search/search.component';
 import { DocumentsComponent } from './documents/documents.component';
 import { AddDocumentComponent } from './documents/add-document/add-document.component';
+import { ScanQrCodeComponent } from './documents/scan-qr-code/scan-qr-code.component';
 const routes: Routes = [
 // Home
 { path: '', component: HomeComponent },
@@ -71,6 +72,7 @@ const routes: Routes = [
 { path: ':entity/documents', component: DocumentsComponent, canActivate: [AuthGuard] },
 { path: ':entity/documents/add/:type', component: AddDocumentComponent, canActivate: [AuthGuard] },
 { path: ':entity/documents/add/:type/:id', component: AddDocumentComponent, canActivate: [AuthGuard] },
+{ path: ':entity/documents/scan/vc', component: ScanQrCodeComponent, canActivate: [AuthGuard] },
 { path: 'document/view', component: DocViewComponent, canActivate: [AuthGuard] },
 { path: 'discovery', component: SearchComponent },
 

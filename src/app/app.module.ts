@@ -52,6 +52,8 @@ import { DocumentsComponent } from './documents/documents.component';
 import { AddDocumentComponent } from './documents/add-document/add-document.component';
 import {WebcamModule} from 'ngx-webcam';
 import { ScanDocumentComponent } from './documents/scan-document/scan-document.component';
+import { ScanQrCodeComponent } from './documents/scan-qr-code/scan-qr-code.component';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
 
 //form validations
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
@@ -123,7 +125,8 @@ function initConfig(config: AppConfig){
     LogoutComponent,
     DocumentsComponent,
     AddDocumentComponent,
-    ScanDocumentComponent
+    ScanDocumentComponent,
+    ScanQrCodeComponent
   ],
   imports: [
     BrowserModule,
@@ -140,6 +143,7 @@ function initConfig(config: AppConfig){
     AngularMultiSelectModule,
     NgSelectModule,
     WebcamModule,
+    ZXingScannerModule,
     FormlyModule.forRoot({
       extras: { resetFieldOnHide: true },
       wrappers: [{ name: 'form-field-horizontal', component: FormlyHorizontalWrapper },

@@ -39,6 +39,7 @@
     "@ngx-formly/bootstrap": "^5.10.21",
     "@ngx-formly/core": "^5.10.22",
     "@ngx-formly/material": "^5.10.22",
+    "@zxing/ngx-scanner": "^3.3.0",
     "ajv": "^6.10.2",
     "angular-ng-autocomplete": "^2.0.5",
     "angular2-multiselect-dropdown": "^5.0.4",
