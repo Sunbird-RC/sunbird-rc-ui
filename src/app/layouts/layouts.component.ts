@@ -35,6 +35,8 @@ export class LayoutsComponent implements OnInit, OnChanges {
   headerName: any;
   subHeadername = [];
   params: any;
+  langKey;
+  titleVal;
   constructor(private route: ActivatedRoute, public schemaService: SchemaService, private titleService: Title, public generalService: GeneralService, private modalService: NgbModal,
     public router: Router, public translate: TranslateService,) {
      }
@@ -102,12 +104,28 @@ export class LayoutsComponent implements OnInit, OnChanges {
     });
   }
 
+  check(conStr, title) {
+    this.translate.get(this.langKey + '.' + conStr).subscribe(res => {
+      let constr = this.langKey + '.' + conStr;
+      if (res != constr) {
+        this.titleVal =  res;
+      }else{
+        this.titleVal = title;
+      }
+    });
+    return this.titleVal;
+  }
 
   addData() {
     this.layoutSchema.blocks.forEach(block => {
-      this.property = []
+      this.property = [];
       block['items'] = [];
       var temp_object;
+
+      if (this.layoutSchema.hasOwnProperty('langKey')) {
+        this.langKey = this.layoutSchema.langKey;
+      }
+
       if (block.fields.includes && block.fields.includes.length > 0) {
         if (block.fields.includes == "*") {
           for (var element in this.model) {
@@ -115,8 +133,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
               if (typeof this.model[element] == 'string') {
                 temp_object = this.responseData['definitions'][block.definition]['properties'][element]
                 if (temp_object != undefined) {
-                 temp_object.title = this.translate.instant(element);
-
+                 temp_object.title = this.check(element, temp_object.title);
                   temp_object['value'] = this.model[element];
                   this.property.push(temp_object)
                 }
@@ -129,6 +146,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
                       temp_object = this.responseData['definitions'][ref_defination]['properties'][key]
 
                       if (temp_object != undefined && typeof value != 'object') {
+                        temp_object.title = this.check(key, temp_object.title);
                         temp_object['value'] = value
                         this.property.push(temp_object)
                       }
@@ -138,6 +156,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
                         temp_object = this.responseData['definitions'][block.definition]['properties'][element]['properties'][key]
 
                         if (temp_object != undefined && typeof value != 'object') {
+                          temp_object.title = this.check(key, temp_object.title);
                           temp_object['value'] = value
                           this.property.push(temp_object)
                         }
@@ -145,6 +164,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
                       else {
                         temp_object = this.responseData['definitions'][block.definition]['properties'][element]
                         if (temp_object != undefined) {
+                          temp_object.title = this.check(element, temp_object.title);
                           temp_object['value'] = this.model[element]
                           this.property.push(temp_object)
                         }
@@ -163,6 +183,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
                         var ref_defination = (this.responseData['definitions'][block.definition]['properties'][element]['$ref']).split('/').pop()
                         temp_object = this.responseData['definitions'][ref_defination]['properties'][key]
                         if (temp_object != undefined && typeof value != 'object') {
+                          temp_object.title = this.check(key, temp_object.title);
                           temp_object['value'] = value;
                           this.property.push(temp_object);
                         }
@@ -170,6 +191,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
                       else {
                         temp_object = this.responseData['definitions'][block.definition]['properties'][element]['items']['properties'][key];
                         if (temp_object != undefined && typeof value != 'object') {
+                          temp_object.title = this.check(key, temp_object.title);
                           temp_object['value'] = value;
                           this.property.push(temp_object);
                         }
@@ -199,6 +221,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
                         //   temp_object['_osClaimNotes'] = element._osClaimNotes;
                         // }
                       }
+                      temp_object.title = this.check(key, temp_object.title);
                       temp_object['value'] = value
                       this.property.push(temp_object)
                     }
@@ -214,6 +237,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
                       if (element.osid) {
                         temp_object['_osState'] = element._osState;
                       }
+                      temp_object.title = this.check(key, temp_object.title);
                       temp_object['value'] = value;
                       this.property.push(temp_object);
                     }
@@ -240,6 +264,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
                         if (objects.osid) {
                           temp_object['_osState'] = objects._osState;
                         }
+                        temp_object.title = this.check(key, temp_object.title);
                         temp_object['value'] = value;
                         temp_array.push(this.pushData(temp_object))
                       }
@@ -249,7 +274,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
                       
                       if(temp_object != undefined && temp_object.hasOwnProperty('title'))
                       {
-                        temp_object.title = this.translate.instant(key);
+                        temp_object.title =  this.check(key, temp_object.title);
                       }
 
                       if (temp_object != undefined && typeof value != 'object') {
@@ -259,6 +284,8 @@ export class LayoutsComponent implements OnInit, OnChanges {
                         if (objects.osid) {
                           temp_object['_osState'] = objects._osState;
                         }
+                        
+                        temp_object.title = this.check(key, temp_object.title);
                         temp_object['value'] = value;
                         temp_array.push(this.pushData(temp_object));
                       }
