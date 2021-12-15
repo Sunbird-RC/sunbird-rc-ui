@@ -142,13 +142,7 @@ function initConfig(config: AppConfig) {
     AngularMultiSelectModule,
     NgSelectModule,
     HttpClientModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: translateLoaderFactory,
-        deps: [HttpClient]
-      }
-    }),
+    TranslateModule.forRoot(),
     FormlyModule.forRoot({
       extras: { resetFieldOnHide: true },
       wrappers: [{ name: 'form-field-horizontal', component: FormlyHorizontalWrapper },
@@ -262,6 +256,6 @@ export class AppModule {
   }
 }
 
-export function translateLoaderFactory(httpClient: HttpClient) {
-  return new TranslateHttpLoader(httpClient);
-}
+// export function translateLoaderFactory(httpClient: HttpClient) {
+//   return new TranslateHttpLoader(httpClient);
+// }
