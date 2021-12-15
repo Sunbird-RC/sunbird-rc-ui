@@ -22,6 +22,8 @@ import { MultiSchemaTypeComponent } from '../app/forms/types/multischema.type';
 import { NullTypeComponent } from '../app/forms/types/null.type';
 import { AutocompleteTypeComponent } from '../app/forms/types/autocomplete.type';
 import { initializeKeycloak } from './utility/app.init';
+import { initLang } from './multilingual.init';
+
 
 //Local imports
 import { FormsComponent } from './forms/forms.component';
@@ -52,6 +54,7 @@ import { AuthConfigService } from './authentication/auth-config.service';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
+
 
 //form validations
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
@@ -97,6 +100,8 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
 function initConfig(config: AppConfig) {
   return () => config.load()
 }
+
+
 
 @NgModule({
   declarations: [
@@ -205,7 +210,13 @@ function initConfig(config: AppConfig) {
       multi: true,
       deps: [KeycloakService, AuthConfigService],
     },
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'always' } }]
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'always' } },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initLang,
+      deps: [HttpClient, TranslateService],
+      multi: true
+    }]
 })
 export class AppModule {
   constructor(translate: TranslateService) {
@@ -236,8 +247,7 @@ export class AppModule {
 
     translate.addLangs(languages);
 
-    if(localStorage.getItem('setLanguage'))
-    {
+    if (localStorage.getItem('setLanguage')) {
       translate.use(localStorage.getItem('setLanguage'));
 
     } else {
@@ -248,7 +258,7 @@ export class AppModule {
     }
 
 
-   
+
   }
 }
 
