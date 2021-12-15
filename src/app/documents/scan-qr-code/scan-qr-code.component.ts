@@ -52,7 +52,7 @@ export class ScanQrCodeComponent implements OnInit {
           "additionalInput": this.model
         }
         console.log(attest);
-        // this.postData('send', attest);
+        this.postData('send', attest);
       });
 
       // fetch("https://ndear.xiv.in/skills/api/v1/verify", requestOptions)
