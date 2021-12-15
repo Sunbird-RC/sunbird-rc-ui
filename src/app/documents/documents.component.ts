@@ -15,7 +15,7 @@ export class DocumentsComponent implements OnInit {
   getStarted: boolean=false;
   entity;
   documents: any = [];
-  excludedFields: any = ['osid'];
+  excludedFields: any = ['osid','id','type'];
   constructor(private route: ActivatedRoute, public generalService: GeneralService) {
 
   }
@@ -56,6 +56,13 @@ export class DocumentsComponent implements OnInit {
         this.hasDocs = true;
       }
 
+      if(res[0]['attestation-DIVOC'] && res[0]['attestation-DIVOC'].length > 0){
+        res[0]['attestation-DIVOC'].forEach(doc => {
+          this.docs.push(doc)
+        });
+        this.hasDocs = true;
+      }
+
       if(!res[0]['attestation-SELF'] && !res[0]['attestation-MOSIP']){
         this.getStarted = true;
       }
@@ -71,16 +78,23 @@ export class DocumentsComponent implements OnInit {
   setDocument(){
     this.docs.forEach(element => {
       var property = [];
-      for (const [key, value] of Object.entries(element['additionalInput'])) {
-        var tempObject = {}
-        if(!this.excludedFields.includes(key)){
-          tempObject['key'] = key;
-          tempObject['value'] = value;
-          tempObject['type'] = element['name']
-          property.push(tempObject);
-        }
-        
+      // console.log("docs",this.docs)
+      if(element.name == 'attestation-DIVOC'){
+        element['additionalInput'] = JSON.parse(element['additionalInput'])['signedCredentials']['credentialSubject'];
+        console.log("dfd",element['additionalInput'])
       }
+        for (const [key, value] of Object.entries(element['additionalInput'])) {
+          var tempObject = {}
+          if(typeof value != 'object'){
+            if(!this.excludedFields.includes(key)){
+              tempObject['key'] = key;
+              tempObject['value'] = value;
+              tempObject['type'] = element['name']
+              property.push(tempObject);
+            }
+          }
+      }
+   
       this.documents.push(property);
     });
   }

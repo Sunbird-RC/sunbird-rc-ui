@@ -121,6 +121,10 @@
                             <ng-template [ngIf]="doc.type == 'attestation-MOSIP'">
                                 <i class="fas fa-award text-primary-color"></i>
                             </ng-template>
+                            <ng-template [ngIf]="doc.type == 'attestation-DIVOC'">
+                                <i class="fas fa-award text-primary-color"></i>
+                                <i class="fa fa-qrcode ml-1"></i>
+                            </ng-template>
                         </span>
                     <!-- </ng-template> -->
                     <!-- <ng-template #elseBlock>
@@ -140,10 +144,13 @@
                     </ng-template>
                 </ng-template>
                 <ng-template [ngIf]="docs[0].type == 'attestation-MOSIP'">
-                    <span class="text-grey"> Digital Verificated </span>
+                    <span class="text-grey"> Digitaly Verified </span>
                 </ng-template>
                 <ng-template [ngIf]="docs[0].type == 'attestation-SELF'">
                     <span class="text-grey"> Self Attested </span>
+                </ng-template>
+                <ng-template [ngIf]="docs[0].type == 'attestation-DIVOC'">
+                    <span class="text-grey"><i class="fa fa-qrcode"></i> Digitaly Verified </span>
                 </ng-template>
 
             </div>

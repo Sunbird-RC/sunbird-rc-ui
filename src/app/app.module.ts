@@ -54,6 +54,7 @@ import {WebcamModule} from 'ngx-webcam';
 import { ScanDocumentComponent } from './documents/scan-document/scan-document.component';
 import { ScanQrCodeComponent } from './documents/scan-qr-code/scan-qr-code.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import {QuarModule} from '@altack/quar';
 
 //form validations
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
@@ -143,6 +144,7 @@ function initConfig(config: AppConfig){
     AngularMultiSelectModule,
     NgSelectModule,
     WebcamModule,
+    QuarModule,
     ZXingScannerModule,
     FormlyModule.forRoot({
       extras: { resetFieldOnHide: true },

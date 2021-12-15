@@ -28,7 +28,7 @@ export class ScanQrCodeComponent implements OnInit {
 
   public scanSuccessHandler($event: any) {
     // this.getData($event)
-
+    this.loader = true;
     this.qrString = $event;
     // console.log($event);
     const CERTIFICATE_FILE = "certificate.json";
@@ -37,7 +37,7 @@ export class ScanQrCodeComponent implements OnInit {
       return contents.files[CERTIFICATE_FILE].async('text')
     }).then(contents => {
       // console.log('con', contents)
-      this.loader = true;
+      // this.loader = true;
       var signedData = JSON.parse(contents)
       console.log('-----s',signedData)
       var context = {}
@@ -52,7 +52,7 @@ export class ScanQrCodeComponent implements OnInit {
           "additionalInput": this.model
         }
         console.log(attest);
-        this.postData('send', attest);
+        // this.postData('send', attest);
       });
 
       // fetch("https://ndear.xiv.in/skills/api/v1/verify", requestOptions)
