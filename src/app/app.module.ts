@@ -54,6 +54,7 @@ import { AuthConfigService } from './authentication/auth-config.service';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
+import { config } from 'process';
 
 
 //form validations
@@ -101,6 +102,7 @@ function initConfig(config: AppConfig) {
   return () => config.load()
 }
 
+import ISO6391 from 'iso-639-1';
 
 
 @NgModule({
@@ -212,50 +214,38 @@ function initConfig(config: AppConfig) {
       multi: true
     }]
 })
+
+
 export class AppModule {
-  constructor(translate: TranslateService) {
-    var installed_languages = [
-      {
-        'code': 'en',
-        'name': "English"
-      },
-      {
-        'code': 'hi',
-        'name': "हिंदी"
-      }];
 
-    localStorage.setItem('languages', JSON.stringify(installed_languages));
+  languages;
+  constructor(translate: TranslateService, authConfig: AuthConfigService) {
 
-    var languages = [];
-    // const browserLang = translate.getBrowserLang();
-    //translate.use(browserLang.match(/en|hi/) ? browserLang : 'en');
+    authConfig.getConfig().subscribe((config) => {
+      this.languages = config.languages;
+      var installed_languages = [];
 
-    for (let i = 0; i < installed_languages.length; i++) {
-      languages.push(installed_languages[i].code);
-    }
-    /*installed_languages.forEach((lang, index) => {
-      console.log(Object.keys(lang)[0]);
-      languages.push(Object.keys(lang)[0]);
+      for (let i = 0; i < this.languages.length; i++) {
+        installed_languages.push({
+          "code": this.languages[i],
+          "name": ISO6391.getNativeName(this.languages[i])
+        });
+      }
 
-    });*/
+      localStorage.setItem('languages', JSON.stringify(installed_languages));
+      translate.addLangs(this.languages);
 
-    translate.addLangs(languages);
+      if (localStorage.getItem('setLanguage') && this.languages.includes(localStorage.getItem('setLanguage'))) {
+        translate.use(localStorage.getItem('setLanguage'));
 
-    if (localStorage.getItem('setLanguage')) {
-      translate.use(localStorage.getItem('setLanguage'));
-
-    } else {
-      const browserLang = translate.getBrowserLang();
-      let lang = languages.includes(browserLang) ? browserLang : 'en';
-      translate.use(lang);
-      localStorage.setItem('setLanguage', lang);
-    }
-
-
+      } else {
+        const browserLang = translate.getBrowserLang();
+        let lang = this.languages.includes(browserLang) ? browserLang : 'en';
+        translate.use(lang);
+        localStorage.setItem('setLanguage', lang);
+      }
+    });
 
   }
 }
 
-// export function translateLoaderFactory(httpClient: HttpClient) {
-//   return new TranslateHttpLoader(httpClient);
-// }

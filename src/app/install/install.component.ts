@@ -18,7 +18,10 @@ export class InstallComponent implements OnInit {
   form = new FormGroup({});
   model: any = {};
   options: FormlyFormOptions = {};
-
+  languages = [
+    { value: "en", label: 'English' },
+    { value: "hi", label: 'Hindi'  }
+  ]
   fields: FormlyFieldConfig[] = [
     {
       key: 'title',
@@ -112,6 +115,19 @@ export class InstallComponent implements OnInit {
         },
       }
       ],
+    },
+    {
+      key: 'language',
+      type: 'select',
+      templateOptions: {
+        label: 'Select Language',
+        placeholder: 'Select language',
+        description: 'Description',
+        required: true,
+        multiple: true,
+        options: this.languages
+      
+      }
     },
     {
       key: 'configFolder',
