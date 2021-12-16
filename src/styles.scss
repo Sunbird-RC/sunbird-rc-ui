@@ -10,10 +10,17 @@
 @import "https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css";
 
 /* Importing Bootstrap SCSS file. */
- @import '~bootstrap/scss/bootstrap';
+@import '~bootstrap/scss/bootstrap';
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css'; 
+
+$primaryColor: #0098AB;
+$secondaryColor: #1987B6;
+$textOnPrimary: hsl(0, 0%, 100%);
+$textOnSecondary: hsl(0, 0%, 100%);
+$background: #F6F8FC;
 body {
     font-family: 'Lato', sans-serif !important;
+    // background-color: $primaryColor
   }
 
 .text-body{
@@ -27,6 +34,10 @@ body {
     background-color: #88ecb226 !important;
     color: #22B02E !important;
     border: 0 !important;
+}
+
+.bg-primary {
+    background-color: $primaryColor !important
 }
 
 .ngx-pagination .current {
@@ -192,10 +203,10 @@ padding-top: 5px !important ;
     background-color: #443df6;
 }
 
-$primary-color: #443df6;
+$primary-color: $primaryColor;
 $gray-color: #8d9091;
 .primary-color {
-    background-color: #efefef!important;
+    background-color: $primary-color !important;
 }
 
 .btn-primary{
@@ -220,7 +231,7 @@ $primary-color-dark: #000;
 
 
 html, body { height: 100%; }
-body { margin: 0; font-family: "Lato", sans-serif;color: #000; background: #F6F8FC !important;}
+body { margin: 0; font-family: "Lato", sans-serif;color: #000; background: $background !important;}
 
 .fs-7{
 	font-size: 0.8rem;
@@ -412,8 +423,8 @@ formly-autocomplete-type .ng-select {
 
 
 .logo { 
-    width: 50px; 
-    height: 50px; 
+    // width: 50px; 
+    height: 35px; 
     display: block; 
     text-indent: -9999px;
 }
@@ -428,6 +439,14 @@ formly-autocomplete-type .ng-select {
     border-color: #69afcf;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #69afcf;
   }
+.navbar-brand
+{
+    position: absolute;
+    width: 100%;
+    left: 0;
+    text-align: center;
+    margin:0 auto;
+}
 
 //   @import "~@material/fab";
 //   @include fab-core.styles;

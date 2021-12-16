@@ -7,10 +7,15 @@ import { AppConfig } from './app.config';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  footerText = 'Sunbird RC'
+  footerText = 'Sunbird RC';
+  isFooter = false;
   constructor(private config: AppConfig) {
-    if(window.location.pathname != '/install'){
-      this.footerText = this.config.getEnv('footerText');
+    if(this.config.getEnv('appType') && this.config.getEnv('appType') != 'digital_wallet'){
+      this.isFooter = true;
+      if(window.location.pathname != '/install'){
+        this.footerText = this.config.getEnv('footerText');
+      }
     }
+    
   }
 }

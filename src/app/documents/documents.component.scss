@@ -24,3 +24,13 @@
     width: 100%;
     padding: 10px;
 }
+
+.card-body {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+  
+//   .card-body>div {
+//     padding: 5px;
+//   }
+

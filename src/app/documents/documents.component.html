@@ -1,6 +1,6 @@
 <app-header [headerFor]='header'></app-header>
 <div class="container">
-    <div class="contain mt-5 mb-20 mx-4 ">
+    <div class="contain mt-5 mb-20 mx-4 ml-2 mr-2">
         <ng-template [ngIf]="!hasDocs">
             <div class="row d-flex justify-content-center">
                 <div class="col-md-6 mb-3">
@@ -112,49 +112,62 @@
                 <div class="col-4"><button class="btn-bg text-primary-color btn-style float-end p14 border-trans"
                         (click)="addDoc()">Add</button></div>
             </div>
-
-            <!-- <div class="card p-2 mt-3 font-weight-bold"> -->
-            <div *ngFor="let docs of documents; index as i;" class="card lh-lg mt-3 p-3 p14">
-                <ng-template ngFor let-doc [ngForOf]="docs" let-i="index">
-                    <!-- <ng-template [ngIf]="doc.key == 'title' || doc.key == 'name'"> -->
-                        <span *ngIf="doc.key == 'title' || doc.key == 'name'" class=" mb-2 text-dark"><b>{{doc.value}} </b>
-                            <ng-template [ngIf]="doc.type == 'attestation-MOSIP'">
-                                <i class="fas fa-award text-primary-color"></i>
-                            </ng-template>
-                            <ng-template [ngIf]="doc.type == 'attestation-DIVOC'">
-                                <i class="fas fa-award text-primary-color"></i>
-                                <i class="fa fa-qrcode ml-1"></i>
-                            </ng-template>
-                        </span>
-                    <!-- </ng-template> -->
-                    <!-- <ng-template #elseBlock>
-                        <span class="text-grey  mb-2">{{doc.value}} </span>
-                    </ng-template> -->
-                </ng-template>
-                <ng-template ngFor let-doc2 [ngForOf]="docs">
-                    <div *ngIf="doc2.key == 'title' || doc2.key == 'name' || doc2.key == 'fileUrl'; else elseBlock"></div>
-                    <div *ngIf="doc2.key == 'fileUrl'">
-                        <a href="/document/view?u={{doc2.value}}" style="color:#1266f1">View Document</a>
+            <div class="row">
+                <div *ngFor="let docs of documents; index as i;" class="col-sm-12 col-md-6 col-lg-4 col-xs-2">
+                    <div  class="card lh-lg mt-3 p-3 p14">
+                        <div class="card-body">
+                            <!-- <div class="row">
+                                <div class="col-sm-6"> -->
+                                    <div>
+                                        <ng-template ngFor let-doc [ngForOf]="docs" let-i="index">
+                                            <span *ngIf="doc.key == 'title' || doc.key == 'name'" class="card-title mb-2 text-dark"><b>{{doc.value}} </b>
+                                                <ng-template [ngIf]="doc.type == 'attestation-MOSIP'">
+                                                    <i class="fas fa-award text-primary-color"></i>
+                                                </ng-template>
+                                                <ng-template [ngIf]="doc.type == 'attestation-DIVOC'">
+                                                    <i class="fas fa-award text-primary-color"></i>
+                                                    <i class="fa fa-qrcode ml-1"></i>
+                                                </ng-template>
+                                                <br>
+                                            </span>
+                                        </ng-template>
+                                        <ng-template ngFor let-doc2 [ngForOf]="docs">
+                                            <div *ngIf="doc2.key == 'title' || doc2.key == 'name' || doc2.key == 'fileUrl'; else elseBlock">
+                                            </div>
+                                            <div *ngIf="doc2.key == 'fileUrl'">
+                                                <a href="/document/view?u={{doc2.value}}" style="color:#1266f1">View Document</a>
+                                                <br>
+                                            </div>
+                                            <ng-template #elseBlock>
+                                                <span class="card-text text-grey  mb-2">{{doc2.value}} </span>
+                                                <br>
+                                            </ng-template>
+                                        </ng-template>
+                                        <ng-template [ngIf]="docs[0].type == 'attestation-MOSIP'">
+                                            <span class="text-grey"> Digitaly Verified </span>
+                                        </ng-template>
+                                        <ng-template [ngIf]="docs[0].type == 'attestation-SELF'">
+                                            <span class="text-grey"> Self Attested </span>
+                                        </ng-template>
+                                        <ng-template [ngIf]="docs[0].type == 'attestation-DIVOC'">
+                                            <span class="text-grey"><i class="fa fa-qrcode"></i> Digitaly Verified </span>
+                                        </ng-template>
+                                    </div>
+                                    
+                                    <img src="assets/images/logo.png" style="height: 60px;" />
+                                <!-- </div>
+                                <div class="col-sm-6 text-right">
+                                    <img src="assets/images/logo.png" style="height: 60px;" />
+                                </div>
+                            </div> -->
+                        </div>
+                      
+                      
                     </div>
-                    <!-- <ng-template [ngIf]="doc2.key=='title' || doc2.key=='name'; else elseBlock">
-                        <hr>
-                    </ng-template> -->
-                    <ng-template #elseBlock>
-                        <span class="text-grey  mb-2">{{doc2.value}} </span>
-                    </ng-template>
-                </ng-template>
-                <ng-template [ngIf]="docs[0].type == 'attestation-MOSIP'">
-                    <span class="text-grey"> Digitaly Verified </span>
-                </ng-template>
-                <ng-template [ngIf]="docs[0].type == 'attestation-SELF'">
-                    <span class="text-grey"> Self Attested </span>
-                </ng-template>
-                <ng-template [ngIf]="docs[0].type == 'attestation-DIVOC'">
-                    <span class="text-grey"><i class="fa fa-qrcode"></i> Digitaly Verified </span>
-                </ng-template>
-
+                </div>
             </div>
-            <!-- </div> -->
+          
+            
         </ng-template>
 
 
