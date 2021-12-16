@@ -154,7 +154,7 @@ padding-top: 5px !important ;
 
 .private-access:before {
     font-family: "Font Awesome 5 Free";
-    content: "\f023  Only by consent";
+    content: "\f023";
     display: inline-block;
     padding-left: 10px;
     vertical-align: middle;
@@ -165,7 +165,7 @@ padding-top: 5px !important ;
 
  .internal-access:before {
     font-family: "Font Awesome 5 Free";
-    content: "\f023  Only by me";
+    content: "\f023 ";
     display: inline-block;
     padding-left: 10px;
     vertical-align: middle;
@@ -177,7 +177,7 @@ padding-top: 5px !important ;
 
  .public-access:before {
     font-family: "Font Awesome 5 Free";
-    content: "\f57c  Anyone";
+    content: "\f57c ";
     display: inline-block;
     padding-left: 10px;
     vertical-align: middle;

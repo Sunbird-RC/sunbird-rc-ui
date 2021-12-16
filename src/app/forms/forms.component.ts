@@ -229,18 +229,21 @@ export class FormsComponent implements OnInit {
 
           if (this.privateFields.indexOf('$.' + fieldObj.key) >= 0) {
             fieldObj.templateOptions['addonRight'] = {
-              class: "private-access d-flex flex-column"
+              class: "private-access d-flex flex-column",
+              text: this.translate.instant('ONLY_BY_CONSENT')
             }
             fieldObj.templateOptions.description = this.translate.instant('VISIBILITY_ATTRIBUTE_DEFINE');
           } else if (this.internalFields.indexOf('$.' + fieldObj.key) >= 0) {
             fieldObj.templateOptions['addonRight'] = {
-              class: "internal-access d-flex flex-column"
+              class: "internal-access d-flex flex-column",
+              text: this.translate.instant('ONLY_BY_ME')
             }
             fieldObj.templateOptions.description = this.translate.instant('VISIBILITY_ATTRIBUTE_DEFINE');
           }
         } else {
           fieldObj.templateOptions['addonRight'] = {
-            class: "public-access d-flex flex-column"
+            class: "public-access d-flex flex-column",
+            text: this.translate.instant('ANYONE')
           }
           fieldObj.templateOptions.description = this.translate.instant('VISIBILITY_ATTRIBUTE_DEFINE');
         }
@@ -422,7 +425,9 @@ export class FormsComponent implements OnInit {
         responseData.widget.formlyConfig.templateOptions['attributes'] = {}
       }
       responseData.widget.formlyConfig.templateOptions['addonRight'] = {
-        class: "private-access"
+        class: "private-access",
+        text: this.translate.instant('ONLY_BY_CONSENT')
+
       }
       responseData.widget.formlyConfig.templateOptions['attributes'] = {
         style: "width: 100%;"
@@ -436,7 +441,9 @@ export class FormsComponent implements OnInit {
         responseData.widget.formlyConfig.templateOptions['attributes'] = {}
       }
       responseData.widget.formlyConfig.templateOptions['addonRight'] = {
-        class: "internal-access"
+        class: "internal-access",
+        text:  this.translate.instant('ONLY_BY_ME')
+
       }
       responseData.widget.formlyConfig.templateOptions['attributes'] = {
         style: "width: 100%;"
@@ -571,7 +578,8 @@ export class FormsComponent implements OnInit {
           if (this.privateFields.length || this.internalFields.length) {
             this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions'] = {
               addonRight: {
-                class: "public-access"
+                class: "public-access",
+                text: this.translate.instant('ANYONE'),
               },
               attributes: {
                 style: "width: 90%; "
@@ -833,7 +841,8 @@ export class FormsComponent implements OnInit {
           this.res.properties[field.name]['widget']['formlyConfig']['templateOptions']['attributes'] = {}
         }
         this.res.properties[field.name]['widget']['formlyConfig']['templateOptions']['addonRight'] = {
-          class: "public-access"
+          class: "public-access",
+          text: this.translate.instant('ANYONE')
         }
         this.res.properties[field.name]['widget']['formlyConfig']['templateOptions']['attributes'] = {
           style: "width: 90%;"

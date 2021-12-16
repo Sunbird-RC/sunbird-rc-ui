@@ -173,6 +173,9 @@
   "PREVIOUS": "प्रिविअस",
   "NEXT": "अगला",
   "FIELD_IS_REQUIRED": "यह फ़ील्ड आवश्यक है",
-  "UPLOAD_FILE":"+ अपलोडिंग"
+  "UPLOAD_FILE":"+ अपलोडिंग",
+  "ONLY_BY_CONSENT": "केवल सहमति से",
+  "ONLY_BY_ME" :"केवल मेरे द्वारा",
+  "ANYONE" : "कोई भी"
 
 }

@@ -22,6 +22,9 @@
      <div *ngIf="globalPrivacy" class="mb-3">
         <h6 class="mb-1 p12 font-weight-bold">{{'VISIBILITY' | translate}}</h6>
         <span class="p12"> {{'PRIVACY_ATTRIBUTE_DEFINE' | translate}} <span class="float-end {{globalPrivacy}}">
+          <span  *ngIf="globalPrivacy == 'public-access'"> &nbsp; {{'ANYONE' | translate}}</span>
+          <span *ngIf="globalPrivacy == 'internal-access'"> &nbsp;{{'ONLY_BY_ME' | translate}}</span>
+          <span *ngIf="globalPrivacy == 'private-access'"> &nbsp;{{'ONLY_BY_CONSENT' | translate}}</span>
            </span></span>
       </div>
       <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form2"></formly-form>

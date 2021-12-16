@@ -174,5 +174,10 @@
     "PREVIOUS": "Privious",
     "NEXT": "Next",
     "FIELD_IS_REQUIRED": "This field is required",
-    "UPLOAD_FILE":"+ Upload File"
+    "UPLOAD_FILE":"+ Upload File",
+    "ONLY_BY_CONSENT": "Only by consent",
+    "ONLY_BY_ME" :"Only by me",
+    "ANYONE" : "Anyone"
+
+    
 }
