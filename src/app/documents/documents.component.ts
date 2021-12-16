@@ -14,6 +14,7 @@ export class DocumentsComponent implements OnInit {
   hasDocs: boolean=false;
   getStarted: boolean=false;
   entity;
+  loader:boolean=true;
   documents: any = [];
   excludedFields: any = ['osid','id','type'];
   constructor(private route: ActivatedRoute, public generalService: GeneralService) {
@@ -63,12 +64,13 @@ export class DocumentsComponent implements OnInit {
         this.hasDocs = true;
       }
 
-      if(!res[0]['attestation-SELF'] && !res[0]['attestation-MOSIP']){
+      if(!res[0]['attestation-SELF'] && !res[0]['attestation-MOSIP'] && res[0]['attestation-DIVOC']){
         this.getStarted = true;
       }
       
       this.setDocument();
       console.log("this.docs",this.documents)
+      this.loader = false;
     });
 
     

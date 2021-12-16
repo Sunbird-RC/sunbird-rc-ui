@@ -55,6 +55,7 @@ import { ScanDocumentComponent } from './documents/scan-document/scan-document.c
 import { ScanQrCodeComponent } from './documents/scan-qr-code/scan-qr-code.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import {QuarModule} from '@altack/quar';
+import { BrowseDocumentsComponent } from './documents/browse-documents/browse-documents.component';
 
 //form validations
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
@@ -127,7 +128,8 @@ function initConfig(config: AppConfig){
     DocumentsComponent,
     AddDocumentComponent,
     ScanDocumentComponent,
-    ScanQrCodeComponent
+    ScanQrCodeComponent,
+    BrowseDocumentsComponent
   ],
   imports: [
     BrowserModule,
