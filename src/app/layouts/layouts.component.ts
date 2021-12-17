@@ -38,7 +38,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
   langKey;
   titleVal;
   constructor(private route: ActivatedRoute, public schemaService: SchemaService, private titleService: Title, public generalService: GeneralService, private modalService: NgbModal,
-    public router: Router, public translate: TranslateService,) {
+    public router: Router, public translate: TranslateService) {
      }
 
   ngOnChanges(): void {

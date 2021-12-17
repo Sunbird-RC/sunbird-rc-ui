@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { AppConfig } from '../app.config';
 import { SchemaService } from '../services/data/schema.service';
 import { TranslateService } from '@ngx-translate/core';
+import { ThemeService } from "../../app/services/theme/theme.service";
 
 declare var $: any;
 
@@ -21,14 +22,20 @@ export class HeaderComponent implements OnInit {
   headerSchema;
   langCode: string;
   lang;
+  themeName: string;
   constructor(
     public router: Router, private config: AppConfig, public schemaService: SchemaService,
-    public translate: TranslateService
+    public translate: TranslateService, private themeService: ThemeService
   ) { }
 
   async ngOnInit() {
     this.languages = JSON.parse(localStorage.getItem('languages'));
     this.langCode = localStorage.getItem('setLanguage');
+    this.themeName = localStorage.getItem('themeName');
+
+    if (!this.themeName) {
+      localStorage.setItem('themeName', "default");
+    }
 
     this.logo = this.config.getEnv('logoPath');
     this.schemaService.getHeaderJSON().subscribe(async (HeaderSchemas) => {
@@ -47,6 +54,19 @@ export class HeaderComponent implements OnInit {
       localStorage.setItem('setLanguage', lang);
       window.location.reload();
     }
+  }
+
+  changeTheme() {
+    if (this.themeName == 'default') {
+      this.themeName = "dark";
+    } else {
+      this.themeName = "default";
+    }
+
+    this.themeService.setTheme(this.themeName);
+    localStorage.setItem('themeName', this.themeName);
+
+
   }
 
 }
