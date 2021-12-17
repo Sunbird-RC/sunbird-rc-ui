@@ -177,7 +177,8 @@
     "UPLOAD_FILE":"+ Upload File",
     "ONLY_BY_CONSENT": "Only by consent",
     "ONLY_BY_ME" :"Only by me",
-    "ANYONE" : "Anyone"
+    "ANYONE" : "Anyone",
+    "SOMETHING_WENT_WRONG": "Something went wrong while uploading files, please try again"
 
     
 }

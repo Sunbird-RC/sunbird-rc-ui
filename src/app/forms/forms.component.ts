@@ -923,7 +923,7 @@ export class FormsComponent implements OnInit {
             }
           }, (err) => {
             console.log(err);
-            this.toastMsg.error('error', 'Something went wrong while uploading files, please try again')
+            this.toastMsg.error('error', this.translate.instant('SOMETHING_WENT_WRONG'))
           });
         }
         else {
