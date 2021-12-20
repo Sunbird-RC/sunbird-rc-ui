@@ -112,6 +112,8 @@ function initConfig(config: AppConfig) {
 
 import ISO6391 from 'iso-639-1';
 import { PagesComponent } from './pages/pages.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -212,7 +214,8 @@ import { PagesComponent } from './pages/pages.component';
       positionClass: 'toast-bottom-full-width',
       preventDuplicates: true,
     }),
-    NgxPaginationModule
+    NgxPaginationModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   exports: [TranslateModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

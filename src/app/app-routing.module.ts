@@ -75,6 +75,7 @@ const routes: Routes = [
 { path: ':entity/attestation/:table/:id', component: AttestationComponent, canActivate: [AuthGuard] },
 { path: ':entity/documents', component: DocumentsComponent, canActivate: [AuthGuard] },
 { path: ':entity/documents/browse', component: BrowseDocumentsComponent, canActivate: [AuthGuard] },
+{ path: ':entity/documents/:type/add/:id', component: AddDocumentComponent, canActivate: [AuthGuard] },
 { path: ':entity/documents/add/:type', component: AddDocumentComponent, canActivate: [AuthGuard] },
 { path: ':entity/documents/add/:type/:id', component: AddDocumentComponent, canActivate: [AuthGuard] },
 { path: ':entity/documents/scan/vc', component: ScanQrCodeComponent, canActivate: [AuthGuard] },
