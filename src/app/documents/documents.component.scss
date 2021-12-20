@@ -1,5 +1,5 @@
 .text-grey{
-    color: grey;
+    color: #8D9091;
 }
 
 .dash-card {
@@ -27,9 +27,22 @@
 
 .card-body {
     display: flex;
-    flex-wrap: nowrap;
-  }
-  
+}
+
+.card-intro-info{
+    width: calc(100% - 45px);
+}
+
+.card-image{
+    border: 1px solid #ddd;
+    height: 45px;
+    border-radius: 50%;
+    width: 45px;
+    img{
+        object-fit: cover;
+        width: 100%;
+    }
+}
 //   .card-body>div {
 //     padding: 5px;
 //   }
