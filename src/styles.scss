@@ -13,22 +13,38 @@
 @import '~bootstrap/scss/bootstrap';
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css'; 
 
-$primaryColor: #0098AB;
-$secondaryColor: #1987B6;
-$textOnPrimary: hsl(0, 0%, 100%);
-$textOnSecondary: hsl(0, 0%, 100%);
-$background: #F6F8FC;
+
+
+
+
+:root {
+  --primaryColor: #1987B6;
+  --secondaryColor: #443DF6;
+  --labelOnPrimary : #0098AB;
+  --navLabelColor: #443DF6;
+  --background: #F6F8FC;
+  --headerColor: #ffffff;
+  --btnBgColor: #c0e3eb6b;
+  --headerTitle: #000000;
+}
+
+
+.bg-header{
+    background: var(--headerColor) !important;
+}
+
+
 body {
     font-family: 'Lato', sans-serif !important;
     // background-color: $primaryColor
   }
 
 .text-body{
-    color: #000000 !important;
+    color: var(--headerTitle) !important;
 }
 
   .table-striped tbody tr:nth-of-type(odd) {
-    background-color: #F6F8FC !important;
+    background-color: var(--background) !important;
 }
 .btn-success {
     background-color: #88ecb226 !important;
@@ -41,7 +57,7 @@ body {
 }
 
 .ngx-pagination .current {
-    background: #1987B6 !important;
+    background: var(--primaryColor) !important;;
 }
 
 .d-contents{
@@ -60,8 +76,8 @@ textarea.form-control {
 }
 
 .btn-primary{
-background-color: #1987B6 !important;
-border-color: #1987B6 !important;
+background-color:  var(--primaryColor) !important;
+border-color: var(--primaryColor) !important;
 border: 0 !important;
 }
 
@@ -71,15 +87,15 @@ height: 40px;
 }
 
 .text-primary-color {
-    color: #1987B6 !important;
+    color: var(--primaryColor) !important;
 }
 
 .text-secondary-color {
-    color: #443DF6 !important;
+    color: var(--navLabelColor) !important;
 }
 
 .label-primary {
-    color: #0098AB !important;
+    color: var(--labelOnPrimary) !important;
 }
 
 .p14, formly-field-select select, formly-autocomplete-type, .form-group, .form-control{
@@ -106,12 +122,12 @@ legend{
 
 
 .btn-bg {
-    background-color: #c0e3eb6b !important;
+    background-color: var( --btnBgColor) !important;
     }
 
     .badge-secondary{
         border: 1px solid #CCCCCC !important;
-        background-color: #F6F8FC !important;
+        background-color: var(--background) !important;
         color: #8D9091 !important;
     }
 
@@ -164,7 +180,7 @@ padding-top: 5px !important ;
 
 .private-access:before {
     font-family: "Font Awesome 5 Free";
-    content: "\f023  Only by consent";
+    content: "\f023";
     display: inline-block;
     padding-left: 10px;
     vertical-align: middle;
@@ -175,7 +191,7 @@ padding-top: 5px !important ;
 
  .internal-access:before {
     font-family: "Font Awesome 5 Free";
-    content: "\f023  Only by me";
+    content: "\f023 ";
     display: inline-block;
     padding-left: 10px;
     vertical-align: middle;
@@ -187,7 +203,7 @@ padding-top: 5px !important ;
 
  .public-access:before {
     font-family: "Font Awesome 5 Free";
-    content: "\f57c  Anyone";
+    content: "\f57c ";
     display: inline-block;
     padding-left: 10px;
     vertical-align: middle;
@@ -200,7 +216,7 @@ padding-top: 5px !important ;
 
 .custom-input-class {
     color: #2a8bac;
-    background-color: #443df6;
+    background-color: var(--secondaryColor);
 }
 
 $primary-color: $primaryColor;
@@ -231,7 +247,9 @@ $primary-color-dark: #000;
 
 
 html, body { height: 100%; }
-body { margin: 0; font-family: "Lato", sans-serif;color: #000; background: $background !important;}
+
+body { margin: 0; font-family: "Lato", sans-serif;color: rgb(0, 0, 0); background: var(--background) !important;}
+
 
 .fs-7{
 	font-size: 0.8rem;

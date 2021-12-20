@@ -11,7 +11,7 @@ import { APP_INITIALIZER } from '@angular/core';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import { NgSelectModule } from '@ng-select/ng-select';
-import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 // formly
 import { FormlyModule, FormlyFieldConfig } from '@ngx-formly/core';
@@ -22,6 +22,8 @@ import { MultiSchemaTypeComponent } from '../app/forms/types/multischema.type';
 import { NullTypeComponent } from '../app/forms/types/null.type';
 import { AutocompleteTypeComponent } from '../app/forms/types/autocomplete.type';
 import { initializeKeycloak } from './utility/app.init';
+import { initLang } from './multilingual.init';
+
 
 //Local imports
 import { FormsComponent } from './forms/forms.component';
@@ -56,6 +58,12 @@ import { ScanQrCodeComponent } from './documents/scan-qr-code/scan-qr-code.compo
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import {QuarModule} from '@altack/quar';
 import { BrowseDocumentsComponent } from './documents/browse-documents/browse-documents.component';
+
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
+import { config } from 'process';
+
 
 //form validations
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
@@ -98,9 +106,12 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
   return `should be equal to constant "${field.templateOptions.const}"`;
 }
 
-function initConfig(config: AppConfig){
+function initConfig(config: AppConfig) {
   return () => config.load()
 }
+
+import ISO6391 from 'iso-639-1';
+
 
 @NgModule({
   declarations: [
@@ -145,16 +156,21 @@ function initConfig(config: AppConfig){
     Bootstrap4FrameworkModule,
     AngularMultiSelectModule,
     NgSelectModule,
+
+    HttpClientModule,
+    TranslateModule.forRoot(),
+
     WebcamModule,
     QuarModule,
     ZXingScannerModule,
+
     FormlyModule.forRoot({
       extras: { resetFieldOnHide: true },
       wrappers: [{ name: 'form-field-horizontal', component: FormlyHorizontalWrapper },
       { name: 'panel', component: PanelWrapperComponent }],
       validationMessages: [
-        { name: 'required', message: 'This field is required' },
-        
+        { name: 'required', message: '' },
+
       ],
       types: [
         { name: 'string', extends: 'input' },
@@ -192,10 +208,11 @@ function initConfig(config: AppConfig){
     }),
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-full-width',
-    preventDuplicates: true,
+      preventDuplicates: true,
     }),
     NgxPaginationModule
   ],
+  exports: [TranslateModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   entryComponents: [],
   bootstrap: [AppComponent],
@@ -203,13 +220,51 @@ function initConfig(config: AppConfig){
     AppConfig,
     { provide: APP_INITIALIZER, useFactory: initConfig, deps: [AppConfig], multi: true },
     {
-    provide: APP_INITIALIZER,
-    useFactory: initializeKeycloak,
-    multi: true,
-    deps: [KeycloakService,AuthConfigService],
-  },
-  { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'always' } }]
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService, AuthConfigService],
+    },
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'always' } },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initLang,
+      deps: [HttpClient, TranslateService],
+      multi: true
+    }]
 })
+
+
 export class AppModule {
-  
+
+  languages;
+  constructor(translate: TranslateService, authConfig: AuthConfigService) {
+
+    authConfig.getConfig().subscribe((config) => {
+      this.languages = config.languages;
+      var installed_languages = [];
+
+      for (let i = 0; i < this.languages.length; i++) {
+        installed_languages.push({
+          "code": this.languages[i],
+          "name": ISO6391.getNativeName(this.languages[i])
+        });
+      }
+
+      localStorage.setItem('languages', JSON.stringify(installed_languages));
+      translate.addLangs(this.languages);
+
+      if (localStorage.getItem('setLanguage') && this.languages.includes(localStorage.getItem('setLanguage'))) {
+        translate.use(localStorage.getItem('setLanguage'));
+
+      } else {
+        const browserLang = translate.getBrowserLang();
+        let lang = this.languages.includes(browserLang) ? browserLang : 'en';
+        translate.use(lang);
+        localStorage.setItem('setLanguage', lang);
+      }
+    });
+
+  }
 }
+

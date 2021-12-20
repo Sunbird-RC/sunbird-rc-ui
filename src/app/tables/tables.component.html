@@ -1,10 +1,10 @@
 <app-header [headerFor]='entity' [tab]='tab'></app-header>
 <div class="container">
-    <h6 class="d-inline-block p16 font-weight-bold">{{tableSchema.title}}</h6>
+    <h6 class="d-inline-block p16 font-weight-bold">{{tableSchema.title | translate}}</h6>
     <table class="table table-striped">
         <thead>
             <tr>
-                <th class="p12 text-grey-color" *ngFor="let th of tableSchema.fields;" scope="col">{{th?.title}}</th>
+                <th class="p12 text-grey-color" *ngFor="let th of tableSchema.fields;" scope="col">{{th?.title | translate}}</th>
                 <!-- <th scope="col">Name</th>
         <th scope="col"></th> -->
             </tr>
@@ -18,8 +18,8 @@
                 <tr>
                     <!-- {{td | json}} -->
                     <ng-template ngFor let-td [ngForOf]="item" class="row">
-                        <td  width="10%" *ngIf="td.type && td.type === 'button'; else normalTd">
-                            <a [routerLink]="[td.redirectToUrl]" class="btn btn-bg btn-style text-primary-color text-end fw-bold text-capitalize">{{td?.buttonText}}</a>
+                        <td  width="20%" *ngIf="td.type && td.type === 'button'; else normalTd">
+                            <a [routerLink]="[td.redirectToUrl]" class="btn btn-bg btn-style text-primary-color text-end fw-bold text-capitalize">{{td?.buttonText | translate}}</a>
                         </td>
                         <ng-template #normalTd>
                             <td class="col-3" *ngIf="td?.formate && td.formate == 'date' && td?.type !== 'name'; else notFormate"><b>{{td?.value | date : 'd MMM y'}}</b></td>
@@ -38,13 +38,14 @@
             </ng-template>
         </tbody>
     </table>
-    <pagination-controls class="my-1 float-end" (pageChange)="page = $event"></pagination-controls>
+    <pagination-controls class="my-1 float-end" (pageChange)="page = $event" previousLabel="{{'PREVIOUS' | translate}}"
+    nextLabel="{{'NEXT' | translate}}"></pagination-controls>
 
     <table class="mx-5 my-5 w-50">
         <tbody class="fs-5">
             <tr *ngIf="tableSchema.items && !tableSchema.items.length">
               <td class="float-end" [attr.colspan]="tableSchema.items.length">
-                No Records Found!
+                {{NO_RECORDS_FOUND| translate }}
               </td>
             </tr>
           </tbody>

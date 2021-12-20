@@ -10,12 +10,15 @@ import { Location } from '@angular/common'
 import { of } from 'rxjs';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
 import { of as observableOf } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-forms',
   templateUrl: './forms.component.html',
   styleUrls: ['./forms.component.scss']
 })
+
 
 export class FormsComponent implements OnInit {
   @Input() form;
@@ -57,9 +60,13 @@ export class FormsComponent implements OnInit {
   fileFields: any[] = [];
   propertyName: string;
   notes: any;
+  langKey: string;
   headingTitle;
+  enumVal;
+  titleVal
   isSignupForm: boolean = false;
   constructor(private route: ActivatedRoute,
+    public translate: TranslateService,
     public toastMsg: ToastMessageService, public router: Router, public schemaService: SchemaService, private formlyJsonschema: FormlyJsonschema, public generalService: GeneralService, private location: Location) { }
 
   ngOnInit(): void {
@@ -99,7 +106,7 @@ export class FormsComponent implements OnInit {
       }
 
       if (this.formSchema.title) {
-        this.headingTitle = this.formSchema.title
+        this.headingTitle = this.translate.instant(this.formSchema.title);
       }
 
       if (this.formSchema.redirectTo) {
@@ -107,7 +114,11 @@ export class FormsComponent implements OnInit {
       }
 
       if (this.formSchema.type) {
-        this.type = this.formSchema.type
+        this.type = this.formSchema.type;
+      }
+
+      if (this.formSchema.langKey) {
+        this.langKey = this.formSchema.langKey;
       }
 
       if (this.type != 'entity') {
@@ -129,7 +140,7 @@ export class FormsComponent implements OnInit {
           this.definations[fieldset.definition] = {}
           this.definations[fieldset.definition]['type'] = "object";
           if (fieldset.title) {
-            this.definations[fieldset.definition]['title'] = fieldset.title;
+            this.definations[fieldset.definition]['title'] = this.generalService.translateString(this.langKey + '.' + fieldset.title);
           }
 
           if (fieldset.required && fieldset.required.length > 0) {
@@ -173,7 +184,7 @@ export class FormsComponent implements OnInit {
         this.loadSchema();
       },
         (error) => {
-          this.toastMsg.error('error', 'Something went wrong with Schema URL or Path not found')
+          this.toastMsg.error('error', this.translate.instant('SOMETHING_WENT_WRONG_WITH_SCHEMA_URL'))
         });
 
     }, (error) => {
@@ -212,26 +223,29 @@ export class FormsComponent implements OnInit {
           let key = fieldObj.key.replace(/^./, fieldObj.key[0].toUpperCase());
 
           if (this.schema.definitions[key] && this.schema.definitions[key].hasOwnProperty('description')) {
-            let desc = this.schema.definitions[key]['description'];
+            let desc = this.checkString(fieldObj.key, this.schema.definitions[key]['description']);
             fieldObj.templateOptions.label = (label ? label : desc);
           }
 
           if (this.privateFields.indexOf('$.' + fieldObj.key) >= 0) {
             fieldObj.templateOptions['addonRight'] = {
-              class: "private-access d-flex flex-column"
+              class: "private-access d-flex flex-column",
+              text: this.translate.instant('ONLY_BY_CONSENT')
             }
-            fieldObj.templateOptions.description = "(Visibility Attribute Define)";
+            fieldObj.templateOptions.description = this.translate.instant('VISIBILITY_ATTRIBUTE_DEFINE');
           } else if (this.internalFields.indexOf('$.' + fieldObj.key) >= 0) {
             fieldObj.templateOptions['addonRight'] = {
-              class: "internal-access d-flex flex-column"
+              class: "internal-access d-flex flex-column",
+              text: this.translate.instant('ONLY_BY_ME')
             }
-            fieldObj.templateOptions.description = "(Visibility Attribute Define)";
+            fieldObj.templateOptions.description = this.translate.instant('VISIBILITY_ATTRIBUTE_DEFINE');
           }
         } else {
           fieldObj.templateOptions['addonRight'] = {
-            class: "public-access d-flex flex-column"
+            class: "public-access d-flex flex-column",
+            text: this.translate.instant('ANYONE')
           }
-          fieldObj.templateOptions.description = "(Visibility Attribute Define)";
+          fieldObj.templateOptions.description = this.translate.instant('VISIBILITY_ATTRIBUTE_DEFINE');
         }
       });
     } else {
@@ -337,14 +351,42 @@ export class FormsComponent implements OnInit {
           let res = this.responseData.definitions[fieldset.definition].properties;
           if (field.children) {
             this.checkProperty(fieldset, field);
+
+            if(this.responseData.definitions[fieldset.definition].properties[field.name].hasOwnProperty('properties'))
+            {
+              let _self = this;
+              Object.keys(_self.responseData.definitions[fieldset.definition].properties[field.name].properties).forEach(function (key) {
+                if(_self.responseData.definitions[fieldset.definition].properties[field.name].properties[key].hasOwnProperty('properties'))
+                {
+                  Object.keys(_self.responseData.definitions[fieldset.definition].properties[field.name].properties[key].properties).forEach(function (key1) {
+                  
+                    _self.responseData.definitions[fieldset.definition].properties[field.name].properties[key].properties[key1].title = _self.checkString(key1, _self.responseData.definitions[fieldset.definition].properties[field.name].properties[key].properties[key1].title);
+                   
+                    if(_self.responseData.definitions[fieldset.definition].properties[field.name].properties[key].properties[key1].hasOwnProperty('enum')){
+                    for (let i = 0; i < _self.responseData.definitions[fieldset.definition].properties[field.name].properties[key].properties[key1].enum.length; i++) {
+                      _self.responseData.definitions[fieldset.definition].properties[field.name].properties[key].properties[key1].enum[i] = _self.enumCheck(_self.responseData.definitions[fieldset.definition].properties[field.name].properties[key].properties[key1].enum[i]);
+                    }
+                  }
+                  });
+
+
+                }
+                console.log(key);
+              });
+            }
+
+
           } else if (this.responseData.definitions[fieldset.definition].properties.hasOwnProperty(field.name) && this.responseData.definitions[fieldset.definition].properties[field.name].hasOwnProperty('properties')) {
             let res = this.responseData.definitions[fieldset.definition].properties[field.name].properties;
             this.nastedChild(fieldset, field.name, res);
-          }
+          } 
         }
 
         if (field.custom && field.element) {
           this.responseData.definitions[fieldset.definition].properties[field.name] = field.element;
+          if (field.element.hasOwnProperty('title')) {
+            this.responseData.definitions[fieldset.definition].properties[field.name]['title'] = this.translate.instant(field.element.title);
+          }
           this.customFields.push(field.name);
         } else {
           this.addWidget(fieldset, field, '')
@@ -383,7 +425,9 @@ export class FormsComponent implements OnInit {
         responseData.widget.formlyConfig.templateOptions['attributes'] = {}
       }
       responseData.widget.formlyConfig.templateOptions['addonRight'] = {
-        class: "private-access"
+        class: "private-access",
+        text: this.translate.instant('ONLY_BY_CONSENT')
+
       }
       responseData.widget.formlyConfig.templateOptions['attributes'] = {
         style: "width: 100%;"
@@ -397,7 +441,9 @@ export class FormsComponent implements OnInit {
         responseData.widget.formlyConfig.templateOptions['attributes'] = {}
       }
       responseData.widget.formlyConfig.templateOptions['addonRight'] = {
-        class: "internal-access"
+        class: "internal-access",
+        text:  this.translate.instant('ONLY_BY_ME')
+
       }
       responseData.widget.formlyConfig.templateOptions['attributes'] = {
         style: "width: 100%;"
@@ -405,7 +451,40 @@ export class FormsComponent implements OnInit {
     }
   }
 
+
+  checkString(conStr, title) {
+    this.translate.get(this.langKey + '.' + conStr).subscribe(res => {
+      let constr = this.langKey + '.' + conStr;
+      if (res != constr) {
+        this.titleVal =  res;
+      }else{
+        this.titleVal = title;
+      }
+    });
+    return this.titleVal;
+  }
+
+  enumCheck(conStr) {
+    this.translate.get(this.langKey + '.' + conStr).subscribe(res => {
+      let constr = this.langKey + '.' + conStr;
+      if (res != constr) {
+        this.enumVal =  res;
+      }else{
+        this.enumVal = conStr;
+      }
+    });
+    return this.enumVal;
+  }
+
   addWidget(fieldset, field, childrenName) {
+
+    this.translate.get(this.langKey + '.' + field.name).subscribe(res => {
+      let constr = this.langKey + '.' + field.name;
+      if (res != constr) {
+        this.responseData.definitions[fieldset.definition].properties[field.name].title = this.generalService.translateString(this.langKey + '.' + field.name);
+      }
+    })
+
     if (field.widget) {
       this.responseData.definitions[fieldset.definition].properties[field.name]['widget'] = field.widget;
     }
@@ -425,11 +504,11 @@ export class FormsComponent implements OnInit {
         }
 
         if (field.placeholder) {
-          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = field.placeholder;
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = this.generalService.translateString(this.langKey + '.' + field.placeholder);
         }
 
         if (field.description) {
-          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['description'] = field.description;
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['description'] = this.generalService.translateString(this.langKey + '.' + field.description);
         }
 
         if (field.classGroup) {
@@ -441,10 +520,39 @@ export class FormsComponent implements OnInit {
         if (field.class) {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['className'] = field.class;
         }
-        if (field.enum) {
-          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = 'select';
-          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['options'] = field.enum;
+
+        if (field.enum || this.responseData.definitions[fieldset.definition].properties[field.name].enum || this.responseData.definitions[fieldset.definition].properties[field.name].hasOwnProperty('items')) {
+          if (field.enum) {
+            for (let i = 0; i < field.enum.length; i++) {
+              field.enum[i].label = this.translate.instant(field.enum[i].label); //this.generalService.translateString(this.langKey + '.' + field.enum[i].label);
+            }
+          } else if (this.responseData.definitions[fieldset.definition].properties[field.name].enum) {
+
+            for (let i = 0; i < this.responseData.definitions[fieldset.definition].properties[field.name].enum.length; i++) {
+              this.responseData.definitions[fieldset.definition].properties[field.name].enum[i] = this.enumCheck(this.responseData.definitions[fieldset.definition].properties[field.name].enum[i]);
+            }
+          } else if(this.responseData.definitions[fieldset.definition].properties[field.name].items.hasOwnProperty('enum')){
+            for (let i = 0; i < this.responseData.definitions[fieldset.definition].properties[field.name].items.enum.length; i++) {
+              this.responseData.definitions[fieldset.definition].properties[field.name].items.enum[i] = this.enumCheck(this.responseData.definitions[fieldset.definition].properties[field.name].items.enum[i]);
+            }
+
+          }else if(this.responseData.definitions[fieldset.definition].properties[field.name].items.properties)
+          {
+            let _self = this;
+            Object.keys(_self.responseData.definitions[fieldset.definition].properties[field.name].items.properties).forEach(function (key) {
+              console.log(key);
+              _self.responseData.definitions[fieldset.definition].properties[field.name].items.properties[key].title = _self.checkString(key, _self.responseData.definitions[fieldset.definition].properties[field.name].items.properties[key].title);
+             
+             if(_self.responseData.definitions[fieldset.definition].properties[field.name].items.properties[key].hasOwnProperty('enum')){
+              for (let i = 0; i < _self.responseData.definitions[fieldset.definition].properties[field.name].items.properties[key].enum.length; i++) {
+                _self.responseData.definitions[fieldset.definition].properties[field.name].items.properties[key].enum[i] = _self.enumCheck(_self.responseData.definitions[fieldset.definition].properties[field.name].items.properties[key].enum[i]);
+              }
+            }
+            });
+
+          }
         }
+
         if (field.hidden) {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['type'] = "hidden";
           delete this.responseData.definitions[fieldset.definition].properties[field.name]['title']
@@ -470,7 +578,8 @@ export class FormsComponent implements OnInit {
           if (this.privateFields.length || this.internalFields.length) {
             this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions'] = {
               addonRight: {
-                class: "public-access"
+                class: "public-access",
+                text: this.translate.instant('ANYONE'),
               },
               attributes: {
                 style: "width: 90%; "
@@ -618,7 +727,7 @@ export class FormsComponent implements OnInit {
       if (field.autocomplete) {
 
         this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = "autocomplete";
-        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = this.responseData.definitions[fieldset.definition].properties[field.name]['title'];
+        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = this.generalService.translateString(this.responseData.definitions[fieldset.definition].properties[field.name]['title']);
         this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['label'] = field.autocomplete.responseKey;
         var dataval = "{{value}}"
         this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['search$'] = (term) => {
@@ -645,9 +754,9 @@ export class FormsComponent implements OnInit {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = field.type;
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['multiple'] = true;
           if (field.required) {
-            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = "Select " + field.name + "*";
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = this.translate.instant("SELECT") + ' ' + this.generalService.translateString(this.langKey + '.' + field.name) + "*";
           } else {
-            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = "Select " + field.name;
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = this.translate.instant("SELECT") + ' ' + this.generalService.translateString(this.langKey + '.' + field.name);
           }
 
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['options'] = [];
@@ -677,7 +786,7 @@ export class FormsComponent implements OnInit {
                 }, 1000);
               });
             };
-            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name]['message'] = "The Date must be Bigger or Equal to today date";
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name]['message'] = this.translate.instant('DATE_MUST_BIGGER_TO_TODAY_DATE');
           }
         }
         else {
@@ -708,6 +817,7 @@ export class FormsComponent implements OnInit {
 
   addChildWidget(field, ParentName, childrenName) {
     this.res = this.responseData.definitions[ParentName.replace(/^./, ParentName[0].toUpperCase())].properties[childrenName];
+    this.res.properties[field.name].title = this.checkString(field.name,  this.res.properties[field.name].title);
     if (field.widget) {
       this.res.properties[field.name]['widget'] = field.widget;
     }
@@ -731,7 +841,8 @@ export class FormsComponent implements OnInit {
           this.res.properties[field.name]['widget']['formlyConfig']['templateOptions']['attributes'] = {}
         }
         this.res.properties[field.name]['widget']['formlyConfig']['templateOptions']['addonRight'] = {
-          class: "public-access"
+          class: "public-access",
+          text: this.translate.instant('ANYONE')
         }
         this.res.properties[field.name]['widget']['formlyConfig']['templateOptions']['attributes'] = {
           style: "width: 90%;"
@@ -812,7 +923,7 @@ export class FormsComponent implements OnInit {
             }
           }, (err) => {
             console.log(err);
-            this.toastMsg.error('error', 'Something went wrong while uploading files, please try again')
+            this.toastMsg.error('error', this.translate.instant('SOMETHING_WENT_WRONG'))
           });
         }
         else {

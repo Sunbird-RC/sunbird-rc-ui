@@ -1,6 +1,6 @@
 <header class="header">
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-white nav-b">
+    <nav class="navbar navbar-expand-lg navbar-light bg-header nav-b">
         <div class="container-fluid">
 
             <div class="nav-item active logo-text">
@@ -18,9 +18,12 @@
                         <li class="nav-item">
                             <a *ngIf="header?.title" id="{{header?.title}}"
                                 class="nav-link  p14 {{header?.activeTab}} {{header?.className}}"
-                                [routerLink]="[header.redirectTo]">{{header?.title}}</a>
+                                [routerLink]="[header.redirectTo]">{{header?.title | translate}}</a>
                             <a *ngIf="header?.image" class="nav-link" [routerLink]="[header.redirectTo]">
                                 <img style="width: 25px;" src={{header?.image}} />
+                            </a>
+                            <a *ngIf="header?.icon" class="nav-link" [routerLink]="[header.redirectTo]">
+                                <i style="font-size: 25px;" class="{{header?.icon}}" aria-hidden="true"></i>
                             </a>
                             <ng-template [ngIf]="header?.title && tab === header?.title">
                                 <hr>
@@ -32,9 +35,12 @@
                     <ul *ngFor="let header of headerSchema.right" class="navbar-nav ms-auto">
                         <li class="nav-item active">
                             <a *ngIf="header?.title" class="nav-link active p14 {{header?.className}}"
-                                [routerLink]="[header.redirectTo]">{{header?.title}}</a>
+                                [routerLink]="[header.redirectTo]">{{header?.title | translate}}</a>
                             <a *ngIf="header?.image" class="nav-link" [routerLink]="[header.redirectTo]">
                                 <img style="width: 25px;" src={{header?.image}} />
+                            </a>
+                            <a *ngIf="header?.icon" class="nav-link" [routerLink]="[header.redirectTo]">
+                                <i style="font-size: 25px;" class="{{header?.icon}}" aria-hidden="true"></i>
                             </a>
                             <ng-template [ngIf]="header?.title && tab === header?.title">
                                 <hr>
@@ -42,6 +48,20 @@
                         </li>
                     </ul>
                 </ng-template>
+                <span>
+                    <i style="font-size: 25px;" class="fa fa-language text-primary-color mt-3" aria-hidden="true"></i>
+
+                    <select class="lang-btn text-primary-color" (change)="languageChange($event)"> 
+                        <option *ngFor="let lang of languages" [value]="lang.code"  [selected]="(lang.code == langCode)? true : false">{{lang.name}}</option>
+                      </select> 
+                </span>
+                <span (click)="changeTheme()">
+                    <a class="nav-link">
+                        <img style="width: 20px;" src="assets/images/theme.png" />
+                    </a>
+                </span>
+
+            
             </div>
         </div>
     </nav>
