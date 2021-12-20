@@ -119,13 +119,13 @@ export class AddDocumentComponent implements OnInit {
   createStaticForm() {
     if (this.docType === 'scan') {
       var schema: any = {
-        "name": { "title": "Name of document", "type": "string" }
+        "name": { "title": this.generalService.translateString('NAME_OF_DOCUMENT'), "type": "string" }
       };
       this.schema['properties'] = schema;
     } else {
       var schema: any = {
-        "name": { "title": "Name of document", "type": "string" },
-        "fileUrl": { "title": "Document", "type": "string" },
+        "name": { "title": this.generalService.translateString('NAME_OF_DOCUMENT'), "type": "string" },
+        "fileUrl": { "title": this.generalService.translateString('DOCUMENT'), "type": "string" },
       };
 
       this.schema['properties'] = schema;

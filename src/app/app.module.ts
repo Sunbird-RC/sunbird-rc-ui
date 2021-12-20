@@ -111,6 +111,7 @@ function initConfig(config: AppConfig) {
 }
 
 import ISO6391 from 'iso-639-1';
+import { PagesComponent } from './pages/pages.component';
 
 
 @NgModule({
@@ -140,7 +141,8 @@ import ISO6391 from 'iso-639-1';
     AddDocumentComponent,
     ScanDocumentComponent,
     ScanQrCodeComponent,
-    BrowseDocumentsComponent
+    BrowseDocumentsComponent,
+    PagesComponent
   ],
   imports: [
     BrowserModule,
@@ -243,6 +245,11 @@ export class AppModule {
     authConfig.getConfig().subscribe((config) => {
       this.languages = config.languages;
       var installed_languages = [];
+
+      if(this.languages == undefined)
+      {
+        this.languages = ["en"];
+      }
 
       for (let i = 0; i < this.languages.length; i++) {
         installed_languages.push({
