@@ -178,7 +178,29 @@
     "ONLY_BY_CONSENT": "Only by consent",
     "ONLY_BY_ME" :"Only by me",
     "ANYONE" : "Anyone",
-    "SOMETHING_WENT_WRONG": "Something went wrong while uploading files, please try again"
+    "SOMETHING_WENT_WRONG": "Something went wrong while uploading files, please try again",
 
-    
+    "VERIFY":"Verify",
+    "CONFIRM_OTP":"Confirm OTP",
+    "ENTER_THE_CODE_SENT_TO_MOBILE_NUMBER":"Enter the code sent to mobile number",
+    "ENTER_OTP":"Enter OTP",
+    "RESEND_OTP":"Resend OTP?",
+    "BY_DOCUMENT":"By Document",
+    "BY_ISSUER":"By Issuer",
+    "CAPTURE":"Capture",
+    "SWITCH":"Switch",
+    "MESSAGES":"Messages:",
+    "SCAN_THE_QR_CODE":"Scan the QR code",
+    "GET_STARTED":"Get Started",
+    "YOU_CAN_UPLOAD_YOUR_DOCUMENTS_AND_TAG_IT_FOR_EASY_ACCESS":"You can upload your documents and tag it for easy access",
+    "ADD_DOCUMENT":"Add Document",
+    "UPLOAD_DOCUMENT":"Upload Document",
+    "SCAN_DOCUMENT":"Scan Document",
+    "BROWSE_DOCUMENT":"Browse Document",
+    "VIEW_DOCUMENT":"View Document",
+    "DIGITALLY_VERIFIED":"Digitally Verified",
+    "SELF_ATTTESTED":"Self Attested",
+    "NAME_OF_DOCUMENT":"Name of document"
+  
+
 }
