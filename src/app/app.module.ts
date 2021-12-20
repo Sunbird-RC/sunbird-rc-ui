@@ -111,6 +111,7 @@ function initConfig(config: AppConfig) {
 }
 
 import ISO6391 from 'iso-639-1';
+import { PagesComponent } from './pages/pages.component';
 
 
 @NgModule({
@@ -140,7 +141,8 @@ import ISO6391 from 'iso-639-1';
     AddDocumentComponent,
     ScanDocumentComponent,
     ScanQrCodeComponent,
-    BrowseDocumentsComponent
+    BrowseDocumentsComponent,
+    PagesComponent
   ],
   imports: [
     BrowserModule,

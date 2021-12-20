@@ -18,6 +18,7 @@ import { DocumentsComponent } from './documents/documents.component';
 import { AddDocumentComponent } from './documents/add-document/add-document.component';
 import { ScanQrCodeComponent } from './documents/scan-qr-code/scan-qr-code.component';
 import { BrowseDocumentsComponent } from './documents/browse-documents/browse-documents.component';
+import { PagesComponent } from './pages/pages.component';
 const routes: Routes = [
 // Home
 { path: '', component: HomeComponent },
@@ -66,6 +67,8 @@ const routes: Routes = [
   ]
 },
 
+// Pages
+{ path: 'page/:page', component: PagesComponent },
 
 // Tables
 { path: ':entity/attestation/:table', component: TablesComponent, canActivate: [AuthGuard] },

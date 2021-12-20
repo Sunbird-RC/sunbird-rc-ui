@@ -222,7 +222,7 @@ padding-top: 5px !important ;
 $primary-color: var(--primaryColor);
 $gray-color: #8d9091;
 .primary-color {
-    background-color: $primary-color !important;
+    background-color: var(--primaryColor) !important;
 }
 
 .btn-primary{
