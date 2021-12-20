@@ -155,13 +155,13 @@
                                                 </ng-template>
                                             </ng-template>
                                             <ng-template [ngIf]="docs[0].type == 'attestation-MOSIP'">
-                                                <div class="text-grey"> Digitaly Verified </div>
+                                                <div class="text-grey"> {{'DIGITALLY_VERIFIED'|translate}}  </div>
                                             </ng-template>
                                             <ng-template [ngIf]="docs[0].type == 'attestation-SELF'">
-                                                <div class="text-grey"> Self Attested </div>
+                                                <div class="text-grey">{{'SELF_ATTTESTED'|translate}}</div>
                                             </ng-template>
                                             <ng-template [ngIf]="docs[0].type == 'attestation-DIVOC'">
-                                                <div class="text-grey"><i class="fa fa-qrcode fs-12"></i> Digitaly Verified </div>
+                                                <div class="text-grey"><i class="fa fa-qrcode fs-12"></i>{{'DIGITALLY_VERIFIED'|translate}}</div>
                                             </ng-template>
                                             <div class="tags-list">
                                                 <ul>
