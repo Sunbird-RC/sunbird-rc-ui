@@ -36,7 +36,7 @@
 
 body {
     font-family: 'Lato', sans-serif !important;
-    // background-color: $primaryColor
+    // background-color: var(--primaryColor)
   }
 
 .text-body{
@@ -53,7 +53,7 @@ body {
 }
 
 .bg-primary {
-    background-color: $primaryColor !important
+    background-color: var(--primaryColor) !important
 }
 
 .ngx-pagination .current {
@@ -219,7 +219,7 @@ padding-top: 5px !important ;
     background-color: var(--secondaryColor);
 }
 
-$primary-color: $primaryColor;
+$primary-color: var(--primaryColor);
 $gray-color: #8d9091;
 .primary-color {
     background-color: $primary-color !important;
