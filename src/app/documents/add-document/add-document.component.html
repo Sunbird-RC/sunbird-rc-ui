@@ -38,7 +38,7 @@
                             margin-top: -49px;
                             position: relative;
                         " type="button" class="btn btn-primary" data-toggle="modal" data-target="#verifyModal">
-                                Verify
+                                {{ 'VERIFY' | translate }}
                             </button>
                         </ng-template>
                         <ng-template [ngIf]="verified  && osid">
@@ -53,7 +53,7 @@
                             <img width="100"[src]="webcamImage.imageAsDataUrl" />
                             </div>
                         <button type="submit" class="btn btn-primary w-100 submit-button"
-                            [disabled]="!verified">Submit</button>
+                            [disabled]="!verified">{{'SUBMIT' | translate}}</button>
                     </form>
                 </div>
             </div>
@@ -64,7 +64,7 @@
         <br>
         <div class="d-flex justify-content-center">
             <div class="spinner-border" style="width: 5rem; height: 5rem;" role="status">
-                <span class="sr-only">Loading...</span>
+                <span class="sr-only">{{'LOADING'| translate}}</span>
             </div>
         </div>
     </ng-template>
@@ -79,21 +79,21 @@
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h3 class="modal-title font-weight-bold" id="myModalLabel2">Confirm OTP</h3>
+                    <h3 class="modal-title font-weight-bold" id="myModalLabel2">{{'CONFIRM_OTP'|translate}}</h3>
                 </div>
 
                 <div class="modal-body">
-                    Enter the code sent to mobile number
-                    <div class="form-group"><label for="formly_18_number_otp_0"> Enter OTP
+                    {{'ENTER_THE_CODE_SENT_TO_MOBILE_NUMBER'| translate}}
+                    <div class="form-group"><label for="formly_18_number_otp_0"> {{'ENTER_OTP'|translate}}
                         </label>
                         <formly-field-input><input type="password"
                                 class="form-control ng-untouched ng-pristine ng-valid">
 
                         </formly-field-input>
-                        <a src="/cf/sluid">Resend OTP?</a>
+                        <a src="/cf/sluid">{{'RESEND_OTP' |translate}}</a>
                     </div>
                     <button type="button" aria-hidden="true" data-dismiss="modal" aria-label="Close"
-                        (click)="verifyFn()" class="btn btn-primary w-100 submit-button">Confirm OTP</button>
+                        (click)="verifyFn()" class="btn btn-primary w-100 submit-button">{{'CONFIRM_OTP'|translate}}</button>
                 </div>
 
             </div>
