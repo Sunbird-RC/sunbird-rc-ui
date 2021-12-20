@@ -52,6 +52,23 @@ export class InstallComponent implements OnInit {
       },
     },
     {
+      key: 'appType',
+      type: 'select',
+      defaultValue: 'Attestation',
+      templateOptions: {
+        label: 'Select type of appplication',
+        required: true,
+        addonLeft: {
+          text: 'appType:',
+        },
+        options: [
+          { label: 'Attestation', value: 'attestation' },
+          { label: 'Certification', value: 'certification' },
+          { label: 'Digital Wallet', value: 'digital_wallet'}
+        ],
+      },
+    },
+    {
       key: 'baseUrl',
       type: 'input',
       templateOptions: {

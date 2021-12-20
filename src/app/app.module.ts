@@ -50,6 +50,14 @@ import { PanelWrapperComponent } from './forms/types/group.type';
 import { LogoutComponent } from './authentication/logout/logout.component';
 import { SearchComponent } from '../app/discovery/search/search.component';
 import { AuthConfigService } from './authentication/auth-config.service';
+import { DocumentsComponent } from './documents/documents.component';
+import { AddDocumentComponent } from './documents/add-document/add-document.component';
+import {WebcamModule} from 'ngx-webcam';
+import { ScanDocumentComponent } from './documents/scan-document/scan-document.component';
+import { ScanQrCodeComponent } from './documents/scan-qr-code/scan-qr-code.component';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import {QuarModule} from '@altack/quar';
+import { BrowseDocumentsComponent } from './documents/browse-documents/browse-documents.component';
 
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -127,7 +135,12 @@ import ISO6391 from 'iso-639-1';
     FormlyFieldNgSelect,
     InstallComponent,
     HomeComponent,
-    LogoutComponent
+    LogoutComponent,
+    DocumentsComponent,
+    AddDocumentComponent,
+    ScanDocumentComponent,
+    ScanQrCodeComponent,
+    BrowseDocumentsComponent
   ],
   imports: [
     BrowserModule,
@@ -143,8 +156,14 @@ import ISO6391 from 'iso-639-1';
     Bootstrap4FrameworkModule,
     AngularMultiSelectModule,
     NgSelectModule,
+
     HttpClientModule,
     TranslateModule.forRoot(),
+
+    WebcamModule,
+    QuarModule,
+    ZXingScannerModule,
+
     FormlyModule.forRoot({
       extras: { resetFieldOnHide: true },
       wrappers: [{ name: 'form-field-horizontal', component: FormlyHorizontalWrapper },

@@ -9,16 +9,23 @@ import { ThemeService } from "../app/services/theme/theme.service";
 })
 export class AppComponent {
   footerText = 'Sunbird RC';
+  isFooter = false;
   themeName;
   constructor(private config: AppConfig, private themeService: ThemeService) {
-    if(window.location.pathname != '/install'){
-      this.footerText = this.config.getEnv('footerText');
+    
+     if(this.config.getEnv('appType') && this.config.getEnv('appType') != 'digital_wallet'){
+      this.isFooter = true;
+      if(window.location.pathname != '/install'){
+        this.footerText = this.config.getEnv('footerText');
+      }
     }
+    
 
     this.themeName = localStorage.getItem('themeName');
 
     if (this.themeName) {
       this.themeService.setTheme(this.themeName);
     }
+
   }
 }

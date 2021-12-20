@@ -1,4 +1,5 @@
 export const THEMES = {
+
   default: {
     primaryColor: "#1987B6",
    secondaryColor: "#443DF6",
@@ -23,3 +24,4 @@ export const THEMES = {
 
   }
 };
+

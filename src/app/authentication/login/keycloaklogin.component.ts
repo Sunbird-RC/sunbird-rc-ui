@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
 import { Router } from '@angular/router';
+import { AppConfig } from '../../app.config';
 
 @Component({
   selector: 'app-keycloaklogin',
@@ -13,7 +14,7 @@ export class KeycloakloginComponent implements OnInit {
   profileUrl: string  = '';
   constructor(
     public keycloakService: KeycloakService,
-    public router: Router
+    public router: Router, private config: AppConfig
 
   ) { }
 
@@ -28,26 +29,12 @@ export class KeycloakloginComponent implements OnInit {
       console.log('keyCloak teacher token - ', token);
       localStorage.setItem('token', token);
       localStorage.setItem('loggedInUser', this.user);
-     // alert(this.entity);
-     this.profileUrl = '/profile/'+this.entity;
-
-      // switch(this.entity)
-      // {
-      //   case 'Student' :
-      //   // this.profileUrl = '/student-profile';
-      //   this.profileUrl = '/profile/'+this.entity;
-      //   break;
-
-      //   case 'Teacher' : 
-      //   this.profileUrl = '/profile/'+this.entity;
-      //   break;
-
-      //   case 'Institute' : 
-      //   this.profileUrl = '/institute-profile';
-      //   break;
-
-      // }
-
+      console.log('---------',this.config.getEnv('appType'))
+      if(this.config.getEnv('appType') && this.config.getEnv('appType') === 'digital_wallet'){
+        this.profileUrl = this.entity+'/documents'
+      }else{
+        this.profileUrl = '/profile/'+this.entity;
+      }
       this.router.navigate([this.profileUrl]);
 
     });

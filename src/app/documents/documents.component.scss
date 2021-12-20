@@ -1,0 +1,36 @@
+.text-grey{
+    color: grey;
+}
+
+.dash-card {
+    // max-width: 300px;
+    display: inline-grid;
+    position: relative;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.5rem;
+    margin: 3px;
+}
+
+.border-trans{
+    border-color: transparent;
+}
+
+.add-doc-block{
+    width: 100%;
+    padding: 10px;
+}
+
+.card-body {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+  
+//   .card-body>div {
+//     padding: 5px;
+//   }
+
