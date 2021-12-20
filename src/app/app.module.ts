@@ -244,6 +244,11 @@ export class AppModule {
       this.languages = config.languages;
       var installed_languages = [];
 
+      if(this.languages == undefined)
+      {
+        this.languages = ["en"];
+      }
+
       for (let i = 0; i < this.languages.length; i++) {
         installed_languages.push({
           "code": this.languages[i],
