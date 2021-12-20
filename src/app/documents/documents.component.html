@@ -8,7 +8,7 @@
           </div>
         </div>
       </ng-template>
-    <div class="contain mt-5 mb-20 mx-4 ml-2 mr-2">
+    <div class="contain mt-5 mb-20">
         <ng-template [ngIf]="!hasDocs && !loader">
             <div class="row d-flex justify-content-center">
                 <div class="col-md-6 mb-3">
@@ -113,69 +113,75 @@
             </div>
         </ng-template>
         <ng-template [ngIf]="hasDocs">
-            <div class="row">
+            <div class="row mb-3">
                 <div class="col-8">
                     <h4 class="font-weight-bold">{{'MY_DOCUMENTS'|translate}}</h4>
                 </div>
-                <div class="col-4"><button class="btn-bg text-primary-color btn-style float-end p14 border-trans"
+                <div class="col-4 text-right"><button class="btn btn-secondary"
                     data-toggle="modal" data-target="#addModal">{{'ADD'|translate}}</button></div>
             </div>
             <div class="row">
-                <div *ngFor="let docs of documents; index as i;" class="col-sm-12 col-md-6 col-lg-4 col-xs-2">
-                    <div  class="card lh-lg mt-3 p-3 p14">
+                <div *ngFor="let docs of documents; index as i;" class="mb-3 col-sm-12 col-md-6 col-lg-4 col-xs-2">
+                    <div  class="card height-100">
                         <div class="card-body">
                             <!-- <div class="row">
                                 <div class="col-sm-6"> -->
-                                    <div>
-                                        <ng-template ngFor let-doc [ngForOf]="docs" let-i="index">
-                                            <span *ngIf="doc.key == 'title' || doc.key == 'name'" class="card-title mb-2 text-dark"><b>{{doc.value}} </b>
-                                                <ng-template [ngIf]="doc.type == 'attestation-MOSIP'">
-                                                    <i class="fas fa-award text-primary-color"></i>
-                                                </ng-template>
-                                                <ng-template [ngIf]="doc.type == 'attestation-DIVOC'">
-                                                    <i class="fas fa-award text-primary-color"></i>
-                                                    <i class="fa fa-qrcode ml-1"></i>
-                                                </ng-template>
-                                                <br>
-                                            </span>
-                                        </ng-template>
-                                        <ng-template ngFor let-doc2 [ngForOf]="docs">
-                                            <div *ngIf="doc2.key == 'title' || doc2.key == 'name' || doc2.key == 'fileUrl'; else elseBlock">
-                                            </div>
-                                            <div *ngIf="doc2.key == 'fileUrl'">
-                                                <a href="/document/view?u={{doc2.value}}" style="color:#1266f1">{{'VIEW_DOCUMENT'|translate}}</a>
-                                                <br>
-                                            </div>
-                                            <ng-template #elseBlock>
-                                                <span class="card-text text-grey  mb-2">{{doc2.value}} </span>
-                                                <br>
+                                        <div class="card-intro-info">
+                                            <ng-template ngFor let-doc [ngForOf]="docs" let-i="index">
+                                                <div *ngIf="doc.key == 'title' || doc.key == 'name'" class="card-title mb-2 text-dark">
+                                                    {{doc.value}}
+                                                    <ng-template [ngIf]="doc.type == 'attestation-MOSIP'">
+                                                        <i class="fas fa-award text-primary-color fs-12 mr-1"></i>
+                                                    </ng-template>
+                                                    <ng-template [ngIf]="doc.type == 'attestation-DIVOC'">
+                                                        <i class="fas fa-award text-primary-color fs-12 mr-1"></i>
+                                                        <i class="fa fa-qrcode mr-1 fs-12"></i>
+                                                    </ng-template>
+                                                </div>
                                             </ng-template>
-                                        </ng-template>
-                                        <ng-template [ngIf]="docs[0].type == 'attestation-MOSIP'">
-                                            <span class="text-grey">{{'DIGITALLY_VERIFIED'|translate}} </span>
-                                        </ng-template>
-                                        <ng-template [ngIf]="docs[0].type == 'attestation-SELF'">
-                                            <span class="text-grey"> {{'SELF_ATTTESTED'|translate}} </span>
-                                        </ng-template>
-                                        <ng-template [ngIf]="docs[0].type == 'attestation-DIVOC'">
-                                            <span class="text-grey"><i class="fa fa-qrcode"></i> {{'DIGITALLY_VERIFIED'|translate}} </span>
-                                        </ng-template>
-                                    </div>
-                                    
-                                    <img src="assets/images/logo.png" style="height: 60px;" />
+                                            <ng-template ngFor let-doc2 [ngForOf]="docs">
+                                                <div *ngIf="doc2.key == 'title' || doc2.key == 'name' || doc2.key == 'fileUrl'; else elseBlock">
+                                                </div>
+                                                <div *ngIf="doc2.key == 'fileUrl'">
+                                                    <a class="primary-text-color" href="/document/view?u={{doc2.value}}" >View Document</a>
+                                                </div>
+                                                <ng-template #elseBlock>
+                                                    <div class="card-text text-grey mb-2">{{doc2.value}} </div>
+                                                </ng-template>
+                                            </ng-template>
+                                            <ng-template [ngIf]="docs[0].type == 'attestation-MOSIP'">
+                                                <div class="text-grey"> {{'DIGITALLY_VERIFIED'|translate}}  </div>
+                                            </ng-template>
+                                            <ng-template [ngIf]="docs[0].type == 'attestation-SELF'">
+                                                <div class="text-grey">{{'SELF_ATTTESTED'|translate}}</div>
+                                            </ng-template>
+                                            <ng-template [ngIf]="docs[0].type == 'attestation-DIVOC'">
+                                                <div class="text-grey"><i class="fa fa-qrcode fs-12 mr-1"></i>{{'DIGITALLY_VERIFIED'|translate}}</div>
+                                            </ng-template>
+                                            <div class="tags-list">
+                                                <ul>
+                                                    <li>ID Card</li>
+                                                    <li>ID Card</li>
+                                                    <li>ID Card</li>
+                                                    <li>ID Card</li>
+                                                    <li>ID Card</li>
+                                                    <li>ID Card</li>
+                                                    <li>ID Card</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="card-image">
+                                            <img src="assets/images/logo.png"/>
+                                        </div>
                                 <!-- </div>
                                 <div class="col-sm-6 text-right">
                                     <img src="assets/images/logo.png" style="height: 60px;" />
                                 </div>
                             </div> -->
                         </div>
-                      
-                      
                     </div>
                 </div>
             </div>
-          
-            
         </ng-template>
 
         <ng-template [ngIf]="!hasDocs && !loader">
@@ -213,13 +219,13 @@
                             </div>
                         </a>
                     </ng-template>
-    
+
                 </div>
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
                 <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
             </div>
         </ng-template>
-   
+
 
 
         <!-- <p class="p14 mt-3">Select and download issued documents</p> -->
@@ -238,7 +244,7 @@
 
         </span>
         <span class="text-grey  mb-2">Government of Sri Lanka </span>
-        <span class="text-grey">   Digital Verificated </span> 
+        <span class="text-grey">   Digital Verificated </span>
 
 
       </div>
@@ -250,7 +256,7 @@
 
       </span>
       <span class="text-grey  mb-2">Ministry of Health </span>
-      <span class="text-grey">   Digital Verificated </span> 
+      <span class="text-grey">   Digital Verificated </span>
     </div> -->
 
         <!-- <div class="row mt-3">
@@ -259,66 +265,66 @@
           </div>
           <div class="col-4"> <label class="p12  float-end text-primary-color">View All</label></div>
         </div>
-      
+
         <button class="btn-bg text-primary-color btn-style  p14 m-1"><a href="/document/add/SLUDI">SLUDI</a></button>
-      
+
         <div class="row mt-3">
           <div class="col-8">
             <p class=" font-weight-bold">Education</p>
           </div>
           <div class="col-4"> <label class="p12  float-end text-primary-color">View All</label></div>
         </div>
-      
+
         <button class="btn-bg text-primary-color btn-style  p14 m-1"><a href="/documents">Class 10 Certificate (3)</a></button>
         <button class="btn-bg text-primary-color btn-style p14 m-1"><a href="/document/issue">Class 12 Certificate</a></button>
-      
+
         <div class="row mt-3">
           <div class="col-8">
             <p class=" font-weight-bold">Health</p>
           </div>
           <div class="col-4"> <label class="p12  float-end text-primary-color">View All</label></div>
         </div>
-      
+
         <button class="btn-bg text-primary-color btn-style  p14 m-1"><a href="/document/issue">Vactination Certificate</a></button>
-      
+
         <div class="row mt-3">
           <div class="col-8">
             <p class=" font-weight-bold">Employment</p>
           </div>
           <div class="col-4"> <label class="p12  float-end text-primary-color">View All</label></div>
         </div>
-      
+
         <button class="btn-bg text-primary-color btn-style  p14 m-1"><a href="/document/issue">Private</a></button>
         <button class="btn-bg text-primary-color btn-style p14 m-1"><a href="/document/issue">Government</a></button>
-      
+
         <div class="row mt-3">
           <div class="col-8">
             <p class=" font-weight-bold">Finance</p>
           </div>
           <div class="col-4"> <label class="p12  float-end text-primary-color">View All</label></div>
         </div>
-      
+
         <button class="btn-bg text-primary-color btn-style  p14 m-1"><a href="/document/issue">Banking</a></button>
         <button class="btn-bg text-primary-color btn-style p14 m-1"><a href="/document/issue">Insurance</a></button>
-      
+
         <div class="row mt-3">
           <div class="col-8">
             <p class=" font-weight-bold">Vehicle</p>
           </div>
           <div class="col-4"> <label class="p12  float-end text-primary-color">View All</label></div>
         </div>
-      
+
         <button class="btn-bg text-primary-color btn-style  p14 m-1"><a href="/document/issue">Driving Licence (1)</a></button>
         <button class="btn-bg text-primary-color btn-style p14 m-1"><a href="/document/issue">Registration</a></button>
         <button class="btn-bg text-primary-color btn-style p14 m-1"><a href="/document/issue">PUC</a></button>
-      
+
         <div class="row mt-3">
           <div class="col-8">
             <p class=" font-weight-bold">Others</p>
           </div>
           <div class="col-4"> <label class="p12  float-end text-primary-color">View All</label></div>
         </div>
-      
+
         <button class="btn-bg text-primary-color btn-style  p14 m-1"><a href="/document/issue">Residence</a></button>
         <button class="btn-bg text-primary-color btn-style p14 m-1"><a href="/document/issue">Marriage Certificate</a></button> -->
     </div>
@@ -340,7 +346,7 @@
 
                 <a [routerLink]="['add','upload']"
                 data-dismiss="modal"
-                    class="btn-bg text-primary-color btn-style float-end p14 border-trans add-doc-block">
+                    class="btn btn-primary-color btn-style float-end p14 border-trans add-doc-block">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -426,8 +432,7 @@
                 </a>
             </div>
         </div>
-        
+
       </div>
     </div>
   </div>
-  
