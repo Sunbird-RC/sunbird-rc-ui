@@ -128,7 +128,7 @@
                                 <div class="col-sm-6"> -->
                                         <div class="card-intro-info">
                                             <ng-template ngFor let-doc [ngForOf]="docs" let-i="index">
-                                                <div *ngIf="doc.key == 'title' || doc.key == 'name'" class="card-title mb-2 text-dark">
+                                                <div *ngIf="doc.key == 'title' || doc.key == 'name'" class="card-title mb-2 text-dark fs-14">
                                                     {{doc.value}}
                                                     <ng-template [ngIf]="doc.type == 'attestation-MOSIP'">
                                                         <i class="fas fa-award text-primary-color fs-12 mr-1"></i>
@@ -139,6 +139,7 @@
                                                     </ng-template>
                                                 </div>
                                             </ng-template>
+                                            <div class="fs-12">
                                             <ng-template ngFor let-doc2 [ngForOf]="docs">
                                                 <div *ngIf="doc2.key == 'title' || doc2.key == 'name' || doc2.key == 'fileUrl'; else elseBlock">
                                                 </div>
@@ -168,6 +169,7 @@
                                                     <li>ID Card</li>
                                                     <li>ID Card</li> -->
                                                 </ul>
+                                            </div>
                                             </div>
                                         </div>
                                         <div class="card-image">

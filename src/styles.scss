@@ -33,12 +33,6 @@
     background: var(--headerColor) !important;
 }
 
-
-body {
-    font-family: 'Mulish', sans-serif;
-    // background-color: var(--primaryColor)
-  }
-
 .text-body{
     color: var(--headerTitle) !important;
 }
@@ -248,7 +242,7 @@ $primary-color-dark: #000;
 
 html, body { height: 100%; }
 
-body { margin: 0; font-family: "Lato", sans-serif;color: rgb(0, 0, 0); background: var(--background) !important;}
+body { margin: 0; font-family: "Lato", sans-serif !important;color: rgb(0, 0, 0); background: var(--background) !important;}
 
 
 .fs-7{
@@ -476,6 +470,9 @@ formly-autocomplete-type .ng-select {
 }
 .fs-12{
     font-size: 12px;
+}
+.fs-14{
+    font-size: 14px;
 }
 .fs-25{
     font-size: 25px;
