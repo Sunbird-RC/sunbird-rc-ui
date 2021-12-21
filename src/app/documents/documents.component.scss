@@ -24,30 +24,11 @@
     width: 100%;
     padding: 10px;
 }
-
-.card-body {
-    display: flex;
-}
-
-.card-intro-info{
-    width: calc(100% - 45px);
-}
-
-.card-image{
-    border: 1px solid #ddd;
-    height: 45px;
-    border-radius: 50%;
-    width: 45px;
-    img{
-        object-fit: cover;
-        width: 100%;
-    }
-}
 //   .card-body>div {
 //     padding: 5px;
 //   }
 
 .modal-dialog {
-    top: calc(100% - 300px); 
+    top: calc(100% - 300px);
   }
 

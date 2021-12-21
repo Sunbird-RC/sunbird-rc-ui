@@ -26,6 +26,7 @@
   --headerColor: #ffffff;
   --btnBgColor: #c0e3eb6b;
   --headerTitle: #000000;
+  --gray2:#CCCCCC;
   /*mm*/
   --secondarybgColor:#EAF5FF;
   --secondarytextColor:#0098AB;
@@ -531,7 +532,7 @@ formly-autocomplete-type .ng-select {
     li{
         .nav-link{
             padding: 10px 0px;
-            margin-right: 10px;
+            margin-right: 15px;
             text-transform: capitalize;
             border: 0px;
             color: var(--textBlack);
@@ -543,6 +544,32 @@ formly-autocomplete-type .ng-select {
                 background-color: transparent !important;
             }
         }
+    }
+}
+
+/* Card */
+.card{
+    .card-body {
+        display: flex;
+    }
+    .card-image{
+        border: 1px solid #ddd;
+        height: 45px;
+        border-radius: 50%;
+        width: 45px;
+        img{
+            object-fit: cover;
+            width: 100%;
+        }
+    }
+    .card-intro-info{
+        width: calc(100% - 45px);
+    }
+    .card-image{
+        border: 1px solid #ddd;
+        height: 45px;
+        border-radius: 50%;
+        width: 45px;
     }
 }
 
