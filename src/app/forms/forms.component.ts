@@ -384,6 +384,21 @@ export class FormsComponent implements OnInit {
           }
         }
 
+        if (field.children) {
+          if(field.children.fields)
+          {
+            for(let i =0; i < field.children.fields.length; i++)
+            {
+              if (field.children.fields[i].hasOwnProperty('validation') && field.children.fields[i].validation.hasOwnProperty('message')) {
+                field.children.fields[i].validation['message'] = this.translate.instant(field.children.fields[i].validation.message);
+                this.responseData.definitions[fieldset.definition].properties[field.name].properties[field.children.fields[i].name]['widget']['formlyConfig']['validation']['messages']['pattern'] = this.translate.instant(field.children.fields[i].validation.message);
+              }
+
+            }
+          }
+         
+        }
+
         if (field.custom && field.element) {
           this.responseData.definitions[fieldset.definition].properties[field.name] = field.element;
           if (field.element.hasOwnProperty('title')) {
