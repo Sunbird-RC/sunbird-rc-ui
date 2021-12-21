@@ -375,7 +375,28 @@ export class FormsComponent implements OnInit {
           } else if (this.responseData.definitions[fieldset.definition].properties.hasOwnProperty(field.name) && this.responseData.definitions[fieldset.definition].properties[field.name].hasOwnProperty('properties')) {
             let res = this.responseData.definitions[fieldset.definition].properties[field.name].properties;
             this.nastedChild(fieldset, field.name, res);
-          } 
+          }
+        }
+
+        if (field.validation) {
+          if (field.validation.hasOwnProperty('message')) {
+            field.validation['message'] = this.translate.instant(field.validation.message);
+          }
+        }
+
+        if (field.children) {
+          if(field.children.fields)
+          {
+            for(let i =0; i < field.children.fields.length; i++)
+            {
+              if (field.children.fields[i].hasOwnProperty('validation') && field.children.fields[i].validation.hasOwnProperty('message')) {
+                field.children.fields[i].validation['message'] = this.translate.instant(field.children.fields[i].validation.message);
+                this.responseData.definitions[fieldset.definition].properties[field.name].properties[field.children.fields[i].name]['widget']['formlyConfig']['validation']['messages']['pattern'] = this.translate.instant(field.children.fields[i].validation.message);
+              }
+
+            }
+          }
+         
         }
 
         if (field.custom && field.element) {
@@ -514,11 +535,7 @@ export class FormsComponent implements OnInit {
               console.log(key);
               _self.responseData.definitions[fieldset.definition].properties[field.name].items.properties[key].title = _self.checkString(key, _self.responseData.definitions[fieldset.definition].properties[field.name].items.properties[key].title);
              
-             if(_self.responseData.definitions[fieldset.definition].properties[field.name].items.properties[key].hasOwnProperty('enum')){
-              for (let i = 0; i < _self.responseData.definitions[fieldset.definition].properties[field.name].items.properties[key].enum.length; i++) {
-                _self.responseData.definitions[fieldset.definition].properties[field.name].items.properties[key].enum[i] = _self.enumCheck(_self.responseData.definitions[fieldset.definition].properties[field.name].items.properties[key].enum[i]);
-              }
-            }
+            
             });
 
           }
