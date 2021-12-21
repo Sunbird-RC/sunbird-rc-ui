@@ -352,17 +352,15 @@ export class FormsComponent implements OnInit {
           if (field.children) {
             this.checkProperty(fieldset, field);
 
-            if(this.responseData.definitions[fieldset.definition].properties[field.name].hasOwnProperty('properties'))
-            {
+            if (this.responseData.definitions[fieldset.definition].properties[field.name].hasOwnProperty('properties')) {
               let _self = this;
               Object.keys(_self.responseData.definitions[fieldset.definition].properties[field.name].properties).forEach(function (key) {
-                if(_self.responseData.definitions[fieldset.definition].properties[field.name].properties[key].hasOwnProperty('properties'))
-                {
+                if (_self.responseData.definitions[fieldset.definition].properties[field.name].properties[key].hasOwnProperty('properties')) {
                   Object.keys(_self.responseData.definitions[fieldset.definition].properties[field.name].properties[key].properties).forEach(function (key1) {
-                  
+
                     _self.responseData.definitions[fieldset.definition].properties[field.name].properties[key].properties[key1].title = _self.checkString(key1, _self.responseData.definitions[fieldset.definition].properties[field.name].properties[key].properties[key1].title);
-                   
-           
+
+
                   });
 
 
@@ -375,7 +373,13 @@ export class FormsComponent implements OnInit {
           } else if (this.responseData.definitions[fieldset.definition].properties.hasOwnProperty(field.name) && this.responseData.definitions[fieldset.definition].properties[field.name].hasOwnProperty('properties')) {
             let res = this.responseData.definitions[fieldset.definition].properties[field.name].properties;
             this.nastedChild(fieldset, field.name, res);
-          } 
+          }
+        }
+
+        if (field.validation) {
+          if (field.validation.hasOwnProperty('message')) {
+            field.validation['message'] = this.translate.instant(field.validation.message);
+          }
         }
 
         if (field.custom && field.element) {
@@ -438,7 +442,7 @@ export class FormsComponent implements OnInit {
       }
       responseData.widget.formlyConfig.templateOptions['addonRight'] = {
         class: "internal-access",
-        text:  this.translate.instant('ONLY_BY_ME')
+        text: this.translate.instant('ONLY_BY_ME')
 
       }
       responseData.widget.formlyConfig.templateOptions['attributes'] = {
@@ -452,8 +456,8 @@ export class FormsComponent implements OnInit {
     this.translate.get(this.langKey + '.' + conStr).subscribe(res => {
       let constr = this.langKey + '.' + conStr;
       if (res != constr) {
-        this.titleVal =  res;
-      }else{
+        this.titleVal = res;
+      } else {
         this.titleVal = title;
       }
     });
@@ -506,14 +510,13 @@ export class FormsComponent implements OnInit {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['className'] = field.class;
         }
 
-        if ( this.responseData.definitions[fieldset.definition].properties[field.name].hasOwnProperty('items')) {
-          if(this.responseData.definitions[fieldset.definition].properties[field.name].items.hasOwnProperty('properties'))
-          {
+        if (this.responseData.definitions[fieldset.definition].properties[field.name].hasOwnProperty('items')) {
+          if (this.responseData.definitions[fieldset.definition].properties[field.name].items.hasOwnProperty('properties')) {
             let _self = this;
             Object.keys(_self.responseData.definitions[fieldset.definition].properties[field.name].items.properties).forEach(function (key) {
               console.log(key);
               _self.responseData.definitions[fieldset.definition].properties[field.name].items.properties[key].title = _self.checkString(key, _self.responseData.definitions[fieldset.definition].properties[field.name].items.properties[key].title);
-             
+
             });
 
           }
@@ -783,7 +786,7 @@ export class FormsComponent implements OnInit {
 
   addChildWidget(field, ParentName, childrenName) {
     this.res = this.responseData.definitions[ParentName.replace(/^./, ParentName[0].toUpperCase())].properties[childrenName];
-    this.res.properties[field.name].title = this.checkString(field.name,  this.res.properties[field.name].title);
+    this.res.properties[field.name].title = this.checkString(field.name, this.res.properties[field.name].title);
     if (field.widget) {
       this.res.properties[field.name]['widget'] = field.widget;
     }
