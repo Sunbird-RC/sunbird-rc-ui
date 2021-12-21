@@ -36,7 +36,7 @@ export class DocViewComponent implements OnInit {
         this.route.queryParams.subscribe(async params => {
             console.log("r", params)
             // this.bearerToken = 'Bearer ' + this.keycloakService.getToken();
-            this.docUrl = 'https://elocker.xiv.in/' + params.u;
+            this.docUrl = 'https://elocker.xiv.in/elocker/api/v1/' + params.u;
             this.extension = params.u.split('.').slice(-1)[0];
             console.log("d", this.docUrl,this.extension)
         })
@@ -63,7 +63,9 @@ export class AuthImagePipe implements PipeTransform {
     async transform(src: string): Promise<any> {
         const token = this.keycloakService.getToken();
         const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
-        const imageBlob = await this.http.get(src, { headers, responseType: 'blob' }).toPromise();
+        let imageBlob = await this.http.get(src, { headers, responseType: 'blob' }).toPromise();
+        console.log(imageBlob.type);
+        imageBlob = new Blob([imageBlob], {type: 'image/png'})
         const reader = new FileReader();
         return new Promise((resolve, reject) => {
             reader.onloadend = () => resolve(reader.result as string);

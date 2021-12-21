@@ -7,5 +7,5 @@
 </ngx-doc-viewer> -->
 
 <ng-template [ngIf]="extension === 'jpg' || extension === 'png' || extension === 'jpeg'">
-  <img src="docUrl | authImage | async" />
+  <img [src]="docUrl | authImage | async" />
 </ng-template>

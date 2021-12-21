@@ -115,6 +115,7 @@ import { PagesComponent } from './pages/pages.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
+import {AuthImagePipe} from '../app/layouts/doc-view/doc-view.component';
 
 @NgModule({
   declarations: [
@@ -144,7 +145,8 @@ import { environment } from '../environments/environment';
     ScanDocumentComponent,
     ScanQrCodeComponent,
     BrowseDocumentsComponent,
-    PagesComponent
+    PagesComponent,
+    AuthImagePipe
   ],
   imports: [
     BrowserModule,
@@ -223,6 +225,7 @@ import { environment } from '../environments/environment';
   bootstrap: [AppComponent],
   providers: [
     AppConfig,
+    AuthImagePipe,
     { provide: APP_INITIALIZER, useFactory: initConfig, deps: [AppConfig], multi: true },
     {
       provide: APP_INITIALIZER,

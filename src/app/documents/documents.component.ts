@@ -94,6 +94,13 @@ export class DocumentsComponent implements OnInit {
               tempObject['type'] = element['name']
               property.push(tempObject);
             }
+          }else{
+            if(!this.excludedFields.includes(key)){
+              tempObject['key'] = key;
+              tempObject['value'] = value[0];
+              tempObject['type'] = element['name']
+              property.push(tempObject);
+            }
           }
       }
    

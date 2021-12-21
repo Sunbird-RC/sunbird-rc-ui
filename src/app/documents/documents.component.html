@@ -145,7 +145,7 @@
                                                 <div *ngIf="doc2.key == 'title' || doc2.key == 'name' || doc2.key == 'fileUrl'; else elseBlock">
                                                 </div>
                                                 <div *ngIf="doc2.key == 'fileUrl'">
-                                                    <a class="primary-text-color" href="/document/view?u={{doc2.value}}" >View Document</a>
+                                                    <a class="primary-text-color" href="/document/view?u={{doc2.value}}" >{{'VIEW_DOCUMENT' | translate}}</a>
                                                 </div>
                                                 <ng-template #elseBlock>
                                                     <div class="card-text text-grey mb-2">{{doc2.value}} </div>
