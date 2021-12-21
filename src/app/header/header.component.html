@@ -48,7 +48,7 @@
                         </li>
                     </ul>
                 </ng-template>
-                <span>
+                <span *ngIf="languages.length > 1">
                     <i style="font-size: 25px;" class="fa fa-language text-primary-color mt-3" aria-hidden="true"></i>
 
                     <select class="lang-btn text-primary-color" (change)="languageChange($event)"> 
