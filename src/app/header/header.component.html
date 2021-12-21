@@ -48,9 +48,10 @@
                         </li>
                     </ul>
                 </ng-template>
-                <span class="d-flex">
-                    <i style="font-size: 25px;" class="fa fa-language text-primary-color" aria-hidden="true"></i>
-                    <select class="lang-btn text-primary-color" (change)="languageChange($event)">
+                <span *ngIf="languages.length > 1">
+                    <i style="font-size: 25px;" class="fa fa-language text-primary-color mt-3" aria-hidden="true"></i>
+
+                    <select class="lang-btn text-primary-color" (change)="languageChange($event)"> 
                         <option *ngFor="let lang of languages" [value]="lang.code"  [selected]="(lang.code == langCode)? true : false">{{lang.name}}</option>
                       </select>
                 </span>
