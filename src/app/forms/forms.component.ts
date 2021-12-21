@@ -535,11 +535,7 @@ export class FormsComponent implements OnInit {
               console.log(key);
               _self.responseData.definitions[fieldset.definition].properties[field.name].items.properties[key].title = _self.checkString(key, _self.responseData.definitions[fieldset.definition].properties[field.name].items.properties[key].title);
              
-             if(_self.responseData.definitions[fieldset.definition].properties[field.name].items.properties[key].hasOwnProperty('enum')){
-              for (let i = 0; i < _self.responseData.definitions[fieldset.definition].properties[field.name].items.properties[key].enum.length; i++) {
-                _self.responseData.definitions[fieldset.definition].properties[field.name].items.properties[key].enum[i] = _self.enumCheck(_self.responseData.definitions[fieldset.definition].properties[field.name].items.properties[key].enum[i]);
-              }
-            }
+            
             });
 
           }
