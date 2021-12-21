@@ -1,0 +1,16 @@
+.search-area{
+    .input-append{
+        position: relative;
+        .fa-search{
+            position: absolute;
+            right: 12px;
+            top: 15px;
+        }
+        input{
+            border: 1px solid #EFEFEF;
+            box-sizing: border-box;
+            border-radius: 4px;
+            padding: 11px 35px 11px 15px;
+        }
+    }
+}

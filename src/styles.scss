@@ -26,6 +26,13 @@
   --headerColor: #ffffff;
   --btnBgColor: #c0e3eb6b;
   --headerTitle: #000000;
+  /*mm*/
+  --secondarybgColor:#EAF5FF;
+  --secondarytextColor:#0098AB;
+  --tagstextColor:#1987B6;
+  --linkColor:#4A227C;
+  --textBlack:#000000;
+
 }
 
 
@@ -492,9 +499,9 @@ formly-autocomplete-type .ng-select {
 }
 
 .btn-secondary{
-    color: #0098AB !important;
-    background-color: #EAF5FF !important;
-    border-color: #EAF5FF !important;
+    color: var(--secondarytextColor) !important;
+    background-color: var(--secondarybgColor) !important;
+    border-color: var(--secondarybgColor) !important;
 }
 
 /* Tags */
@@ -507,12 +514,34 @@ formly-autocomplete-type .ng-select {
             display: inline-block;
             list-style: none;
             font-size: 11px;
-            background-color: #EAF5FF;
+            background-color: var(--secondarybgColor) !important;
             padding: 5px 7px;
             border-radius: 5px;
             margin-right: 5px;
             margin-bottom: 5px;
-            color: #1987B6;
+            color: var(--tagstextColor) !important;
+        }
+    }
+}
+
+/* Tabs */
+
+.nav-tabs{
+    border:0 !important;
+    li{
+        .nav-link{
+            padding: 10px 0px;
+            margin-right: 10px;
+            text-transform: capitalize;
+            border: 0px;
+            color: var(--textBlack);
+            &.active,
+            &:hover
+            {
+                border-bottom: 1px solid var(--linkColor) !important;
+                color: var(--linkColor) !important;
+                background-color: transparent !important;
+            }
         }
     }
 }
