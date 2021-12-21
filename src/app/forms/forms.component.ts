@@ -375,7 +375,13 @@ export class FormsComponent implements OnInit {
           } else if (this.responseData.definitions[fieldset.definition].properties.hasOwnProperty(field.name) && this.responseData.definitions[fieldset.definition].properties[field.name].hasOwnProperty('properties')) {
             let res = this.responseData.definitions[fieldset.definition].properties[field.name].properties;
             this.nastedChild(fieldset, field.name, res);
-          } 
+          }
+        }
+
+        if (field.validation) {
+          if (field.validation.hasOwnProperty('message')) {
+            field.validation['message'] = this.translate.instant(field.validation.message);
+          }
         }
 
         if (field.custom && field.element) {
