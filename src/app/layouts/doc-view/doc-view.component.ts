@@ -28,20 +28,20 @@ export class DocViewComponent implements OnInit {
     docUrl: string;
     baseUrl = this.config.getEnv('baseUrl');
     extension;
+    token
     public bearerToken: string | undefined = undefined;
     constructor(private route: ActivatedRoute,
-        private keycloakService: KeycloakService, private config: AppConfig) { }
+        private keycloakService: KeycloakService, private config: AppConfig) {
+        this.token = this.keycloakService.getToken();
+
+    }
 
     ngOnInit(): void {
         this.route.queryParams.subscribe(async params => {
             this.docUrl = this.baseUrl + '/' + params.u;
             this.extension = params.u.split('.').slice(-1)[0];
         })
-
     }
-
-
-
 }
 
 
@@ -52,10 +52,12 @@ export class DocViewComponent implements OnInit {
 })
 export class AuthImagePipe implements PipeTransform {
     extension;
+
     constructor(
         private http: HttpClient, private route: ActivatedRoute,
         private keycloakService: KeycloakService, // our service that provides us with the authorization token
     ) {
+
         this.route.queryParams.subscribe(async params => {
             this.extension = params.u.split('.').slice(-1)[0];
         })
@@ -66,7 +68,11 @@ export class AuthImagePipe implements PipeTransform {
         const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
         let imageBlob = await this.http.get(src, { headers, responseType: 'blob' }).toPromise();
 
-        imageBlob = new Blob([imageBlob], { type: 'image/' + this.extension })
+        if (this.extension == 'pdf') {
+            imageBlob = new Blob([imageBlob], { type: 'application/' + this.extension })
+        } else {
+            imageBlob = new Blob([imageBlob], { type: 'image/' + this.extension })
+        }
 
         const reader = new FileReader();
         return new Promise((resolve, reject) => {

@@ -116,6 +116,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
 import {AuthImagePipe} from '../app/layouts/doc-view/doc-view.component';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 @NgModule({
   declarations: [
@@ -169,7 +170,7 @@ import {AuthImagePipe} from '../app/layouts/doc-view/doc-view.component';
     WebcamModule,
     QuarModule,
     ZXingScannerModule,
-
+    NgxExtendedPdfViewerModule,
     FormlyModule.forRoot({
       extras: { resetFieldOnHide: true },
       wrappers: [{ name: 'form-field-horizontal', component: FormlyHorizontalWrapper },
