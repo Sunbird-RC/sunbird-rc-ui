@@ -218,6 +218,8 @@ export class AddDocumentComponent implements OnInit {
       this.router.navigate([this.entity, 'documents'])
       // this.documentTypes = res;
     }, (err) => {
+      this.router.navigate([this.entity, 'documents'])
+
       // this.toastMsg.error('error', err.error.params.errmsg)
       console.log('error', err)
     });
