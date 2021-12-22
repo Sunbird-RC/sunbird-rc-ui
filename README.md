@@ -1,6 +1,9 @@
-# OpenSaber-RC Frontend
+# Sunbird-RC UI
 
-Configurable Angular front end with generic forms and layouts for OpenSaber RC
+Configurable Angular front end with generic forms and layouts for Sunbird RC
+
+# Community Discussions & Issue Reporting
+Please use the community repo for reporting issues & participating in discussions
 
 # Installation & Configuration
 
@@ -14,7 +17,7 @@ The application needs to be configured with the appropriate fields to be able to
 
 Key | Value
 ------------          | -------------
-`baseUrl`             | Base URL for the OpenSaber backend. Eg: https://registry.com/api
+`baseUrl`             | Base URL for the Sunbird RC backend. Eg: https://registry.com/api
 `schemaUrl`           | URL to the OpenAPI schema definition. This could be a HTTP path or a path to a local file Eg: https://registry.com/api/schema.json OR /assets/schema.json
 `logo`                | URL to logo. This logo is displayed in the header of the UI
 
@@ -32,7 +35,7 @@ Key | Value
 `form.title`          | Title of form
 `form.redirectTo`     | Redirect URL on after form submit
 `form.fieldsets`      | List of fieldsets(multiple) for this form. At least one fieldset is needed
-
+`form.langKey`      | This is the name of key, which contains the all language constants strings for this form in the en-local.json file. Eg:  <br>  **form.json:** <pre> {<br> "langKey": "instituteLang"  <br>} </pre>  **en-local.json:** <pre> { <br> 'instituteLang' : { <br> ..language constants.. <br>} <br> } </pre>
 
 **fieldsets**
 
@@ -64,6 +67,7 @@ Key | Value
 `layout.api`    | URL Path of API
 `layout.title`  | Title of form
 `layout.blocks` | Cards/Blocks (multiple) to populate in `layout`.
+`layout.langKey`      | This is the name of key, which contains the all language constants strings for this layout in the en-local.json file. Eg:  <br>  **layout.json:** <pre> {<br> "langKey": "instituteLang"  <br>} </pre>  **en-local.json:** <pre> { <br> 'instituteLang' : { <br> ..language constants.. <br>} <br> } </pre>
 
 **blocks**
 
@@ -86,29 +90,41 @@ Key | Value
 `fields.includes` | Array/list of Included Fields from response or `[*]` for all fields
 `fields.excludes` | Array/list of Excluded Fields from response
 
+### Search
+The `search.json` needs to be placed in `src/assets/config`. In this file defines the tabs, filters and result cards attribute names which are displayed on the discovery page.
+
+
+In this file `searches` is an array with key/value pairs. Each search definition will have the below fields -
+
+Key | Value
+------------    | -------------
+`search.tab`    |  Key name of tab
+`search.tabTitle`  | Title of tab
+`search.api`    | URL Path of API
+`search.activeTab` | Set active tab as a default.
+
+**filters**
+
+Key | Value
+------------ | -------------
+`filters.key` | unique key of filter/property
+`filters.title` | Title of filter
+`filters.type` | Type of filter
+`filters.propertyPath` | Actul path of property in your api responce
+`filters.default` | Set filter as default
+`filters.placeholder` | Set placeholder in the filter input box
+
+**fields**
+
+Key | Value
+------------ | -------------
+`fields.title` | Title of field 
+`fields.property` | Set property path in you api responce (eg : "address.district" )
+`fields.attest` | Set state check property key name 
 
 # Examples
 
-## Professional Registry
-Let's create a registry of employees and employers, where the employees are able to add work experience at each employer. Consider the below cases
-
-- Employees sign up for an account
-- Employers sign up for an account
-- Employees add and edit their Experience claim
-- Employers attest the experience claim
-
-The `src/examples/professional-registry` [folder](https://github.com/Sunbird-RC/opensaber-rc-ui/tree/main/src/examples/professional-registry) has the forms and layouts files to enable this use case
-
-## Insurance Registry
-Let's create a registry for insurance, which lets users maintain their policies in the electronic format
-
-- Users sign up for an account
-- Insurance companies sign up for an account
-- User adds their policy details as a claim
-- Insurance companies attest the claim
-
-The `src/examples/insurance-registry` [folder](https://github.com/Sunbird-RC/opensaber-rc-ui/tree/main/src/examples/insurance-registry) has the forms and layouts files to enable this use case
-
+You can find examples of config files [here](https://github.com/ref-registries)
 
 
 # FAQs
