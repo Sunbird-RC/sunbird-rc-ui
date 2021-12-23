@@ -63,6 +63,7 @@
     "ng-otp-input": "^1.7.1",
     "ng2-semantic-ui": "^0.9.7",
     "ngx-doc-viewer": "^2.0.4",
+    "ngx-extended-pdf-viewer": "^10.1.0",
     "ngx-pagination": "^5.1.1",
     "ngx-schema-form": "^2.6.5",
     "ngx-toastr": "^13.2.1",

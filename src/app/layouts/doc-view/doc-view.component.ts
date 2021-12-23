@@ -28,23 +28,20 @@ export class DocViewComponent implements OnInit {
     docUrl: string;
     baseUrl = this.config.getEnv('baseUrl');
     extension;
+    token
     public bearerToken: string | undefined = undefined;
     constructor(private route: ActivatedRoute,
-        private keycloakService: KeycloakService, private config: AppConfig) { }
-
-    ngOnInit(): void {
-        this.route.queryParams.subscribe(async params => {
-            console.log("r", params)
-            // this.bearerToken = 'Bearer ' + this.keycloakService.getToken();
-            this.docUrl = 'https://elocker.xiv.in/' + params.u;
-            this.extension = params.u.split('.').slice(-1)[0];
-            console.log("d", this.docUrl,this.extension)
-        })
+        private keycloakService: KeycloakService, private config: AppConfig) {
+        this.token = this.keycloakService.getToken();
 
     }
 
-
-
+    ngOnInit(): void {
+        this.route.queryParams.subscribe(async params => {
+            this.docUrl = this.baseUrl + '/' + params.u;
+            this.extension = params.u.split('.').slice(-1)[0];
+        })
+    }
 }
 
 
@@ -54,16 +51,29 @@ export class DocViewComponent implements OnInit {
     name: 'authImage'
 })
 export class AuthImagePipe implements PipeTransform {
+    extension;
 
     constructor(
-        private http: HttpClient,
+        private http: HttpClient, private route: ActivatedRoute,
         private keycloakService: KeycloakService, // our service that provides us with the authorization token
-    ) { }
+    ) {
+
+        this.route.queryParams.subscribe(async params => {
+            this.extension = params.u.split('.').slice(-1)[0];
+        })
+    }
 
     async transform(src: string): Promise<any> {
         const token = this.keycloakService.getToken();
         const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
-        const imageBlob = await this.http.get(src, { headers, responseType: 'blob' }).toPromise();
+        let imageBlob = await this.http.get(src, { headers, responseType: 'blob' }).toPromise();
+
+        if (this.extension == 'pdf') {
+            imageBlob = new Blob([imageBlob], { type: 'application/' + this.extension })
+        } else {
+            imageBlob = new Blob([imageBlob], { type: 'image/' + this.extension })
+        }
+
         const reader = new FileReader();
         return new Promise((resolve, reject) => {
             reader.onloadend = () => resolve(reader.result as string);

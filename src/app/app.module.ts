@@ -140,7 +140,8 @@ import ISO6391 from 'iso-639-1';
     AddDocumentComponent,
     ScanDocumentComponent,
     ScanQrCodeComponent,
-    BrowseDocumentsComponent
+    BrowseDocumentsComponent,
+    AuthImagePipe
   ],
   imports: [
     BrowserModule,
@@ -163,7 +164,7 @@ import ISO6391 from 'iso-639-1';
     WebcamModule,
     QuarModule,
     ZXingScannerModule,
-
+    NgxExtendedPdfViewerModule,
     FormlyModule.forRoot({
       extras: { resetFieldOnHide: true },
       wrappers: [{ name: 'form-field-horizontal', component: FormlyHorizontalWrapper },
@@ -218,6 +219,7 @@ import ISO6391 from 'iso-639-1';
   bootstrap: [AppComponent],
   providers: [
     AppConfig,
+    AuthImagePipe,
     { provide: APP_INITIALIZER, useFactory: initConfig, deps: [AppConfig], multi: true },
     {
       provide: APP_INITIALIZER,
@@ -243,6 +245,11 @@ export class AppModule {
     authConfig.getConfig().subscribe((config) => {
       this.languages = config.languages;
       var installed_languages = [];
+
+      if(this.languages == undefined)
+      {
+        this.languages = ["en"];
+      }
 
       for (let i = 0; i < this.languages.length; i++) {
         installed_languages.push({
