@@ -21,10 +21,10 @@ import { BrowseDocumentsComponent } from './documents/browse-documents/browse-do
 import { PagesComponent } from './pages/pages.component';
 const routes: Routes = [
 // Home
-{ path: '', component: HomeComponent },
+{ path: 'home', component: HomeComponent },
 
 // Auth
-{ path: 'login', component: KeycloakloginComponent ,  canActivate: [AuthGuard]},
+{ path: '', component: KeycloakloginComponent ,  canActivate: [AuthGuard]},
 { path: 'logout', component: LogoutComponent},
 
 // Forms

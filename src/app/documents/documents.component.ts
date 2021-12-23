@@ -11,12 +11,12 @@ export class DocumentsComponent implements OnInit {
   header = 'documents'
   documentTypes: any;
   docs: any = [];
-  hasDocs: boolean=false;
-  getStarted: boolean=false;
+  hasDocs: boolean = false;
+  getStarted: boolean = false;
   entity;
-  loader:boolean=true;
+  loader: boolean = true;
   documents: any = [];
-  excludedFields: any = ['osid','id','type'];
+  excludedFields: any = ['osid', 'id', 'type'];
   constructor(private route: ActivatedRoute, public generalService: GeneralService) {
 
   }
@@ -35,7 +35,7 @@ export class DocumentsComponent implements OnInit {
       "filters": {}
     }
     this.generalService.postData('/Issuer/search', search).subscribe((res) => {
-      console.log('pub res',res);
+      console.log('pub res', res);
       this.documentTypes = res;
     }, (err) => {
       // this.toastMsg.error('error', err.error.params.errmsg)
@@ -43,72 +43,78 @@ export class DocumentsComponent implements OnInit {
     });
     this.generalService.getData(this.entity).subscribe((res) => {
       console.log('res', res)
-      if(res[0]['attestation-MOSIP'] && res[0]['attestation-MOSIP'].length > 0){
+      if (res[0]['attestation-MOSIP'] && res[0]['attestation-MOSIP'].length > 0) {
         res[0]['attestation-MOSIP'].forEach(doc => {
           this.docs.push(doc)
         });
         this.hasDocs = true;
-        
+
       }
-      if(res[0]['attestation-SELF'] && res[0]['attestation-SELF'].length > 0){
+      if (res[0]['attestation-SELF'] && res[0]['attestation-SELF'].length > 0) {
         res[0]['attestation-SELF'].forEach(doc => {
           this.docs.push(doc)
         });
         this.hasDocs = true;
       }
 
-      if(res[0]['attestation-DIVOC'] && res[0]['attestation-DIVOC'].length > 0){
+      if (res[0]['attestation-DIVOC'] && res[0]['attestation-DIVOC'].length > 0) {
         res[0]['attestation-DIVOC'].forEach(doc => {
           this.docs.push(doc)
         });
         this.hasDocs = true;
       }
 
-      if(!res[0]['attestation-SELF'] && !res[0]['attestation-MOSIP'] && res[0]['attestation-DIVOC']){
+      if (!res[0]['attestation-SELF'] && !res[0]['attestation-MOSIP'] && res[0]['attestation-DIVOC']) {
         this.getStarted = true;
       }
-      
+
       this.setDocument();
-      console.log("this.docs",this.documents)
+      console.log("this.docs", this.documents)
       this.loader = false;
     });
 
-    
-    
+
+
   }
 
-  setDocument(){
+  setDocument() {
     this.docs.forEach(element => {
       var property = [];
       // console.log("docs",this.docs)
-      if(element.name == 'attestation-DIVOC'){
+      if (element.name == 'attestation-DIVOC') {
         element['additionalInput'] = JSON.parse(element['additionalInput'])['signedCredentials']['credentialSubject'];
-        console.log("dfd",element['additionalInput'])
+        console.log("dfd", element['additionalInput'])
       }
-        for (const [key, value] of Object.entries(element['additionalInput'])) {
-          var tempObject = {}
-          if(typeof value != 'object'){
-            if(!this.excludedFields.includes(key)){
-              tempObject['key'] = key;
-              tempObject['value'] = value;
-              tempObject['type'] = element['name']
-              property.push(tempObject);
+      for (const [key, value] of Object.entries(element['additionalInput'])) {
+        var tempObject = {}
+        if (typeof value != 'object') {
+          if (!this.excludedFields.includes(key)) {
+            tempObject['key'] = key;
+            tempObject['value'] = value;
+            tempObject['type'] = element['name']
+            if(element['logoUrl']){
+              tempObject['logoUrl'] = element['logoUrl']
             }
-          }else{
-            if(!this.excludedFields.includes(key)){
-              tempObject['key'] = key;
-              tempObject['value'] = value[0];
-              tempObject['type'] = element['name']
-              property.push(tempObject);
-            }
+            property.push(tempObject);
           }
+        } else {
+          if (!this.excludedFields.includes(key)) {
+            tempObject['key'] = key;
+            tempObject['value'] = value[0];
+            tempObject['type'] = element['name']
+            if(element['logoUrl']){
+              tempObject['logoUrl'] = element['logoUrl']
+            }
+            property.push(tempObject);
+          }
+        }
       }
-   
+
       this.documents.push(property);
     });
   }
 
-  addDoc(){
+  addDoc() {
     this.hasDocs = false;
   }
 }
