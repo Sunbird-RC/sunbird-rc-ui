@@ -177,7 +177,7 @@ export class AddDocumentComponent implements OnInit {
         file = this.imageFile;
         formData.append("files", file);
       }else{
-        file = this.model['fileUrl']
+        file = this.model['fileUrl'];
         formData.append("files", file[0]);
       }
       
