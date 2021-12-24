@@ -30,10 +30,11 @@
   /*mm*/
   --secondarybgColor:#4A227C;
   --secondarytextColor:#F6F8FC;
+  --primarybgColor:#F07D00;
   --tagstextColor:#1987B6;
   --linkColor:#4A227C;
   --textBlack:#000000;
-
+  --textWhite:#ffffff;
 }
 
 
@@ -473,8 +474,18 @@ formly-autocomplete-type .ng-select {
 .height-100{
     height: 100%;
 }
+.hr-0{
+    height: 0 !important;
+    border-color: #ccc !important;
+}
 .w-45{
     width: 45px;
+}
+.min-70{
+    min-width: 70px;
+}
+.min-220{
+    min-width:220px;
 }
 .fs-12{
     font-size: 12px;
@@ -492,7 +503,6 @@ formly-autocomplete-type .ng-select {
     border-radius: 8px !important;
     text-transform:capitalize !important;
     box-shadow: none !important;
-    min-width: 70px;
 }
 
 .primary-text-color{
@@ -503,6 +513,12 @@ formly-autocomplete-type .ng-select {
     color: var(--secondarytextColor) !important;
     background-color: var(--secondarybgColor) !important;
     border-color: var(--secondarybgColor) !important;
+}
+
+.btn-primary{
+    color: var(--textWhite) !important;
+    background-color: var(--primarybgColor) !important;
+    border-color: var(--primarybgColor) !important;
 }
 
 /* Tags */
@@ -557,20 +573,16 @@ formly-autocomplete-type .ng-select {
         height: 50px;
         border-radius: 50%;
         width: 50px;
+        text-align: center;
+        overflow: hidden;
         img{
             object-fit: cover;
-            width: 100%;
-            padding:5px;
+            padding: 8px;
+            height: 45px;
         }
     }
     .card-intro-info{
         width: calc(100% - 50px);
-    }
-    .card-image{
-        border: 1px solid #ddd;
-        height: 50px;
-        border-radius: 50%;
-        width: 50px;
     }
 }
 
