@@ -116,11 +116,8 @@
         </ng-template>
         <ng-template [ngIf]="hasDocs">
             <div class="row mb-3">
-                <div class="col-8">
+                <div class="col-12">
                     <h6 class="font-weight-bold">{{'MY_DOCUMENTS'|translate}}</h6>
-                </div>
-                <div class="col-4 text-right"><button class="btn btn-secondary min-70" data-toggle="modal"
-                        data-target="#addModal">{{'ADD'|translate}}</button>
                 </div>
             </div>
             <div class="row">
@@ -198,6 +195,8 @@
                     </div>
                 </div>
             </div>
+            <button class="btn btn-secondary position-fixed btn-icon-circle floating-bottom" data-toggle="modal"
+                data-target="#addModal"><i class="fas fa-plus"></i></button>
         </ng-template>
 
         <ng-template [ngIf]="!hasDocs && !loader">

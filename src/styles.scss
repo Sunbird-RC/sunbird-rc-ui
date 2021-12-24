@@ -586,5 +586,15 @@ formly-autocomplete-type .ng-select {
     }
 }
 
+.floating-bottom{
+    bottom: 30px;
+    right: 20px;
+}
+
+.btn-icon-circle{
+    border-radius: 50% !important;
+    padding: 12px 17px !important;
+}
+
 //   @import "~@material/fab";
 //   @include fab-core.styles;
