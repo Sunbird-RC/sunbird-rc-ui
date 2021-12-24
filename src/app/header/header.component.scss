@@ -42,8 +42,8 @@ hr{
     display: inline-block;
     border-radius: 2px;
   }
-  
-  
+
+
   .notification .badge {
     position: absolute;
     top: 4px;
@@ -83,4 +83,28 @@ hr{
     top: 0;
     width: 100%;
     z-index: 1;
+    @media (max-width: 767.98px) {
+        .custom-header{
+            justify-content: normal !important;
+            .logo-text{
+                width:calc(100% - 30px);
+                text-align: center;
+                a{
+                    display: inline-block;
+                }
+            }
+        }
+    }
+    @media (max-width: 991.98px){
+        .custom-header{
+            justify-content: normal !important;
+            .logo-text{
+                width:calc(100% - 30px);
+                text-align: center;
+                a{
+                    display: inline-block;
+                }
+            }
+        }
+    }
 }
