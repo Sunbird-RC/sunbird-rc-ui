@@ -62,11 +62,8 @@ export class HeaderComponent implements OnInit {
     } else {
       this.themeName = "default";
     }
-
     this.themeService.setTheme(this.themeName);
     localStorage.setItem('themeName', this.themeName);
-
-
   }
 
 }
