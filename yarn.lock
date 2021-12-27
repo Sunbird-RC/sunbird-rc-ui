@@ -228,7 +228,7 @@
     "universal-analytics" "0.4.23"
     "uuid" "8.3.0"
 
-"@angular/common@*", "@angular/common@^10 || ^11 || ^12", "@angular/common@^10.0.0", "@angular/common@^10.0.0 || ^11.0.0-0", "@angular/common@^10.0.1", "@angular/common@^11.2.11 || ^12.0.4", "@angular/common@^11.2.13", "@angular/common@^11.2.6", "@angular/common@^12.0.0", "@angular/common@^9.0.0 || ^10.0.0 || ^11.0.0", "@angular/common@>= 10.0.0", "@angular/common@>= 5.0.0", "@angular/common@>=10.0.0-0", "@angular/common@>=10.0.0-rc.0", "@angular/common@>=11.0.0", "@angular/common@>=12.0.0 <13.0.0", "@angular/common@>=13.0.0", "@angular/common@>=5.0.0", "@angular/common@>=6.0.0", "@angular/common@10.2.5":
+"@angular/common@*", "@angular/common@^10 || ^11 || ^12", "@angular/common@^10.0.0", "@angular/common@^10.0.0 || ^11.0.0-0", "@angular/common@^10.0.1", "@angular/common@^11.2.11 || ^12.0.4", "@angular/common@^11.2.13", "@angular/common@^11.2.6", "@angular/common@^12.0.0", "@angular/common@^8.0.0 || ^8.1.0 || ^8.2.0 || ^8.3.0 || ^9.0.0 || ^10.0.0 || ^11.0.0 || ^12.0.0", "@angular/common@^9.0.0 || ^10.0.0 || ^11.0.0", "@angular/common@>= 10.0.0", "@angular/common@>= 5.0.0", "@angular/common@>=10.0.0-0", "@angular/common@>=10.0.0-rc.0", "@angular/common@>=11.0.0", "@angular/common@>=12.0.0 <13.0.0", "@angular/common@>=13.0.0", "@angular/common@>=5.0.0", "@angular/common@>=6.0.0", "@angular/common@10.2.5":
   "integrity" "sha512-553yf6ZUHNqT4XpOqbW7EKKMfX56u/8DkwYXuSv8MAKdl4/AW6gliFOEJGYo04JcKF7Knq3VPvGSCO9kupf0hg=="
   "resolved" "https://registry.npmjs.org/@angular/common/-/common-10.2.5.tgz"
   "version" "10.2.5"
@@ -261,7 +261,7 @@
   dependencies:
     "tslib" "^2.0.0"
 
-"@angular/core@*", "@angular/core@^10 || ^11 || ^12", "@angular/core@^10.0.0", "@angular/core@^10.0.0 || ^11.0.0-0", "@angular/core@^10.0.1", "@angular/core@^11.2.11 || ^12.0.4", "@angular/core@^11.2.13", "@angular/core@^11.2.6", "@angular/core@^12.0.0", "@angular/core@^9.0.0 || ^10.0.0 || ^11.0.0", "@angular/core@>= 10.0.0", "@angular/core@>= 5.0.0", "@angular/core@>=10.0.0", "@angular/core@>=10.0.0-0", "@angular/core@>=10.0.0-rc.0", "@angular/core@>=11.0.0", "@angular/core@>=12.0.0 <13.0.0", "@angular/core@>=2.3.1 <10.0.0 || >9.0.0-beta <10.0.0 || >9.1.0-beta <10.0.0 || >9.2.0-beta <10.0.0", "@angular/core@>=5.0.0", "@angular/core@>=6.0.0", "@angular/core@10.2.5":
+"@angular/core@*", "@angular/core@^10 || ^11 || ^12", "@angular/core@^10.0.0", "@angular/core@^10.0.0 || ^11.0.0-0", "@angular/core@^10.0.1", "@angular/core@^11.2.11 || ^12.0.4", "@angular/core@^11.2.13", "@angular/core@^11.2.6", "@angular/core@^12.0.0", "@angular/core@^8.0.0 || ^8.1.0 || ^8.2.0|| ^8.3.0 || ^9.0.0 || ^10.0.0 || ^11.0.0 || ^12.0.0", "@angular/core@^9.0.0 || ^10.0.0 || ^11.0.0", "@angular/core@>= 10.0.0", "@angular/core@>= 5.0.0", "@angular/core@>=10.0.0", "@angular/core@>=10.0.0-0", "@angular/core@>=10.0.0-rc.0", "@angular/core@>=11.0.0", "@angular/core@>=12.0.0 <13.0.0", "@angular/core@>=2.3.1 <10.0.0 || >9.0.0-beta <10.0.0 || >9.1.0-beta <10.0.0 || >9.2.0-beta <10.0.0", "@angular/core@>=5.0.0", "@angular/core@>=6.0.0", "@angular/core@10.2.5":
   "integrity" "sha512-krhOKNTj5XE92Rk9ASX5KmgTF72j7qT2PLVxrGEVjuUKjBY2XaK3TV0Kotq9zI3qa9WgeCrP/Njn6jlKQCCAEQ=="
   "resolved" "https://registry.npmjs.org/@angular/core/-/core-10.2.5.tgz"
   "version" "10.2.5"
@@ -6158,6 +6158,11 @@
   "resolved" "https://registry.npmjs.org/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz"
   "version" "4.5.0"
 
+"lodash.deburr@^4.1.0":
+  "integrity" "sha1-3bG7s+8HRYwBd7oH3hRCLLAz/5s="
+  "resolved" "https://registry.npmjs.org/lodash.deburr/-/lodash.deburr-4.1.0.tgz"
+  "version" "4.1.0"
+
 "lodash.get@^4.4.2":
   "integrity" "sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk="
   "resolved" "https://registry.npmjs.org/lodash.get/-/lodash.get-4.4.2.tgz"
@@ -6716,6 +6721,14 @@
   "version" "2.0.5"
   dependencies:
     "tslib" "^2.1.0"
+
+"ngx-extended-pdf-viewer@^10.1.0":
+  "integrity" "sha512-lSZjbGYdIZX1d63OY2XigA+8Pidi8c33LmZPWZ/d88cXntJQpMyii32/d6j7v0ozZAbtF9IZxo7CGbbkCCjydg=="
+  "resolved" "https://registry.npmjs.org/ngx-extended-pdf-viewer/-/ngx-extended-pdf-viewer-10.5.0.tgz"
+  "version" "10.5.0"
+  dependencies:
+    "lodash.deburr" "^4.1.0"
+    "tslib" "^2.2.0"
 
 "ngx-pagination@^5.1.1":
   "integrity" "sha512-KxHES+Dn6pbetytO9ng2GAdclmo4UcwzFmQyVPWh2xRPbAlv5/ezL2xnDVBFMqCoJQaZagvdQ+ZZFbqGWqAvCQ=="
@@ -9695,7 +9708,7 @@
     "strip-bom" "^3.0.0"
     "strip-json-comments" "^2.0.0"
 
-"tslib@^1.10.0", "tslib@^2.0.0", "tslib@^2.3.0":
+"tslib@^1.10.0", "tslib@^2.0.0", "tslib@^2.2.0", "tslib@^2.3.0":
   "integrity" "sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw=="
   "resolved" "https://registry.npmjs.org/tslib/-/tslib-2.3.1.tgz"
   "version" "2.3.1"
@@ -9721,11 +9734,6 @@
   "version" "1.14.1"
 
 "tslib@^2.1.0":
-  "integrity" "sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw=="
-  "resolved" "https://registry.npmjs.org/tslib/-/tslib-2.3.1.tgz"
-  "version" "2.3.1"
-
-"tslib@^2.2.0":
   "integrity" "sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw=="
   "resolved" "https://registry.npmjs.org/tslib/-/tslib-2.3.1.tgz"
   "version" "2.3.1"
