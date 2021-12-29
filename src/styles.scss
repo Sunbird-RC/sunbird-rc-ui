@@ -19,24 +19,74 @@
 
 :root {
   --primaryColor: #F07D00;
-  --secondaryColor: #443DF6;
-  --labelOnPrimary : #0098AB;
-  --navLabelColor: #443DF6;
-  --background: #F6F8FC;
+  --secondaryColor: #4A227C;
+  --bodyBackground: #F6F8FC;
+  --cardBackground: #FFFFFF;
+  --tagsBackground: #F4ECFF;
+  --navLabelColor: #B275FF;
   --headerColor: #ffffff;
-  --btnBgColor: #c0e3eb6b;
-  --headerTitle: #000000;
-  --gray2:#CCCCCC;
-  /*mm*/
+  --primaryTextColor: #000000;
+  --secondaryTextColor:#8D9091;
+
+//   dark
+    // --primaryColor: #F07D00;
+    // --secondaryColor: #F07D00;
+    // --bodyBackground: #080808;
+    // --cardBackground: #323232;
+    // --tagsBackground: #505050;
+    // --navLabelColor: #FFB96C;
+    // --headerColor: #313131;
+    // --primaryTextColor: #FFFFFF;
+    // --secondaryTextColor:#FFFFFF;
+
+
+  --labelOnPrimary : var(--cardBackground);
+  --btnBgColor: var(--secondaryColor);
+  --headerTitle: var(--primaryColor);
+  --secondarybgColor: var(--secondaryColor);
+  --secondarytextColor: var(--bodyBackground);
+  --primarybgColor:var(--primaryColor);
+  --tagstextColor:var(--secondaryColor);
+  --linkColor:var(--navLabelColor);
+  --textWhite:var(--secondarytextColor);
+
+
+  
+  /*mm
   --secondarybgColor:#4A227C;
   --secondarytextColor:#F6F8FC;
   --primarybgColor:#F07D00;
   --tagstextColor:#1987B6;
   --linkColor:#4A227C;
   --textBlack:#000000;
-  --textWhite:#ffffff;
+  --textWhite:#ffffff;*/
+
+
+
 }
 
+/* PK changes for - theme support */
+.tagstextColor{
+    color: var(--primarybgColor) !important; 
+}
+
+.headerTitleColor{
+    color: var(--secondaryColor) !important; 
+}
+
+.primarybgColor{
+    color: var(--primarybgColor) !important; 
+}
+
+.card .card-body {
+    background-color: var(--cardBackground) !important;
+}
+
+.card-title {
+    color: var(--primaryTextColor) !important;
+}
+
+/* pk changes - end */
 
 .bg-header{
     background: var(--headerColor) !important;
@@ -47,7 +97,7 @@
 }
 
   .table-striped tbody tr:nth-of-type(odd) {
-    background-color: var(--background) !important;
+    background-color: var(--bodyBackground) !important;
 }
 .btn-success {
     background-color: #88ecb226 !important;
@@ -130,7 +180,7 @@ legend{
 
 .badge-secondary{
     border: 1px solid #CCCCCC !important;
-    background-color: var(--background) !important;
+    background-color: var(--bodyBackground) !important;
     color: #8D9091 !important;
 }
 
@@ -251,7 +301,7 @@ $primary-color-dark: #000;
 
 html, body { height: 100%; }
 
-body { margin: 0; font-family: "Lato", sans-serif !important;color: rgb(0, 0, 0); background: var(--background) !important;}
+body { margin: 0; font-family: "Lato", sans-serif !important;color: rgb(0, 0, 0); background: var(--bodyBackground) !important;}
 
 
 .fs-7{
@@ -516,7 +566,7 @@ formly-autocomplete-type .ng-select {
 }
 
 .btn-primary{
-    color: var(--textWhite) !important;
+    color:var(--secondarytextColor) !important;
     background-color: var(--primarybgColor) !important;
     border-color: var(--primarybgColor) !important;
 }
@@ -551,7 +601,7 @@ formly-autocomplete-type .ng-select {
             margin-right: 15px;
             text-transform: capitalize;
             border: 0px;
-            color: var(--textBlack);
+            color: var(--primaryTextColor);
             &.active,
             &:hover
             {
@@ -565,25 +615,8 @@ formly-autocomplete-type .ng-select {
 
 /* Card */
 .card{
-    .card-body {
-        display: flex;
-    }
-    .card-image{
-        border: 1px solid #ddd;
-        height: 50px;
-        border-radius: 50%;
-        width: 50px;
-        text-align: center;
-        overflow: hidden;
-        img{
-            object-fit: cover;
-            padding: 8px;
-            height: 45px;
-        }
-    }
-    .card-intro-info{
-        width: calc(100% - 50px);
-    }
+    background-color: var(--cardBackground) !important;
+    
 }
 
 .floating-bottom{
@@ -598,3 +631,22 @@ formly-autocomplete-type .ng-select {
 
 //   @import "~@material/fab";
 //   @include fab-core.styles;
+// .custom-toggler .navbar-toggler-icon {
+//     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,102,203, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E") !important;
+//   }
+.toggler {
+    color: var(--primaryTextColor);
+}
+.navbar-light .navbar-nav .nav-link {
+    color: var(--primaryTextColor) !important;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+.navbar-light .navbar-nav .active{
+    color: var(--secondaryColor) !important;
+}
+
+
+
+
+

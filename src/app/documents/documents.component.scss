@@ -31,4 +31,45 @@
 .modal-dialog {
     top: calc(100% - 300px);
   }
+  .modal.show .modal-dialog {
+    margin: -15px -2px 0px -2px;
+}
 
+.animate-bottom {
+    position: relative;
+    animation: animatebottom 0.4 s;
+ }
+ 
+ @keyframes animatebottom {
+    from {
+       bottom: -300 px;
+       opacity: 0;
+    }
+ 
+    to {
+       bottom: 0;
+       opacity: 1;
+    }
+ }
+
+ .card{
+    .card-body {
+        display: flex;
+    }
+    .card-image{
+        border: 1px solid #ddd;
+        height: 50px;
+        border-radius: 50%;
+        width: 50px;
+        text-align: center;
+        overflow: hidden;
+        img{
+            object-fit: cover;
+            padding: 8px;
+            height: 45px;
+        }
+    }
+    .card-intro-info{
+        width: calc(100% - 50px);
+    }
+}

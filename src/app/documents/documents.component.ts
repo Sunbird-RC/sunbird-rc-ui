@@ -16,7 +16,7 @@ export class DocumentsComponent implements OnInit {
   entity;
   loader: boolean = true;
   documents: any = [];
-  excludedFields: any = ['osid', 'id', 'type'];
+  excludedFields: any = ['osid','id', 'type'];
   constructor(private route: ActivatedRoute, public generalService: GeneralService) {
 
   }
@@ -91,7 +91,8 @@ export class DocumentsComponent implements OnInit {
           if (!this.excludedFields.includes(key)) {
             tempObject['key'] = key;
             tempObject['value'] = value;
-            tempObject['type'] = element['name']
+            tempObject['type'] = element['name'];
+            tempObject['osid'] = element['osid'];
             if(element['logoUrl']){
               tempObject['logoUrl'] = element['logoUrl']
             }
@@ -101,7 +102,8 @@ export class DocumentsComponent implements OnInit {
           if (!this.excludedFields.includes(key)) {
             tempObject['key'] = key;
             tempObject['value'] = value[0];
-            tempObject['type'] = element['name']
+            tempObject['type'] = element['name'];
+            tempObject['osid'] = element['osid'];
             if(element['logoUrl']){
               tempObject['logoUrl'] = element['logoUrl']
             }

@@ -30,16 +30,64 @@ export class DocViewComponent implements OnInit {
     extension;
     token
     public bearerToken: string | undefined = undefined;
-    constructor(private route: ActivatedRoute,
+    id: any;
+    excludedFields: any = ['osid','id', 'type','fileUrl'];
+    document = [];
+    constructor(private route: ActivatedRoute, public generalService: GeneralService,
         private keycloakService: KeycloakService, private config: AppConfig) {
         this.token = this.keycloakService.getToken();
 
     }
 
     ngOnInit(): void {
-        this.route.queryParams.subscribe(async params => {
-            this.docUrl = this.baseUrl + '/' + params.u;
-            this.extension = params.u.split('.').slice(-1)[0];
+        this.route.params.subscribe(async params => {
+            if(params.id && params.type){
+                this.id = params.id;
+                this.generalService.getData(params.type+'/'+params.id).subscribe((res) => {
+                    console.log('pub res', res);
+                    if(res.name !== 'attestation-DIVOC'){
+                        for (const [key, value] of Object.entries(res['additionalInput'])) {
+                            var tempObject = {}
+                            if(key === 'fileUrl'){
+                                this.docUrl = this.baseUrl + '/' + value;
+                                this.extension = this.docUrl.split('.').slice(-1)[0];
+                            }
+                            if (typeof value != 'object') {
+                              if (!this.excludedFields.includes(key)) {
+                                tempObject['key'] = key;
+                                tempObject['value'] = value;
+                                tempObject['type'] = res['name'];
+                                tempObject['osid'] = res['osid'];
+                                if(res['logoUrl']){
+                                  tempObject['logoUrl'] = res['logoUrl']
+                                }
+                                this.document.push(tempObject);
+                              }
+                            } else {
+                              if (!this.excludedFields.includes(key)) {
+                                tempObject['key'] = key;
+                                tempObject['value'] = value[0];
+                                tempObject['type'] = res['name'];
+                                tempObject['osid'] = res['osid'];
+                                if(res['logoUrl']){
+                                  tempObject['logoUrl'] = res['logoUrl']
+                                }
+                                this.document.push(tempObject);
+                              }
+                            }
+    
+                            
+                          }
+                    }
+                    
+                      console.log('this.document',this.document)
+                  }, (err) => {
+                    // this.toastMsg.error('error', err.error.params.errmsg)
+                    console.log('error', err)
+                  });
+                  
+            }
+           
         })
     }
 }
@@ -52,18 +100,18 @@ export class DocViewComponent implements OnInit {
 })
 export class AuthImagePipe implements PipeTransform {
     extension;
-
     constructor(
         private http: HttpClient, private route: ActivatedRoute,
         private keycloakService: KeycloakService, // our service that provides us with the authorization token
     ) {
 
-        this.route.queryParams.subscribe(async params => {
-            this.extension = params.u.split('.').slice(-1)[0];
-        })
+        // this.route.queryParams.subscribe(async params => {
+        //     this.extension = params.u.split('.').slice(-1)[0];
+        // })
     }
 
-    async transform(src: string): Promise<any> {
+    async transform(src: string,extension:string): Promise<any> {
+        this.extension = extension;
         const token = this.keycloakService.getToken();
         const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
         let imageBlob = await this.http.get(src, { headers, responseType: 'blob' }).toPromise();

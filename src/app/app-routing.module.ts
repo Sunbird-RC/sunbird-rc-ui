@@ -19,6 +19,7 @@ import { AddDocumentComponent } from './documents/add-document/add-document.comp
 import { ScanQrCodeComponent } from './documents/scan-qr-code/scan-qr-code.component';
 import { BrowseDocumentsComponent } from './documents/browse-documents/browse-documents.component';
 import { PagesComponent } from './pages/pages.component';
+import { DocDetailViewComponent } from './documents/doc-detail-view/doc-detail-view.component';
 const routes: Routes = [
 // Home
 { path: 'home', component: HomeComponent },
@@ -74,12 +75,14 @@ const routes: Routes = [
 { path: ':entity/attestation/:table', component: TablesComponent, canActivate: [AuthGuard] },
 { path: ':entity/attestation/:table/:id', component: AttestationComponent, canActivate: [AuthGuard] },
 { path: ':entity/documents', component: DocumentsComponent, canActivate: [AuthGuard] },
+{ path: ':entity/documents/view/:type/:id', component: DocViewComponent, canActivate: [AuthGuard] },
 { path: ':entity/documents/browse', component: BrowseDocumentsComponent, canActivate: [AuthGuard] },
 { path: ':entity/documents/:type/add/:id', component: AddDocumentComponent, canActivate: [AuthGuard] },
 { path: ':entity/documents/add/:type', component: AddDocumentComponent, canActivate: [AuthGuard] },
 { path: ':entity/documents/add/:type/:id', component: AddDocumentComponent, canActivate: [AuthGuard] },
 { path: ':entity/documents/scan/vc', component: ScanQrCodeComponent, canActivate: [AuthGuard] },
-{ path: 'document/view', component: DocViewComponent, canActivate: [AuthGuard] },
+// { path: 'document/detail', component: DocDetailViewComponent, canActivate: [AuthGuard] },
+// { path: 'document/view/:id', component: DocViewComponent, canActivate: [AuthGuard] },
 { path: 'discovery', component: SearchComponent },
 
 // Installation

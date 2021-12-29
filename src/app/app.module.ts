@@ -117,6 +117,7 @@ import { environment } from '../environments/environment';
 
 import {AuthImagePipe} from '../app/layouts/doc-view/doc-view.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { DocDetailViewComponent } from './documents/doc-detail-view/doc-detail-view.component';
 
 @NgModule({
   declarations: [
@@ -147,7 +148,8 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     ScanQrCodeComponent,
     BrowseDocumentsComponent,
     PagesComponent,
-    AuthImagePipe
+    AuthImagePipe,
+    DocDetailViewComponent
   ],
   imports: [
     BrowserModule,
