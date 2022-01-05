@@ -200,6 +200,14 @@
     "VIEW_DOCUMENT":"View Document",
     "DIGITALLY_VERIFIED":"Digitally Verified",
     "SELF_ATTTESTED":"Self Attested",
-    "NAME_OF_DOCUMENT":"Name of document"
+    "NAME_OF_DOCUMENT":"Name of document",
+    "USER_DETAILS":"User Details",
+    "COURSES": "Courses",
+    "SKILLS": "Skills",
+    "ABOUT": "About",
+    "DOCUMENTS": "Documents",
+    "TERMS_AND_CONDITIONS":"Terms and Conditions"
+    
+
 
 }
