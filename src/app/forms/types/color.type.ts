@@ -1,0 +1,22 @@
+import { Component } from '@angular/core';
+import { FieldType } from '@ngx-formly/core';
+
+@Component({
+ selector: 'formly-field-input',
+ template: `
+ <input [(colorPicker)]="color" [style.background]="color" 
+  (colorPickerChange)="test($event)"
+[value]="color" [formControl]="formControl"
+  />
+
+ `,                                                                                                                 
+})  
+export class FormlyColorInput extends FieldType {
+    public color: string = '#2889e9';
+  test(event){
+    this.formControl.patchValue(event);
+    // this.field.model[this.key] = event;
+
+  }
+
+}

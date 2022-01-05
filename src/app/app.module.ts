@@ -21,6 +21,7 @@ import { ObjectTypeComponent } from '../app/forms/types/object.type';
 import { MultiSchemaTypeComponent } from '../app/forms/types/multischema.type';
 import { NullTypeComponent } from '../app/forms/types/null.type';
 import { AutocompleteTypeComponent } from '../app/forms/types/autocomplete.type';
+import { FormlyColorInput } from '../app/forms/types/color.type';
 import { initializeKeycloak } from './utility/app.init';
 import { initLang } from './multilingual.init';
 
@@ -63,6 +64,7 @@ import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-transla
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import { config } from 'process';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 
 //form validations
@@ -118,6 +120,7 @@ import { environment } from '../environments/environment';
 import {AuthImagePipe} from '../app/layouts/doc-view/doc-view.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { DocDetailViewComponent } from './documents/doc-detail-view/doc-detail-view.component';
+import { FaqComponent } from './custom-components/faq/faq.component';
 
 @NgModule({
   declarations: [
@@ -133,6 +136,7 @@ import { DocDetailViewComponent } from './documents/doc-detail-view/doc-detail-v
     ModalRouterAddLinkDirective,
     PanelsComponent, EditPanelComponent, AddPanelComponent, TablesComponent,
     AutocompleteTypeComponent,
+    FormlyColorInput,
     HeaderComponent,
     AttestationComponent,
     FileValueAccessor,
@@ -149,7 +153,8 @@ import { DocDetailViewComponent } from './documents/doc-detail-view/doc-detail-v
     BrowseDocumentsComponent,
     PagesComponent,
     AuthImagePipe,
-    DocDetailViewComponent
+    DocDetailViewComponent,
+    FaqComponent
   ],
   imports: [
     BrowserModule,
@@ -170,6 +175,7 @@ import { DocDetailViewComponent } from './documents/doc-detail-view/doc-detail-v
     TranslateModule.forRoot(),
 
     WebcamModule,
+    ColorPickerModule,
     QuarModule,
     ZXingScannerModule,
     NgxExtendedPdfViewerModule,
@@ -212,7 +218,8 @@ import { DocDetailViewComponent } from './documents/doc-detail-view/doc-detail-v
           component: AutocompleteTypeComponent
         },
         { name: 'file', component: FormlyFieldFile, wrappers: ['form-field'] },
-        { name: 'multiselect', component: FormlyFieldNgSelect }
+        { name: 'multiselect', component: FormlyFieldNgSelect },
+        { name: 'color', component: FormlyColorInput },
       ],
     }),
     ToastrModule.forRoot({

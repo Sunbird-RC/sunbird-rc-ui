@@ -13,13 +13,14 @@ import { InstallComponent } from './install/install.component';
 import { HomeComponent } from './home/home.component';
 import { KeycloakloginComponent } from './authentication/login/keycloaklogin.component';
 import { LogoutComponent } from './authentication/logout/logout.component';
-  import { SearchComponent } from './discovery/search/search.component';
+import { SearchComponent } from './discovery/search/search.component';
 import { DocumentsComponent } from './documents/documents.component';
 import { AddDocumentComponent } from './documents/add-document/add-document.component';
 import { ScanQrCodeComponent } from './documents/scan-qr-code/scan-qr-code.component';
 import { BrowseDocumentsComponent } from './documents/browse-documents/browse-documents.component';
 import { PagesComponent } from './pages/pages.component';
 import { DocDetailViewComponent } from './documents/doc-detail-view/doc-detail-view.component';
+import { FaqComponent } from './custom-components/faq/faq.component';
 const routes: Routes = [
 // Home
 { path: 'home', component: HomeComponent },
@@ -75,6 +76,7 @@ const routes: Routes = [
 { path: ':entity/attestation/:table', component: TablesComponent, canActivate: [AuthGuard] },
 { path: ':entity/attestation/:table/:id', component: AttestationComponent, canActivate: [AuthGuard] },
 { path: ':entity/documents', component: DocumentsComponent, canActivate: [AuthGuard] },
+{ path: ':entity/documents/detail/view/:type/:id', component: DocDetailViewComponent, canActivate: [AuthGuard] },
 { path: ':entity/documents/view/:type/:id', component: DocViewComponent, canActivate: [AuthGuard] },
 { path: ':entity/documents/browse', component: BrowseDocumentsComponent, canActivate: [AuthGuard] },
 { path: ':entity/documents/:type/add/:id', component: AddDocumentComponent, canActivate: [AuthGuard] },
@@ -87,6 +89,9 @@ const routes: Routes = [
 
 // Installation
 { path: 'install', component: InstallComponent },
+
+// Custom
+{ path: 'faq', component: FaqComponent },
 ];
 
 @NgModule({
