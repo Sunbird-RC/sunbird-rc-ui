@@ -180,4 +180,25 @@
   "SOMETHING_WENT_WRONG": "फ़ाइल अपलोड करते समय कुछ गलत हुआ, कृपया पुनः प्रयास करें"
 
 
+  ,"VERIFY":"सत्यापित करें",
+  "CONFIRM_OTP":"OTP की पुष्टि करें",
+  "ENTER_THE_CODE_SENT_TO_MOBILE_NUMBER":"मोबाइल नंबर पर भेजा गया कोड दर्ज करें",
+  "ENTER_OTP":"OTP दर्ज करें",
+  "RESEND_OTP":"OTP फिर से भेजें?",
+  "BY_DOCUMENT":"दस्तावेज़ द्वारा",
+  "BY_ISSUER":"जारीकर्ता द्वारा",
+  "CAPTURE":"कैप्चर",
+  "SWITCH":"स्विच",
+  "MESSAGES":"संदेश:",
+  "SCAN_THE_QR_CODE":"क्यूआर कोड स्कैन करें",
+  "GET_STARTED":"आरंभ करें",
+  "YOU_CAN_UPLOAD_YOUR_DOCUMENTS_AND_TAG_IT_FOR_EASY_ACCESS":"आप अपने दस्तावेज़ अपलोड कर सकते हैं और आसान पहुंच के लिए इसे टैग कर सकते हैं",
+  "ADD_DOCUMENT":"दस्तावेज़ जोड़ें",
+  "UPLOAD_DOCUMENT":"दस्तावेज़ अपलोड करें",
+  "SCAN_DOCUMENT":"दस्तावेज़ स्कैन करें",
+  "BROWSE_DOCUMENT":"दस्तावेज़ ब्राउज़ करें",
+  "VIEW_DOCUMENT":"दस्तावेज़ देखें",
+  "DIGITALLY_VERIFIED":"डिजिटली सत्यापित",
+  "SELF_ATTTESTED":"स्व-प्रमाणित",
+  "NAME_OF_DOCUMENT":"दस्तावेज़ का नाम"
 }
