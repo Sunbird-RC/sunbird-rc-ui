@@ -51,7 +51,7 @@
   --textWhite:var(--secondarytextColor);
 
 
-  
+
   /*mm
   --secondarybgColor:#4A227C;
   --secondarytextColor:#F6F8FC;
@@ -67,15 +67,15 @@
 
 /* PK changes for - theme support */
 .tagstextColor{
-    color: var(--primarybgColor) !important; 
+    color: var(--primarybgColor) !important;
 }
 
 .headerTitleColor{
-    color: var(--secondaryColor) !important; 
+    color: var(--secondaryColor) !important;
 }
 
 .primarybgColor{
-    color: var(--primarybgColor) !important; 
+    color: var(--primarybgColor) !important;
 }
 
 .card .card-body {
@@ -616,7 +616,7 @@ formly-autocomplete-type .ng-select {
 /* Card */
 .card{
     background-color: var(--cardBackground) !important;
-    
+
 }
 
 .floating-bottom{
@@ -646,9 +646,15 @@ formly-autocomplete-type .ng-select {
     color: var(--secondaryColor) !important;
 }
 
+/* borders */
+
+.bb-1{
+    border-bottom:1px solid var(--secondaryTextColor);
+}
 
 
-    
+
+
 
 
 

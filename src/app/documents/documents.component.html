@@ -190,7 +190,7 @@
                                         <img src="assets/images/slgov.png" />
                                     </div>
                                 </ng-template>
-    
+
                                 <!-- </div>
                                     <div class="col-sm-6 text-right">
                                         <img src="assets/images/logo.png" style="height: 60px;" />
@@ -359,19 +359,21 @@
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content animate-bottom">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"> {{'ADD_DOCUMENT'|translate}}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header px-3 py-2 border-0">
+                <h6 class="modal-title font-weight-bold" id="exampleModalLabel"> {{'ADD_DOCUMENT'|translate}}</h6>
+                <button type="button" class="close px-3 py-3" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="text-center">
+            <div class="modal-body px-3 pt-0 pb-3">
+                <ul class="list-group add-documentList">
+                    <li class="d-flex py-2 bb-1">
+                    <span class="fs-14 mr-2 icon-color"><i class="fa fa-upload"></i></span>
+                    <span>
                     <!-- <img class="mobile" src="assets/images/mobile.png" style="left: 68px;max-width: 286px;top: 179px;"> -->
-                    <h6>{{'ADD_DOCUMENT'|translate}}</h6>
                     <a  [routerLink]="['add','upload']"
                     data-dismiss="modal" aria-label="Close"
-                        class="btn btn-secondary mt-2 btn-style float-end p14 border-trans add-doc-block">
+                        class="">
                         <!-- <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -381,24 +383,35 @@
                                 d="M12.5379 6.58217L12.5379 15.1146C12.5379 15.3347 12.311 15.6553 12.015 15.6553C11.7313 15.6553 11.4668 15.3975 11.4731 15.1146V6.57587L9.14892 8.49994C8.90312 8.67612 8.66385 8.67612 8.42435 8.47493C8.1977 8.23588 8.22902 7.90266 8.46851 7.68254L11.4857 5.18643C11.782 4.94739 12.204 4.92846 12.519 5.18643L15.5362 7.68254C15.7439 7.85242 15.8133 8.22349 15.6117 8.43708C15.4163 8.63827 15.1392 8.71375 14.8621 8.49994L12.5379 6.58217Z"
                                 fill="#1987B6" />
                         </svg> -->
-                        <i class="fa fa-upload"></i>
+
                         {{'UPLOAD_DOCUMENT'|translate}}
                     </a>
+                    <span class="d-block fs-12 mt-2 text-grey">Add files (JPEG, PNG, JPG, PDF) from your device</span>
+                    </span>
+                     </li>
+                     <li class="d-flex py-2 bb-1">
+                    <span class="fs-14 mr-2 icon-color"><i class="fa fa-camera"></i></span>
+                    <span>
                     <a [routerLink]="['add','scan']"
                     data-dismiss="modal" aria-label="Close"
-                        class="btn btn-secondary mt-2 btn-style float-end p14 border-trans add-doc-block">
+                        class="">
                         <!-- <svg width="16" height="14" viewBox="0 0 16 14" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M1.7561 13.2683C0.789971 13.2683 0 12.4783 0 11.5122V3.70732C0 2.74119 0.789971 1.95122 1.7561 1.95122H4.2256L4.90853 0.25C4.93659 0.177115 4.98589 0.114322 5.05002 0.0697528C5.11416 0.0251837 5.19019 0.000889252 5.26829 0H10.7317C10.8098 0.000889252 10.8858 0.0251837 10.95 0.0697528C11.0141 0.114322 11.0634 0.177115 11.0915 0.25L11.7744 1.95122H14.2439C15.21 1.95122 16 2.74119 16 3.70732V11.5122C16 12.4783 15.21 13.2683 14.2439 13.2683H1.7561ZM1.7561 12.4878H14.2439C14.7911 12.4878 15.2195 12.0594 15.2195 11.5122V3.70732C15.2195 3.16008 14.7911 2.73171 14.2439 2.73171H11.5122C11.4348 2.7313 11.3593 2.70791 11.2952 2.66448C11.2312 2.62105 11.1815 2.55955 11.1524 2.4878L10.4695 0.780488H5.5305L4.84757 2.4878C4.81854 2.55955 4.76884 2.62105 4.70478 2.66448C4.64072 2.70791 4.5652 2.7313 4.4878 2.73171H1.7561C1.20886 2.73171 0.780488 3.16008 0.780488 3.70732V11.5122C0.780488 12.0594 1.20886 12.4878 1.7561 12.4878ZM8 11.122C6.06492 11.122 4.4878 9.54486 4.4878 7.60976C4.4878 5.67463 6.06492 4.09756 8 4.09756C9.93512 4.09756 11.5122 5.67465 11.5122 7.60976C11.5122 9.54486 9.93512 11.122 8 11.122ZM8 10.3415C9.51331 10.3415 10.7317 9.12304 10.7317 7.60976C10.7317 6.09645 9.51331 4.87805 8 4.87805C6.48673 4.87805 5.26829 6.09645 5.26829 7.60976C5.26829 9.12304 6.48673 10.3415 8 10.3415Z"
                                 fill="#1987B6" />
                         </svg> -->
-                        <i class="fa fa-camera"></i>
                         {{'SCAN_DOCUMENT'|translate}}
                     </a>
+                    <span class="d-block fs-12 mt-2 text-grey">Use your device camera to capture document</span>
+                    </span>
+                    </li>
+                    <li class="d-flex py-2 bb-1">
+                        <span class="fs-14 mr-2 icon-color"><i class="fa fa-qrcode"></i></span>
+                        <span>
                     <a [routerLink]="['scan','vc']"
                     data-dismiss="modal" aria-label="Close"
-                        class="btn btn-secondary mt-2 btn-style float-end p14 border-trans add-doc-block">
+                        class="">
                         <!-- <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <g clip-path="url(#clip0_1552_13)">
@@ -449,18 +462,25 @@
                                 </clipPath>
                             </defs>
                         </svg> -->
-                        <i class="fa fa-qrcode"></i>
                         {{'SCAN_QR_CODE'|translate}}
                     </a>
+                    <span class="d-block fs-12 mt-2 text-grey">Use your device camera to scan QR code</span>
+                </span>
+                    </li>
+                    <li class="d-flex py-2">
+                        <span class="fs-14 mr-2 icon-color"><i class="fa fa-search"></i></span>
+                        <span>
                     <a href="/form/user-signup"
                     data-dismiss="modal" aria-label="Close"
-                        class="btn btn-secondary mt-2 btn-style float-end p14 border-trans add-doc-block">
-                        <i class="fa fa-search"></i>
+                        class="">
+
                         {{'BROWSE_DOCUMENT'|translate}}
                     </a>
-                </div>
+                    <span class="d-block fs-12 mt-2 text-grey">You can download digital documents from issuers</span>
+                    </span>
+                </li>
+                </ul>
             </div>
-
         </div>
     </div>
 </div>
