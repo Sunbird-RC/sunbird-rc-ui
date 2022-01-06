@@ -1,19 +1,20 @@
-
-
-  <div class="container">
-    <div class="text-center text-uppercase font-weight-bold"><h4>Document</h4></div>
+<div class="container mt-2">
+    <h6 class="font-weight-bold mt-3"><i onClick="history.go(-1); return false;" class="fas fa-chevron-left mr-2" aria-hidden="true"></i></h6>
+    <div class="text-center text-uppercase font-weight-bold">
+        <h4>Document</h4>
+    </div>
     <ng-template [ngIf]="extension === 'jpg' || extension === 'png' || extension === 'jpeg'">
-      <div class="text-center img-mb px-5 mt-4">
-        <img class="img-fluid" [src]="docUrl | authImage: extension | async" />
-      </div>
+        <div class="text-center img-mb px-5 mt-4">
+            <img class="img-fluid" [src]="docUrl | authImage: extension | async" />
+        </div>
     </ng-template>
     <ng-template [ngIf]="extension != 'pdf'">
-      <div class="doc-view-deatils mt-4 mx-3 fs-14">
-        <div *ngFor="let item of document" class="row mb-2">
-          <div class="col-4"><label>{{item.key | uppercase}}</label></div>
-          <div class="col-8 font-weight-bold">{{item.value}}</div>
-        </div>
-        <!-- <div class="row mb-2">
+        <div class="doc-view-deatils mt-4 mx-3 fs-14">
+            <div *ngFor="let item of document" class="row mb-2">
+                <div class="col-4"><label>{{item.key | uppercase}}</label></div>
+                <div class="col-8 font-weight-bold primary-text">{{item.value}}</div>
+            </div>
+            <!-- <div class="row mb-2">
           <div class="col-4"><label>Document Number</label></div>
           <div class="col-8 font-weight-bold">1231 12321 12313</div>
         </div>
@@ -21,28 +22,28 @@
           <div class="col-4"><label>Date of Birth</label></div>
           <div class="col-8 font-weight-bold">01.06.1984</div>
         </div> -->
-        <hr class="hr-0">
-        <div class="row mb-2">
-          <div class="col-8">
-            <label>Issued By</label>
-            <div class="font-weight-bold">Government of Sri Lanka</div>
-          </div>
-          <div class="col-4 text-right">
-            <!-- <div class="row"><img class="img-fluid float-right col-md-4 col-sm-2" [src]="docUrl | authImage | async" /></div> -->
-          </div>
+            <hr class="hr-0">
+            <div class="row mb-2">
+                <div class="col-8">
+                    <label>Issued By</label>
+                    <div class="font-weight-bold primary-text">Government of Sri Lanka</div>
+                </div>
+                <div class="col-4 text-right">
+                    <!-- <div class="row"><img class="img-fluid float-right col-md-4 col-sm-2" [src]="docUrl | authImage | async" /></div> -->
+                </div>
+            </div>
+            <div class="mt-5 text-center">
+                <button class="btn btn-primary min-220">Download Certificate</button>
+            </div>
         </div>
-        <div class="mt-5 text-center">
-          <button class="btn btn-primary min-220">Download Certificate</button>
-        </div>
-      </div>
     </ng-template>
-  </div>
+</div>
 
 
 
 
 <ng-template [ngIf]="extension === 'pdf'">
-  <div class="text-center mt-5">
-    <ngx-extended-pdf-viewer [src]="docUrl | authImage | async"></ngx-extended-pdf-viewer>
-  </div>
+    <div class="text-center mt-5">
+        <ngx-extended-pdf-viewer [src]="docUrl | authImage | async"></ngx-extended-pdf-viewer>
+    </div>
 </ng-template>

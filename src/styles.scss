@@ -1,34 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
+
 @import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
 @import '~@fortawesome/fontawesome-free/scss/solid.scss';
 @import '~@fortawesome/fontawesome-free/scss/regular.scss';
 @import '~@fortawesome/fontawesome-free/scss/brands.scss';
-
 @import '~mdb-angular-ui-kit/assets/scss/mdb.scss';
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import "https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;0,400;0,500;0,700;1,200;1,300;1,400;1,600&display=swap";
 @import "https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css";
 
 /* Importing Bootstrap SCSS file. */
+
 @import '~bootstrap/scss/bootstrap';
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-
-
-
-
-
 :root {
-  --primaryColor: #F07D00;
-  --secondaryColor: #4A227C;
-  --bodyBackground: #F6F8FC;
-  --cardBackground: #FFFFFF;
-  --tagsBackground: #F4ECFF;
-  --navLabelColor: #B275FF;
-  --headerColor: #ffffff;
-  --primaryTextColor: #000000;
-  --secondaryTextColor:#8D9091;
-
-//   dark
+    --primaryColor: #F07D00;
+    --secondaryColor: #4A227C;
+    --bodyBackground: #F6F8FC;
+    --cardBackground: #FFFFFF;
+    --tagsBackground: #F4ECFF;
+    --navLabelColor: #B275FF;
+    --headerColor: #ffffff;
+    --primaryTextColor: #000000;
+    --secondaryTextColor: #8D9091;
+    //   dark
     // --primaryColor: #F07D00;
     // --secondaryColor: #F07D00;
     // --bodyBackground: #080808;
@@ -38,21 +33,16 @@
     // --headerColor: #313131;
     // --primaryTextColor: #FFFFFF;
     // --secondaryTextColor:#FFFFFF;
-
-
-  --labelOnPrimary : var(--cardBackground);
-  --btnBgColor: var(--secondaryColor);
-  --headerTitle: var(--primaryColor);
-  --secondarybgColor: var(--secondaryColor);
-  --secondarytextColor: var(--bodyBackground);
-  --primarybgColor:var(--primaryColor);
-  --tagstextColor:var(--secondaryColor);
-  --linkColor:var(--navLabelColor);
-  --textWhite:var(--secondarytextColor);
-
-
-
-  /*mm
+    --labelOnPrimary: var(--cardBackground);
+    --btnBgColor: var(--secondaryColor);
+    --headerTitle: var(--primaryColor);
+    --secondarybgColor: var(--secondaryColor);
+    --secondarytextColor: var(--bodyBackground);
+    --primarybgColor: var(--primaryColor);
+    --tagstextColor: var(--secondaryColor);
+    --linkColor: var(--navLabelColor);
+    --textWhite: var(--secondarytextColor);
+    /*mm
   --secondarybgColor:#4A227C;
   --secondarytextColor:#F6F8FC;
   --primarybgColor:#F07D00;
@@ -60,21 +50,20 @@
   --linkColor:#4A227C;
   --textBlack:#000000;
   --textWhite:#ffffff;*/
-
-
-
 }
 
+
 /* PK changes for - theme support */
-.tagstextColor{
+
+.tagstextColor {
     color: var(--primarybgColor) !important;
 }
 
-.headerTitleColor{
+.headerTitleColor {
     color: var(--secondaryColor) !important;
 }
 
-.primarybgColor{
+.primarybgColor {
     color: var(--primarybgColor) !important;
 }
 
@@ -86,19 +75,21 @@
     color: var(--primaryTextColor) !important;
 }
 
+
 /* pk changes - end */
 
-.bg-header{
+.bg-header {
     background: var(--headerColor) !important;
 }
 
-.text-body{
+.text-body {
     color: var(--headerTitle) !important;
 }
 
-  .table-striped tbody tr:nth-of-type(odd) {
+.table-striped tbody tr:nth-of-type(odd) {
     background-color: var(--bodyBackground) !important;
 }
+
 .btn-success {
     background-color: #88ecb226 !important;
     color: #22B02E !important;
@@ -110,10 +101,11 @@
 }
 
 .ngx-pagination .current {
-    background: var(--primaryColor) !important;;
+    background: var(--primaryColor) !important;
+    ;
 }
 
-.d-contents{
+.d-contents {
     display: contents !important;
 }
 
@@ -128,15 +120,15 @@ textarea.form-control {
     font-size: 12px;
 }
 
-.btn-primary{
-background-color:  var(--primaryColor) !important;
-border-color: var(--primaryColor) !important;
-border: 0 !important;
+.btn-primary {
+    background-color: var(--primaryColor) !important;
+    border-color: var(--primaryColor) !important;
+    border: 0 !important;
 }
 
-.btn-style{
+.btn-style {
     border-radius: 8px !important;
-height: 40px;
+    height: 40px;
 }
 
 .text-primary-color {
@@ -151,54 +143,56 @@ height: 40px;
     color: var(--labelOnPrimary) !important;
 }
 
-.p14, formly-field-select select, formly-autocomplete-type, .form-group, .form-control{
+.p14,
+formly-field-select select,
+formly-autocomplete-type,
+.form-group,
+.form-control {
     font-size: 14px !important;
 }
 
-.p16, legend {
+.p16,
+legend {
     font-size: 16px !important;
-
 }
 
-legend{
+legend {
     font-weight: 700;
 }
 
-.img16{
+.img16 {
     width: 16px
 }
 
-.p12{
+.p12 {
     font-size: 12px !important;
 }
-
-
 
 .btn-bg {
     background-color: var( --btnBgColor) !important;
 }
 
-.badge-secondary{
+.badge-secondary {
     border: 1px solid #CCCCCC !important;
     background-color: var(--bodyBackground) !important;
     color: #8D9091 !important;
 }
 
-.marker-pointer{
-        font-family: "Font Awesome 5 Free";
-        content: "\f3c5";
-        display: inline-block;
-        padding-left: 10px;
-        vertical-align: middle;
-        font-weight:900;
-        font-style: normal;
-        font-size: 12px;
+.marker-pointer {
+    font-family: "Font Awesome 5 Free";
+    content: "\f3c5";
+    display: inline-block;
+    padding-left: 10px;
+    vertical-align: middle;
+    font-weight: 900;
+    font-style: normal;
+    font-size: 12px;
 }
 
-.input-group-text{
+.input-group-text {
     background: none !important;
     border: none !important;
-    font-size:14px !important;
+    font-size: 14px !important;
     padding-left: 0 !important;
     padding-right: 5px !important;
 }
@@ -214,58 +208,52 @@ form-group {
 // .form-group{
 //     font-size: 14px;
 // }
-
-.form-group label{
+.form-group label {
     font-size: 12px;
-font-weight: 700;}
-
-.custom-control-label{
-    font-size: 14px;
-font-weight: 400 !important;
-padding-top: 5px !important ;
-
+    font-weight: 700;
 }
 
+.custom-control-label {
+    font-size: 14px;
+    font-weight: 400 !important;
+    padding-top: 5px !important;
+}
 
 // .text-primary-color{
 //     color: #1987B6 !important;
 // }
-
 .private-access:before {
     font-family: "Font Awesome 5 Free";
     content: "\f023";
     display: inline-block;
     padding-left: 10px;
     vertical-align: middle;
-    font-weight:900;
+    font-weight: 900;
     font-style: normal;
     font-size: 12px;
- }
+}
 
- .internal-access:before {
+.internal-access:before {
     font-family: "Font Awesome 5 Free";
     content: "\f023 ";
     display: inline-block;
     padding-left: 10px;
     vertical-align: middle;
-    font-weight:900;
+    font-weight: 900;
     font-size: 12px;
     font-style: normal;
+}
 
- }
-
- .public-access:before {
+.public-access:before {
     font-family: "Font Awesome 5 Free";
     content: "\f57c ";
     display: inline-block;
     padding-left: 10px;
     vertical-align: middle;
-    font-weight:900;
+    font-weight: 900;
     font-size: 12px;
     font-style: normal;
-
- }
-
+}
 
 .custom-input-class {
     color: #2a8bac;
@@ -278,8 +266,8 @@ $gray-color: #8d9091;
     background-color: var(--primaryColor) !important;
 }
 
-.btn-primary{
-	background: $primary-color;
+.btn-primary {
+    background: $primary-color;
 }
 
 $primary-color-dark: #000;
@@ -290,42 +278,53 @@ $primary-color-dark: #000;
 // .text-primary-color{
 //     color: $primary-color;
 // }
-
-.text-grey-color{
+.text-grey-color {
     color: $gray-color;
 }
-.form-label{
-	color: $primary-color-dark;
+
+.form-label {
+    color: $primary-color-dark;
 }
 
-
-html, body { height: 100%; }
-
-body { margin: 0; font-family: "Lato", sans-serif !important;color: rgb(0, 0, 0); background: var(--bodyBackground) !important;}
-
-
-.fs-7{
-	font-size: 0.8rem;
+html,
+body {
+    height: 100%;
 }
-.fs-8{
-	font-size: 0.7rem;
+
+body {
+    margin: 0;
+    font-family: "Lato", sans-serif !important;
+    color: rgb(0, 0, 0);
+    background: var(--bodyBackground) !important;
 }
-.w-70{
-	width: 70% !important;
+
+.fs-7 {
+    font-size: 0.8rem;
 }
-a{
+
+.fs-8 {
+    font-size: 0.7rem;
+}
+
+.w-70 {
+    width: 70% !important;
+}
+
+a {
     text-decoration: none !important;
 }
+
 // /* Importing Bootstrap SCSS file. */
 // @import '~bootstrap/scss/bootstrap';
-
-button.calendar, button.calendar:active {
+button.calendar,
+button.calendar:active {
     width: 2.75rem;
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAcCAYAAAAEN20fAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAEUSURBVEiJ7ZQxToVAEIY/YCHGxN6XGOIpnpaEsBSeQC9ArZbm9TZ6ADyBNzAhQGGl8Riv4BLAWAgmkpBYkH1b8FWT2WK/zJ8ZJ4qiI6XUI3ANnGKWBnht2/ZBDRK3hgVGNsCd7/ui+JkEIrKtqurLpEWaphd933+IyI3LEIdpCYCiKD6HcuOa/nwOa0ScJEnk0BJg0UTUWJRl6RxCYEzEmomsIlPU3IPW+grIAbquy+q6fluy/28RIBeRMwDXdXMgXLj/B2uimRXpui4D9sBeRLKl+1N+L+t6RwbWrZliTTTr1oxYtzVWiTQAcRxvTX+eJMnlUDaO1vpZRO5NS0x48sIwfPc87xg4B04MCzQi8hIEwe4bl1DnFMCN2zsAAAAASUVORK5CYII=)!important;
     background-repeat: no-repeat;
     background-size: 23px;
     background-position: 50%;
 }
+
 .btn-outline-secondary {
     color: #8d9091;
     border-color: #8d9091;
@@ -336,58 +335,71 @@ button.calendar, button.calendar:active {
     border-color: #8d9091;
 }
 
-.d-flex{
+.d-flex {
     display: flex;
 }
-.flex-justify-between{
+
+.flex-justify-between {
     justify-content: space-between;
 }
 
-.alert-warning{
+.alert-warning {
     color: #0e0e0e !important;
     background-color: #f7efe0 !important;
     border-color: #f7efe0 !important;
     font-size: 0.8rem;
     padding: 1rem;
 }
-.alert-success{
+
+.alert-success {
     color: #0e0e0e !important;
     font-size: 0.8rem;
 }
-.red{
+
+.red {
     color: red;
 }
 
+.display-flex {
+    display: flex;
+}
 
+.flex-1 {
+    flex: 1;
+}
 
+.flex-2 {
+    flex: 2;
+}
 
-.display-flex { display: flex; }
+.flex-3 {
+    flex: 3;
+}
 
-.flex-1 { flex: 1; }
+.flex-4 {
+    flex: 4;
+}
 
-.flex-2 { flex: 2; }
+.flex-5 {
+    flex: 5;
+}
 
-.flex-3 { flex: 3; }
-
-.flex-4 { flex: 4; }
-
-.flex-5 { flex: 5; }
-
-.flex-6 { flex: 6; }
+.flex-6 {
+    flex: 6;
+}
 
 [class*="flex-"] {
-  padding-left: 10px;
-  padding-right: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 [class*="flex-"]:first-child {
-  padding-left: 0;
+    padding-left: 0;
 }
 
 [class*="flex-"]:nth-last-child(2) {
-  padding-right: 0;
+    padding-right: 0;
 }
-
 
 .modal-dialog.panel-right {
     position: fixed !important;
@@ -404,16 +416,21 @@ button.calendar, button.calendar:active {
     -o-transform: translate3d(0%, 0, 0) !important;
     transform: translate3d(0%, 0, 0) !important;
 }
+
 .modal-dialog.panel-right .modal-content {
     height: 100%;
     overflow-y: auto;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
 }
+
 .modal-dialog.panel-right .modal-body {
     padding: 15px 15px 80px;
 }
+
+
 /*Right*/
+
 .modal.fade .modal-dialog.panel-right {
     right: -320px;
     -webkit-transition: opacity 0.3s linear, right 400ms ease-in-out !important;
@@ -421,11 +438,12 @@ button.calendar, button.calendar:active {
     -o-transition: opacity 0.3s linear, right 400ms ease-in-out !important;
     transition: opacity 0.3s linear, right 400ms ease-in-out !important;
 }
+
 .modal.fade.show .modal-dialog.panel-right {
     right: 0;
 }
 
-.container{
+.container {
     //margin-top: 100px;
     padding-bottom: 100px;
     margin-top: 75px;
@@ -433,19 +451,16 @@ button.calendar, button.calendar:active {
 
 formly-field {
     display: block;
-  }
+}
 
-
-  @import "~@ng-select/ng-select/themes/default.theme.css";
-
-
-  [type="file"] {
+@import "~@ng-select/ng-select/themes/default.theme.css";
+[type="file"] {
     height: 0;
     overflow: hidden;
     width: 0;
-  }
+}
 
-  [type="file"] + label {
+[type="file"]+label {
     background: white;
     border: none;
     border-radius: 5px;
@@ -460,17 +475,15 @@ formly-field {
     position: relative;
     transition: all 0.3s;
     vertical-align: middle;
-
     &:hover {
-      background-color: darken(white, 5%);
+        background-color: darken(white, 5%);
     }
-
     #custom-text {
         margin-left: 10px;
         font-family: sans-serif;
         color: #aaa;
-      }
-  }
+    }
+}
 
 // discovery page
 .selected-list .c-list .c-token {
@@ -492,7 +505,6 @@ formly-autocomplete-type .ng-select {
     margin-bottom: 5px;
 }
 
-
 .logo {
     // width: 50px;
     height: 35px;
@@ -500,7 +512,7 @@ formly-autocomplete-type .ng-select {
     text-indent: -9999px;
 }
 
-.ng-select{
+.ng-select {
     margin-bottom: 15px;
     margin-top: 15px;
     width: 100%;
@@ -510,74 +522,85 @@ formly-autocomplete-type .ng-select {
     border-color: #69afcf;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #69afcf;
 }
-.navbar-brand
-{
+
+.navbar-brand {
     position: absolute;
     width: 100%;
     left: 0;
     text-align: center;
-    margin:0 auto;
+    margin: 0 auto;
 }
+
 
 /* MM */
 
-.height-100{
+.height-100 {
     height: 100%;
 }
-.hr-0{
+
+.hr-0 {
     height: 0 !important;
     border-color: #ccc !important;
 }
-.w-45{
+
+.w-45 {
     width: 45px;
 }
-.min-70{
+
+.min-70 {
     min-width: 70px;
 }
-.min-220{
-    min-width:220px;
+
+.min-220 {
+    min-width: 220px;
 }
-.fs-12{
+
+.fs-12 {
     font-size: 12px;
 }
-.fs-14{
+
+.fs-14 {
     font-size: 14px;
 }
-.fs-25{
+
+.fs-25 {
     font-size: 25px;
 }
 
+
 /* Button */
 
-.btn{
+.btn {
     border-radius: 8px !important;
-    text-transform:capitalize !important;
+    text-transform: capitalize !important;
     box-shadow: none !important;
 }
 
-.primary-text-color{
+.primary-text-color {
     color: $primary-color !important;
 }
 
-.btn-secondary{
+.btn-secondary {
     color: var(--secondarytextColor) !important;
     background-color: var(--secondarybgColor) !important;
     border-color: var(--secondarybgColor) !important;
 }
 
-.btn-primary{
-    color:var(--secondarytextColor) !important;
+.btn-primary {
+    color: var(--secondarytextColor) !important;
     background-color: var(--primarybgColor) !important;
     border-color: var(--primarybgColor) !important;
 }
 
+
 /* Tags */
-.tags-list{
+
+.tags-list {
     margin-top: 10px;
-    ul{
+    ul {
         margin: 0;
         padding: 0;
-        li{
+        li {
             display: inline-block;
             list-style: none;
             font-size: 11px;
@@ -591,20 +614,20 @@ formly-autocomplete-type .ng-select {
     }
 }
 
+
 /* Tabs */
 
-.nav-tabs{
-    border:0 !important;
-    li{
-        .nav-link{
+.nav-tabs {
+    border: 0 !important;
+    li {
+        .nav-link {
             padding: 10px 0px;
             margin-right: 15px;
             text-transform: capitalize;
             border: 0px;
             color: var(--primaryTextColor);
             &.active,
-            &:hover
-            {
+            &:hover {
                 border-bottom: 1px solid var(--linkColor) !important;
                 color: var(--linkColor) !important;
                 background-color: transparent !important;
@@ -613,18 +636,19 @@ formly-autocomplete-type .ng-select {
     }
 }
 
-/* Card */
-.card{
-    background-color: var(--cardBackground) !important;
 
+/* Card */
+
+.card {
+    background-color: var(--cardBackground) !important;
 }
 
-.floating-bottom{
+.floating-bottom {
     bottom: 30px;
     right: 20px;
 }
 
-.btn-icon-circle{
+.btn-icon-circle {
     border-radius: 50% !important;
     padding: 12px 17px !important;
 }
@@ -637,27 +661,56 @@ formly-autocomplete-type .ng-select {
 .toggler {
     color: var(--primaryTextColor);
 }
+
 .navbar-light .navbar-nav .nav-link {
     color: var(--primaryTextColor) !important;
     margin-right: 10px;
     margin-left: 10px;
 }
-.navbar-light .navbar-nav .active{
+
+.navbar-light .navbar-nav .active {
     color: var(--secondaryColor) !important;
 }
 
+
 /* borders */
 
-.bb-1{
-    border-bottom:1px solid #cecece;
+.bb-1 {
+    border-bottom: 1px solid #cecece;
 }
 
+h4 {
+    color: var(--primaryTextColor)
+}
 
+h5 {
+    color: var(--primaryTextColor)
+}
 
+h6 {
+    color: var(--primaryTextColor)
+}
 
+p {
+    color: var(--primaryTextColor)
+}
 
+.text-dark {
+    color: var(--primaryTextColor) !important;
+}
 
+.text-grey {
+    color: var(--secondaryTextColor) !important;
+}
 
+.form-group {
+    color: var(--primaryTextColor) !important;
+}
 
+label {
+    color: var(--secondaryTextColor);
+}
 
-
+.primary-text {
+    color: var(--primaryTextColor) !important;
+}

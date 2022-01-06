@@ -1,6 +1,6 @@
-<app-header [headerFor]='header'></app-header>
-<div class="container">
-
+<!-- <app-header [headerFor]='header'></app-header> -->
+<div class="container mt-2">
+    <h6 class="font-weight-bold mt-3"><i onClick="history.go(-1); return false;" class="fas fa-chevron-left mr-2" aria-hidden="true"></i></h6>
     <div class="col-md-6 offset-md-3 mt-5">
         <!-- <div style="text-align-last: center;color: #1987B6 !important">
             <h3> <img style="display: -webkit-inline-box;" class="logo" src="assets/images/logo.png" />Sunbird eLocker</h3>
@@ -23,8 +23,8 @@
                 <img [src]="webcamImage.imageAsDataUrl"/>
               </div> -->
 
-              <app-scan-document [width]="width" (pictureTaken)="handleImage($event)"></app-scan-document>
-          
+            <app-scan-document [width]="width" (pictureTaken)="handleImage($event)"></app-scan-document>
+
         </ng-template>
 
         <div class="card p-4" #myIdentifier>
@@ -50,10 +50,9 @@
                             </i>
                         </ng-template>
                         <div *ngIf="webcamImage">
-                            <img width="100"[src]="webcamImage.imageAsDataUrl" />
-                            </div>
-                        <button type="submit" class="btn btn-primary w-100 submit-button"
-                            [disabled]="!verified">{{'SUBMIT' | translate}}</button>
+                            <img width="100" [src]="webcamImage.imageAsDataUrl" />
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 submit-button" [disabled]="!verified">{{'SUBMIT' | translate}}</button>
                     </form>
                 </div>
             </div>
@@ -86,14 +85,12 @@
                     {{'ENTER_THE_CODE_SENT_TO_MOBILE_NUMBER'| translate}}
                     <div class="form-group"><label for="formly_18_number_otp_0"> {{'ENTER_OTP'|translate}}
                         </label>
-                        <formly-field-input><input type="password"
-                                class="form-control ng-untouched ng-pristine ng-valid">
+                        <formly-field-input><input type="password" class="form-control ng-untouched ng-pristine ng-valid">
 
                         </formly-field-input>
                         <a src="/cf/sluid">{{'RESEND_OTP' |translate}}</a>
                     </div>
-                    <button type="button" aria-hidden="true" data-dismiss="modal" aria-label="Close"
-                        (click)="verifyFn()" class="btn btn-primary w-100 submit-button">{{'CONFIRM_OTP'|translate}}</button>
+                    <button type="button" aria-hidden="true" data-dismiss="modal" aria-label="Close" (click)="verifyFn()" class="btn btn-primary w-100 submit-button">{{'CONFIRM_OTP'|translate}}</button>
                 </div>
 
             </div>
@@ -101,7 +98,7 @@
     </div>
 </ng-template>
 <script>
-    $('#button').submit(function (e) {
+    $('#button').submit(function(e) {
         e.preventDefault();
         // Coding
         $('#verifyModal').modal('toggle'); //or  $('#IDModal').modal('hide');

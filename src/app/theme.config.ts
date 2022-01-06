@@ -20,7 +20,7 @@ export const THEMES = {
     navLabelColor: "#FFB96C",
     headerColor: "#313131",
     primaryTextColor: "#FFFFFF",
-    secondaryTextColor: "#FFFFFF",
+    secondaryTextColor: "#c3c3c3",
   }
 };
 
