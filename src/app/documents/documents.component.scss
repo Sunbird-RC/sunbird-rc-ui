@@ -19,11 +19,6 @@
 .border-trans{
     border-color: transparent;
 }
-
-.add-doc-block{
-    width: 100%;
-    padding: 10px;
-}
 //   .card-body>div {
 //     padding: 5px;
 //   }
@@ -39,13 +34,13 @@
     position: relative;
     animation: animatebottom 0.4 s;
  }
- 
+
  @keyframes animatebottom {
     from {
        bottom: -300 px;
        opacity: 0;
     }
- 
+
     to {
        bottom: 0;
        opacity: 1;
@@ -70,6 +65,19 @@
         }
     }
     .card-intro-info{
-        width: calc(100% - 50px);
+        width: calc(100% - 45px);
+        padding-right: 5px;
+    }
+}
+
+.add-documentList{
+    li{
+        a{
+            color: var(--primaryColor);
+        }
+    }
+    .icon-color{
+        color: var(--primaryColor);
+        margin-top: 5px;
     }
 }
