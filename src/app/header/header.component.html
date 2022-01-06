@@ -1,21 +1,18 @@
 <header class="header">
     <nav class="navbar navbar-expand-lg navbar-light bg-header nav-b navbar-inverse">
         <div class="container-fluid custom-header">
-            <button class="navbar-toggler p-0 m-0 custom-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler p-0 m-0 custom-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fa fa-bars toggler"></i>
                 <!-- <span class="navbar-toggler-icon"></span> -->
             </button>
-            <div class="nav-item active logo-text">
+            <div class="nav-item active logo-text" style="width: 79%;">
                 <a href=""><img class="logo" src={{logo}} /></a>
             </div>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <ng-template [ngIf]="headerSchema?.left">
                     <ul class="navbar-nav nav-tabs-line mb-2 mb-lg-0">
                         <li class="nav-item" *ngFor="let header of headerSchema.left">
-                            <a *ngIf="header?.title" id="{{header?.title}}"
-                                class="nav-link  p14 {{header?.activeTab}} {{header?.className}}"
-                                [routerLink]="[header.redirectTo]">{{header?.title | translate}}</a>
+                            <a *ngIf="header?.title" id="{{header?.title}}" class="nav-link  p14 {{header?.activeTab}} {{header?.className}}" [routerLink]="[header.redirectTo]">{{header?.title | translate}}</a>
                             <a *ngIf="header?.image" class="nav-link" [routerLink]="[header.redirectTo]">
                                 <img style="width: 25px;" src={{header?.image}} />
                             </a>
@@ -31,8 +28,7 @@
                 <ng-template [ngIf]="headerSchema?.right">
                     <ul *ngFor="let header of headerSchema.right" class="navbar-nav ms-auto">
                         <li class="nav-item active">
-                            <a *ngIf="header?.title" class="nav-link active p14 {{header?.className}}"
-                                [routerLink]="[header.redirectTo]">{{header?.title | translate}}</a>
+                            <a *ngIf="header?.title" class="nav-link active p14 {{header?.className}}" [routerLink]="[header.redirectTo]">{{header?.title | translate}}</a>
                             <a *ngIf="header?.image" class="nav-link" [routerLink]="[header.redirectTo]">
                                 <img style="width: 25px;" src={{header?.image}} />
                             </a>
@@ -51,14 +47,19 @@
                         <option *ngFor="let lang of languages" [value]="lang.code"  [selected]="(lang.code == langCode)? true : false">{{lang.name}}</option>
                       </select>
                 </span>
-                <span (click)="changeTheme()">
+                <!-- <span (click)="changeTheme()">
                     <a class="nav-link">
-                        <img style="width: 20px;" src="assets/images/theme.png" />
+                        <img style="width: 20px;" src="assets/images/theme_icon.svg" />
                     </a>
-                </span>
+                </span> -->
 
 
             </div>
+            <span (click)="changeTheme()">
+                <a class="nav-link">
+                    <img style="width: 20px;" src="assets/images/theme_icon.svg" />
+                </a>
+            </span>
         </div>
     </nav>
 </header>

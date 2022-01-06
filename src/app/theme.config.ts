@@ -7,7 +7,7 @@ export const THEMES = {
     cardBackground: "#FFFFFF",
     tagsBackground: "#F4ECFF",
     navLabelColor: "#B275FF",
-    headerColor: "#ffffff",
+    headerColor: "#4A227C",
     primaryTextColor: "#000000",
     secondaryTextColor: "#8D9091",
   },

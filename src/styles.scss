@@ -20,7 +20,8 @@
     --cardBackground: #FFFFFF;
     --tagsBackground: #F4ECFF;
     --navLabelColor: #B275FF;
-    --headerColor: #ffffff;
+    --headerColor: #4A227C;
+    --headerLinkColor: #F4ECFF;
     --primaryTextColor: #000000;
     --secondaryTextColor: #8D9091;
     //   dark
@@ -659,17 +660,17 @@ formly-autocomplete-type .ng-select {
 //     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,102,203, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E") !important;
 //   }
 .toggler {
-    color: var(--primaryTextColor);
+    color: var(--headerLinkColor);
 }
 
 .navbar-light .navbar-nav .nav-link {
-    color: var(--primaryTextColor) !important;
+    color: var(--headerLinkColor) !important;
     margin-right: 10px;
     margin-left: 10px;
 }
 
 .navbar-light .navbar-nav .active {
-    color: var(--secondaryColor) !important;
+    color: var(--primaryColor) !important;
 }
 
 
