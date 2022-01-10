@@ -6,7 +6,7 @@ import { FieldType } from '@ngx-formly/core';
  template: `
  <input [(colorPicker)]="color" [style.background]="color" 
   (colorPickerChange)="test($event)"
-[value]="color" [formControl]="formControl"
+[value]="color"
   />
 
  `,                                                                                                                 
