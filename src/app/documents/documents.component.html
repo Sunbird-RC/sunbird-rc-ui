@@ -180,10 +180,10 @@
                                         <ng-template ngFor let-doc2 [ngForOf]="docs">
                                             <div *ngIf="doc2.key == 'title' || doc2.key == 'name' || doc2.key == 'fileUrl'; else elseBlock">
                                             </div>
-                                            <div *ngIf="doc2.key == 'fileUrl'">
+                                            <!-- <div *ngIf="doc2.key == 'fileUrl'">
                                                 <a class="tagstextColor" href="/document/view?u={{doc2.value}}">{{'VIEW_DOCUMENT' |
                                                     translate}}</a>
-                                            </div>
+                                            </div> -->
                                             <ng-template #elseBlock>
                                                 <div class="card-text text-grey mb-2">{{doc2.value}} </div>
                                             </ng-template>
