@@ -23,6 +23,9 @@ export class KeycloakloginComponent implements OnInit {
       console.log(res['attributes'].entity[0]);
 
       this.entity = res['attributes'].entity[0];
+      if(res['attributes'].hasOwnProperty('locale') && res['attributes'].locale.length){
+        localStorage.setItem('setLanguage', res['attributes'].locale[0]);
+      }
     });
     this.user = this.keycloakService.getUsername();
     this.keycloakService.getToken().then((token)=>{
