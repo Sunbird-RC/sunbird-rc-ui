@@ -5,7 +5,7 @@
                 <i class="fa fa-bars toggler"></i>
                 <!-- <span class="navbar-toggler-icon"></span> -->
             </button>
-            <div class="nav-item active logo-text" style="width: 79%;">
+            <div class="nav-item active logo-text" style="width: 60%;">
                 <a href=""><img class="logo" src={{logo}} /></a>
             </div>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -41,12 +41,12 @@
                         </li>
                     </ul>
                 </ng-template>
-                <span *ngIf="languages.length > 1">
+                <!-- <span *ngIf="languages.length > 1">
                     <i style="font-size: 25px;" class="fa fa-language text-primary-color mt-3" aria-hidden="true"></i>
                     <select class="lang-btn text-primary-color" (change)="languageChange($event)">
                         <option *ngFor="let lang of languages" [value]="lang.code"  [selected]="(lang.code == langCode)? true : false">{{lang.name}}</option>
                       </select>
-                </span>
+                </span> -->
                 <!-- <span (click)="changeTheme()">
                     <a class="nav-link">
                         <img style="width: 20px;" src="assets/images/theme_icon.svg" />
@@ -55,6 +55,12 @@
 
 
             </div>
+            <span *ngIf="languages.length > 1">
+                <!-- <i style="font-size: 25px;" class="fa fa-language text-primary-color mt-3" aria-hidden="true"></i> -->
+                <select class="lang-btn text-primary-color" (change)="languageChange($event)">
+                    <option *ngFor="let lang of languages" [value]="lang.code"  [selected]="(lang.code == langCode)? true : false">{{lang.name}}</option>
+                  </select>
+            </span>
             <span (click)="changeTheme()">
                 <a class="nav-link">
                     <img style="width: 20px;" src="assets/images/theme_icon.svg" />
