@@ -255,36 +255,13 @@ import { FaqComponent } from './custom-components/faq/faq.component';
 
 export class AppModule {
 
-  languages = [];
   constructor(translate: TranslateService, authConfig: AuthConfigService) {
 
-    authConfig.getConfig().subscribe((config) => {
-      this.languages = config.hasOwnProperty('languages')? config.languages : [];
-      var installed_languages = [];
-
-      if(this.languages.length)
-      {
-        for (let i = 0; i < this.languages.length; i++) {
-          installed_languages.push({
-            "code": this.languages[i],
-            "name": ISO6391.getNativeName(this.languages[i])
-          });
-        }
-     
-      localStorage.setItem('languages', JSON.stringify(installed_languages));
-      translate.addLangs(this.languages);
+    if (localStorage.getItem('ELOCKER_LANGUAGE')) {
+      translate.use(localStorage.getItem('ELOCKER_LANGUAGE'));
+    } else {
+      translate.use('en');
     }
-
-      if (localStorage.getItem('setLanguage') && this.languages.includes(localStorage.getItem('setLanguage'))) {
-        translate.use(localStorage.getItem('setLanguage'));
-
-      } else {
-        const browserLang = translate.getBrowserLang();
-        let lang = this.languages.includes(browserLang) ? browserLang : 'en';
-        translate.use(lang);
-        localStorage.setItem('setLanguage', lang);
-      }
-    });
 
   }
 }
