@@ -29,8 +29,9 @@
         overflow: hidden;
         img {
             object-fit: cover;
-            padding: 8px;
+            // padding: 8px;
             height: 45px;
+            border-radius: 100%;
         }
     }
     .card-intro-info {

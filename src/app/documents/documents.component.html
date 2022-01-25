@@ -213,7 +213,7 @@
                                 </div>
                                 <ng-template [ngIf]="docs[0].type == 'attestation-MOSIP'">
                                     <div class="card-image">
-                                        <img src="assets/images/slgov.png" />
+                                        <img [src]="docs[0].logoUrl" onError="this.src='assets/images/slgov.png'" />
                                     </div>
                                 </ng-template>
 
@@ -256,7 +256,7 @@
                     <div class="row">
                         <ng-template ngFor let-item [ngForOf]="documentTypes" let-i="index">
                             <div class="mb-3 col-sm-12 col-md-6 col-lg-4 col-xs-2">
-                                <a [routerLink]="['add',item.osid]">
+                                <a [routerLink]="['browse','add',item.osid]">
                                     <div class="card height-100">
                                         <div class="card-body">
                                             <div class="card-intro-info">

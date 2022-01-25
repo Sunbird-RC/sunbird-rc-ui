@@ -16,7 +16,7 @@ export class DocumentsComponent implements OnInit {
   entity;
   loader: boolean = true;
   documents: any = [];
-  excludedFields: any = ['osid','id', 'type'];
+  excludedFields: any = ['osid','id', 'type','otp','transactionId'];
   constructor(private route: ActivatedRoute, public generalService: GeneralService) {
 
   }
