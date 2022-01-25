@@ -122,6 +122,8 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { DocDetailViewComponent } from './documents/doc-detail-view/doc-detail-view.component';
 import { FaqComponent } from './custom-components/faq/faq.component';
 import { SafeHtmlPipe } from './safe-html.pipe';
+import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -154,7 +156,8 @@ import { SafeHtmlPipe } from './safe-html.pipe';
     PagesComponent,
     AuthImagePipe,
     DocDetailViewComponent,
-    FaqComponent
+    SafeHtmlPipe,
+    CreateCertificateComponent
   ],
   imports: [
     BrowserModule,
