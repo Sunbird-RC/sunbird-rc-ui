@@ -121,7 +121,7 @@ import {AuthImagePipe} from '../app/layouts/doc-view/doc-view.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { DocDetailViewComponent } from './documents/doc-detail-view/doc-detail-view.component';
 import { FaqComponent } from './custom-components/faq/faq.component';
-
+import { SafeHtmlPipe } from './safe-html.pipe';
 @NgModule({
   declarations: [
     AppComponent,
