@@ -275,14 +275,14 @@ export class AppModule {
       translate.addLangs(this.languages);
     }
 
-      if (localStorage.getItem('setLanguage') && this.languages.includes(localStorage.getItem('setLanguage'))) {
-        translate.use(localStorage.getItem('setLanguage'));
+      if (localStorage.getItem('ELOCKER_LANGUAGE') && this.languages.includes(localStorage.getItem('ELOCKER_LANGUAGE'))) {
+        translate.use(localStorage.getItem('ELOCKER_LANGUAGE'));
 
       } else {
         const browserLang = translate.getBrowserLang();
         let lang = this.languages.includes(browserLang) ? browserLang : 'en';
         translate.use(lang);
-        localStorage.setItem('setLanguage', lang);
+        localStorage.setItem('ELOCKER_LANGUAGE', lang);
       }
     });
 

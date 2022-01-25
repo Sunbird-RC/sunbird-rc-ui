@@ -8,6 +8,7 @@ export const THEMES = {
     tagsBackground: "#F4ECFF",
     navLabelColor: "#B275FF",
     headerColor: "#4A227C",
+    headerLinkColor: "#F4ECFF",
     primaryTextColor: "#000000",
     secondaryTextColor: "#8D9091",
   },

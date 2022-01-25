@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit {
 
   async ngOnInit() {
     this.languages = JSON.parse(localStorage.getItem('languages'));
-    this.langCode = localStorage.getItem('setLanguage');
+    this.langCode = localStorage.getItem('ELOCKER_LANGUAGE');
     this.themeName = localStorage.getItem('themeName');
 
     if (!this.themeName) {
@@ -51,7 +51,7 @@ export class HeaderComponent implements OnInit {
   languageChange(lang) {
     if (this.langCode != lang.target.value) {
       lang = lang.target.value;
-      localStorage.setItem('setLanguage', lang);
+      localStorage.setItem('ELOCKER_LANGUAGE', lang);
       window.location.reload();
     }
   }

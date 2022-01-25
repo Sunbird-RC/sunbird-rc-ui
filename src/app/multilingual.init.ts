@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 export function initLang(http: HttpClient, translate: TranslateService) {
   
   return () => new Promise<boolean>((resolve: (res: boolean) => void) => {
-    const defaultSetLanguage = 'en';
+    const defaultELOCKER_LANGUAGE = 'en';
     const localUrl = '/assets/i18n/local';
     const globalUrl = '/assets/i18n/global';
     const globalReqBody = {
@@ -26,8 +26,8 @@ export function initLang(http: HttpClient, translate: TranslateService) {
     const local = '-local';
     const global = '-global';
 
-    const storageLocale = localStorage.getItem('setLanguage');
-    const setLanguage = storageLocale || defaultSetLanguage;
+    const storageLocale = localStorage.getItem('ELOCKER_LANGUAGE');
+    const ELOCKER_LANGUAGE = storageLocale || defaultELOCKER_LANGUAGE;
     var translatedKeys;
     var languageUrl;
 
@@ -36,13 +36,13 @@ export function initLang(http: HttpClient, translate: TranslateService) {
    console.log();
 
     forkJoin([
-      http.get(`${localUrl}/${setLanguage}${local}${sufix}`).pipe(
+      http.get(`${localUrl}/${ELOCKER_LANGUAGE}${local}${sufix}`).pipe(
         catchError(() => of(null))
       ),
       http.post(languageUrl, globalReqBody, {headers : headers}).pipe(
         catchError(() => of(null))
       ),
-      // http.get(`${globalUrl}/${setLanguage}${global}${sufix}`).pipe(
+      // http.get(`${globalUrl}/${ELOCKER_LANGUAGE}${global}${sufix}`).pipe(
       //   catchError(() => of(null))
       // )
     ]).subscribe((response: any[]) => {
@@ -52,18 +52,18 @@ export function initLang(http: HttpClient, translate: TranslateService) {
      if(response[1] != null && response[1].length){
      for(let i = 0; i < response[1].length; i++){
        console.log(response[1][i].language);
-       if(response[1][i].language == setLanguage)
+       if(response[1][i].language == ELOCKER_LANGUAGE)
        {
           translatedKeys = response[1][i].messages;
        }
      }
     }
 
-      translate.setTranslation(defaultSetLanguage, devKeys || {});
-      translate.setTranslation(setLanguage, translatedKeys || {}, true);
+      translate.setTranslation(defaultELOCKER_LANGUAGE, devKeys || {});
+      translate.setTranslation(ELOCKER_LANGUAGE, translatedKeys || {}, true);
 
-      translate.setDefaultLang(defaultSetLanguage);
-      translate.use(setLanguage);
+      translate.setDefaultLang(defaultELOCKER_LANGUAGE);
+      translate.use(ELOCKER_LANGUAGE);
 
       resolve(true);
     });
