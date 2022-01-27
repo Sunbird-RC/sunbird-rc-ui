@@ -14,6 +14,7 @@ export class PagesComponent implements OnInit {
   page: any;
   pageSchema: any;
   myTemplate: any;
+  notFound: any;
   title: any;
 
   constructor(private route: ActivatedRoute,public router: Router, public schemaService: SchemaService,private httpClient: HttpClient) { }
@@ -26,29 +27,37 @@ export class PagesComponent implements OnInit {
     });
 
     this.schemaService.getPageJSON().subscribe((PageSchemas) => {
-      var filtered = PageSchemas.pages.filter(obj => {
-        return Object.keys(obj)[0] === this.page
-      })
-      this.pageSchema = filtered[0][this.page]
-      console.log(this.pageSchema)
-      this.title = this.pageSchema.title;
-      this.checkHtmlFile(this.pageSchema.path).subscribe((res) => {
-        if (res) {
-          this.myTemplate = res;
-        }
-      },
-        (error) => {
-          var handler = document.getElementById('menu-open-handler');
-          var toggleInterval = setInterval(function () {
-            this.checkbox = document.getElementById('menu-open');
-            this.checkbox.checked = !this.checkbox.checked;
-          }, 4000);
-  
-          handler.onclick = function () {
-            clearInterval(toggleInterval);
-          };
-        }
-      );
+      try{
+        var filtered = PageSchemas.pages.filter(obj => {
+          return Object.keys(obj)[0] === this.page
+        })
+        this.pageSchema = filtered[0][this.page]
+        console.log(this.pageSchema)
+        this.title = this.pageSchema.title;
+        this.checkHtmlFile(this.pageSchema.path).subscribe((res) => {
+          if (res) {
+            this.myTemplate = res;
+          }else{
+            this.notFound = true;
+          }
+        },
+          (error) => {
+            this.notFound = true;
+            var handler = document.getElementById('menu-open-handler');
+            var toggleInterval = setInterval(function () {
+              this.checkbox = document.getElementById('menu-open');
+              this.checkbox.checked = !this.checkbox.checked;
+            }, 4000);
+    
+            handler.onclick = function () {
+              clearInterval(toggleInterval);
+            };
+          }
+        );
+      }
+      catch (e) {
+        this.notFound = true;
+      }
     })
   }
 
@@ -61,13 +70,13 @@ export class PagesComponent implements OnInit {
         }),
         catchError(error => {
           console.log(error);
+          this.notFound = true;
           return of(false);
         })
       );
   }
 
   close(){
-    console.log('here')
     this.router.navigate(['']);
   }
 

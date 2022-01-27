@@ -45,23 +45,29 @@ export class DocumentsComponent implements OnInit {
       console.log('res', res)
       if (res[0]['attestation-MOSIP'] && res[0]['attestation-MOSIP'].length > 0) {
         res[0]['attestation-MOSIP'].forEach(doc => {
-          this.docs.push(doc)
+          if(doc._osState == "PUBLISHED"){
+            this.docs.push(doc)
+            this.hasDocs = true;
+          }
+ 
         });
-        this.hasDocs = true;
+        
 
       }
       if (res[0]['attestation-SELF'] && res[0]['attestation-SELF'].length > 0) {
         res[0]['attestation-SELF'].forEach(doc => {
-          this.docs.push(doc)
+          this.docs.push(doc);
+          this.hasDocs = true;
         });
-        this.hasDocs = true;
+        
       }
 
       if (res[0]['attestation-DIVOC'] && res[0]['attestation-DIVOC'].length > 0) {
         res[0]['attestation-DIVOC'].forEach(doc => {
-          this.docs.push(doc)
+          this.docs.push(doc);
+          this.hasDocs = true;
         });
-        this.hasDocs = true;
+        
       }
 
       if (!res[0]['attestation-SELF'] && !res[0]['attestation-MOSIP'] && res[0]['attestation-DIVOC']) {

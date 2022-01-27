@@ -7,6 +7,8 @@ import { JSONSchema7 } from "json-schema";
 import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
 import { Observable, Observer, Subject } from 'rxjs';
 import { GeneralService } from '../../services/general/general.service';
+import { interval } from 'rxjs';
+import { ToastMessageService } from 'src/app/services/toast-message/toast-message.service';
 
 @Component({
   selector: 'app-add-document',
@@ -45,7 +47,9 @@ export class AddDocumentComponent implements OnInit {
   schema_property: {};
   loading: boolean = false;
   policyName: any;
-  constructor(private route: ActivatedRoute, public generalService: GeneralService, private formlyJsonschema: FormlyJsonschema, public router: Router) { }
+  attestationOSID: any;
+  mySubscription: any;
+  constructor(private route: ActivatedRoute,public toastMsg: ToastMessageService, public generalService: GeneralService, private formlyJsonschema: FormlyJsonschema, public router: Router) { }
 
   public webcamImage: WebcamImage = null;
   handleImage(webcamImage: WebcamImage) {
@@ -129,6 +133,9 @@ export class AddDocumentComponent implements OnInit {
         "name": { "title": this.generalService.translateString('NAME_OF_DOCUMENT'), "type": "string" }
       };
       this.schema['properties'] = schema;
+      this.schema['properties']['name']['widget'] = {};
+      this.schema['properties']['name']['widget']['formlyConfig'] = {};
+      this.schema['properties']['name']['widget']['formlyConfig']['templateOptions'] = { required: true };
     } else {
       var schema: any = {
         "name": { "title": this.generalService.translateString('NAME_OF_DOCUMENT'), "type": "string" },
@@ -136,8 +143,12 @@ export class AddDocumentComponent implements OnInit {
       };
 
       this.schema['properties'] = schema;
+      this.schema['properties']['name']['widget'] = {};
       this.schema['properties']['fileUrl']['widget'] = {};
+      this.schema['properties']['name']['widget']['formlyConfig'] = {};
       this.schema['properties']['fileUrl']['widget']['formlyConfig'] = { "type": "file" };
+      this.schema['properties']['name']['widget']['formlyConfig']['templateOptions'] = { required: true };
+      this.schema['properties']['fileUrl']['widget']['formlyConfig']['templateOptions'] = { required: true };
     }
 
     this.form2 = new FormGroup({});
@@ -302,22 +313,25 @@ export class AddDocumentComponent implements OnInit {
 
 
   postData(url, data) {
-    data['logoUrl'] = this.doc_data['logoUrl']
+    if(this.doc_data && this.doc_data['logoUrl']){
+      data['logoUrl'] = this.doc_data['logoUrl']
+    }
     this.generalService.postData(url, data).subscribe((res) => {
       console.log('post res', res);
-      var attestationOSID = res.result.attestationOSID;
-      setTimeout(function () {
-        this.generalService.getData(this.entity).subscribe((res) => {
-          console.log('res', res)
-          var document = res[0][this.policyName].filter(doc => {
-            return doc.osid === attestationOSID
-          })
-          console.log("document", document);
-          if(document._osState == 'PUBLISHED'){
-            this.router.navigate([this.entity, 'documents'])
-          }
-        });
-      }, 5000);
+      this.attestationOSID = res.result.attestationOSID;
+      // interval(5000).subscribe((x =>{
+      //   this.getPublishedData()
+      // }, 5000));
+
+      this.mySubscription=interval(5000).subscribe(x => {
+        console.log("xxx",x)
+        if(x==12){
+          this.router.navigate([this.entity, 'documents'])
+          this.toastMsg.error('error', "Taking more time than usual to fetch document from issuer, something went wrong, please try again")
+          this.mySubscription.unsubscribe()
+        }
+        this.getPublishedData()
+    });
       // this.router.navigate([this.entity, 'documents'])
       // this.documentTypes = res;
     }, (err) => {
@@ -325,6 +339,20 @@ export class AddDocumentComponent implements OnInit {
 
       // this.toastMsg.error('error', err.error.params.errmsg)
       console.log('error', err)
+    });
+  }
+
+  getPublishedData(){
+    this.generalService.getData(this.entity).subscribe((res) => {
+      console.log('res', res)
+      var document = res[0][this.policyName].filter(doc => {
+        return doc.osid === this.attestationOSID
+      })
+      console.log("document", document);
+      if(document[0]._osState == "PUBLISHED"){
+        this.mySubscription.unsubscribe()
+        this.router.navigate([this.entity, 'documents'])
+      }
     });
   }
 

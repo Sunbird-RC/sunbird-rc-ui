@@ -1,12 +1,19 @@
-<div *ngIf="myTemplate; else defaultBlock"  [innerHtml]="myTemplate">
+<div *ngIf="myTemplate; else defaultBlock" [innerHtml]="myTemplate">
 </div>
 <ng-template #defaultBlock>
-  <nav class="item-menu">
+    <br>
+    <div *ngIf="!notFound" class="d-flex justify-content-center">
+        <div class="spinner-border" style="width: 5rem; height: 5rem;" role="status">
+            <span class="sr-only">{{'LOADING'| translate}}| translate}}...</span>
+        </div>
+    </div>
+</ng-template>
+<nav class="item-menu" *ngIf="notFound">
     <h2>404 Page Not Found</h2>
-  </nav>
+</nav>
 
-  <!-- filters -->
-  <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="width: 0; height: 0;">
+<!-- filters -->
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="width: 0; height: 0;">
     <defs>
       <filter id="shadowed-goo">
         <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="10" />
@@ -25,4 +32,3 @@
       </filter>
     </defs>
   </svg>
-</ng-template>
