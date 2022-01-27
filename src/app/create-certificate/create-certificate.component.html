@@ -1,0 +1,61 @@
+<!-- <app-header [headerFor]="header"></app-header> -->
+
+<!--Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark orange lighten-1">
+    <a class="navbar-brand text-secondary-color">Certificate Template</a>
+    <button class="navbar-toggler btn-primary" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent-555" aria-controls="navbarSupportedContent-555" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent-555">
+  
+      <ul class="navbar-nav ml-auto nav-flex-icons">
+        <li class="nav-item avatar">
+          <a class="nav-link p-0 mr-2" href="#">
+            <button class="btn btn-style btn-bg submit-button">Cancel</button>
+          </a>
+        </li>
+        <li class="nav-item avatar">
+          <a class="nav-link p-0" href="#">
+            <button class="btn btn-primary submit-button">Save</button>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <!--/.Navbar -->
+  
+  <div class="container">
+    <!-- <button (click)="addValue()">or click here</button> -->
+  
+    <div class="row d-flex">
+  
+      <div class=" p-0 col-12 col-sm-6">
+        <div class=" p-0 mb-2">
+          <p> <span class="p12"> Choose Template </span> <a class="text-primary-color p12"> Help </a> <span
+              class="p12 text-grey">You can select exiting template or create your own certificate</span></p>
+          <select class="browser-default custom-select input-field p14">
+            <option selected>Select Template</option>
+            <option value="1">Template One</option>
+            <option value="2">Template Two</option>
+            <option value="3">Template Three</option>
+          </select>
+        </div>
+        <textarea rows="20" cols="70" class="card-body w-100 h-75" [(ngModel)]="userHtml"
+          placeholder="Enter html code ..."></textarea>
+      </div>
+  
+  
+      <div class="col-12 col-sm-6">
+        <div class=" p-0 mb-2 mt-1">
+          <p class="p12"> Template Name</p>
+          <input class="w-100 input-field p14" type="text" />
+        </div>
+        <!-- <angular-editor [(ngModel)]="userHtml" [config]="config"></angular-editor> -->
+        <div class=" card div-scroll h-75">
+          <div class="card-body w-100" [innerHtml]="userHtml | safeHtml: 'html'"></div>
+        </div>
+      </div>
+  
+    </div>
