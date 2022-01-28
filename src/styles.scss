@@ -438,6 +438,10 @@ button.calendar:active {
     border-bottom-right-radius: 0px;
 }
 
+.modal-content {
+    background-color: var(--cardBackground) !important;
+}
+
 .modal-dialog.panel-right .modal-body {
     padding: 15px 15px 80px;
 }
