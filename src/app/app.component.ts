@@ -10,7 +10,7 @@ import { ThemeService } from "../app/services/theme/theme.service";
 export class AppComponent {
   footerText = 'Sunbird RC';
   isFooter = false;
-  themeName;
+  ELOCKER_THEME;
   constructor(private config: AppConfig, private themeService: ThemeService) {
     
      if(this.config.getEnv('appType') && this.config.getEnv('appType') != 'digital_wallet'){
@@ -21,10 +21,10 @@ export class AppComponent {
     }
     
 
-    this.themeName = localStorage.getItem('themeName');
+    this.ELOCKER_THEME = localStorage.getItem('ELOCKER_THEME');
 
-    if (this.themeName) {
-      this.themeService.setTheme(this.themeName);
+    if (this.ELOCKER_THEME) {
+      this.themeService.setTheme(this.ELOCKER_THEME);
     }
 
   }

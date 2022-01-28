@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
   headerSchema;
   langCode: string;
   lang;
-  themeName: string;
+  ELOCKER_THEME: string;
   constructor(
     public router: Router, private config: AppConfig, public schemaService: SchemaService,
     public translate: TranslateService, private themeService: ThemeService
@@ -31,10 +31,10 @@ export class HeaderComponent implements OnInit {
   async ngOnInit() {
     this.languages = JSON.parse(localStorage.getItem('languages'));
     this.langCode = localStorage.getItem('ELOCKER_LANGUAGE');
-    this.themeName = localStorage.getItem('themeName');
+    this.ELOCKER_THEME = localStorage.getItem('ELOCKER_THEME');
 
-    if (!this.themeName) {
-      localStorage.setItem('themeName', "default");
+    if (!this.ELOCKER_THEME) {
+      localStorage.setItem('ELOCKER_THEME', "default");
     }
 
     this.logo = this.config.getEnv('logoPath');
@@ -57,13 +57,13 @@ export class HeaderComponent implements OnInit {
   }
 
   changeTheme() {
-    if (this.themeName == 'default') {
-      this.themeName = "dark";
+    if (this.ELOCKER_THEME == 'default') {
+      this.ELOCKER_THEME = "dark";
     } else {
-      this.themeName = "default";
+      this.ELOCKER_THEME = "default";
     }
-    this.themeService.setTheme(this.themeName);
-    localStorage.setItem('themeName', this.themeName);
+    this.themeService.setTheme(this.ELOCKER_THEME);
+    localStorage.setItem('ELOCKER_THEME', this.ELOCKER_THEME);
   }
 
 }
