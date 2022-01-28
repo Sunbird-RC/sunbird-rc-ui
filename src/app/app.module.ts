@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { APP_INITIALIZER } from '@angular/core';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
@@ -156,6 +157,7 @@ import { CreateCertificateComponent } from './create-certificate/create-certific
     PagesComponent,
     AuthImagePipe,
     DocDetailViewComponent,
+    FaqComponent,
     SafeHtmlPipe,
     CreateCertificateComponent
   ],
@@ -167,6 +169,7 @@ import { CreateCertificateComponent } from './create-certificate/create-certific
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
+    NgbAccordionModule,
     FormlyBootstrapModule,
     KeycloakAngularModule,
     NgxDocViewerModule,
@@ -232,10 +235,10 @@ import { CreateCertificateComponent } from './create-certificate/create-certific
     NgxPaginationModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  exports: [TranslateModule],
+  exports: [TranslateModule,FaqComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   entryComponents: [],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent,FaqComponent],
   providers: [
     AppConfig,
     AuthImagePipe,
