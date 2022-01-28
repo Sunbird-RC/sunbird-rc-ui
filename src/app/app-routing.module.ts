@@ -21,6 +21,7 @@ import { BrowseDocumentsComponent } from './documents/browse-documents/browse-do
 import { PagesComponent } from './pages/pages.component';
 import { DocDetailViewComponent } from './documents/doc-detail-view/doc-detail-view.component';
 import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
+import { FaqComponent } from './custom-components/faq/faq.component';
 const routes: Routes = [
 // Home
 { path: 'home', component: HomeComponent },

@@ -82,6 +82,7 @@
 
 .card .card-body {
     background-color: var(--cardBackground) !important;
+    color: var(--primaryTextColor) !important;
 }
 
 .card-title {
@@ -732,6 +733,6 @@ label {
     color: var(--primaryTextColor) !important;
 }
 
-.lh-32{
+.lh-32 {
     line-height: 32px;
 }
