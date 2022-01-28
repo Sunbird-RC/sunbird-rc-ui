@@ -733,6 +733,14 @@ label {
     color: var(--primaryTextColor) !important;
 }
 
-.lh-32 {
+.lh-32{
     line-height: 32px;
+}
+
+.search-area .input-append input{
+    background-color: var(--cardBackground) !important ;
+}
+
+.search-area .fa-search {
+    color: var(--primaryTextColor) !important ;
 }
