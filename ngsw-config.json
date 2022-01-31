@@ -26,5 +26,12 @@
         ]
       }
     }
+  ],
+  "navigationUrls": [
+    "/**",
+    "!/auth/**/**",
+    "!/registry/**/**",
+    "!/minio/**/**",
+    "!/print/**/**"
   ]
 }
