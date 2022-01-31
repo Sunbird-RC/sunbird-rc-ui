@@ -196,7 +196,7 @@ export class AddDocumentComponent implements OnInit {
 
 
   submit() {
-    this.loading = true;
+
     if (this.steps_length > 0 && this.steps_length != this.step) {
       var api = this.doc_data['steps'][this.step]['api'];
       this.doc_data['steps'][this.step]['request'] = this.model
@@ -252,29 +252,30 @@ export class AddDocumentComponent implements OnInit {
         if (this.docType === 'scan') {
           file = this.imageFile;
           formData.append("files", file);
-        } else {
+        } else if (this.model['fileUrl'] && this.model['name']) {
+
+          this.loading = true;
           file = this.model['fileUrl'];
           formData.append("files", file[0]);
-        }
 
-        this.generalService.getData(this.entity).subscribe((res) => {
-          var url = [this.entity, res[0]['osid'], 'attestation', 'documents']
-          this.generalService.postData(url.join('/'), formData).subscribe((res2) => {
-            this.model['fileUrl'] = res2['documentLocations'];
-            var attest = {
-              "name": "attestation-SELF",
-              "entityName": "User",
-              "entityId": res[0]['osid'],
-              "additionalInput": this.model
-            }
-            console.log(attest);
-            this.postData('send', attest);
+          this.generalService.getData(this.entity).subscribe((res) => {
+            var url = [this.entity, res[0]['osid'], 'attestation', 'documents']
+            this.generalService.postData(url.join('/'), formData).subscribe((res2) => {
+              this.model['fileUrl'] = res2['documentLocations'];
+              var attest = {
+                "name": "attestation-SELF",
+                "entityName": "User",
+                "entityId": res[0]['osid'],
+                "additionalInput": this.model
+              }
+              console.log(attest);
+              this.postData('send', attest);
+            })
           })
-        })
+        }
       }
       else {
         this.generalService.getData(this.entity).subscribe((res) => {
-          console.log('res', res)
           this.model['title'] = this.certificate;
           var attest = {
             "name": this.policyName,
