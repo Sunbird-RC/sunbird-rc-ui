@@ -219,15 +219,18 @@ export class AddDocumentComponent implements OnInit {
                 "formlyConfig": {
                   "defaultValue": datavalue,
                   "templateOptions": {
+                    required: true,
+                    disabled: true
+                  },
+                  "expressionProperties": {
                   },
                   "validation": {},
-                  "expressionProperties": {},
                   "modelOptions": {}
                 }
               }
               if (this.schema_property[key]["hidden"]) {
                 this.schema_property[key]['widget']['type'] = 'input'
-                this.schema_property[key]['widget']['formlyConfig']['templateOptions'] = { type: 'hidden' };
+                this.schema_property[key]['widget']['formlyConfig']['templateOptions']['type'] = 'hidden' ;
               }
             }
 
