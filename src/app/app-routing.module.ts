@@ -94,7 +94,7 @@ const routes: Routes = [
 { path: 'install', component: InstallComponent },
 
 // Custom
-{ path: 'faq', component: FaqComponent },
+// { path: 'faq', component: FaqComponent },
 ];
 
 @NgModule({
