@@ -359,8 +359,8 @@ export class FormsComponent implements OnInit {
                   Object.keys(_self.responseData.definitions[fieldset.definition].properties[field.name].properties[key].properties).forEach(function (key1) {
 
                     _self.responseData.definitions[fieldset.definition].properties[field.name].properties[key].properties[key1].title = _self.checkString(key1, _self.responseData.definitions[fieldset.definition].properties[field.name].properties[key].properties[key1].title);
-
-
+                   
+           
                   });
 
 
@@ -525,13 +525,15 @@ export class FormsComponent implements OnInit {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['className'] = field.class;
         }
 
-        if (this.responseData.definitions[fieldset.definition].properties[field.name].hasOwnProperty('items')) {
-          if (this.responseData.definitions[fieldset.definition].properties[field.name].items.hasOwnProperty('properties')) {
+        if ( this.responseData.definitions[fieldset.definition].properties[field.name].hasOwnProperty('items')) {
+          if(this.responseData.definitions[fieldset.definition].properties[field.name].items.hasOwnProperty('properties'))
+          {
             let _self = this;
             Object.keys(_self.responseData.definitions[fieldset.definition].properties[field.name].items.properties).forEach(function (key) {
               console.log(key);
               _self.responseData.definitions[fieldset.definition].properties[field.name].items.properties[key].title = _self.checkString(key, _self.responseData.definitions[fieldset.definition].properties[field.name].items.properties[key].title);
-
+             
+            
             });
 
           }

@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { APP_INITIALIZER } from '@angular/core';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
@@ -21,6 +22,7 @@ import { ObjectTypeComponent } from '../app/forms/types/object.type';
 import { MultiSchemaTypeComponent } from '../app/forms/types/multischema.type';
 import { NullTypeComponent } from '../app/forms/types/null.type';
 import { AutocompleteTypeComponent } from '../app/forms/types/autocomplete.type';
+import { FormlyColorInput } from '../app/forms/types/color.type';
 import { initializeKeycloak } from './utility/app.init';
 import { initLang } from './multilingual.init';
 
@@ -63,6 +65,7 @@ import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-transla
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import { config } from 'process';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 
 //form validations
@@ -111,7 +114,16 @@ function initConfig(config: AppConfig) {
 }
 
 import ISO6391 from 'iso-639-1';
+import { PagesComponent } from './pages/pages.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
+import {AuthImagePipe} from '../app/layouts/doc-view/doc-view.component';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { DocDetailViewComponent } from './documents/doc-detail-view/doc-detail-view.component';
+import { FaqComponent } from './custom-components/faq/faq.component';
+import { SafeHtmlPipe } from './safe-html.pipe';
+import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
 
 @NgModule({
   declarations: [
@@ -127,6 +139,7 @@ import ISO6391 from 'iso-639-1';
     ModalRouterAddLinkDirective,
     PanelsComponent, EditPanelComponent, AddPanelComponent, TablesComponent,
     AutocompleteTypeComponent,
+    FormlyColorInput,
     HeaderComponent,
     AttestationComponent,
     FileValueAccessor,
@@ -151,6 +164,7 @@ import ISO6391 from 'iso-639-1';
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
+    NgbAccordionModule,
     FormlyBootstrapModule,
     KeycloakAngularModule,
     NgxDocViewerModule,
@@ -162,6 +176,7 @@ import ISO6391 from 'iso-639-1';
     TranslateModule.forRoot(),
 
     WebcamModule,
+    ColorPickerModule,
     QuarModule,
     ZXingScannerModule,
     NgxExtendedPdfViewerModule,
@@ -204,19 +219,21 @@ import ISO6391 from 'iso-639-1';
           component: AutocompleteTypeComponent
         },
         { name: 'file', component: FormlyFieldFile, wrappers: ['form-field'] },
-        { name: 'multiselect', component: FormlyFieldNgSelect }
+        { name: 'multiselect', component: FormlyFieldNgSelect },
+        { name: 'color', component: FormlyColorInput },
       ],
     }),
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-full-width',
       preventDuplicates: true,
     }),
-    NgxPaginationModule
+    NgxPaginationModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  exports: [TranslateModule],
+  exports: [TranslateModule,FaqComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   entryComponents: [],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent,FaqComponent],
   providers: [
     AppConfig,
     AuthImagePipe,
@@ -239,38 +256,13 @@ import ISO6391 from 'iso-639-1';
 
 export class AppModule {
 
-  languages;
   constructor(translate: TranslateService, authConfig: AuthConfigService) {
 
-    authConfig.getConfig().subscribe((config) => {
-      this.languages = config.languages;
-      var installed_languages = [];
-
-      if(this.languages == undefined)
-      {
-        this.languages = ["en"];
-      }
-
-      for (let i = 0; i < this.languages.length; i++) {
-        installed_languages.push({
-          "code": this.languages[i],
-          "name": ISO6391.getNativeName(this.languages[i])
-        });
-      }
-
-      localStorage.setItem('languages', JSON.stringify(installed_languages));
-      translate.addLangs(this.languages);
-
-      if (localStorage.getItem('setLanguage') && this.languages.includes(localStorage.getItem('setLanguage'))) {
-        translate.use(localStorage.getItem('setLanguage'));
-
-      } else {
-        const browserLang = translate.getBrowserLang();
-        let lang = this.languages.includes(browserLang) ? browserLang : 'en';
-        translate.use(lang);
-        localStorage.setItem('setLanguage', lang);
-      }
-    });
+    if (localStorage.getItem('ELOCKER_LANGUAGE')) {
+      translate.use(localStorage.getItem('ELOCKER_LANGUAGE'));
+    } else {
+      translate.use('en');
+    }
 
   }
 }

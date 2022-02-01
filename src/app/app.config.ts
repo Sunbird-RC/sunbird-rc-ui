@@ -27,7 +27,12 @@ export class AppConfig {
      * Use to get the data found in the first file (environment file)
      */
     public getEnv(key: any) {
-        return this.environment[key];
+        try {
+            return this.environment[key];
+        }
+        catch(err) {
+            this.router.navigate(['install'])
+          }
     }
 
     /**

@@ -1,24 +1,18 @@
 <header class="header">
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-header nav-b">
-        <div class="container-fluid">
-
-            <div class="nav-item active logo-text">
+    <nav class="navbar navbar-expand-lg navbar-light bg-header nav-b navbar-inverse">
+        <div class="container-fluid custom-header">
+            <button class="navbar-toggler p-0 m-0 custom-toggler mr-2" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-bars toggler"></i>
+                <!-- <span class="navbar-toggler-icon"></span> -->
+            </button>
+            <div class="nav-item active logo-text" style="width: 60%;">
                 <a href=""><img class="logo" src={{logo}} /></a>
             </div>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-
                 <ng-template [ngIf]="headerSchema?.left">
-                    <ul *ngFor="let header of headerSchema.left" class="navbar-nav nav-tabs-line mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a *ngIf="header?.title" id="{{header?.title}}"
-                                class="nav-link  p14 {{header?.activeTab}} {{header?.className}}"
-                                [routerLink]="[header.redirectTo]">{{header?.title | translate}}</a>
+                    <ul class="navbar-nav nav-tabs-line mb-2 mb-lg-0">
+                        <li class="nav-item" *ngFor="let header of headerSchema.left">
+                            <a *ngIf="header?.title" id="{{header?.title}}" class="nav-link  p14 {{header?.activeTab}} {{header?.className}}" [routerLink]="[header.redirectTo]">{{header?.title | translate}}</a>
                             <a *ngIf="header?.image" class="nav-link" [routerLink]="[header.redirectTo]">
                                 <img style="width: 25px;" src={{header?.image}} />
                             </a>
@@ -33,9 +27,8 @@
                 </ng-template>
                 <ng-template [ngIf]="headerSchema?.right">
                     <ul *ngFor="let header of headerSchema.right" class="navbar-nav ms-auto">
-                        <li class="nav-item active">
-                            <a *ngIf="header?.title" class="nav-link active p14 {{header?.className}}"
-                                [routerLink]="[header.redirectTo]">{{header?.title | translate}}</a>
+                        <li class="nav-item">
+                            <a *ngIf="header?.title" class="nav-link p14 {{header?.className}}" [routerLink]="[header.redirectTo]">{{header?.title | translate}}</a>
                             <a *ngIf="header?.image" class="nav-link" [routerLink]="[header.redirectTo]">
                                 <img style="width: 25px;" src={{header?.image}} />
                             </a>
@@ -48,21 +41,35 @@
                         </li>
                     </ul>
                 </ng-template>
-                <span *ngIf="languages.length > 1">
+                <!-- <span *ngIf="languages.length > 1">
                     <i style="font-size: 25px;" class="fa fa-language text-primary-color mt-3" aria-hidden="true"></i>
-
-                    <select class="lang-btn text-primary-color" (change)="languageChange($event)"> 
+                    <select class="lang-btn text-primary-color" (change)="languageChange($event)">
                         <option *ngFor="let lang of languages" [value]="lang.code"  [selected]="(lang.code == langCode)? true : false">{{lang.name}}</option>
-                      </select> 
+                      </select>
+                </span> -->
+                <!-- <span (click)="changeTheme()">
+                    <a class="nav-link">
+                        <img style="width: 20px;" src="assets/images/theme_icon.svg" />
+                    </a>
+                </span> -->
+
+
+            </div>
+            <div class="d-flex align-items-center ml-auto">
+                <span *ngIf="languages.length > 1">
+                    <!-- <i style="font-size: 25px;" class="fa fa-language text-primary-color mt-3" aria-hidden="true"></i> -->
+                    <select class="lang-btn text-primary-color" (change)="languageChange($event)">
+                        <option *ngFor="let lang of languages" [value]="lang.code"
+                            [selected]="(lang.code == langCode)? true : false">{{lang.name}}</option>
+                    </select>
                 </span>
                 <span (click)="changeTheme()">
-                    <a class="nav-link">
-                        <img style="width: 20px;" src="assets/images/theme.png" />
+                    <a class="nav-link pr-0">
+                        <img style="width: 20px;" src="assets/images/theme_icon.svg" />
                     </a>
                 </span>
-
-            
             </div>
+
         </div>
     </nav>
 </header>
