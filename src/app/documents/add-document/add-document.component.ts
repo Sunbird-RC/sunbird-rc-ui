@@ -348,7 +348,7 @@ export class AddDocumentComponent implements OnInit {
 
   getPublishedData(){
     this.generalService.getData(this.entity).subscribe((res) => {
-      console.log('res', res)
+      console.log('res', res,this.policyName,this.attestationOSID)
       var document = res[0][this.policyName].filter(doc => {
         return doc.osid === this.attestationOSID
       })

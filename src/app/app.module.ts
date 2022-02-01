@@ -235,10 +235,10 @@ import { CreateCertificateComponent } from './create-certificate/create-certific
     NgxPaginationModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  exports: [TranslateModule,FaqComponent],
+  exports: [TranslateModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   entryComponents: [],
-  bootstrap: [AppComponent,FaqComponent],
+  bootstrap: [AppComponent],
   providers: [
     AppConfig,
     AuthImagePipe,
