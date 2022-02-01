@@ -121,9 +121,9 @@ import { environment } from '../environments/environment';
 import {AuthImagePipe} from '../app/layouts/doc-view/doc-view.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { DocDetailViewComponent } from './documents/doc-detail-view/doc-detail-view.component';
-import { FaqComponent } from './custom-components/faq/faq.component';
+// import { FaqComponent } from './custom-components/faq/faq.component';
 import { SafeHtmlPipe } from './safe-html.pipe';
-import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
+// import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
 
 @NgModule({
   declarations: [
@@ -230,10 +230,10 @@ import { CreateCertificateComponent } from './create-certificate/create-certific
     NgxPaginationModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  exports: [TranslateModule,FaqComponent],
+  exports: [TranslateModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   entryComponents: [],
-  bootstrap: [AppComponent,FaqComponent],
+  bootstrap: [AppComponent],
   providers: [
     AppConfig,
     AuthImagePipe,
@@ -256,7 +256,7 @@ import { CreateCertificateComponent } from './create-certificate/create-certific
 
 export class AppModule {
 
-  constructor(translate: TranslateService, authConfig: AuthConfigService) {
+  constructor(translate: TranslateService) {
 
     if (localStorage.getItem('ELOCKER_LANGUAGE')) {
       translate.use(localStorage.getItem('ELOCKER_LANGUAGE'));

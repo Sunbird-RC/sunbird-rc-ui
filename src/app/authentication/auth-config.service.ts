@@ -18,7 +18,6 @@ export class AuthConfigService {
         })
         .pipe(
           catchError((error) => {
-            console.log(error)
             return of(null)
           } ),
           mergeMap((response) => {

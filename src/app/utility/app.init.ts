@@ -9,8 +9,8 @@ export function initializeKeycloak(keycloak: KeycloakService, configService: Aut
         configService.getConfig()
             .pipe(
                 switchMap<any, any>((config) => {
-                    console.log('conf---',config);
-                    if(config && config.keycloak){
+                    // console.log('conf---',config);
+                    if(config != null && config.keycloak){
                         return fromPromise(keycloak.init({
                             config: {
                                 url: config['keycloak']['url'],
@@ -27,7 +27,7 @@ export function initializeKeycloak(keycloak: KeycloakService, configService: Aut
                         return fromPromise(keycloak.init({
                             config: {
                                 url: 'https://skills.xiv.in/auth',
-                                realm: 'skills',
+                                realm: 'ndear',
                                 clientId: 'registry-frontend',
                             },
                             initOptions: {

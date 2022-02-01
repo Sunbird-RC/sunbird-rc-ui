@@ -430,8 +430,13 @@ export class InstallComponent implements OnInit {
   constructor(public router: Router, private httpClient: HttpClient) { }
 
   ngOnInit(): void {
-    this.checkConfig().subscribe((res) => { if (res) { this.router.navigate(['']) } },
-      (error) => this.installed = false);
+    try{
+      this.checkConfig().subscribe((res) => { if (res) { this.router.navigate(['']) } },
+        (error) => this.installed = false);
+    }
+    catch(error) {
+      console.log('---------------------',error);
+    }
   }
 
   checkConfig(): Observable<boolean> {
