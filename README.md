@@ -35,7 +35,7 @@ Key | Value
 `form.title`          | Title of form
 `form.redirectTo`     | Redirect URL on after form submit
 `form.fieldsets`      | List of fieldsets(multiple) for this form. At least one fieldset is needed
-
+`form.langKey`      | This is the name of key, which contains the all language constants strings for this form in the en-local.json file. Eg:  <br>  **form.json:** <pre> {<br> "langKey": "instituteLang"  <br>} </pre>  **en-local.json:** <pre> { <br> 'instituteLang' : { <br> ..language constants.. <br>} <br> } </pre>
 
 **fieldsets**
 
@@ -67,6 +67,7 @@ Key | Value
 `layout.api`    | URL Path of API
 `layout.title`  | Title of form
 `layout.blocks` | Cards/Blocks (multiple) to populate in `layout`.
+`layout.langKey`      | This is the name of key, which contains the all language constants strings for this layout in the en-local.json file. Eg:  <br>  **layout.json:** <pre> {<br> "langKey": "instituteLang"  <br>} </pre>  **en-local.json:** <pre> { <br> 'instituteLang' : { <br> ..language constants.. <br>} <br> } </pre>
 
 **blocks**
 
