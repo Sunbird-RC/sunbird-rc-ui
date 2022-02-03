@@ -154,7 +154,11 @@ import { CreateCertificateComponent } from './create-certificate/create-certific
     ScanDocumentComponent,
     ScanQrCodeComponent,
     BrowseDocumentsComponent,
-    AuthImagePipe
+    AuthImagePipe,
+    CreateCertificateComponent,
+    FaqComponent,
+    SafeHtmlPipe,
+    PagesComponent
   ],
   imports: [
     BrowserModule,

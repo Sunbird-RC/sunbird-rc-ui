@@ -54,7 +54,7 @@
                         <div *ngIf="webcamImage">
                             <img width="100" [src]="webcamImage.imageAsDataUrl" />
                         </div>
-                        <button type="submit" class="btn btn-secondary w-100 submit-button" [disabled]="loading">
+                        <button type="submit" class="btn btn-secondary w-100 submit-button" [disabled]="loading || !form2.valid">
                             <ng-template [ngIf]="loading">
                                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                 <span class="sr-only">Loading...</span>

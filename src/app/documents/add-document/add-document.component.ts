@@ -128,6 +128,7 @@ export class AddDocumentComponent implements OnInit {
   myIdentifier: ElementRef;
 
   createStaticForm() {
+    this.policyName = "attestation-SELF"
     if (this.docType === 'scan') {
       var schema: any = {
         "name": { "title": this.generalService.translateString('NAME_OF_DOCUMENT'), "type": "string" }
@@ -196,7 +197,7 @@ export class AddDocumentComponent implements OnInit {
 
 
   submit() {
-
+    this.loading = true;
     if (this.steps_length > 0 && this.steps_length != this.step) {
       var api = this.doc_data['steps'][this.step]['api'];
       this.doc_data['steps'][this.step]['request'] = this.model
@@ -257,13 +258,13 @@ export class AddDocumentComponent implements OnInit {
           this.loading = true;
           file = this.model['fileUrl'];
           formData.append("files", file[0]);
-
+        }
           this.generalService.getData(this.entity).subscribe((res) => {
             var url = [this.entity, res[0]['osid'], 'attestation', 'documents']
             this.generalService.postData(url.join('/'), formData).subscribe((res2) => {
               this.model['fileUrl'] = res2['documentLocations'];
               var attest = {
-                "name": "attestation-SELF",
+                "name": this.policyName,
                 "entityName": "User",
                 "entityId": res[0]['osid'],
                 "additionalInput": this.model
@@ -272,7 +273,7 @@ export class AddDocumentComponent implements OnInit {
               this.postData('send', attest);
             })
           })
-        }
+        
       }
       else {
         this.generalService.getData(this.entity).subscribe((res) => {
@@ -348,7 +349,7 @@ export class AddDocumentComponent implements OnInit {
 
   getPublishedData(){
     this.generalService.getData(this.entity).subscribe((res) => {
-      console.log('res', res,this.policyName,this.attestationOSID)
+      console.log('getPublishedData', res,this.policyName,this.attestationOSID)
       var document = res[0][this.policyName].filter(doc => {
         return doc.osid === this.attestationOSID
       })

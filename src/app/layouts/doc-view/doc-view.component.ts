@@ -17,6 +17,7 @@ import { KeycloakService } from 'keycloak-angular';
 import { AppConfig } from 'src/app/app.config';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
+import { pdfDefaultOptions } from 'ngx-extended-pdf-viewer';
 
 
 @Component({
@@ -31,11 +32,14 @@ export class DocViewComponent implements OnInit {
     token
     public bearerToken: string | undefined = undefined;
     id: any;
-    excludedFields: any = ['osid','id', 'type','fileUrl'];
+    excludedFields: any = ['osid','id', 'type','fileUrl','otp','transactionId'];
     document = [];
+    loader: boolean = true;
     constructor(private route: ActivatedRoute, public generalService: GeneralService,
         private keycloakService: KeycloakService, private config: AppConfig) {
         this.token = this.keycloakService.getToken();
+        pdfDefaultOptions.renderInteractiveForms = false;
+
 
     }
 
@@ -45,7 +49,7 @@ export class DocViewComponent implements OnInit {
                 this.id = params.id;
                 this.generalService.getData(params.type+'/'+params.id).subscribe((res) => {
                     console.log('pub res', res);
-                    if(res.name !== 'attestation-DIVOC'){
+                    if(res.name == 'attestation-SELF'){
                         for (const [key, value] of Object.entries(res['additionalInput'])) {
                             var tempObject = {}
                             if(key === 'fileUrl'){
@@ -78,8 +82,47 @@ export class DocViewComponent implements OnInit {
     
                             
                           }
+                          this.loader = false;
                     }
-                    
+                    else{
+                        if(res['_osAttestedData'] && JSON.parse(res['_osAttestedData'])['files']){
+                            this.docUrl = this.baseUrl + '/' + JSON.parse(res['_osAttestedData'])['files'][0];
+                            this.extension = this.docUrl.split('.').slice(-1)[0];
+                        }
+                        for (const [key, value] of Object.entries(res['additionalInput'])) {
+                            var tempObject = {}
+                            if(key === 'fileUrl'){
+                                this.docUrl = this.baseUrl + '/' + value;
+                                this.extension = this.docUrl.split('.').slice(-1)[0];
+                            }
+                            if (typeof value != 'object') {
+                              if (!this.excludedFields.includes(key)) {
+                                tempObject['key'] = key;
+                                tempObject['value'] = value;
+                                tempObject['type'] = res['name'];
+                                tempObject['osid'] = res['osid'];
+                                if(res['logoUrl']){
+                                  tempObject['logoUrl'] = res['logoUrl']
+                                }
+                                this.document.push(tempObject);
+                              }
+                            } else {
+                              if (!this.excludedFields.includes(key)) {
+                                tempObject['key'] = key;
+                                tempObject['value'] = value[0];
+                                tempObject['type'] = res['name'];
+                                tempObject['osid'] = res['osid'];
+                                if(res['logoUrl']){
+                                  tempObject['logoUrl'] = res['logoUrl']
+                                }
+                                this.document.push(tempObject);
+                              }
+                            }
+    
+                            
+                          }
+                          this.loader = false;
+                    }
                       console.log('this.document',this.document)
                   }, (err) => {
                     // this.toastMsg.error('error', err.error.params.errmsg)

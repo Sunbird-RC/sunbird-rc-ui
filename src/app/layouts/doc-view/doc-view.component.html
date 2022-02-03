@@ -3,6 +3,14 @@
     <div class="text-center text-uppercase font-weight-bold">
         <h4>Document</h4>
     </div>
+    <ng-template [ngIf]="loader">
+        <br>
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border" style="width: 5rem; height: 5rem;" role="status">
+                <span class="sr-only">{{'LOADING'|translate}}</span>
+            </div>
+        </div>
+    </ng-template>
     <ng-template [ngIf]="extension === 'jpg' || extension === 'png' || extension === 'jpeg'">
         <div class="text-center img-mb px-5 mt-4">
             <img class="img-fluid" [src]="docUrl | authImage: extension | async" />
@@ -37,13 +45,9 @@
             </div>
         </div>
     </ng-template>
+    <ng-template [ngIf]="extension === 'pdf'">
+        <div class="text-center">
+            <ngx-extended-pdf-viewer [src]="docUrl | authImage | async"></ngx-extended-pdf-viewer>
+        </div>
+    </ng-template>
 </div>
-
-
-
-
-<ng-template [ngIf]="extension === 'pdf'">
-    <div class="text-center mt-5">
-        <ngx-extended-pdf-viewer [src]="docUrl | authImage | async"></ngx-extended-pdf-viewer>
-    </div>
-</ng-template>
