@@ -744,3 +744,39 @@ label {
 .search-area .fa-search {
     color: var(--primaryTextColor) !important;
 }
+
+.header-fixed-height{
+    height: 56px !important;
+    margin-bottom: 10px;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    @media (max-width: 767.98px) {
+        .custom-header {
+            justify-content: normal !important;
+            .logo-text {
+                width: calc(100% - 30px);
+                // text-align: center;
+                a {
+                    display: inline-block;
+                }
+            }
+        }
+    }
+    @media (max-width: 991.98px) {
+        .custom-header {
+            justify-content: normal !important;
+            .logo-text {
+                width: calc(100% - 30px);
+                // text-align: center;
+                a {
+                    display: inline-block;
+                }
+            }
+        }
+    }
+}
