@@ -1,8 +1,29 @@
+<header class="header">
+    <nav class="navbar navbar-expand-lg navbar-light bg-header nav-b navbar-inverse">
+
+        <div class="navbar-brand d-contents" id="navbarExample01">
+            <h6 class="font-weight-bold mt-2"><i (click)="goBack()" class="fas fa-chevron-left mr-2" aria-hidden="true"></i>
+                <ng-template [ngIf]="docName"> {{docName}}</ng-template>
+            </h6>
+
+            <!-- <div class="col-2 col-lg-1">
+                <ol class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="" onClick="history.go(-1); return false;"><span class="p14 font-weight-bold"><i class="fa fa-close"></i></span> </a>
+                    </li>
+                </ol>
+            </div> -->
+        </div>
+    </nav>
+
+</header>
 <div class="container mt-2">
-    <h6 class="font-weight-bold mt-3"><i onClick="history.go(-1); return false;" class="fas fa-chevron-left mr-2" aria-hidden="true"></i></h6>
-    <div class="text-center text-uppercase font-weight-bold">
+    <!-- <h6 class="font-weight-bold mt-3 position-fixed"><i (click)="goBack()" class="fas fa-chevron-left mr-2" aria-hidden="true"></i>
+        <ng-template [ngIf]="docName"> {{docName}}</ng-template>
+    </h6> -->
+    <!-- <div class="text-center text-uppercase font-weight-bold">
         <h4>Document</h4>
-    </div>
+    </div> -->
     <ng-template [ngIf]="loader">
         <br>
         <div class="d-flex justify-content-center">
@@ -11,43 +32,61 @@
             </div>
         </div>
     </ng-template>
+
+
+
     <ng-template [ngIf]="extension === 'jpg' || extension === 'png' || extension === 'jpeg'">
-        <div class="text-center img-mb px-5 mt-4">
-            <img class="img-fluid" [src]="docUrl | authImage: extension | async" />
+        <div class="text-center img-mb">
+            <img class="img-fluid " [src]="docUrl | authImage: extension | async" />
         </div>
     </ng-template>
-    <ng-template [ngIf]="extension != 'pdf'">
+
+    <ng-template [ngIf]="extension === 'pdf'">
+        <div class="text-center img-mb">
+            <ngx-extended-pdf-viewer [src]="docUrl | authImage | async"></ngx-extended-pdf-viewer>
+        </div>
+    </ng-template>
+
+
+
+    <!-- <ng-template [ngIf]="extension != 'pdf'">
         <div class="doc-view-deatils mt-4 mx-3 fs-14">
             <div *ngFor="let item of document" class="row mb-2">
                 <div class="col-4"><label>{{item.key | uppercase}}</label></div>
                 <div class="col-8 font-weight-bold primary-text">{{item.value}}</div>
             </div>
-            <!-- <div class="row mb-2">
-          <div class="col-4"><label>Document Number</label></div>
-          <div class="col-8 font-weight-bold">1231 12321 12313</div>
-        </div>
-        <div class="row mb-2">
-          <div class="col-4"><label>Date of Birth</label></div>
-          <div class="col-8 font-weight-bold">01.06.1984</div>
-        </div> -->
+            <div class="row mb-2">
+                <div class="col-4"><label>Document Number</label></div>
+                <div class="col-8 font-weight-bold">1231 12321 12313</div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-4"><label>Date of Birth</label></div>
+                <div class="col-8 font-weight-bold">01.06.1984</div>
+            </div>
             <hr class="hr-0">
             <div class="row mb-2">
                 <div class="col-8">
                     <label>Issued By</label>
                     <div class="font-weight-bold primary-text">Government of Sri Lanka</div>
                 </div>
-                <div class="col-4 text-right">
-                    <!-- <div class="row"><img class="img-fluid float-right col-md-4 col-sm-2" [src]="docUrl | authImage | async" /></div> -->
-                </div>
+
             </div>
             <div class="mt-5 text-center">
                 <button class="btn btn-primary min-220">Download Certificate</button>
             </div>
         </div>
-    </ng-template>
-    <ng-template [ngIf]="extension === 'pdf'">
-        <div class="text-center">
-            <ngx-extended-pdf-viewer [src]="docUrl | authImage | async"></ngx-extended-pdf-viewer>
-        </div>
-    </ng-template>
+    </ng-template> -->
 </div>
+<footer>
+    <div class="row mb-2">
+        <div *ngIf="document[0].type == 'attestation-SELF'; else elseBlock" class="col-8 text ml-4">
+            <i class="fas fa-check primarybgColor fs-12 mr-1"></i> {{'SELF_ATTTESTED'|translate}}
+        </div>
+        <ng-template #elseBlock>
+            <div class="col-8 text ml-4">
+                <i class="fas fa-award primarybgColor fs-12 mr-1"></i> {{'DIGITALLY_VERIFIED'|translate}}
+            </div>
+        </ng-template>
+
+    </div>
+</footer>

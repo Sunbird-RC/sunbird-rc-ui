@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
 import {
@@ -35,12 +35,11 @@ export class DocViewComponent implements OnInit {
     excludedFields: any = ['osid','id', 'type','fileUrl','otp','transactionId'];
     document = [];
     loader: boolean = true;
+  docName: any;
     constructor(private route: ActivatedRoute, public generalService: GeneralService,
-        private keycloakService: KeycloakService, private config: AppConfig) {
+        private keycloakService: KeycloakService, private config: AppConfig,private router: Router) {
         this.token = this.keycloakService.getToken();
         pdfDefaultOptions.renderInteractiveForms = false;
-
-
     }
 
     ngOnInit(): void {
@@ -50,6 +49,7 @@ export class DocViewComponent implements OnInit {
                 this.generalService.getData(params.type+'/'+params.id).subscribe((res) => {
                     console.log('pub res', res);
                     if(res.name == 'attestation-SELF'){
+                      this.docName = res['additionalInput'].name;
                         for (const [key, value] of Object.entries(res['additionalInput'])) {
                             var tempObject = {}
                             if(key === 'fileUrl'){
@@ -78,9 +78,7 @@ export class DocViewComponent implements OnInit {
                                 }
                                 this.document.push(tempObject);
                               }
-                            }
-    
-                            
+                            } 
                           }
                           this.loader = false;
                     }
@@ -132,6 +130,10 @@ export class DocViewComponent implements OnInit {
             }
            
         })
+    }
+
+    goBack(){
+      this.router.navigateByUrl('');
     }
 }
 

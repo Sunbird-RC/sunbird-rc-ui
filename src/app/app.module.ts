@@ -10,7 +10,6 @@ import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { APP_INITIALIZER } from '@angular/core';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
-import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
@@ -158,7 +157,8 @@ import { CreateCertificateComponent } from './create-certificate/create-certific
     CreateCertificateComponent,
     FaqComponent,
     SafeHtmlPipe,
-    PagesComponent
+    PagesComponent,
+    DocDetailViewComponent
   ],
   imports: [
     BrowserModule,
@@ -171,7 +171,6 @@ import { CreateCertificateComponent } from './create-certificate/create-certific
     NgbAccordionModule,
     FormlyBootstrapModule,
     KeycloakAngularModule,
-    NgxDocViewerModule,
     Bootstrap4FrameworkModule,
     AngularMultiSelectModule,
     NgSelectModule,
