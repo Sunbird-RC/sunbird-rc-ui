@@ -1,0 +1,252 @@
+.item-menu {
+    padding-top: 20px;
+    height: 250px;
+    box-sizing: border-box;
+    font-size: 20px;
+    text-align: center;
+    filter: url("#shadowed-goo");
+    .real-menu {
+        transform: translate3d(0, -65px, 0);
+        transition: transform ease-out 200ms;
+    }
+    .menu-item {
+        background: #75eeac;
+        border-radius: 100%;
+        width: 80px;
+        height: 80px;
+        color: white;
+        text-align: center;
+        line-height: 80px;
+        transition: transform ease-out 200ms;
+        display: inline-block;
+        position: relative;
+    }
+    .mt-20 {
+        margin-top: 20px;
+    }
+    .menu-open-button {
+        background: #75eeac;
+        border-radius: 10%;
+        width: 120px;
+        height: 120px;
+        color: white;
+        text-align: center;
+        line-height: 120px;
+        transition: transform ease-out 200ms;
+        display: inline-block;
+        position: relative;
+        // width: 40px;
+        // height: 40px;
+    }
+    .menu-open {
+        display: none;
+    }
+    .plus {
+        width: 18px;
+        height: 2px;
+        background: white;
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-left: -9px;
+        margin-top: -1px;
+        transition: transform 200ms;
+        &.plus-1 {
+            // transform: rotate(90deg) translate3d(0, 0, 0);
+        }
+        &.plus-2 {
+            // transform: rotate(0) translate3d(0, 0, 0);
+        }
+    }
+    .menu-item {
+        &:hover {
+            background: white;
+            color: #75eeac;
+        }
+        &:nth-child(1) {
+            transition-duration: 10ms;
+            transform: translate3d(256.5px, 0, 0) scale(0.5);
+        }
+        &:nth-child(2) {
+            transition-duration: 70ms;
+            transform: translate3d(171px, 0, 0) scale(0.5);
+        }
+        &:nth-child(3) {
+            transition-duration: 130ms;
+            transform: translate3d(85.5px, 0, 0) scale(0.5);
+        }
+        &:nth-child(4) {
+            transition-duration: 190ms;
+            transform: translate3d(0, 0, 0) scale(0.5);
+        }
+        &:nth-child(5) {
+            transition-duration: 130ms;
+            transform: translate3d(-85.5px, 0, 0) scale(0.5);
+        }
+        &:nth-child(6) {
+            transition-duration: 70ms;
+            transform: translate3d(-171px, 0, 0) scale(0.5);
+        }
+        &:nth-child(7) {
+            transition-duration: 10ms;
+            transform: translate3d(-256.5px, 0, 0) scale(0.5);
+        }
+        &:after {
+            content: attr(data-name);
+            position: absolute;
+            font-size: 14px;
+            font-weight: 500;
+            color: #02642f;
+            line-height: 40px;
+            left: 50%;
+            white-space: nowrap;
+            transform: translate3d(-50%, 0, 0);
+            display: none;
+        }
+    }
+    .menu-open-button {
+        z-index: 2;
+        transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transition-duration: 400ms;
+        transform: scale(1.1, 1.1) translate3d(0, 0, 0);
+        cursor: pointer;
+        &:hover {
+            transform: scale(1.2, 1.2) translate3d(0, 0, 0);
+        }
+    }
+    .menu-open:checked {
+        +.menu-open-button {
+            transition-timing-function: linear;
+            transition-duration: 200ms;
+            transform: scale(1, 1) rotate(-45deg) translate3d(0, 0, 0);
+        }
+        ~.real-menu {
+            transform: translate3d(0, 5px, 0);
+            .menu-item {
+                transition-timing-function: cubic-bezier(0.935, 0, 0.34, 1.33);
+                transform: translate3d(0, 0, 0);
+                &:nth-child(1) {
+                    transition-duration: 400ms;
+                }
+                &:nth-child(2) {
+                    transition-duration: 320ms;
+                }
+                &:nth-child(3) {
+                    transition-duration: 240ms;
+                }
+                &:nth-child(4) {
+                    transition-duration: 160ms;
+                }
+                &:nth-child(5) {
+                    transition-duration: 240ms;
+                }
+                &:nth-child(6) {
+                    transition-duration: 320ms;
+                }
+                &:nth-child(7) {
+                    transition-duration: 400ms;
+                }
+                &:after {
+                    display: block;
+                }
+            }
+        }
+    }
+}
+
+// faq
+.accordion {
+    .accordion-item {
+        border-bottom: 1px solid gray;
+        button[aria-expanded='true'] {
+            border-bottom: 1px solid blue;
+        }
+    }
+    button {
+        position: relative;
+        display: block;
+        text-align: left;
+        width: 100%;
+        padding: 1em 0;
+        color: #7288a2;
+        font-size: 1.15rem;
+        font-weight: 400;
+        border: none;
+        background: none;
+        outline: none;
+        &:hover,
+        &:focus {
+            cursor: pointer;
+            color: blue;
+            &::after {
+                cursor: pointer;
+                color: blue;
+                border: 1px solid blue;
+            }
+        }
+        .accordion-title {
+            padding: 1em 1.5em 1em 0;
+        }
+        .icon {
+            display: inline-block;
+            position: absolute;
+            top: 18px;
+            right: 0;
+            width: 22px;
+            height: 22px;
+            border: 1px solid;
+            border-radius: 22px;
+            &::before {
+                display: block;
+                position: absolute;
+                content: '';
+                top: 9px;
+                left: 5px;
+                width: 10px;
+                height: 2px;
+                background: currentColor;
+            }
+            &::after {
+                display: block;
+                position: absolute;
+                content: '';
+                top: 5px;
+                left: 9px;
+                width: 2px;
+                height: 10px;
+                background: currentColor;
+            }
+        }
+    }
+    button[aria-expanded='true'] {
+        color: blue;
+        .icon {
+            &::after {
+                width: 0;
+            }
+        }
+        +.accordion-content {
+            opacity: 1;
+            max-height: 9em;
+            transition: all 200ms linear;
+            will-change: opacity, max-height;
+        }
+    }
+    .accordion-content {
+        opacity: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: opacity 200ms linear, max-height 200ms linear;
+        will-change: opacity, max-height;
+        p {
+            font-size: 1rem;
+            font-weight: 300;
+            margin: 2em 0;
+        }
+    }
+}
+
+a {
+    color: #ffff !important;
+}

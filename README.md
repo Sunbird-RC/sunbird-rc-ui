@@ -35,7 +35,7 @@ Key | Value
 `form.title`          | Title of form
 `form.redirectTo`     | Redirect URL on after form submit
 `form.fieldsets`      | List of fieldsets(multiple) for this form. At least one fieldset is needed
-
+`form.langKey`      | This is the name of key, which contains the all language constants strings for this form in the en-local.json file. Eg:  <br>  **form.json:** <pre> {<br> "langKey": "instituteLang"  <br>} </pre>  **en-local.json:** <pre> { <br> 'instituteLang' : { <br> ..language constants.. <br>} <br> } </pre>
 
 **fieldsets**
 
@@ -67,6 +67,7 @@ Key | Value
 `layout.api`    | URL Path of API
 `layout.title`  | Title of form
 `layout.blocks` | Cards/Blocks (multiple) to populate in `layout`.
+`layout.langKey`      | This is the name of key, which contains the all language constants strings for this layout in the en-local.json file. Eg:  <br>  **layout.json:** <pre> {<br> "langKey": "instituteLang"  <br>} </pre>  **en-local.json:** <pre> { <br> 'instituteLang' : { <br> ..language constants.. <br>} <br> } </pre>
 
 **blocks**
 
@@ -89,6 +90,37 @@ Key | Value
 `fields.includes` | Array/list of Included Fields from response or `[*]` for all fields
 `fields.excludes` | Array/list of Excluded Fields from response
 
+### Search
+The `search.json` needs to be placed in `src/assets/config`. In this file defines the tabs, filters and result cards attribute names which are displayed on the discovery page.
+
+
+In this file `searches` is an array with key/value pairs. Each search definition will have the below fields -
+
+Key | Value
+------------    | -------------
+`search.tab`    |  Key name of tab
+`search.tabTitle`  | Title of tab
+`search.api`    | URL Path of API
+`search.activeTab` | Set active tab as a default.
+
+**filters**
+
+Key | Value
+------------ | -------------
+`filters.key` | unique key of filter/property
+`filters.title` | Title of filter
+`filters.type` | Type of filter
+`filters.propertyPath` | Actul path of property in your api responce
+`filters.default` | Set filter as default
+`filters.placeholder` | Set placeholder in the filter input box
+
+**fields**
+
+Key | Value
+------------ | -------------
+`fields.title` | Title of field 
+`fields.property` | Set property path in you api responce (eg : "address.district" )
+`fields.attest` | Set state check property key name 
 
 # Examples
 

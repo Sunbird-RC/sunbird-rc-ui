@@ -2,7 +2,7 @@
 </div>
 <ng-template #defaultBlock>
   <nav class="item-menu">
-    <h1>Welcome to Sunbird RC</h1>
+    <h1>{{'WELCOME_TO_SUNBIRD_RC' | translate}}</h1>
     <br>
     <input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open" />
     <label id="menu-open-handler" class="menu-open-button" for="menu-open">
@@ -26,14 +26,10 @@
     </div>
     <div class="center">
       <a class="btn" href="https://github.com/Sunbird-RC/sunbird-rc-ui/blob/main/README.md" target="_blank"><i
-          class="fa fa-github" aria-hidden="true"></i> Learn More on github</a>
-      <p class="mt-20 red">Create <b>home.html</b> file as per your need and place it inside <b>/assets/config/</b> to
-        change this page.</p>
+          class="fa fa-github" aria-hidden="true"></i> {{'LEARN_MORE_ON_GITHUB' | translate}}</a>
+      <p class="mt-20 red">{{'CREATE' | translate}} <b>home.html</b> {{'FILE_AS_PER_YOUR_NEED_AND_PLACE_IT_INSIDE' | translate}} <b>/assets/config/</b> {{'TO_CHANGE_THIS_PAGE' | translate}}.</p>
     </div>
-
-
   </nav>
-
   <!-- filters -->
   <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="width: 0; height: 0;">
     <defs>

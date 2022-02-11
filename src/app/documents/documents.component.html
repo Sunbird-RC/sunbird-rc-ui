@@ -1,0 +1,514 @@
+<app-header [headerFor]='header'></app-header>
+<div class="container">
+    <ng-template [ngIf]="loader">
+        <br>
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border" style="width: 5rem; height: 5rem;" role="status">
+                <span class="sr-only">{{'LOADING'|translate}}</span>
+            </div>
+        </div>
+    </ng-template>
+    <div class="contain mt-5 mb-20">
+        <ng-template [ngIf]="!hasDocs && !loader">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-6 mb-3">
+                    <!-- <ng-template [ngIf]="getStarted"> -->
+                    <h6>
+                        <b>{{'GET_STARTED'|translate}}</b>
+                    </h6>
+                    <p>{{'YOU_CAN_UPLOAD_YOUR_DOCUMENTS_AND_TAG_IT_FOR_EASY_ACCESS'|translate}}</p>
+                    <!-- </ng-templte> -->
+                    <!-- #1987B6 -->
+                    <!-- #F07D00 -->
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- <h6>Add Document</h6> -->
+                            <!-- <div class="text-center"> -->
+                            <!-- <img class="mobile" src="assets/images/mobile.png" style="left: 68px;max-width: 286px;top: 179px;"> -->
+
+                            <ul class="list-group add-documentList" style="width: 100%;">
+                                <h6>{{'ADD_DOCUMENT'|translate}}</h6>
+                                <li class="d-flex py-2 bb-1">
+                                    <span class="fs-14 mr-2 icon-color"><i class="fa fa-upload"></i></span>
+                                    <span>
+                                    <!-- <img class="mobile" src="assets/images/mobile.png" style="left: 68px;max-width: 286px;top: 179px;"> -->
+                                    <a  [routerLink]="['add','upload']"
+                                    data-dismiss="modal" aria-label="Close"
+                                        class="">
+                                        <!-- <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M4.47259 13.8656C4.21439 13.8971 3.99382 14.1422 4.00013 14.4V17.4557C4.00013 18.4052 4.78125 19.1973 5.73225 19.1973H18.2678C19.219 19.1973 19.9999 18.4049 19.9999 17.4557V14.4C20.0062 14.1233 19.748 13.8656 19.4643 13.8656C19.1875 13.8656 18.929 14.1235 18.9351 14.4V17.4557C18.9351 17.8392 18.6454 18.1348 18.2675 18.1348H5.73247C5.35464 18.1348 5.06491 17.8392 5.06491 17.4557V14.4C5.07099 14.0981 4.77494 13.828 4.47259 13.8656Z"
+                                                fill="#1987B6" />
+                                            <path
+                                                d="M12.5379 6.58217L12.5379 15.1146C12.5379 15.3347 12.311 15.6553 12.015 15.6553C11.7313 15.6553 11.4668 15.3975 11.4731 15.1146V6.57587L9.14892 8.49994C8.90312 8.67612 8.66385 8.67612 8.42435 8.47493C8.1977 8.23588 8.22902 7.90266 8.46851 7.68254L11.4857 5.18643C11.782 4.94739 12.204 4.92846 12.519 5.18643L15.5362 7.68254C15.7439 7.85242 15.8133 8.22349 15.6117 8.43708C15.4163 8.63827 15.1392 8.71375 14.8621 8.49994L12.5379 6.58217Z"
+                                                fill="#1987B6" />
+                                        </svg> -->
+                
+                                        {{'UPLOAD_DOCUMENT'|translate}}
+                                    </a>
+                                    <span class="d-block fs-12 mt-2 text-grey">{{'UPLOAD_DOCUMENT_SUB'|translate}}</span>
+                                    </span>
+                                </li>
+                                <li class="d-flex py-2 bb-1">
+                                    <span class="fs-14 mr-2 icon-color"><i class="fa fa-camera"></i></span>
+                                    <span>
+                                    <a [routerLink]="['add','scan']"
+                                    data-dismiss="modal" aria-label="Close"
+                                        class="">
+                                        <!-- <svg width="16" height="14" viewBox="0 0 16 14" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M1.7561 13.2683C0.789971 13.2683 0 12.4783 0 11.5122V3.70732C0 2.74119 0.789971 1.95122 1.7561 1.95122H4.2256L4.90853 0.25C4.93659 0.177115 4.98589 0.114322 5.05002 0.0697528C5.11416 0.0251837 5.19019 0.000889252 5.26829 0H10.7317C10.8098 0.000889252 10.8858 0.0251837 10.95 0.0697528C11.0141 0.114322 11.0634 0.177115 11.0915 0.25L11.7744 1.95122H14.2439C15.21 1.95122 16 2.74119 16 3.70732V11.5122C16 12.4783 15.21 13.2683 14.2439 13.2683H1.7561ZM1.7561 12.4878H14.2439C14.7911 12.4878 15.2195 12.0594 15.2195 11.5122V3.70732C15.2195 3.16008 14.7911 2.73171 14.2439 2.73171H11.5122C11.4348 2.7313 11.3593 2.70791 11.2952 2.66448C11.2312 2.62105 11.1815 2.55955 11.1524 2.4878L10.4695 0.780488H5.5305L4.84757 2.4878C4.81854 2.55955 4.76884 2.62105 4.70478 2.66448C4.64072 2.70791 4.5652 2.7313 4.4878 2.73171H1.7561C1.20886 2.73171 0.780488 3.16008 0.780488 3.70732V11.5122C0.780488 12.0594 1.20886 12.4878 1.7561 12.4878ZM8 11.122C6.06492 11.122 4.4878 9.54486 4.4878 7.60976C4.4878 5.67463 6.06492 4.09756 8 4.09756C9.93512 4.09756 11.5122 5.67465 11.5122 7.60976C11.5122 9.54486 9.93512 11.122 8 11.122ZM8 10.3415C9.51331 10.3415 10.7317 9.12304 10.7317 7.60976C10.7317 6.09645 9.51331 4.87805 8 4.87805C6.48673 4.87805 5.26829 6.09645 5.26829 7.60976C5.26829 9.12304 6.48673 10.3415 8 10.3415Z"
+                                                fill="#1987B6" />
+                                        </svg> -->
+                                        {{'SCAN_DOCUMENT'|translate}}
+                                    </a>
+                                    <span class="d-block fs-12 mt-2 text-grey">{{'SCAN_DOCUMENT_SUB'|translate}}</span>
+                                    </span>
+                                </li>
+                                <li class="d-flex py-2 bb-1">
+                                    <span class="fs-14 mr-2 icon-color"><i class="fa fa-qrcode"></i></span>
+                                    <span>
+                                    <a [routerLink]="['scan','vc']"
+                                    data-dismiss="modal" aria-label="Close"
+                                        class="">
+                                        <!-- <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <g clip-path="url(#clip0_1552_13)">
+                                                <rect width="16" height="16" fill="white" />
+                                                <path d="M0.937239 0.937239H3.75126V0H0V3.75126H0.937239V0.937239Z"
+                                                    fill="#1987B6" />
+                                                <path d="M12.2499 0V0.937239H15.0622V3.75126H16.0011V0H12.2499Z"
+                                                    fill="#1987B6" />
+                                                <path
+                                                    d="M15.0622 15.0623H12.2499V16.0013H16.0011V12.25H15.0639L15.0622 15.0623Z"
+                                                    fill="#1987B6" />
+                                                <path d="M0.937239 12.25H0V16.0013H3.75126V15.064H0.937239V12.25Z"
+                                                    fill="#1987B6" />
+                                                <path
+                                                    d="M1.90625 1.875V6.56235H6.5936V3.75005H7.53084V2.81224H6.5936V1.875H1.90625ZM5.65751 5.62626H2.84349V2.81224H5.65751V5.62626Z"
+                                                    fill="#1987B6" />
+                                                <path
+                                                    d="M14.0938 14.0627V9.37532H12.2199V8.4375H11.2827V9.37473H8.46863V10.312H9.40586V11.2492H8.46863V12.1888H9.40586V14.0638L14.0938 14.0627ZM10.3425 10.3114H13.1548V13.1237H10.3425V10.3114Z"
+                                                    fill="#1987B6" />
+                                                <path
+                                                    d="M4.71854 8.43748H6.5936V7.50024H1.90625V8.43748H3.7813V9.37472H2.84349V10.312H3.78073V12.187H2.84349V13.1242H3.78073V14.0615H8.46807V13.1242H7.53141V12.187H6.5936V13.1242H4.71854V12.187H5.65751V11.2515H4.71854V8.43748Z"
+                                                    fill="#1987B6" />
+                                                <path d="M3.78125 3.75H4.71849V4.68724H3.78125V3.75Z" fill="#1987B6" />
+                                                <path d="M11.2815 3.75H12.2187V4.68724H11.2815V3.75Z" fill="#1987B6" />
+                                                <path
+                                                    d="M12.2187 6.56235H14.0937V1.875H9.40637V6.56235H11.2814V7.49959H12.2187V6.56235ZM10.3436 5.62626V2.81224H13.1576V5.62626H10.3436Z"
+                                                    fill="#1987B6" />
+                                                <path d="M14.0938 8.43748V7.50024H12.2188V8.43748H14.0938Z"
+                                                    fill="#1987B6" />
+                                                <path d="M11.2815 11.2498H12.2187V12.187H11.2815V11.2498Z" fill="#1987B6" />
+                                                <path d="M7.53137 10.3125H8.46861V11.2497H7.53137V10.3125Z"
+                                                    fill="#1987B6" />
+                                                <path d="M5.65637 11.2503H6.59361V9.37524H5.65637V11.2503Z"
+                                                    fill="#1987B6" />
+                                                <path d="M6.59351 8.4375H7.53074V9.37473H6.59351V8.4375Z" fill="#1987B6" />
+                                                <path d="M2.84349 10.3125H1.90625V12.1876H2.84349V10.3125Z"
+                                                    fill="#1987B6" />
+                                                <path d="M1.90625 13.1248H2.84349V14.062H1.90625V13.1248Z" fill="#1987B6" />
+                                                <path d="M7.53137 1.875H8.46861V2.81224H7.53137V1.875Z" fill="#1987B6" />
+                                                <path d="M7.53137 5.62505H8.46861V3.75H7.53137V5.62505Z" fill="#1987B6" />
+                                                <path
+                                                    d="M8.46861 7.49973V6.5625H7.53137V8.43755H11.2826V7.50032L8.46861 7.49973Z"
+                                                    fill="#1987B6" />
+                                            </g>
+                                            <defs>
+                                                <clipPath id="clip0_1552_13">
+                                                    <rect width="16" height="16" fill="white" />
+                                                </clipPath>
+                                            </defs>
+                                        </svg> -->
+                                        {{'SCAN_QR_CODE'|translate}}
+                                    </a>
+                                    <span class="d-block fs-12 mt-2 text-grey">{{'SCAN_QR_CODE_SUB'|translate}}</span>
+                                    </span>
+                                </li>
+                                <li class="d-flex py-2">
+                                    <span class="fs-14 mr-2 icon-color"><i class="fa fa-search"></i></span>
+                                    <span>
+                                    <a [routerLink]="['browse']"
+                                    data-dismiss="modal" aria-label="Close"
+                                        class="">
+                
+                                        {{'BROWSE_DOCUMENT'|translate}}
+                                    </a>
+                                    <span class="d-block fs-12 mt-2 text-grey">{{'BROWSE_DOCUMENT_SUB'|translate}}</span>
+                                    </span>
+                                </li>
+                            </ul>
+                            <!-- </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template [ngIf]="hasDocs && documents">
+            <div class="row mb-3">
+                <div class="col-12">
+                    <h6 class="font-weight-bold headerTitleColor">{{'MY_DOCUMENTS'|translate}}</h6>
+                </div>
+            </div>
+            <div class="row">
+                <div *ngFor="let docs of documents; index as i;" class="mb-3 col-sm-12 col-md-6 col-lg-4 col-xs-2">
+                    <!-- {{docs[i].osid}} -->
+                    <a [routerLink]="['detail',docs[0].type,docs[0].osid]">
+                        <div class="card height-100">
+                            <div class="card-body">
+                                <!-- <div class="row">
+                                    <div class="col-sm-6"> -->
+                                <div class="card-intro-info">
+                                    <ng-template ngFor let-doc [ngForOf]="docs" let-i="index">
+                                        <div *ngIf="doc.key == 'title' || doc.key == 'name'" class="card-title mb-2 fs-14">
+                                            {{doc.value}}
+                                            <ng-template [ngIf]="doc.type == 'attestation-SELF'">
+                                                <i class="fas fa-check primarybgColor fs-12 mr-1"></i>
+                                            </ng-template>
+                                            <ng-template [ngIf]="doc.type == 'attestation-MOSIP'">
+                                                <i class="fas fa-award primarybgColor fs-12 mr-1"></i>
+                                            </ng-template>
+                                            <ng-template [ngIf]="doc.type == 'attestation-DIVOC'">
+                                                <i class="fas fa-award primarybgColor fs-12 mr-1"></i>
+                                            </ng-template>
+                                        </div>
+                                    </ng-template>
+                                    <div class="fs-12">
+                                        <ng-template ngFor let-doc2 [ngForOf]="docs">
+                                            <div *ngIf="doc2.key == 'title' || doc2.key == 'name' || doc2.key == 'fileUrl'; else elseBlock">
+                                            </div>
+                                            <!-- <div *ngIf="doc2.key == 'fileUrl'">
+                                                <a class="tagstextColor" href="/document/view?u={{doc2.value}}">{{'VIEW_DOCUMENT' |
+                                                    translate}}</a>
+                                            </div> -->
+                                            <ng-template #elseBlock>
+                                                <div class="card-text text-grey mb-2">{{doc2.value}} </div>
+                                            </ng-template>
+                                        </ng-template>
+                                        <ng-template [ngIf]="docs[0].type == 'attestation-MOSIP'">
+                                            <div class="text-grey"> {{'DIGITALLY_VERIFIED'|translate}} </div>
+                                        </ng-template>
+                                        <ng-template [ngIf]="docs[0].type == 'attestation-SELF'">
+                                            <div class="text-grey">{{'SELF_ATTTESTED'|translate}}</div>
+                                        </ng-template>
+                                        <ng-template [ngIf]="docs[0].type == 'attestation-DIVOC'">
+                                            <div class="text-grey"><i class="fa fa-qrcode fs-12 mr-1"></i>{{'DIGITALLY_VERIFIED'|translate}}
+                                            </div>
+                                        </ng-template>
+                                        <!-- <div class="tags-list">
+                                                    <ul>
+                                                        <li>ID Card</li>
+                                                        <li>ID Card</li>
+                                                        <li>ID Card</li>
+                                                        <li>ID Card</li>
+                                                        <li>ID Card</li>
+                                                        <li>ID Card</li>
+                                                        <li>ID Card</li>
+                                                    </ul>
+                                                </div> -->
+                                    </div>
+                                </div>
+                                <ng-template [ngIf]="docs[0].type == 'attestation-MOSIP'">
+                                    <div class="card-image">
+                                        <img [src]="docs[0].logoUrl" onError="this.src='assets/images/slgov.png'" />
+                                    </div>
+                                </ng-template>
+
+                                <!-- </div>
+                                    <div class="col-sm-6 text-right">
+                                        <img src="assets/images/logo.png" style="height: 60px;" />
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <button class="btn btn-secondary position-fixed btn-icon-circle floating-bottom" onClick="window.navigator.vibrate(200);" data-toggle="modal" data-target="#addModal"><i class="fas fa-plus"></i></button>
+        </ng-template>
+
+        <ng-template [ngIf]="!hasDocs && !loader">
+            <h4 class="font-weight-bold mt-3">{{'BROWSE_ISSUED_DOCUMENTS'|translate}}</h4>
+            <ul class="nav nav-tabs mb-3 fs-14" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active fs-14" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">{{'BY_DOCUMENT'|translate}}</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link fs-14" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">{{'BY_ISSUER'|translate}}</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link fs-14" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">{{'BY_CATEGORY'|translate}}</button>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="row">
+                        <div class="col search-area mb-3">
+                            <div class="input-append">
+                                <input class="w-100" type="text" placeholder="Search Documents" aria-label="Search">
+                                <i class="fas fa-search" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <ng-template ngFor let-item [ngForOf]="documentTypes" let-i="index">
+                            <div class="mb-3 col-sm-12 col-md-6 col-lg-4 col-xs-2">
+                                <a [routerLink]="['browse','add',item.osid]">
+                                    <div class="card height-100">
+                                        <div class="card-body">
+                                            <div class="card-intro-info">
+                                                <div class="card-title mb-2 fs-14">{{item.title}}
+                                                </div>
+                                                <div class="text-grey fs-12">{{item.issuer}}</div>
+                                            </div>
+                                            <div class="card-image">
+                                                <img src="{{item.logoUrl}}" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+            </div>
+        </ng-template>
+
+
+
+        <!-- <p class="p14 mt-3">Select and download issued documents</p> -->
+        <!-- <div class="row">
+      <div class="col">
+        <input class=" w-100" type="text" placeholder="Search Documents" aria-label="Search">
+        <i class="fas fa-search" style="margin-left: -50px;
+              margin-top: 3px;" aria-hidden="true"></i>
+      </div>
+    </div> -->
+        <!-- <a href="/cf/sluid">
+      <div class="card lh-lg mt-3 p-3 p14">
+
+        <span class=" mb-2 text-dark"><b>Sri Lanka Unique Digital Identification</b>
+          <i class="fas fa-award text-primary-color"></i>
+
+        </span>
+        <span class="text-grey  mb-2">Government of Sri Lanka </span>
+        <span class="text-grey">   Digital Verificated </span>
+
+
+      </div>
+    </a>
+
+    <div class="card lh-lg mt-3 p-3 p14">
+      <span class=" mb-2 text-dark"><b>Vaccination certificate</b>
+        <i class="fas fa-award text-primary-color"></i>
+
+      </span>
+      <span class="text-grey  mb-2">Ministry of Health </span>
+      <span class="text-grey">   Digital Verificated </span>
+    </div> -->
+
+        <!-- <div class="row mt-3">
+          <div class="col-8">
+            <p class=" font-weight-bold">Central Government</p>
+          </div>
+          <div class="col-4"> <label class="p12  float-end text-primary-color">View All</label></div>
+        </div>
+
+        <button class="btn-bg text-primary-color btn-style  p14 m-1"><a href="/document/add/SLUDI">SLUDI</a></button>
+
+        <div class="row mt-3">
+          <div class="col-8">
+            <p class=" font-weight-bold">Education</p>
+          </div>
+          <div class="col-4"> <label class="p12  float-end text-primary-color">View All</label></div>
+        </div>
+
+        <button class="btn-bg text-primary-color btn-style  p14 m-1"><a href="/documents">Class 10 Certificate (3)</a></button>
+        <button class="btn-bg text-primary-color btn-style p14 m-1"><a href="/document/issue">Class 12 Certificate</a></button>
+
+        <div class="row mt-3">
+          <div class="col-8">
+            <p class=" font-weight-bold">Health</p>
+          </div>
+          <div class="col-4"> <label class="p12  float-end text-primary-color">View All</label></div>
+        </div>
+
+        <button class="btn-bg text-primary-color btn-style  p14 m-1"><a href="/document/issue">Vactination Certificate</a></button>
+
+        <div class="row mt-3">
+          <div class="col-8">
+            <p class=" font-weight-bold">Employment</p>
+          </div>
+          <div class="col-4"> <label class="p12  float-end text-primary-color">View All</label></div>
+        </div>
+
+        <button class="btn-bg text-primary-color btn-style  p14 m-1"><a href="/document/issue">Private</a></button>
+        <button class="btn-bg text-primary-color btn-style p14 m-1"><a href="/document/issue">Government</a></button>
+
+        <div class="row mt-3">
+          <div class="col-8">
+            <p class=" font-weight-bold">Finance</p>
+          </div>
+          <div class="col-4"> <label class="p12  float-end text-primary-color">View All</label></div>
+        </div>
+
+        <button class="btn-bg text-primary-color btn-style  p14 m-1"><a href="/document/issue">Banking</a></button>
+        <button class="btn-bg text-primary-color btn-style p14 m-1"><a href="/document/issue">Insurance</a></button>
+
+        <div class="row mt-3">
+          <div class="col-8">
+            <p class=" font-weight-bold">Vehicle</p>
+          </div>
+          <div class="col-4"> <label class="p12  float-end text-primary-color">View All</label></div>
+        </div>
+
+        <button class="btn-bg text-primary-color btn-style  p14 m-1"><a href="/document/issue">Driving Licence (1)</a></button>
+        <button class="btn-bg text-primary-color btn-style p14 m-1"><a href="/document/issue">Registration</a></button>
+        <button class="btn-bg text-primary-color btn-style p14 m-1"><a href="/document/issue">PUC</a></button>
+
+        <div class="row mt-3">
+          <div class="col-8">
+            <p class=" font-weight-bold">Others</p>
+          </div>
+          <div class="col-4"> <label class="p12  float-end text-primary-color">View All</label></div>
+        </div>
+
+        <button class="btn-bg text-primary-color btn-style  p14 m-1"><a href="/document/issue">Residence</a></button>
+        <button class="btn-bg text-primary-color btn-style p14 m-1"><a href="/document/issue">Marriage Certificate</a></button> -->
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade animate" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content animate-bottom">
+            <div class="modal-header px-3 py-2 border-0">
+                <h6 class="modal-title font-weight-bold" id="exampleModalLabel"> {{'ADD_DOCUMENT'|translate}}</h6>
+                <button type="button" class="close px-3 py-3" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body px-3 pt-0 pb-3">
+                <ul class="list-group add-documentList">
+                    <li class="d-flex py-2 bb-1">
+                        <span class="fs-14 mr-2 icon-color"><i class="fa fa-upload"></i></span>
+                        <span>
+                    <!-- <img class="mobile" src="assets/images/mobile.png" style="left: 68px;max-width: 286px;top: 179px;"> -->
+                    <a  [routerLink]="['add','upload']"
+                    data-dismiss="modal" aria-label="Close"
+                        class="">
+                        <!-- <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M4.47259 13.8656C4.21439 13.8971 3.99382 14.1422 4.00013 14.4V17.4557C4.00013 18.4052 4.78125 19.1973 5.73225 19.1973H18.2678C19.219 19.1973 19.9999 18.4049 19.9999 17.4557V14.4C20.0062 14.1233 19.748 13.8656 19.4643 13.8656C19.1875 13.8656 18.929 14.1235 18.9351 14.4V17.4557C18.9351 17.8392 18.6454 18.1348 18.2675 18.1348H5.73247C5.35464 18.1348 5.06491 17.8392 5.06491 17.4557V14.4C5.07099 14.0981 4.77494 13.828 4.47259 13.8656Z"
+                                fill="#1987B6" />
+                            <path
+                                d="M12.5379 6.58217L12.5379 15.1146C12.5379 15.3347 12.311 15.6553 12.015 15.6553C11.7313 15.6553 11.4668 15.3975 11.4731 15.1146V6.57587L9.14892 8.49994C8.90312 8.67612 8.66385 8.67612 8.42435 8.47493C8.1977 8.23588 8.22902 7.90266 8.46851 7.68254L11.4857 5.18643C11.782 4.94739 12.204 4.92846 12.519 5.18643L15.5362 7.68254C15.7439 7.85242 15.8133 8.22349 15.6117 8.43708C15.4163 8.63827 15.1392 8.71375 14.8621 8.49994L12.5379 6.58217Z"
+                                fill="#1987B6" />
+                        </svg> -->
+
+                        {{'UPLOAD_DOCUMENT'|translate}}
+                    </a>
+                    <span class="d-block fs-12 mt-2 text-grey">{{'UPLOAD_DOCUMENT_SUB'|translate}}</span>
+                        </span>
+                    </li>
+                    <li class="d-flex py-2 bb-1">
+                        <span class="fs-14 mr-2 icon-color"><i class="fa fa-camera"></i></span>
+                        <span>
+                    <a [routerLink]="['add','scan']"
+                    data-dismiss="modal" aria-label="Close"
+                        class="">
+                        <!-- <svg width="16" height="14" viewBox="0 0 16 14" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M1.7561 13.2683C0.789971 13.2683 0 12.4783 0 11.5122V3.70732C0 2.74119 0.789971 1.95122 1.7561 1.95122H4.2256L4.90853 0.25C4.93659 0.177115 4.98589 0.114322 5.05002 0.0697528C5.11416 0.0251837 5.19019 0.000889252 5.26829 0H10.7317C10.8098 0.000889252 10.8858 0.0251837 10.95 0.0697528C11.0141 0.114322 11.0634 0.177115 11.0915 0.25L11.7744 1.95122H14.2439C15.21 1.95122 16 2.74119 16 3.70732V11.5122C16 12.4783 15.21 13.2683 14.2439 13.2683H1.7561ZM1.7561 12.4878H14.2439C14.7911 12.4878 15.2195 12.0594 15.2195 11.5122V3.70732C15.2195 3.16008 14.7911 2.73171 14.2439 2.73171H11.5122C11.4348 2.7313 11.3593 2.70791 11.2952 2.66448C11.2312 2.62105 11.1815 2.55955 11.1524 2.4878L10.4695 0.780488H5.5305L4.84757 2.4878C4.81854 2.55955 4.76884 2.62105 4.70478 2.66448C4.64072 2.70791 4.5652 2.7313 4.4878 2.73171H1.7561C1.20886 2.73171 0.780488 3.16008 0.780488 3.70732V11.5122C0.780488 12.0594 1.20886 12.4878 1.7561 12.4878ZM8 11.122C6.06492 11.122 4.4878 9.54486 4.4878 7.60976C4.4878 5.67463 6.06492 4.09756 8 4.09756C9.93512 4.09756 11.5122 5.67465 11.5122 7.60976C11.5122 9.54486 9.93512 11.122 8 11.122ZM8 10.3415C9.51331 10.3415 10.7317 9.12304 10.7317 7.60976C10.7317 6.09645 9.51331 4.87805 8 4.87805C6.48673 4.87805 5.26829 6.09645 5.26829 7.60976C5.26829 9.12304 6.48673 10.3415 8 10.3415Z"
+                                fill="#1987B6" />
+                        </svg> -->
+                        {{'SCAN_DOCUMENT'|translate}}
+                    </a>
+                    <span class="d-block fs-12 mt-2 text-grey">{{'SCAN_DOCUMENT_SUB'|translate}}</span>
+                        </span>
+                    </li>
+                    <li class="d-flex py-2 bb-1">
+                        <span class="fs-14 mr-2 icon-color"><i class="fa fa-qrcode"></i></span>
+                        <span>
+                    <a [routerLink]="['scan','vc']"
+                    data-dismiss="modal" aria-label="Close"
+                        class="">
+                        <!-- <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_1552_13)">
+                                <rect width="16" height="16" fill="white" />
+                                <path d="M0.937239 0.937239H3.75126V0H0V3.75126H0.937239V0.937239Z"
+                                    fill="#1987B6" />
+                                <path d="M12.2499 0V0.937239H15.0622V3.75126H16.0011V0H12.2499Z"
+                                    fill="#1987B6" />
+                                <path
+                                    d="M15.0622 15.0623H12.2499V16.0013H16.0011V12.25H15.0639L15.0622 15.0623Z"
+                                    fill="#1987B6" />
+                                <path d="M0.937239 12.25H0V16.0013H3.75126V15.064H0.937239V12.25Z"
+                                    fill="#1987B6" />
+                                <path
+                                    d="M1.90625 1.875V6.56235H6.5936V3.75005H7.53084V2.81224H6.5936V1.875H1.90625ZM5.65751 5.62626H2.84349V2.81224H5.65751V5.62626Z"
+                                    fill="#1987B6" />
+                                <path
+                                    d="M14.0938 14.0627V9.37532H12.2199V8.4375H11.2827V9.37473H8.46863V10.312H9.40586V11.2492H8.46863V12.1888H9.40586V14.0638L14.0938 14.0627ZM10.3425 10.3114H13.1548V13.1237H10.3425V10.3114Z"
+                                    fill="#1987B6" />
+                                <path
+                                    d="M4.71854 8.43748H6.5936V7.50024H1.90625V8.43748H3.7813V9.37472H2.84349V10.312H3.78073V12.187H2.84349V13.1242H3.78073V14.0615H8.46807V13.1242H7.53141V12.187H6.5936V13.1242H4.71854V12.187H5.65751V11.2515H4.71854V8.43748Z"
+                                    fill="#1987B6" />
+                                <path d="M3.78125 3.75H4.71849V4.68724H3.78125V3.75Z" fill="#1987B6" />
+                                <path d="M11.2815 3.75H12.2187V4.68724H11.2815V3.75Z" fill="#1987B6" />
+                                <path
+                                    d="M12.2187 6.56235H14.0937V1.875H9.40637V6.56235H11.2814V7.49959H12.2187V6.56235ZM10.3436 5.62626V2.81224H13.1576V5.62626H10.3436Z"
+                                    fill="#1987B6" />
+                                <path d="M14.0938 8.43748V7.50024H12.2188V8.43748H14.0938Z"
+                                    fill="#1987B6" />
+                                <path d="M11.2815 11.2498H12.2187V12.187H11.2815V11.2498Z" fill="#1987B6" />
+                                <path d="M7.53137 10.3125H8.46861V11.2497H7.53137V10.3125Z"
+                                    fill="#1987B6" />
+                                <path d="M5.65637 11.2503H6.59361V9.37524H5.65637V11.2503Z"
+                                    fill="#1987B6" />
+                                <path d="M6.59351 8.4375H7.53074V9.37473H6.59351V8.4375Z" fill="#1987B6" />
+                                <path d="M2.84349 10.3125H1.90625V12.1876H2.84349V10.3125Z"
+                                    fill="#1987B6" />
+                                <path d="M1.90625 13.1248H2.84349V14.062H1.90625V13.1248Z" fill="#1987B6" />
+                                <path d="M7.53137 1.875H8.46861V2.81224H7.53137V1.875Z" fill="#1987B6" />
+                                <path d="M7.53137 5.62505H8.46861V3.75H7.53137V5.62505Z" fill="#1987B6" />
+                                <path
+                                    d="M8.46861 7.49973V6.5625H7.53137V8.43755H11.2826V7.50032L8.46861 7.49973Z"
+                                    fill="#1987B6" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_1552_13">
+                                    <rect width="16" height="16" fill="white" />
+                                </clipPath>
+                            </defs>
+                        </svg> -->
+                        {{'SCAN_QR_CODE'|translate}}
+                    </a>
+                    <span class="d-block fs-12 mt-2 text-grey">{{'SCAN_QR_CODE_SUB'|translate}}</span>
+                        </span>
+                    </li>
+                    <li class="d-flex py-2">
+                        <span class="fs-14 mr-2 icon-color"><i class="fa fa-search"></i></span>
+                        <span>
+                    <a [routerLink]="['browse']"
+                    data-dismiss="modal" aria-label="Close"
+                        class="">
+
+                        {{'BROWSE_DOCUMENT'|translate}}
+                    </a>
+                    <span class="d-block fs-12 mt-2 text-grey">{{'BROWSE_DOCUMENT_SUB'|translate}}</span>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

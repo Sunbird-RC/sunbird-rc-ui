@@ -1,0 +1,118 @@
+// .container {
+//     padding-bottom: 50px;
+//     margin-top: 35px;
+// }
+.bg-header {
+    background: var(--cardBackground) !important;
+}
+
+.headerTitleColor {
+    color: var(--primaryTextColor) !important;
+}
+
+h6 {
+    color: var(--primaryTextColor)
+}
+
+.search-area {
+    .input-append {
+        position: relative;
+        .fa-search {
+            position: absolute;
+            right: 12px;
+            top: 15px;
+            color: var(--secondaryTextColor) !important;
+        }
+        input {
+            border: 1px solid #EFEFEF;
+            box-sizing: border-box;
+            border-radius: 4px;
+            padding: 11px 35px 11px 15px;
+        }
+    }
+}
+
+.dash-card {
+    // max-width: 300px;
+    display: inline-grid;
+    position: relative;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.5rem;
+    margin: 3px;
+}
+
+.border-trans {
+    border-color: transparent;
+}
+
+//   .card-body>div {
+//     padding: 5px;
+//   }
+.modal-dialog {
+    top: calc(100% - 300px);
+}
+
+.modal.show .modal-dialog {
+    margin: -15px -2px 0px -2px;
+}
+
+.animate-bottom {
+    position: relative;
+    animation: animatebottom 0.4 s;
+}
+
+@keyframes animatebottom {
+    from {
+        bottom: -300 px;
+        opacity: 0;
+    }
+    to {
+        bottom: 0;
+        opacity: 1;
+    }
+}
+
+.card-title {
+    color: var(--primaryColor) !important;
+}
+
+.card {
+    .card-body {
+        display: flex;
+    }
+    .card-image {
+        // border: 1px solid #ddd;
+        height: 100%;
+        // border-radius: 50%;
+        // width: 60px;
+        text-align: center;
+        overflow: hidden;
+        img {
+            object-fit: cover;
+            // padding: 8px;
+            height: 60px;
+            // border-radius: 100%;
+        }
+    }
+    .card-intro-info {
+        width: calc(100% - 45px);
+        padding-right: 5px;
+    }
+}
+
+.add-documentList {
+    li {
+        a {
+            color: var(--secondaryColor);
+        }
+    }
+    .icon-color {
+        color: var(--secondaryColor);
+        margin-top: 5px;
+    }
+}

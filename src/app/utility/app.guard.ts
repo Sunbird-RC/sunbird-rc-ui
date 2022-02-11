@@ -4,7 +4,8 @@ import {
     Router,
     RouterStateSnapshot,
 } from '@angular/router';
-import { KeycloakAuthGuard, KeycloakService } from 'keycloak-angular';
+import { KeycloakAuthGuard, KeycloakEvent, KeycloakEventType, KeycloakService } from 'keycloak-angular';
+import { KeycloakLoginOptions } from 'keycloak-js';
 
 @Injectable({
     providedIn: 'root',
@@ -20,12 +21,20 @@ export class AuthGuard extends KeycloakAuthGuard {
     public async isAccessAllowed(
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
-    ): Promise<boolean> {
+    ): Promise<any> {
         // Force the user to log in if currently unauthenticated.
         if (!this.authenticated) {
-            await this.keycloak.login({
-                redirectUri: window.location.origin + state.url,
-            });
+            /* await this.keycloak.login({
+                 redirectUri: window.location.origin + state.url,
+             });*/
+            this.keycloak
+                .getKeycloakInstance()
+                .login(<KeycloakLoginOptions>{
+                    locale: localStorage.getItem('ELOCKER_LANGUAGE')
+                })
+                .then((res) => {
+                    console.log({ res });
+                });
         }
 
         // Get the roles required from the route.
