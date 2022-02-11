@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 
 export function initLang(http: HttpClient, translate: TranslateService) {
   
-  return () => new Promise<boolean>((resolve: (res: boolean) => void) => {
+  return ()  => {
     const defaultELOCKER_LANGUAGE = 'en';
     const globalReqBody = {
       "entityType": [
@@ -65,5 +65,5 @@ export function initLang(http: HttpClient, translate: TranslateService) {
 //       resolve(true);
 //     });
 //   });
-})
+}
 }
