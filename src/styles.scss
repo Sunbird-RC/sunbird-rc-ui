@@ -697,7 +697,12 @@ formly-autocomplete-type .ng-select {
     border-bottom: 1px solid #cecece;
 }
 
-h4 {
+legend{
+    color: var(--primaryTextColor) !important;
+ 
+}
+
+h4, h3 {
     color: var(--primaryTextColor)
 }
 
