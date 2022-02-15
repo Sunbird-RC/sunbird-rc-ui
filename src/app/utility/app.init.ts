@@ -27,7 +27,7 @@ export function initializeKeycloak(keycloak: KeycloakService, configService: Aut
                         return fromPromise(keycloak.init({
                             config: {
                                 url: 'https://skills.xiv.in/auth',
-                                realm: 'ndear',
+                                realm: 'sunbird-rc',
                                 clientId: 'registry-frontend',
                             },
                             initOptions: {
