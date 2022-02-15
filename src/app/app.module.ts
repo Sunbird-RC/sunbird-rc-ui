@@ -255,14 +255,33 @@ import { SafeHtmlPipe } from './safe-html.pipe';
 
 
 export class AppModule {
+  languages;
+  constructor(translate: TranslateService, authConfig: AuthConfigService) {
 
-  constructor(translate: TranslateService) {
+    authConfig.getConfig().subscribe((config) => {
+      this.languages = config.languages;
+      var installed_languages = [];
 
-    if (localStorage.getItem('ELOCKER_LANGUAGE')) {
-      translate.use(localStorage.getItem('ELOCKER_LANGUAGE'));
-    } else {
-      translate.use('en');
-    }
+      for (let i = 0; i < this.languages.length; i++) {
+        installed_languages.push({
+          "code": this.languages[i],
+          "name": ISO6391.getNativeName(this.languages[i])
+        });
+      }
+
+      localStorage.setItem('languages', JSON.stringify(installed_languages));
+      translate.addLangs(this.languages);
+
+      if (localStorage.getItem('setLanguage') && this.languages.includes(localStorage.getItem('setLanguage'))) {
+        translate.use(localStorage.getItem('setLanguage'));
+
+      } else {
+        const browserLang = translate.getBrowserLang();
+        let lang = this.languages.includes(browserLang) ? browserLang : 'en';
+        translate.use(lang);
+        localStorage.setItem('setLanguage', lang);
+      }
+    });
 
   }
 }
