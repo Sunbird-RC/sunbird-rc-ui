@@ -26,16 +26,22 @@
     // --primaryTextColor: #000000;
     // --secondaryTextColor: #8D9091;
     // SL
-    --primaryColor: #F07D00;
-    --secondaryColor: #4A227C;
+    --primaryColor: #1987B6;
+    --secondaryColor: #0098AB;
     --bodyBackground: #F6F8FC;
     --cardBackground: #FFFFFF;
     --tagsBackground: #F4ECFF;
-    --navLabelColor: #B275FF;
-    --headerColor: #4A227C;
-    --headerLinkColor: #F4ECFF;
+    --navLabelColor: #0098AB;
+    --headerColor: #FFFFFF;
+    --headerLinkColor: #0098AB;
     --primaryTextColor: #000000;
-    --secondaryTextColor: #8D9091;
+    --secondaryTextColor: #000000;
+    --linkColor: #443DF6;
+
+    
+    --secondaryBtnBgColor: #e8f3f8;
+
+
     //   dark
     // --primaryColor: #F07D00;
     // --secondaryColor: #F07D00;
@@ -53,7 +59,7 @@
     --secondarytextColor: var(--bodyBackground);
     --primarybgColor: var(--primaryColor);
     --tagstextColor: var(--secondaryColor);
-    --linkColor: var(--navLabelColor);
+    --navlinkColor: var(--navLabelColor);
     --textWhite: var(--secondarytextColor);
     /*mm
   --secondarybgColor:#4A227C;
@@ -67,6 +73,11 @@
 
 
 /* PK changes for - theme support */
+
+.nav-link-color {
+    color: var(--navlinkColor) !important;  
+}
+
 
 .tagstextColor {
     color: var(--primarybgColor) !important;
@@ -186,6 +197,9 @@ legend {
     background-color: var( --btnBgColor) !important;
 }
 
+.btn-sec-bg{
+    background-color: var( --secondaryBtnBgColor) !important;
+}
 .badge-secondary {
     border: 1px solid #CCCCCC !important;
     background-color: var(--bodyBackground) !important;
@@ -326,6 +340,7 @@ body {
 
 a {
     text-decoration: none !important;
+    color: var(--linkColor) !important;
 }
 
 // /* Importing Bootstrap SCSS file. */
@@ -514,9 +529,14 @@ formly-field {
 }
 
 .list-area {
-    background: #fbfbfb;
-    color: black !important;
+    background-color : var(--cardBackground) !important;
+ color: var(--primaryTextColor) !important;
 }
+
+.list-filter {
+    background: #FFFFFF;
+}
+
 
 formly-autocomplete-type .ng-select {
     margin-top: 25px !important;
@@ -644,10 +664,11 @@ formly-autocomplete-type .ng-select {
             text-transform: capitalize;
             border: 0px;
             color: var(--primaryTextColor);
+            font-weight: 400 !important;
             &.active,
             &:hover {
-                border-bottom: 1px solid var(--linkColor) !important;
-                color: var(--linkColor) !important;
+                border-bottom: 1px solid var(--navlinkColor) !important;
+                color: var(--navlinkColor) !important;
                 background-color: transparent !important;
             }
         }
@@ -748,4 +769,9 @@ label {
 
 .search-area .fa-search {
     color: var(--primaryTextColor) !important;
+}
+
+.modal-header
+{
+    background-color: var(--headerColor) !important;
 }

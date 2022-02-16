@@ -58,7 +58,7 @@
             <div class="d-flex align-items-center ml-auto">
                 <span *ngIf="languages.length > 1">
                     <!-- <i style="font-size: 25px;" class="fa fa-language text-primary-color mt-3" aria-hidden="true"></i> -->
-                    <select class="lang-btn text-primary-color" (change)="languageChange($event)">
+                    <select class="lang-btn nav-link-color" (change)="languageChange($event)">
                         <option *ngFor="let lang of languages" [value]="lang.code"
                             [selected]="(lang.code == langCode)? true : false">{{lang.name}}</option>
                     </select>

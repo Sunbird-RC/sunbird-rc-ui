@@ -6,8 +6,8 @@
     <div class="card-body">
       <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item" *ngFor="let tab of filtered;let index = index;">
-          <a class="nav-link {{tab?.activeTab}} text-capitalize p14" (click)="onTabChange($event, tab?.tab);"
-            data-toggle="tab" href="#{{tab?.tab}}"><b>{{tab?.tabTitle | translate}}</b></a>
+          <a class="nav-link primary-text {{tab?.activeTab}} text-capitalize p14" (click)="onTabChange($event, tab?.tab);"
+            data-toggle="tab" href="#{{tab?.tab}}">{{tab?.tabTitle | translate}}</a>
         </li>
       </ul>
 
@@ -27,7 +27,7 @@
             <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form"></formly-form>
             <button type="submit" class="btn btn-primary text-capitalize btn-style float-end mt-2 submit-button"
               [disabled]="!form.valid">{{'SEARCH' | translate}}</button>
-            <button type="button" class="btn btn-bg text-capitalize btn-style ml-2 mt-2 label-primary"
+            <button type="button" class="btn btn-bg text-capitalize btn-style ml-2 mt-2 nav-link-color btn-sec-bg"
               (click)="resetModel(index)">{{'RESET' | translate}}</button>
           </form>
         </div>
@@ -42,7 +42,7 @@
       *ngFor="let item of items | paginate: { itemsPerPage: limit, currentPage: page }">
       <div *ngFor="let field of item.fields">
         <div data-toggle="modal" data-target="#prewiewProfile" (click)="showDetails(item?.data)">
-          <div *ngIf="field?.value" class="p14">
+          <div *ngIf="field?.value" class="p14 primary-text">
             <span *ngIf="field?.title"> {{field?.title | translate}} : </span>
             <span class="" *ngIf="typeOf(field?.value) != 'object'"><b>{{field?.value}} </b> </span>
             <span class="" *ngIf="typeOf(field?.value) === 'object'"><b>
@@ -80,7 +80,7 @@
     <table class="mx-5 my-5 w-50">
       <tbody class="fs-5" *ngIf="!isLoading && !items?.length">
         <tr>
-          <td class="float-end" [attr.colspan]="items?.length">
+          <td class="float-end primary-text" [attr.colspan]="items?.length">
             {{'DATA_NOT_FOUND' | translate}}
           </td>
         </tr>
@@ -105,7 +105,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h6 class="modal-title" id="prewiewProfile">{{'PUBLIC_PROFILE' | translate}}</h6>
+        <h6 class="modal-title primary-text" id="prewiewProfile">{{'PUBLIC_PROFILE' | translate}}</h6>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
             aria-hidden="true">&times;</span></button>
       </div>
