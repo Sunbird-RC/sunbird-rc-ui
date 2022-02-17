@@ -37,7 +37,7 @@ export class HeaderComponent implements OnInit {
       localStorage.setItem('ELOCKER_THEME', "default");
     }
 
-    this.logo = this.config.getEnv('logoPath');
+    this.logo = this.config.getEnv(localStorage.getItem('ELOCKER_THEME') + '_theme').logoPath;
     this.schemaService.getHeaderJSON().subscribe(async (HeaderSchemas) => {
       var filtered = HeaderSchemas.headers.filter(obj => {
         return Object.keys(obj)[0] === this.headerFor;

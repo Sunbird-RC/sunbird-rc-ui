@@ -38,7 +38,7 @@ export function initializeKeycloak(keycloak: KeycloakService, configService: Aut
                         }))
                     }
                 })
-            )
+            ).toPromise()
 }
 //     return () =>
 //         keycloak.init({

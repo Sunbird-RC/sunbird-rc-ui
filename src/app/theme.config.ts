@@ -1,4 +1,24 @@
-export const THEMES = {
+
+import { HttpClient } from '@angular/common/http';
+
+export var THEMES: { default: any; dark: any; };
+
+export function initTheme(http: HttpClient) {
+  
+  return ()  => {
+
+    http.get('./assets/config/config.json').subscribe((res)=>{
+      console.log(res);
+       THEMES = {
+        default : res['default_theme'],
+        dark: res['dark_theme']
+      }
+    });
+  }
+
+}
+    
+/*export const THEMES = {
 
   default: {
     primaryColor: "#1987B6",
@@ -28,5 +48,5 @@ export const THEMES = {
     secondaryBtnBgColor: "#e8f3f8",
 
   }
-};
+};*/
 

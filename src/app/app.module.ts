@@ -123,6 +123,7 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { DocDetailViewComponent } from './documents/doc-detail-view/doc-detail-view.component';
 // import { FaqComponent } from './custom-components/faq/faq.component';
 import { SafeHtmlPipe } from './safe-html.pipe';
+import { initTheme } from './theme.config';
 // import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
 
 @NgModule({
@@ -248,6 +249,12 @@ import { SafeHtmlPipe } from './safe-html.pipe';
     {
       provide: APP_INITIALIZER,
       useFactory: initLang,
+      deps: [HttpClient, TranslateService],
+      multi: true
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initTheme,
       deps: [HttpClient, TranslateService],
       multi: true
     }]
