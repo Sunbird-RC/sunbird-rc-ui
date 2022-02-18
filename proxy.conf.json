@@ -1,24 +1,25 @@
 {
-    "/elocker/api/v1": {
-        "target": "https://elocker.xiv.in",
-        "changeOrigin": true,
-        "logLevel": "debug",
-        "secure": false
+    "/registry/api/v1": {
+      "target": "https://ndear.xiv.in",
+      "changeOrigin": true,
+      "logLevel": "debug",
+      "secure": false
 
     },
 
-    "/elocker/api": {
-        "target": "https://elocker.xiv.in",
-        "changeOrigin": true,
-        "logLevel": "debug",
-        "secure": false
+    "/registry/api": {
+      "target": "https://ndear.xiv.in",
+      "changeOrigin": true,
+      "logLevel": "debug",
+      "secure": false
+
     },
 
-    "/elocker/api/docs": {
-        "target": "https://elocker.xiv.in",
-        "changeOrigin": true,
-        "logLevel": "debug",
-        "secure": false
+    "/registry/api/docs": {
+      "target": "https://ndear.xiv.in",
+      "changeOrigin": true,
+      "logLevel": "debug",
+      "secure": false
 
     }
-}
+  }

@@ -146,8 +146,43 @@ export class FormsComponent implements OnInit {
           if (fieldset.required && fieldset.required.length > 0) {
             this.definations[fieldset.definition]['required'] = fieldset.required;
           }
+
           if (fieldset.dependencies) {
+
+            let _self = this;
+            Object.keys(fieldset.dependencies).forEach(function (key) {
+              let above13 = fieldset.dependencies[key];
+              if(typeof(above13) === 'object'){
+              Object.keys(above13).forEach(function (key1) {
+                let oneOf = above13[key1];
+
+                if (oneOf.length) {
+                  for (let i = 0; i < oneOf.length; i++) {
+
+                    if (oneOf[i].hasOwnProperty('properties')) {
+
+                      Object.keys(oneOf[i].properties).forEach(function (key2) {
+                        let pro = oneOf[i].properties[key2];
+
+                        if (pro.hasOwnProperty('properties')) {
+                          Object.keys(pro['properties']).forEach(function (key3) {
+                            console.log(pro.properties[key3]);
+                            if (pro.properties[key3].hasOwnProperty('title')) {
+                              fieldset.dependencies[key][key1][i].properties[key2].properties[key3]['title'] = _self.translate.instant(pro.properties[key3].title);
+                            }
+                          });
+                        }
+
+                      })
+                    }
+                  }
+                }
+              })
+            }
+            })
+
             this.dependencies = fieldset.dependencies;
+
           }
 
           this.definations[fieldset.definition].properties = {}
@@ -359,8 +394,8 @@ export class FormsComponent implements OnInit {
                   Object.keys(_self.responseData.definitions[fieldset.definition].properties[field.name].properties[key].properties).forEach(function (key1) {
 
                     _self.responseData.definitions[fieldset.definition].properties[field.name].properties[key].properties[key1].title = _self.checkString(key1, _self.responseData.definitions[fieldset.definition].properties[field.name].properties[key].properties[key1].title);
-                   
-           
+
+
                   });
 
 
@@ -383,10 +418,8 @@ export class FormsComponent implements OnInit {
         }
 
         if (field.children) {
-          if(field.children.fields)
-          {
-            for(let i =0; i < field.children.fields.length; i++)
-            {
+          if (field.children.fields) {
+            for (let i = 0; i < field.children.fields.length; i++) {
               if (field.children.fields[i].hasOwnProperty('validation') && field.children.fields[i].validation.hasOwnProperty('message')) {
                 field.children.fields[i].validation['message'] = this.translate.instant(field.children.fields[i].validation.message);
                 this.responseData.definitions[fieldset.definition].properties[field.name].properties[field.children.fields[i].name]['widget']['formlyConfig']['validation']['messages']['pattern'] = this.translate.instant(field.children.fields[i].validation.message);
@@ -394,7 +427,7 @@ export class FormsComponent implements OnInit {
 
             }
           }
-         
+
         }
 
         if (field.custom && field.element) {
@@ -525,15 +558,14 @@ export class FormsComponent implements OnInit {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['className'] = field.class;
         }
 
-        if ( this.responseData.definitions[fieldset.definition].properties[field.name].hasOwnProperty('items')) {
-          if(this.responseData.definitions[fieldset.definition].properties[field.name].items.hasOwnProperty('properties'))
-          {
+        if (this.responseData.definitions[fieldset.definition].properties[field.name].hasOwnProperty('items')) {
+          if (this.responseData.definitions[fieldset.definition].properties[field.name].items.hasOwnProperty('properties')) {
             let _self = this;
             Object.keys(_self.responseData.definitions[fieldset.definition].properties[field.name].items.properties).forEach(function (key) {
               console.log(key);
               _self.responseData.definitions[fieldset.definition].properties[field.name].items.properties[key].title = _self.checkString(key, _self.responseData.definitions[fieldset.definition].properties[field.name].items.properties[key].title);
-             
-            
+
+
             });
 
           }

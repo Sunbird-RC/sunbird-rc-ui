@@ -18,6 +18,8 @@
   "SEND_FOR_ATTENSTATION": "सत्यापन के लिए भेजें?",
   "MOBILE_NO_MUST_10_DIGIT": "मोबाइल नंबर 10 अंकों का होना चाहिए।",
   "END_DATE_GREATER_THAN_START_DATE": "समाप्ति तिथि प्रारंभ तिथि से बड़ी होनी चाहिए",
+  "yes" : "हाँ",
+  "No" : "नहीं",
   "GUARDIAN_FULL_NAME": "अभिभावक का पूरा नाम",
   "GUARDIAN_RELATION_TYPE": "अभिभावक का संबंध प्रकार",
   "ARE_YOU_ABOVE_13": "क्या आप 13 साल से ऊपर हैं?",

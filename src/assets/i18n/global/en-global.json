@@ -17,6 +17,8 @@
     "SEND_FOR_ATTENSTATION": "Send for attestation?",
     "MOBILE_NO_MUST_10_DIGIT": "Mobile Number must be 10 digit number.",
     "END_DATE_GREATER_THAN_START_DATE": "End date must be greater than start date",
+    "yes" : "yes",
+    "No" : "No",
     "GUARDIAN_FULL_NAME": "Guardian's Full Name",
     "GUARDIAN_RELATION_TYPE": "Guardian's Relation type",
     "ARE_YOU_ABOVE_13": "Are you above 13?",
