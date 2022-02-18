@@ -340,7 +340,7 @@ body {
 
 a {
     text-decoration: none !important;
-    color: var(--linkColor) !important;
+   // color: var(--linkColor) !important;
 }
 
 // /* Importing Bootstrap SCSS file. */
@@ -702,7 +702,7 @@ formly-autocomplete-type .ng-select {
 }
 
 .navbar-light .navbar-nav .nav-link {
-    color: var(--headerLinkColor) !important;
+    //color: var(--headerLinkColor) !important;
     margin-right: 10px;
     margin-left: 10px;
 }

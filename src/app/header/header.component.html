@@ -11,8 +11,8 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <ng-template [ngIf]="headerSchema?.left">
                     <ul class="navbar-nav nav-tabs-line mb-2 mb-lg-0">
-                        <li class="nav-item" *ngFor="let header of headerSchema.left">
-                            <a *ngIf="header?.title" id="{{header?.title}}" class="nav-link  p14 {{header?.activeTab}} {{header?.className}}" [routerLink]="[header.redirectTo]">{{header?.title | translate}}</a>
+                        <li class="nav-item" *ngFor="let header of headerSchema.left; let index = index">
+                            <a *ngIf="header?.title" id="{{header?.title}}" (click)="onTabChange(index, 'left')" class="nav-link  p14 {{header?.className}}  {{header?.activeTab}}" [routerLink]="[header.redirectTo]">{{header?.title | translate}}</a>
                             <a *ngIf="header?.image" class="nav-link" [routerLink]="[header.redirectTo]">
                                 <img style="width: 25px;" src={{header?.image}} />
                             </a>
@@ -28,7 +28,7 @@
                 <ng-template [ngIf]="headerSchema?.right">
                     <ul *ngFor="let header of headerSchema.right" class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a *ngIf="header?.title" class="nav-link p14 {{header?.className}}" [routerLink]="[header.redirectTo]">{{header?.title | translate}}</a>
+                            <a *ngIf="header?.title" class="nav-link p14 {{header?.className}} {{header?.activeTab}}" [routerLink]="[header.redirectTo]">{{header?.title | translate}}</a>
                             <a *ngIf="header?.image" class="nav-link" [routerLink]="[header.redirectTo]">
                                 <img style="width: 25px;" src={{header?.image}} />
                             </a>

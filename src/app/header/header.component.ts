@@ -22,6 +22,7 @@ export class HeaderComponent implements OnInit {
   headerSchema;
   langCode: string;
   lang;
+  indexPre;
   ELOCKER_THEME: string;
   constructor(
     public router: Router, private config: AppConfig, public schemaService: SchemaService,
@@ -43,6 +44,19 @@ export class HeaderComponent implements OnInit {
         return Object.keys(obj)[0] === this.headerFor;
       });
       this.headerSchema = filtered[0][this.headerFor];
+
+      this.headerSchema['left'][0]["activeTab"] = (this.headerSchema['left'].length == 1 || (localStorage.getItem('activeTab') == null)) ? 'active' : '';
+      this.headerSchema['right'][0]["activeTab"] = (this.headerSchema['right'].length == 1 || (localStorage.getItem('activeTab') == null)) ? 'active' : '';
+
+
+      if (localStorage.getItem('activeTab')) {
+        let activeT = JSON.parse(localStorage.getItem('activeTab'));
+        this.headerSchema[activeT.pos][activeT.i]["activeTab"] = 'active';
+
+        console.log(this.headerSchema);
+
+      }
+
     }, (error) => {
       console.error('headers.json not found in src/assets/config/ - You can refer to examples folder to create the file')
     });
@@ -64,6 +78,17 @@ export class HeaderComponent implements OnInit {
     }
     this.themeService.setTheme(this.ELOCKER_THEME);
     localStorage.setItem('ELOCKER_THEME', this.ELOCKER_THEME);
+  }
+
+  onTabChange(index, pos) {
+
+    localStorage.setItem('activeTab', JSON.stringify({ 'pos': pos, 'i': index }))
+
+    // console.log(this.headerSchema);
+
+
+    // this.preTitle = activeTabIs.title;
+
   }
 
 }
