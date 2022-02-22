@@ -1,9 +1,11 @@
+<div class="header-fixed-height"></div>
+
 <app-header *ngIf="!public" [headerFor]='layout' [tab]='tab'></app-header>
-<!-- <div *ngIf="params?.layout && !public">
+ <div *ngIf="params?.layout && !public" class="mb-2">
     <nav class="navbar navbar-expand-lg navbar-light bg-header">
         <div class="container my-2">
             <div class=" d-inline ">
-                <h3 class="mb-1 text-body">
+                <h3 class="mb-1 text-wb">
                     {{headerName}}
                 </h3>
                 <p *ngIf="subHeadername.length"> <i class="fa fa-map-marker"></i> <span *ngFor="let a of subHeadername;let i = index">
@@ -16,7 +18,7 @@
         </div>
     </nav>
 </div>
-<br /> -->
+<br />
 
 <ng-template #loader>
     <!-- <div class="spinner-border" style="width: 6rem; height: 6rem; align-self: center;" role="status">
@@ -37,7 +39,7 @@
     <ng-template ngFor let-block [ngForOf]="Data" let-blockIndex="index">
         <div *ngIf="block.items[0].length > 0; else noData">
             <div [ngClass]="public ? 'd-flex flex-justify-between' : 'd-flex flex-justify-between mt-3'">
-                <div class="mt-3">
+                <div class="mt-4">
                     <p class="d-inline-block fs-6 font-weight-bold mb-2">{{block.title | translate}}</p>
                     <ng-template [ngIf]="block.edit">
                         <a *ngIf="!public" panelEditLink="{{block.editform}}" class="pl-1 fs-7 text-secondary-color">{{'EDIT'| translate}}

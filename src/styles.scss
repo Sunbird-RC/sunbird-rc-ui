@@ -107,8 +107,8 @@
     background: var(--headerColor) !important;
 }
 
-.text-body {
-    color: var(--headerTitle) !important;
+.text-wb {
+    color: var(--primaryTextColor) !important;
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
@@ -480,7 +480,7 @@ button.calendar:active {
 .container {
     //margin-top: 100px;
     padding-bottom: 100px;
-    margin-top: 75px;
+    margin-top: 35px;
 }
 
 formly-field {
@@ -775,4 +775,9 @@ label {
 .modal-header
 {
     background-color: var(--headerColor) !important;
+}
+
+.header-fixed-height{
+    height: 56px !important;
+    margin-bottom: 25px;
 }
