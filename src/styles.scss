@@ -191,6 +191,7 @@ legend {
 
 .p12 {
     font-size: 12px !important;
+    color: var(--secondaryTextColor);
 }
 
 .btn-bg {
@@ -663,7 +664,7 @@ formly-autocomplete-type .ng-select {
             margin-right: 15px;
             text-transform: capitalize;
             border: 0px;
-            color: var(--primaryTextColor);
+            color: var(--primaryTextColor) !important;
             font-weight: 400 !important;
             &.active,
             &:hover {
@@ -702,7 +703,7 @@ formly-autocomplete-type .ng-select {
 }
 
 .navbar-light .navbar-nav .nav-link {
-    //color: var(--headerLinkColor) !important;
+    color: var(--primaryTextColor) !important;
     margin-right: 10px;
     margin-left: 10px;
 }
