@@ -10,7 +10,6 @@ import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { APP_INITIALIZER } from '@angular/core';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
-import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
@@ -57,7 +56,6 @@ import { AddDocumentComponent } from './documents/add-document/add-document.comp
 import {WebcamModule} from 'ngx-webcam';
 import { ScanDocumentComponent } from './documents/scan-document/scan-document.component';
 import { ScanQrCodeComponent } from './documents/scan-qr-code/scan-qr-code.component';
-import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import {QuarModule} from '@altack/quar';
 import { BrowseDocumentsComponent } from './documents/browse-documents/browse-documents.component';
 
@@ -168,7 +166,6 @@ import { initTheme } from './theme.config';
     NgbAccordionModule,
     FormlyBootstrapModule,
     KeycloakAngularModule,
-    NgxDocViewerModule,
     Bootstrap4FrameworkModule,
     AngularMultiSelectModule,
     NgSelectModule,
@@ -179,7 +176,6 @@ import { initTheme } from './theme.config';
     WebcamModule,
     ColorPickerModule,
     QuarModule,
-    ZXingScannerModule,
     NgxExtendedPdfViewerModule,
     FormlyModule.forRoot({
       extras: { resetFieldOnHide: true },
