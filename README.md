@@ -13,7 +13,7 @@ This is an Angular 8 project, and you need to install the dependencies, and run 
 ## Configuration
 Fill up the all configuration details in installation page. The application needs to be configured with the appropriate fields to be able to use it. 
 
-### Required Configuration deatils
+### Required Configuration details
 
 Fields | Info
 ------------          | -------------
@@ -129,13 +129,13 @@ Key | Value
 `fields.title` | Title of field 
 `fields.property` | Set property path in you api responce (eg : "address.district" )
 `fields.attest` | Set state check property key name 
-`fields.autocomplete` | Auto suugest field  <pre> <br /> Example :  "autocomplete": { "apiURL": "_search_api_url_",
+`fields.autocomplete` | Auto auto suggestion field  <pre> <br /> Example :  "autocomplete": { "apiURL": "_search_api_url_",
                             "body": {
                                 "filters": {
                                     "instituteName": {
                                         "startsWith": "{{value}}"
                                     },
-                                    "affiliation._osState": {
+                                    "affiliation._State": {
                                         "eq": "PUBLISHED"
                                     }
                                 },
