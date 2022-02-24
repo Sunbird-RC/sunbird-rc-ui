@@ -160,7 +160,7 @@ mb-2{
 nav {
     overflow: hidden;
     // padding: 1em;
-    position: fixed;
+    position: inherit;
     top: 0px;
     display: block;
     width: 100%;
@@ -181,3 +181,7 @@ img {
     position: relative !important;
 }
 
+.header-fixed-height{
+   // height: 56px !important;
+    margin-bottom: 45px;
+}

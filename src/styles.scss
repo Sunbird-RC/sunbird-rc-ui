@@ -480,7 +480,7 @@ button.calendar:active {
 .container {
     //margin-top: 100px;
     padding-bottom: 100px;
-    margin-top: 35px;
+  //  margin-top: 35px;
 }
 
 formly-field {
@@ -777,7 +777,4 @@ label {
     background-color: var(--headerColor) !important;
 }
 
-.header-fixed-height{
-    height: 56px !important;
-    margin-bottom: 25px;
-}
+

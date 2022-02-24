@@ -8,7 +8,6 @@ export function initTheme(http: HttpClient) {
   return ()  => {
 
     http.get('./assets/config/config.json').subscribe((res)=>{
-      console.log(res);
        THEMES = {
         default : res['default_theme'],
         dark: res['dark_theme']
