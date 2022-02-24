@@ -35,7 +35,7 @@
 <!-- <div [ngClass]="public ? 'container noToBottom' : 'container'" *ngIf="identifier != null"> -->
 
 
-<div [ngClass]="public ? 'container noToBottom' : 'container'" *ngIf="identifier != null && schemaloaded; else loader">
+<div [ngClass]="public ? 'container noToBottom' : 'container mt-0'" *ngIf="identifier != null && schemaloaded; else loader">
     <ng-template ngFor let-block [ngForOf]="Data" let-blockIndex="index">
         <div *ngIf="block.items[0].length > 0; else noData">
             <div [ngClass]="public ? 'd-flex flex-justify-between' : 'd-flex flex-justify-between mt-1'">
