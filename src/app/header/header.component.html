@@ -63,11 +63,14 @@
                             [selected]="(lang.code == langCode)? true : false">{{lang.name}}</option>
                     </select>
                 </span>
-                <span (click)="changeTheme()">
+                <!-- <span (click)="changeTheme()">
                     <a class="nav-link pr-0">
                         <img style="width: 20px;" src="assets/images/theme_icon.svg" />
                     </a>
-                </span>
+                </span> -->
+
+                <span class="p12" *ngIf="loggedInUser">{{loggedInUser}}</span> &nbsp;
+                <a href="/logout" class="p12"> <img style="width: 25px;" src="assets/images/logout.png" /></a>
             </div>
 
         </div>

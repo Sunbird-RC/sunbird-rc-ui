@@ -34,9 +34,13 @@ export class KeycloakloginComponent implements OnInit {
       localStorage.setItem('loggedInUser', this.user);
       console.log('---------',this.config.getEnv('appType'))
       if(this.config.getEnv('appType') && this.config.getEnv('appType') === 'digital_wallet'){
-        this.profileUrl = this.entity+'/documents'
+        this.profileUrl = this.entity+'/documents';
+      } if(this.config.getEnv('appType') && this.config.getEnv('appType') === 'issuer'){
+        this.profileUrl = '/dashboard';
       }else{
-        this.profileUrl = '/profile/'+this.entity;
+       // this.profileUrl = '/dashboard';
+       this.profileUrl = '/profile/'+this.entity;
+
       }
       this.router.navigate([this.profileUrl]);
 

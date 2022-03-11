@@ -24,6 +24,7 @@ export class HeaderComponent implements OnInit {
   lang;
   indexPre;
   ELOCKER_THEME: string;
+  loggedInUser;
   constructor(
     public router: Router, private config: AppConfig, public schemaService: SchemaService,
     public translate: TranslateService, private themeService: ThemeService
@@ -32,6 +33,7 @@ export class HeaderComponent implements OnInit {
   async ngOnInit() {
     this.languages = JSON.parse(localStorage.getItem('languages'));
     this.langCode = localStorage.getItem('setLanguage');
+    this.loggedInUser = localStorage.getItem('loggedInUser');
     this.ELOCKER_THEME = localStorage.getItem('ELOCKER_THEME');
 
     if (!this.ELOCKER_THEME) {
@@ -45,9 +47,15 @@ export class HeaderComponent implements OnInit {
       });
       this.headerSchema = filtered[0][this.headerFor];
 
-      this.headerSchema['left'][0]["activeTab"] = (this.headerSchema['left'].length == 1 || (localStorage.getItem('activeTab') == null)) ? 'active' : '';
-      this.headerSchema['right'][0]["activeTab"] = (this.headerSchema['right'].length == 1 || (localStorage.getItem('activeTab') == null)) ? 'active' : '';
+      if(this.headerSchema.hasOwnProperty('left'))
+      {
+        this.headerSchema['left'][0]["activeTab"] = (this.headerSchema['left'].length == 1 || (localStorage.getItem('activeTab') == null)) ? 'active' : '';
+      }
 
+      if(this.headerSchema.hasOwnProperty('right'))
+      {
+      this.headerSchema['right'][0]["activeTab"] = (this.headerSchema['right'].length == 1 || (localStorage.getItem('activeTab') == null)) ? 'active' : '';
+      }
 
       if (localStorage.getItem('activeTab')) {
         let activeT = JSON.parse(localStorage.getItem('activeTab'));

@@ -20,11 +20,19 @@ import { ScanQrCodeComponent } from './documents/scan-qr-code/scan-qr-code.compo
 import { BrowseDocumentsComponent } from './documents/browse-documents/browse-documents.component';
 import { PagesComponent } from './pages/pages.component';
 import { DocDetailViewComponent } from './documents/doc-detail-view/doc-detail-view.component';
+import { DocTypesComponent } from './tables/doc-types/doc-types.component';
+import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
+import { DashboardComponent } from './issure/dashboard/dashboard.component';
+import { AddCertificateComponent } from './issure/add-certificate/add-certificate.component';
+import { GetRecordsComponent } from './issure/get-records/get-records.component';
+import { AddRecordsComponent } from './issure/add-records/add-records.component';
 // import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
 // import { FaqComponent } from './custom-components/faq/faq.component';
 const routes: Routes = [
 // Home
-{ path: '', component: HomeComponent },
+// { path: '', component: HomeComponent },
+{ path: '', component: KeycloakloginComponent , canActivate: [AuthGuard]},
+
 
 // Auth
 { path: 'login', component: KeycloakloginComponent ,  canActivate: [AuthGuard]},
@@ -87,7 +95,16 @@ const routes: Routes = [
 // { path: 'document/detail', component: DocDetailViewComponent, canActivate: [AuthGuard] },
 // { path: 'document/view/:id', component: DocViewComponent, canActivate: [AuthGuard] },
 { path: 'discovery', component: SearchComponent },
-// { path: 'template', component: CreateCertificateComponent },
+ { path: 'doc-types', component: DocTypesComponent },
+ { path: 'template', component: CreateCertificateComponent },
+ 
+ { path: 'dashboard', component: DashboardComponent , canActivate: [AuthGuard] },
+ { path: 'records', component: GetRecordsComponent , canActivate: [AuthGuard] },
+ { path: 'add-records', component: AddRecordsComponent , canActivate: [AuthGuard] },
+
+
+ { path: 'certificate/:form', component: AddCertificateComponent , canActivate: [AuthGuard] },
+
 
 
 // Installation

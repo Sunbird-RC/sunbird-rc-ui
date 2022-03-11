@@ -122,6 +122,11 @@ import { DocDetailViewComponent } from './documents/doc-detail-view/doc-detail-v
 // import { FaqComponent } from './custom-components/faq/faq.component';
 import { SafeHtmlPipe } from './safe-html.pipe';
 import { initTheme } from './theme.config';
+import { DocTypesComponent } from './tables/doc-types/doc-types.component';
+import { DashboardComponent } from './issure/dashboard/dashboard.component';
+import { AddCertificateComponent } from './issure/add-certificate/add-certificate.component';
+import { GetRecordsComponent } from './issure/get-records/get-records.component';
+import { AddRecordsComponent } from './issure/add-records/add-records.component';
 // import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
 
 @NgModule({
@@ -153,7 +158,13 @@ import { initTheme } from './theme.config';
     ScanDocumentComponent,
     ScanQrCodeComponent,
     BrowseDocumentsComponent,
-    AuthImagePipe
+    AuthImagePipe,
+    DocTypesComponent,
+    SafeHtmlPipe,
+    DashboardComponent,
+    AddCertificateComponent,
+    GetRecordsComponent,
+    AddRecordsComponent
   ],
   imports: [
     BrowserModule,

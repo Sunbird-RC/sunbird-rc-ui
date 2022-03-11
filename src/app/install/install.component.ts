@@ -64,7 +64,8 @@ export class InstallComponent implements OnInit {
         options: [
           { label: 'Attestation', value: 'attestation' },
           { label: 'Certification', value: 'certification' },
-          { label: 'Digital Wallet', value: 'digital_wallet'}
+          { label: 'Digital Wallet', value: 'digital_wallet'},
+          { label: 'Issuer Portal', value: 'issuer'}
         ],
       },
     },

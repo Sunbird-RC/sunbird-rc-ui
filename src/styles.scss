@@ -431,6 +431,11 @@ button.calendar:active {
     padding-right: 0;
 }
 
+.modal-dialog{
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
 .modal-dialog.panel-right {
     position: fixed !important;
     left: auto;
@@ -438,9 +443,7 @@ button.calendar:active {
     right: 0;
     bottom: 0;
     margin: auto !important;
-    width: 600px !important;
     height: 100%;
-    max-width: 800px !important;
     -webkit-transform: translate3d(0%, 0, 0) !important;
     -ms-transform: translate3d(0%, 0, 0) !important;
     -o-transform: translate3d(0%, 0, 0) !important;
@@ -724,7 +727,7 @@ legend{
  
 }
 
-h4, h3 {
+h4, h3 , h2{
     color: var(--primaryTextColor)
 }
 
@@ -777,4 +780,50 @@ label {
     background-color: var(--headerColor) !important;
 }
 
+
+/* home.html css*/
+
+.landing-img {
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-size: 100% 100%;
+    flex: 1;
+    width: 55%;
+}
+
+.xx-small{
+    font-size: xx-small;
+}
+
+.langing-bg-color {
+    background: radial-gradient(72.14% 138.06% at 4.8% 90.49%, #D5EBE9 0%, #D5EBE9 45.05%, #B5E6DF 100%);
+}
+
+.small-card {
+    position: absolute;
+    left: 0%;
+    right: 0%;
+    top: 0%;
+    bottom: 0%;
+    background: #FFFFFF;
+    border: 1px solid #EFEFEF;
+    box-sizing: border-box;
+    border-radius: 4px;
+    height: 141px;
+    width: 326px;
+    left: 0px;
+    top: 0px;
+    border-radius: 4px;
+    min-width: 300px !important;
+}
+
+formly-field formly-object-type p {
+    color: #8D9091;
+    font-size: 14px;
+}
+
+formly-field .col-6 {
+    display: inline-block;
+    padding: 0 0 0 5px;
+}
 

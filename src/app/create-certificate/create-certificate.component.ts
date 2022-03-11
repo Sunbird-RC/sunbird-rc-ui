@@ -8,7 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class CreateCertificateComponent implements OnInit {
   @ViewChild("userHtml", { static: false }) userHtml;
-
+header : string = "documents";
   constructor(public translate: TranslateService,) { }
 
   ngOnInit(): void {

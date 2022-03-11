@@ -39,6 +39,8 @@
 
 <div [ngClass]="public ? 'container noToBottom' : 'container mt-0'"
     *ngIf="identifier != null && schemaloaded; else loader">
+    <!-- <button type="button" class="btn btn-bg text-capitalize float-end btn-sm nav-link-color btn-sec-bg"
+    (click)="resetModel(index)">View All</button> -->
     <ng-template ngFor let-block [ngForOf]="Data" let-blockIndex="index">
         <div *ngIf="block.items[0].length > 0; else noData">
             <div [ngClass]="public ? 'd-flex flex-justify-between' : 'd-flex flex-justify-between mt-1'">
@@ -52,10 +54,15 @@
                     </ng-template>
                 </div>
                 <ng-template [ngIf]="block.add">
-                    <a *ngIf="!public" panelAddLink="{{block.addform}}" class="fs-7 text-secondary-color"><i
+                    <!-- <a *ngIf="!public" panelAddLink="{{block.addform}}" class="fs-7 text-secondary-color"><i
                             class="fa fa-plus pr-1" aria-hidden="true"></i><span
-                            class="text-secondary-color p12">{{block.title | translate}}</span></a>
+                            class="text-secondary-color p12">{{block.title | translate}}</span></a> -->
+
+                            <button *ngIf="!public" panelAddLink="{{block.addform}}" type="button" class="mb-2 btn p14 btn-bg text-capitalize float-end btn-sm label-primary btn-primary"
+                            data-toggle="modal" data-target="#prewiewProfile">{{block.addFormTitle | translate}}</button>
                 </ng-template>
+                <!-- <button type="button" class="btn btn-bg text-capitalize btn-sm mt-2 nav-link-color btn-sec-bg"
+                (click)="resetModel(index)">View All</button> -->
                 <!-- <a *ngIf="!public" class="text-end d-block text-primary-color blue-shade-btn float-end" data-toggle="modal"
                 data-target="#prewiewProfile">Preview Public Profile</a> -->
             </div>
@@ -212,7 +219,7 @@
 
                     <div class="modal-header">
                         <h6 class="modal-title">{{'PREVIEW_PUBLIC_PROFILE' | translate}}</h6>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        <button type="button" class="close" da ta-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
@@ -230,20 +237,20 @@
             </div>
         </ng-template>
     </ng-template>
+    
 
 
-
-    <div class="card mt-4">
+    <!-- <div class="card mt-4">
 
         <div class="card-body text-center">
             <p class="p16"><b>Get started</b></p>
 
            <p> <b>Setup new or connect to existing Issuance system </b></p>
 
-            <a  class=" p-2 p14 btn-bg label-primary btn-style"> Add Document type</a>
+            <a  class=" p-2 p14 btn-bg label-primary btn-style" href="/add-doc-types"> Add Document type</a>
            
         </div>
-    </div>
+    </div> -->
 </div>
 
 
