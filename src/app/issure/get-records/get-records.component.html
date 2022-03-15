@@ -1,0 +1,56 @@
+<app-header [headerFor]='headerName'></app-header>
+<br />
+
+
+
+
+<div class="container">
+    <!-- <div class="d-flex flex-row flex-nowrap overflow-auto">
+        <div class="card card-block small-card mx-2 p-2" *ngFor="let card of cards">
+            <p class="p16 mb-1">{{card?.title}}</p>
+            <h2>{{card?.records}}</h2>
+            <p class="p12 mb-1">Records</p>
+        </div>
+
+    </div> -->
+
+    <div class="d-flex mt-3">
+        <a  href="" onClick="history.go(-1); return false;"><i
+            class="fa fa-angle-left primary-text"></i> </a> &nbsp; &nbsp;
+            
+        <span class="p16"><b>{{documentName}}</b></span>
+        
+    </div>
+
+    <div class="my-3">
+        <span class="p16"><b>{{recordItems?.length}} Records</b></span>
+        
+
+        <a class=""> <button type="button" routerLink="/add-records/{{documentName}}"
+            class="btn p16 btn-bg pl-3 pr-3 text-capitalize float-end btn-sm label-primary btn-primary">Add </button></a>
+    </div>
+
+    <div class="card" *ngIf="!recordItems?.length">
+        <div class="p16 card-body">
+            <p class="mb-1">No Records issued documents.</p>
+            <p class="mb-1">Getting started by ‘uploading’ or ‘adding records’</p>
+        </div>
+    </div>
+
+    <div class="card" *ngIf="recordItems?.length">
+    <table class="card-body">
+        <tr>
+          <th class="p12">Name</th>
+          <th class="p12">Mobile Number </th>
+        </tr>
+        <tr *ngFor="let item of recordItems" class="p-3">
+          <td class="p16" *ngIf="item?.name" (click)="downloadVc(item)">{{item?.name}}</td>
+          <td class="p16" *ngIf="item?.name" (click)="downloadVc(item)">{{item?.contact}}</td>
+          <!-- <td class="float-end text-primary"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i></td> -->
+        </tr>
+      </table>
+    </div>
+
+    
+
+</div>

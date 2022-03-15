@@ -70,18 +70,18 @@ export class AppConfig {
                             this.config = responseData;
                             this.titleService.setTitle(responseData.title);
                             resolve(true);
-                        }, err => {console.log('Error reading config.json configuration file . Please find Sample ->> https://ndear.xiv.in/assets/config/config.json', err);
+                        }, err => {console.log('Error reading config.json configuration file . Please find Sample ->> https://sunbird-certificate-demo.xiv.in/assets/config/config.json', err);
                         // this.titleService.setTitle("Sunbird RC");
                         this.router.navigate(['install'])});
                 } else {
-                    console.error('config.json file is not valid . Please find Sample ->> https://ndear.xiv.in/assets/config/config.json');
+                    console.error('config.json file is not valid . Please find Sample ->> https://sunbird-certificate-demo.xiv.in/assets/config/config.json');
                     // this.titleService.setTitle("Sunbird RC");
                     this.router.navigate(['install'])
                     resolve(true);
                 }
             }, 
             
-            err => {console.log('Error reading config.json configuration file. Please find Sample ->> https://ndear.xiv.in/assets/config/config.json', err);
+            err => {console.log('Error reading config.json configuration file. Please find Sample ->> https://sunbird-certificate-demo.xiv.in/assets/config/config.json', err);
                     // this.titleService.setTitle("Sunbird RC");
                     this.router.navigate(['install'])
                     resolve(true);

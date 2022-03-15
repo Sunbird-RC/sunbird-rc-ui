@@ -1,0 +1,72 @@
+<app-header [headerFor]='headerName'></app-header>
+<div class="card mt-5">
+    <div class="card-body mx-4">
+        <img src="{{issuerInfo.logoUrl}}" style="width: 25px;" class="p12" alt='logo Url'/>
+        <p class="p14 mb-1">{{issuerInfo.name}}</p>
+        <p class="p14 mb-1"><a>{{issuerInfo.websiteUrl}}</a></p>
+
+    </div>
+</div>
+
+
+<div class="container">
+    <!-- <div class="d-flex flex-row flex-nowrap overflow-auto">
+        <div class="card card-block small-card p-2 mr-2 " *ngFor="let card of cards">
+            <p class="p16 mb-1">{{card?.title}}</p>
+            <h2>{{card?.records}}</h2>
+            <p class="p12 mb-1">Records</p>
+        </div>
+
+    </div> -->
+
+    <div class="my-3">
+        <span class="p16"><b>Documents</b></span>
+        <!-- <a class=" p-2 p14 btn-bg label-primary btn-style float-end" href="/add-doc-types"> Add Document type</a> -->
+        <!-- <button type="button" class="btn p14 btn-bg text-capitalize float-end btn-sm label-primary btn-primary"
+            data-toggle="modal" data-target="#prewiewProfile">Add New Document</button> -->
+        <a routerLink="/certificate/add-document" class=""> <button type="button"
+                class="btn p14 btn-bg text-capitalize float-end btn-sm label-primary btn-primary">Add New
+                Document</button></a>
+    </div>
+
+    <div class="card" *ngIf="!templatesItems">
+        <div class="p16 card-body">
+            <p class="mb-1">You have not added certificates yet.</p>
+            <p class="mb-1">Add New to Setup and issue Verified Credentials</p>
+        </div>
+    </div>
+
+    <div class="card" *ngIf="templatesItems">
+    <table class="card-body">
+        <tr>
+          <th class="p12">Certificate</th>
+        </tr>
+        <tr *ngFor="let item of templatesItems" class="p-3">
+          <td class="p16" *ngIf="item?.name" routerLink="/records/{{item?.name}}" >{{item?.name}}</td>
+        
+          <!-- <td class="float-end text-primary"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i></td> -->
+        </tr>
+      </table>
+    </div>
+
+
+
+
+    <!-- <div class="modal right fade right-xl-modal" id="prewiewProfile" tabindex="-1" role="dialog"
+        aria-labelledby="prewiewProfile">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h6 class="modal-title">Add Document type</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    hi
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+</div>

@@ -483,7 +483,13 @@ button.calendar:active {
 .container {
     //margin-top: 100px;
     padding-bottom: 100px;
-    margin-top: 75px;
+    margin-top: 50px;
+    max-width: 94% !important; 
+}
+
+.sub-container {
+    //margin-top: 100px;
+   margin: 20px;
 }
 
 formly-field {
