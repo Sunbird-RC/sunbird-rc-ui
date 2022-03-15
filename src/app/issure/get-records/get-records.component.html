@@ -1,5 +1,5 @@
-<app-header [headerFor]='headerName'></app-header>
-<br />
+<!-- <app-header [headerFor]='headerName'></app-header>
+<br /> -->
 
 
 
@@ -23,7 +23,8 @@
     </div>
 
     <div class="my-3">
-        <span class="p16"><b>{{recordItems?.length}} Records</b></span>
+        <span class="p16" *ngIf="recordItems?.length == 1"><b>{{recordItems?.length}} Record</b></span>
+        <span class="p16" *ngIf="recordItems?.length != 1"><b>{{recordItems?.length}} Records</b></span>
         
 
         <a class=""> <button type="button" routerLink="/add-records/{{documentName}}"
