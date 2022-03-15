@@ -1,4 +1,4 @@
-<div class="header-fixed-height"></div>
+<div *ngIf="!public" class="header-fixed-height"></div>
 
 <app-header *ngIf="!public" [headerFor]='layout' [tab]='tab'></app-header>
  <div *ngIf="params?.layout && !public" class="mb-2">
@@ -35,11 +35,11 @@
 <!-- <div [ngClass]="public ? 'container noToBottom' : 'container'" *ngIf="identifier != null"> -->
 
 
-<div [ngClass]="public ? 'container noToBottom' : 'container'" *ngIf="identifier != null && schemaloaded; else loader">
+<div [ngClass]="public ? 'container noToBottom' : 'container mt-0'" *ngIf="identifier != null && schemaloaded; else loader">
     <ng-template ngFor let-block [ngForOf]="Data" let-blockIndex="index">
         <div *ngIf="block.items[0].length > 0; else noData">
-            <div [ngClass]="public ? 'd-flex flex-justify-between' : 'd-flex flex-justify-between mt-3'">
-                <div class="mt-4">
+            <div [ngClass]="public ? 'd-flex flex-justify-between' : 'd-flex flex-justify-between mt-1'">
+                <div class="mt-1">
                     <p class="d-inline-block fs-6 font-weight-bold mb-2">{{block.title | translate}}</p>
                     <ng-template [ngIf]="block.edit">
                         <a *ngIf="!public" panelEditLink="{{block.editform}}" class="pl-1 fs-7 text-secondary-color">{{'EDIT'| translate}}

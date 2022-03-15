@@ -282,6 +282,43 @@ export class InstallComponent implements OnInit {
             required: true,
             label: 'Select color',
           },
+        },
+        
+        {
+          key: 'headerLinkColor',
+          type: 'color',
+          defaultValue: '#000000',
+          templateOptions: {
+            addonLeft: {
+              text: 'Header Link color:',
+            },
+            required: true,
+            label: 'Select color',
+          },
+        },
+        {
+          key: 'linkColor',
+          type: 'color',
+          defaultValue: '#000000',
+          templateOptions: {
+            addonLeft: {
+              text: 'Link color:',
+            },
+            required: true,
+            label: 'Select color',
+          },
+        },
+        {
+          key: 'secondaryBtnBgColor',
+          type: 'color',
+          defaultValue: '#000000',
+          templateOptions: {
+            addonLeft: {
+              text: 'Secondary Button Background color:',
+            },
+            required: true,
+            label: 'Select color',
+          }
         }
       ]
     },
@@ -409,6 +446,42 @@ export class InstallComponent implements OnInit {
             required: true,
             label: 'Select color',
           },
+        },
+        {
+          key: 'headerLinkColor',
+          type: 'color',
+          defaultValue: '#000000',
+          templateOptions: {
+            addonLeft: {
+              text: 'Header Link color:',
+            },
+            required: true,
+            label: 'Select color',
+          },
+        },
+        {
+          key: 'linkColor',
+          type: 'color',
+          defaultValue: '#000000',
+          templateOptions: {
+            addonLeft: {
+              text: 'Link color:',
+            },
+            required: true,
+            label: 'Select color',
+          },
+        },
+        {
+          key: 'secondaryBtnBgColor',
+          type: 'color',
+          defaultValue: '#000000',
+          templateOptions: {
+            addonLeft: {
+              text: 'Secondary Button Background color:',
+            },
+            required: true,
+            label: 'Select color',
+          }
         }
       ]
     },
