@@ -1,4 +1,4 @@
-<app-header [headerFor]="header"></app-header>
+<!-- <app-header [headerFor]="header"></app-header> -->
 
 <!--Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark orange lighten-1">
@@ -42,8 +42,8 @@
             <option value="3">Template Three</option>
           </select>
         </div>
-        <textarea rows="20" cols="70" class="card-body w-100 h-75" [(ngModel)]="userHtml"
-          placeholder="Enter html code ..."></textarea>
+        <!-- <textarea rows="20" cols="70" class="card-body w-100 h-75" [(ngModel)]="userHtml"
+          placeholder="Enter html code ..."></textarea> -->
       </div>
   
   
@@ -54,7 +54,9 @@
         </div>
         <!-- <angular-editor [(ngModel)]="userHtml" [config]="config"></angular-editor> -->
         <div class=" card div-scroll h-75">
-          <div class="card-body w-100" [innerHtml]="userHtml | safeHtml: 'html'"></div>
+          <!-- <div class="card-body w-100" [innerHtml]="userHtml | safe : 'html'"></div> -->
+
+          <!-- <div class="card-body w-100" [innerHtml]="userHtml"></div> -->
         </div>
       </div>
   
