@@ -13,7 +13,7 @@ export class GetRecordsComponent implements OnInit {
   item:any;
   recordItems: any;
   vcOsid: any;
-  headerName: 'records'
+  headerName: string = 'records'
   documentName: string;
   constructor(public router: Router, public route: ActivatedRoute,
     public generalService: GeneralService, private http: HttpClient,) { 
