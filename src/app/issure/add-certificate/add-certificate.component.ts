@@ -103,32 +103,32 @@ export class AddCertificateComponent implements OnInit {
     });
 
 
-    this.schemaService.getFormJSON().subscribe((FormSchemas) => {
-      var filtered = FormSchemas.forms.filter(obj => {
-        return Object.keys(obj)[0] === this.form
-      })
-      this.formSchema = filtered[0][this.form];
-      this.templatePath = filtered[0][this.form]['template'];
+    // this.schemaService.getFormJSON().subscribe((FormSchemas) => {
+    //   var filtered = FormSchemas.forms.filter(obj => {
+    //     return Object.keys(obj)[0] === this.form
+    //   })
+    //   this.formSchema = filtered[0][this.form];
+    //   this.templatePath = filtered[0][this.form]['template'];
 
-      this.schemaService.getSchemas().subscribe((res) => {
-        this.responseData = res;
-        this.formSchema.fieldsets.forEach(fieldset => {
+    //   this.schemaService.getSchemas().subscribe((res) => {
+    //     this.responseData = res;
+    //     this.formSchema.fieldsets.forEach(fieldset => {
 
-          this.definations = this.responseData.definitions;
-          this.property = this.definations[fieldset.definition].properties;
+    //       this.definations = this.responseData.definitions;
+    //       this.property = this.definations[fieldset.definition].properties;
 
 
-          this.schema["type"] = "object";
-          this.schema["title"] = this.formSchema.title;
-          this.schema["definitions"] = this.definations;
-          this.schema["properties"] = this.property;
-          this.loadSchema();
-        });
-      });
+    //       this.schema["type"] = "object";
+    //       this.schema["title"] = this.formSchema.title;
+    //       this.schema["definitions"] = this.definations;
+    //       this.schema["properties"] = this.property;
+    //       this.loadSchema();
+    //     });
+    //   });
 
-    }, (error) => {
-      this.toastMsg.error('error', 'forms.json not found in src/assets/config/ - You can refer to examples folder to create the file')
-    })
+    // }, (error) => {
+    //   this.toastMsg.error('error', 'forms.json not found in src/assets/config/ - You can refer to examples folder to create the file')
+    // })
 
     this.generalService.getData('/Issuer').subscribe((res) => {
       console.log(res);
@@ -137,13 +137,13 @@ export class AddCertificateComponent implements OnInit {
    
   }
 
-  loadSchema() {
-    this.form2 = new FormGroup({});
-    this.options = {};
-    this.fields = [this.formlyJsonschema.toFieldConfig(this.schema)];
+  // loadSchema() {
+  //   this.form2 = new FormGroup({});
+  //   this.options = {};
+  //   this.fields = [this.formlyJsonschema.toFieldConfig(this.schema)];
 
-    this.schemaloaded = true;
-  }
+  //   this.schemaloaded = true;
+  // }
 
   dataChange() {
     window.location.reload();
@@ -170,7 +170,7 @@ export class AddCertificateComponent implements OnInit {
     console.log(err.message);
   });*/
 
-  fetch('https://sunbird-certificate-demo.xiv.in/' + doc.samples[0].schemaUrl)
+  fetch( doc.samples[0].schemaUrl)
   .then(response => response.text())
   .then(data => {
     this.schemaContent = data;
@@ -179,7 +179,7 @@ this.userJson = data;
   	console.log(this.userJson);
   });
 
-  fetch('https://sunbird-certificate-demo.xiv.in/' + doc.samples[0].certificateUrl)
+  fetch( doc.samples[0].certificateUrl)
   .then(response => response.text())
   .then(data => {
     this.certificateContent = data;
@@ -247,6 +247,7 @@ this.userJson = data;
   submit() {
     console.log(this.description);
     console.log(this.userHtml);
+     this.schemaContent = this.userJson;
    
   
     // Creating a file object with some content

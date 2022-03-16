@@ -41,31 +41,31 @@ export class AddRecordsComponent implements OnInit {
     private route: ActivatedRoute,
     private formlyJsonschema: FormlyJsonschema,
     public generalService: GeneralService,
-    public http: HttpClient) { 
-      this.schemaName = this.route.snapshot.paramMap.get('document'); 
+    public http: HttpClient) {
+    this.schemaName = this.route.snapshot.paramMap.get('document');
 
-    }
+  }
 
   ngOnInit(): void {
 
-    
-
-      this.schemaService.getSchemas().subscribe((res) => {
-        this.responseData = res;
-
-          this.definations = this.responseData.definitions;
-          this.property = this.definations[this.schemaName].properties;
 
 
-          this.schema["type"] = "object";
-        //  this.schema["title"] = this.formSchema.title;
-          this.schema["definitions"] = this.definations;
-          this.schema["properties"] = this.property;
-          this.loadSchema();
-        
-      });
+    this.schemaService.getSchemas().subscribe((res) => {
+      this.responseData = res;
 
-   
+      this.definations = this.responseData.definitions;
+      this.property = this.definations[this.schemaName].properties;
+
+
+      this.schema["type"] = "object";
+      //  this.schema["title"] = this.formSchema.title;
+      this.schema["definitions"] = this.definations;
+      this.schema["properties"] = this.property;
+      this.loadSchema();
+
+    });
+
+
   }
 
   loadSchema() {
@@ -73,29 +73,51 @@ export class AddRecordsComponent implements OnInit {
     this.options = {};
     this.fields = [this.formlyJsonschema.toFieldConfig(this.schema)];
 
-    this.fields[0].fieldGroup.forEach( (fieldObj, index) => {
-      console.log({fieldObj});
-      let str : any = fieldObj.key;
-      if(str !== "trainingTitle")
-      {
-        this.fields[0].fieldGroup[index].templateOptions['label'] = str.charAt(0).toUpperCase() + str.slice(1);
+    this.fields[0].fieldGroup.forEach((fieldObj, index) => {
+      console.log({ fieldObj });
 
-      }else{
-        this.fields[0].fieldGroup[index].templateOptions['label'] = 'Training Title';
+
+      if (!fieldObj.templateOptions.hasOwnProperty('label') || fieldObj.templateOptions.label == undefined) {
+        // let str: any = (fieldObj.templateOptions.label) ? fieldObj.templateOptions.label : fieldObj.key;
+
+
+        let str: any = fieldObj.key;
+
+        if (str !== "trainingTitle") {
+          this.fields[0].fieldGroup[index].templateOptions['label'] = str.charAt(0).toUpperCase() + str.slice(1);
+
+        } else {
+          this.fields[0].fieldGroup[index].templateOptions['label'] = 'Training Title';
+
+        }
+
+      } else {
+
+        if (fieldObj.templateOptions.label == undefined) {
+          let str: any = fieldObj.key;
+
+          if (str !== "trainingTitle") {
+            this.fields[0].fieldGroup[index].templateOptions['label'] = str.charAt(0).toUpperCase() + str.slice(1);
+
+          } else {
+            this.fields[0].fieldGroup[index].templateOptions['label'] = 'Training Title';
+
+          }
+        }
 
       }
 
-     // this.fields[0].fieldGroup[0]['label'] = (fieldObj.name).toUpperCase();
-      
+
+      // this.fields[0].fieldGroup[0]['label'] = (fieldObj.name).toUpperCase();
+
     });
 
     this.schemaloaded = true;
   }
 
-  submit()
-  {
+  submit() {
     console.log(this.model);
-    this.generalService.postData('/' + this.schemaName, this.model).subscribe((res)=>{
+    this.generalService.postData('/' + this.schemaName, this.model).subscribe((res) => {
 
       this.router.navigate(['records/' + this.schemaName]);
 
