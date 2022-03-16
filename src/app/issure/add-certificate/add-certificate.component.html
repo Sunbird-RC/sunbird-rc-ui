@@ -51,18 +51,21 @@
                         </div>
                     </div>
                 </div> -->
-
+                <!-- *ngFor="let doc of selectedDecType.samples" -->
                 <div class="wrapper">
-                    <div class="mb-2" *ngFor="let doc of selectedDecType">
+                    <div class="mb-2" *ngFor="let doctype of selectedDecType">
+                        <p> {{doctype?.name}} </p>
+                        <div class="mb-2" *ngFor="let doc of doctype.samples">
                         <div class="box" >
-                            <p> {{doc?.name}} </p>
+                            <img (click)="previewScreen(doc)" class="templateThumb" src="{{doc?.thumbnailUrl}}" />
                             <!-- <iframe src="/assets/template/sec.html" allowfullscreen="" width="100%"
                                 height="200px"></iframe> -->
                                
-                                <button class="prevBtn" (click)="previewScreen(doc)"> <i class="fa fa-eye" aria-hidden="true"></i></button>
+                                <!-- <button class="prevBtn" (click)="previewScreen(doc)"> <i class="fa fa-eye" aria-hidden="true"></i></button>
                                 <iframe id="frame" width="1024" height="726" src="/assets/template/sec.html"
                                 style="margin: -263px 0 0 -357px !important; -webkit-transform:scale(0.3);-moz-transform:scale(0.3);"></iframe>
-                      
+                       -->
+                            </div>
                             </div>
                     </div>
                 </div>

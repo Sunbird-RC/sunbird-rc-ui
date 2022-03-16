@@ -43,7 +43,7 @@ export function initializeKeycloak(keycloak: KeycloakService, configService: Aut
 //     return () =>
 //         keycloak.init({
 //             config: {
-//                 url: 'https://ndear.xiv.in/auth',
+//                 url: 'https://sunbird-certificate-demo.xiv.in/auth',
 //                 realm: 'ndear',
 //                 clientId: 'registry-frontend',
 //             },

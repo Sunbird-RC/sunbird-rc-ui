@@ -170,7 +170,7 @@ export class AddCertificateComponent implements OnInit {
     console.log(err.message);
   });*/
 
-  fetch( doc.samples[0].schemaUrl)
+  fetch( doc.schemaUrl)
   .then(response => response.text())
   .then(data => {
     this.schemaContent = data;
@@ -179,7 +179,7 @@ this.userJson = data;
   	console.log(this.userJson);
   });
 
-  fetch( doc.samples[0].certificateUrl)
+  fetch( doc.certificateUrl)
   .then(response => response.text())
   .then(data => {
     this.certificateContent = data;
