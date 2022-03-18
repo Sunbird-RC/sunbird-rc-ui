@@ -52,6 +52,7 @@ export class AddCertificateComponent implements OnInit {
   schemaContent: any;
   certificateContent: any;
   oldTemplateName;
+  SampleData: any;
   constructor(public schemaService: SchemaService,
     public toastMsg: ToastMessageService,
     public router: Router,
@@ -74,10 +75,10 @@ export class AddCertificateComponent implements OnInit {
     //  }, err => {
     //   console.log(err.message);
     // })  
-    
-    
-     
-  //  this.isPreview = (localStorage.getItem('isPreview') == 'yes') ? true : false;
+
+
+
+    //  this.isPreview = (localStorage.getItem('isPreview') == 'yes') ? true : false;
 
     this.getDocument();
 
@@ -90,10 +91,10 @@ export class AddCertificateComponent implements OnInit {
     // }
 
 
-    if (localStorage.getItem('content')) {
-      console.log('------------------- ', JSON.parse(localStorage.getItem('content')));
-      this.previewScreen(JSON.parse(localStorage.getItem('content')));
-    }
+    // if (localStorage.getItem('content')) {
+    //   console.log('------------------- ', JSON.parse(localStorage.getItem('content')));
+    //   this.previewScreen(JSON.parse(localStorage.getItem('content')));
+    // }
 
     this.route.params.subscribe(params => {
       console.log(params);
@@ -134,7 +135,7 @@ export class AddCertificateComponent implements OnInit {
       console.log(res);
       this.issuerOsid = res[0].osid;
     });
-   
+
   }
 
   // loadSchema() {
@@ -151,52 +152,42 @@ export class AddCertificateComponent implements OnInit {
 
   cancel() {
     this.isPreview = false;
-    localStorage.setItem('content' , '');
+    localStorage.setItem('content', '');
   }
 
   previewScreen(doc) {
-    console.log({doc});
+    console.log({ doc });
+    this.SampleData = doc;
 
-    //this.isPreview = true;
-    localStorage.setItem('content' , JSON.stringify(doc));
- /*this.http.get('assets/template/schema.json').subscribe((res)=>{
-    console.log({res});
-    this.schemaJson =res;
 
-    this.schemaJson['certificateTemplate'] = { 'html' : "https://sunbird-certificate-demo.xiv.in" + "/github/dileepbapat/ref-sunbirdrc-certificate/main/schemas/templates/TrainingCertificate.html"}
-    
-    console.log(JSON.stringify(this.schemaJson));
-   }, err => {
-    console.log(err.message);
-  });*/
+    fetch(doc.schemaUrl)
+      .then(response => response.text())
+      .then(data => {
+        this.schemaContent = data;
+        this.userJson = data;
+        // Do something with your data
+        console.log(this.userJson);
+      });
 
-  fetch( doc.schemaUrl)
-  .then(response => response.text())
-  .then(data => {
-    this.schemaContent = data;
-this.userJson = data;
-  	// Do something with your data
-  	console.log(this.userJson);
-  });
+    fetch(doc.certificateUrl)
+      .then(response => response.text())
+      .then(data => {
+        this.certificateContent = data;
+        this.userHtml = data;
+        this.injectHTML();
+        // Do something with your data
+        console.log(data);
+      });
 
-  fetch( doc.certificateUrl)
-  .then(response => response.text())
-  .then(data => {
-    this.certificateContent = data;
-    this.userHtml = data;
-  	// Do something with your data
-  	console.log(data);
-  });
-   
-      
-   
-  //  this.isPreview = true;
-  //  localStorage.setItem('isPreview', 'yes');
+
+
+    //  this.isPreview = true;
+    //  localStorage.setItem('isPreview', 'yes');
   }
 
-  editTemplate()
-  {
-    this.isPreview = true; 
+  editTemplate() {
+   // this.isPreview = true;
+   this.router.navigate(['/preview-html'], { state: { item: this.SampleData } });
   }
 
   ngAfterViewInit() {
@@ -220,11 +211,11 @@ this.userJson = data;
   getDocument() {
     let payout = {
       "filters": {}
-  }
+    }
 
     this.generalService.postData('DocumentType/search', payout).subscribe((res) => {
       console.log(res);
-      this.documentTypeList =  res;
+      this.documentTypeList = res;
       this.selectedDecType = res;
     });
   }
@@ -239,65 +230,64 @@ this.userJson = data;
 
   }
 
-   replaceAll(str, find, replace) {
-    var escapedFind=find.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+  replaceAll(str, find, replace) {
+    var escapedFind = find.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
     return str.replace(new RegExp(escapedFind, 'g'), replace);
-}
+  }
 
   submit() {
     console.log(this.description);
     console.log(this.userHtml);
-     this.schemaContent = this.userJson;
-   
-  
+    this.schemaContent = this.userJson;
+
+
     // Creating a file object with some content
     var fileObj = new File([this.userHtml], this.templateName.replace(/\s+/g, '') + '.html');
     console.log(fileObj);
 
-  this.templateName = this.templateName.replace(/\s+/g, '');
-      // Create form data
-      const formData = new FormData(); 
-      // Store form name as "file" with file data
-      formData.append("files", fileObj, fileObj.name);
-      this.generalService.postData('/Issuer/' + this.issuerOsid + '/schema/documents', formData).subscribe((res)=>{
-      
-        console.log( this.schemaContent);
-        this.schemaContent = JSON.parse(this.schemaContent);
-        let _self = this;
-        Object.keys(this.schemaContent['properties']).forEach(function (key) {
-          _self.oldTemplateName = key;
-          console.log(key);
-        });
+    this.templateName = this.templateName.replace(/\s+/g, '');
+    // Create form data
+    const formData = new FormData();
+    // Store form name as "file" with file data
+    formData.append("files", fileObj, fileObj.name);
+    this.generalService.postData('/Issuer/' + this.issuerOsid + '/schema/documents', formData).subscribe((res) => {
+
+      console.log(this.schemaContent);
+      this.schemaContent = JSON.parse(this.schemaContent);
+      let _self = this;
+      Object.keys(this.schemaContent['properties']).forEach(function (key) {
+        _self.oldTemplateName = key;
+        console.log(key);
+      });
 
 
-        this.schemaContent._osConfig['certificateTemplates'] = { html :  'did:path:' + res.documentLocations[0]}
+      this.schemaContent._osConfig['certificateTemplates'] = { html: 'did:path:' + res.documentLocations[0] }
 
-        let result = JSON.stringify(this.schemaContent);
-        
-       result = this.replaceAll(result, this.oldTemplateName, this.templateName);
+      let result = JSON.stringify(this.schemaContent);
 
-        console.log({result});
+      result = this.replaceAll(result, this.oldTemplateName, this.templateName);
 
-        let payload = {
-          "name": this.templateName,
-          "schema": result
+      console.log({ result });
+
+      let payload = {
+        "name": this.templateName,
+        "schema": result
       }
 
-        if(res.documentLocations[0])
-        {
-          this.generalService.postData('/Schema', payload).subscribe((res)=>{
-            localStorage.setItem('content' , '');
-            this.router.navigate(['/dashboard']);
-          })
-        }
-      })
+      if (res.documentLocations[0]) {
+        this.generalService.postData('/Schema', payload).subscribe((res) => {
+          localStorage.setItem('content', '');
+          this.router.navigate(['/dashboard']);
+        })
+      }
+    })
 
-    
-        
-      // Make http post request over api
-      // with formData as req
-      // this.http.post(this.baseApiUrl, formData)
-  
+
+
+    // Make http post request over api
+    // with formData as req
+    // this.http.post(this.baseApiUrl, formData)
+
 
     // Verifying the contents of the file
     // var reader = new FileReader();
@@ -317,6 +307,34 @@ this.userJson = data;
     // a.Close();
 
   }
- 
+
+  injectHTML() {
+
+    const iframe: HTMLIFrameElement = document.getElementById('iframe1') as HTMLIFrameElement;
+    // step 2: obtain the document associated with the iframe tag
+    // most of the browser supports .document. 
+    // Some supports (such as the NetScape series) .contentDocumet, 
+    // while some (e.g. IE5/6) supports .contentWindow.document
+    // we try to read whatever that exists.
+
+    var iframedoc;
+    if (iframe.contentDocument)
+      iframedoc = iframe.contentDocument;
+    else if (iframe.contentWindow)
+      iframedoc = iframe.contentWindow.document;
+
+
+    if (iframedoc) {
+      // Put the content in the iframe
+      iframedoc.open();
+      iframedoc.writeln(this.userHtml);
+      iframedoc.close();
+    } else {
+      alert('Cannot inject dynamic contents into iframe.');
+    }
+  }
+
+
+
 
 }

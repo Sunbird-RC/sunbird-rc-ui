@@ -1,0 +1,84 @@
+select {
+    height: 34px;
+    width: 100%;
+    left: 1px;
+    top: 22px;
+    border-radius: 4px;
+    background: white;
+}
+
+select option {
+    height: 34px; 
+}
+
+
+.inputField {
+    height: 40px;
+    width: 505px;
+    left: -5px;
+    top: 8px;
+    border-radius: 4px;
+    border: 1px solid #EFEFEF !important;
+}
+
+
+
+.div-scroll {
+    overflow-y: scroll; /* Show vertical scrollbar */
+    overflow-x: scroll; /* Show horizontal scrollbar */
+  }
+
+  .h-card{
+    height: 570px !important;
+  }
+
+
+  .mt-23{
+    margin-top: -23px;
+}
+
+.setHeight{
+    height: 614px !important;
+    max-height: 614px !important;
+}
+
+.modal-content {
+    width: 45%;
+    height: 425px;
+    margin: 10% 30%;
+}
+
+.w-0{
+    width: 0 !important;
+}
+  
+
+
+.box{
+    float:left;
+    margin-right:20px;
+}
+.clear{
+    clear:both;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);;
+  }
+
+  .desc {
+    height: 90px;
+}
+
+.prevBtn 
+{
+    margin: 1px 0 -2px 20px;
+    z-index: 9999;
+    position: absolute;
+}
+
+.templateThumb {
+    width: 122px;
+    border: 1px solid;
+}

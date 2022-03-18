@@ -26,6 +26,7 @@ import { DashboardComponent } from './issure/dashboard/dashboard.component';
 import { AddCertificateComponent } from './issure/add-certificate/add-certificate.component';
 import { GetRecordsComponent } from './issure/get-records/get-records.component';
 import { AddRecordsComponent } from './issure/add-records/add-records.component';
+import { PreviewHtmlComponent } from './issure/preview-html/preview-html.component';
 // import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
 // import { FaqComponent } from './custom-components/faq/faq.component';
 const routes: Routes = [
@@ -94,6 +95,7 @@ const routes: Routes = [
 { path: ':entity/documents/scan/vc', component: ScanQrCodeComponent, canActivate: [AuthGuard] },
 // { path: 'document/detail', component: DocDetailViewComponent, canActivate: [AuthGuard] },
 // { path: 'document/view/:id', component: DocViewComponent, canActivate: [AuthGuard] },
+
 { path: 'discovery', component: SearchComponent },
  { path: 'doc-types', component: DocTypesComponent },
  { path: 'template', component: CreateCertificateComponent },
@@ -101,9 +103,9 @@ const routes: Routes = [
  { path: 'dashboard', component: DashboardComponent , canActivate: [AuthGuard] },
  { path: 'records/:document', component: GetRecordsComponent , canActivate: [AuthGuard] },
  { path: 'add-records/:document', component: AddRecordsComponent , canActivate: [AuthGuard] },
-
-
  { path: 'certificate/:form', component: AddCertificateComponent , canActivate: [AuthGuard] },
+ { path: 'preview-html', component: PreviewHtmlComponent  , canActivate: [AuthGuard] },
+
 
 
 

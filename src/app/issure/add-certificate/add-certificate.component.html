@@ -17,8 +17,6 @@
 
         <div class="row d-flex">
             <div class=" p-3 col-12 col-sm-4 card h-card ">
-
-
                 <!-- <form [formGroup]="form2" (ngSubmit)="submit()" *ngIf="fields">
                             <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form2"></formly-form>
                         </form> -->
@@ -42,16 +40,7 @@
 
                 <h6 class="mt-4"><b>General Templates (A4) </b></h6>
 
-                <!-- <div class="wrapper">
-                    <div class="mb-2" *ngFor="let doc of selectedDecType">
-                        <div class="box" (click)="previewScreen(doc)">
-                            <p> {{doc?.name}} </p>
-                            <iframe src="/assets/template/sec.html" allowfullscreen="" width="100%"
-                                height="200px"></iframe>
-                        </div>
-                    </div>
-                </div> -->
-                <!-- *ngFor="let doc of selectedDecType.samples" -->
+           
                 <div class="wrapper">
                     <div class="mb-2" *ngFor="let doctype of selectedDecType">
                         <p> {{doctype?.name}} </p>
@@ -69,31 +58,7 @@
                             </div>
                     </div>
                 </div>
-                <!-- <div class="box">
-                    <iframe src="https://embed.spotify.com/?uri=spotify:user:1290230929:playlist:6nTIVNGZfnZ4urUiwHIgpT" frameborder="0" scrolling="no" width="100%" height="512" align="left"> </iframe>
-                  </div>
-                  
-                  <div class="box">
-                    <iframe src="https://embed.spotify.com/?uri=spotify:user:1285279066:playlist:56KI83cMiMTOocIdXq2R5j" frameborder="0" scrolling="no" width="100%" height="512" align="right"></iframe>
-                  </div> -->
-                <!-- <div *ngFor="let doc of selectedDecType" style="margin-bottom: -248px;">
-                    <div (click)="previewScreen(doc)">
-                        <p> {{doc?.name}} </p>
-                        <iframe id="frame" width="1024" height="726" src="/assets/template/sec.html"
-                            style="margin: -263px 0 0 -357px !important; -webkit-transform:scale(0.3);-moz-transform:scale(0.3);"></iframe>
-                    </div>
-                </div> -->
-
-                <!-- <div class="container w-50">
-                    <div class="row">
-                      <div class="col w-0">
-                        <iframe id="frame" width="1024" height="726" src="/assets/template/first.html"
-                        style="margin: -321px 0 0 -528px !important; -webkit-transform:scale(0.2);-moz-transform:scale(0.3);"></iframe>
-                      </div>
-                   
-                    
-                    </div>
-                  </div> -->
+             
 
             </div>
             <div class=" col-12 col-sm-8" *ngIf="userHtml">
@@ -111,123 +76,15 @@
                 </div>
 
                 <div class=" card div-scroll h-75">
-                    <div class="card-body w-100" [innerHtml]="userHtml | safe : 'html'"></div>
+                    <!-- <div class="card-body w-100" [innerHtml]="userHtml | safe : 'html'"></div> -->
+                    <iframe id="iframe1" src="about:blank" class="w-100 h-100"></iframe>
+
                 </div>
             </div>
         </div>
 
-
-        <!-- <iframe src="/assets/template/first.html"></iframe> -->
-        <!-- <div (click)="previewScreen()">hi</div>  <iframe width="1024" height="726"  src="/assets/template/sec.html" style="margin: -263px 0 0 -357px !important; -webkit-transform:scale(0.3);-moz-transform:scale(0.3);"></iframe> -->
-
-        <!-- <div style="height: 0" class="mt-3">
-            <iframe id="frame" width="1024" height="726" src="/assets/template/sec.html"
-                style="margin: -263px 0 0 -357px !important; -webkit-transform:scale(0.3);-moz-transform:scale(0.3);"></iframe>
-        </div> -->
-
-        <!-- <div>
-            <div class="d-flex">
-                <div *ngFor="let template of templatePath.path">
-                    {{template}} ----
-                    <iframe width="350px" height="235px" src="{{template}}" frameborder="0"
-                        allowfullscreen></iframe>
-                </div>
-            </div>
-        </div> -->
     </div>
 
-    <div [hidden]="!isPreview">
 
-        <!-- <div>
-            <p class="p12 ml-14"> <b>Template Name</b></p>
-            <input [(ngModel)]="templateName" class="w-50 input-field p14 inputField ml-14" type="text" />
-        </div> -->
-
-        <div class="row d-flex mt-4 setHeight">
-            <div class=" p-0 col-12 col-sm-6 setHeight">
-                <!-- <h6>HTML</h6>
-                <textarea rows="20" cols="70" class="card-body w-100 h-100" [(ngModel)]="userHtml"
-                    placeholder="Enter html code ..."></textarea> -->
-
-                <div class="bs-example">
-                    <ul class="nav nav-tabs">
-                        <li class="nav-item">
-                            <a href="#htmlDiv" class="nav-link active" data-toggle="tab">HTML</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#schenaDiv" class="nav-link" data-toggle="tab">Schema</a>
-                        </li>
-
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane fade show active" id="htmlDiv">
-                            <textarea rows="20" cols="70" class="card-body w-100 h-75" [(ngModel)]="userHtml"
-                                placeholder="Enter html code ..."></textarea>
-                        </div>
-                        <div class="tab-pane fade" id="schenaDiv">
-                            <textarea rows="20" cols="70" class="card-body w-100 h-75" [(ngModel)]="userJson"
-                                placeholder="Enter html code ..."></textarea>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-sm-6 setHeight">
-                <h6>Preview</h6>
-                <div class=" card div-scroll h-75">
-                    <div class="card-body w-100" [innerHtml]="userHtml | safe : 'html'"></div>
-                    <!-- <iframe id="frame" width="1024" height="726" srcdoc="{{userHtml}}"></iframe> -->
-                    <!-- <iframe width="560" height="315" srcdoc="{{userHtml}}" frameborder="0" allowfullscreen></iframe> -->
-                </div>
-            </div>
-
-        </div>
-
-        <div>
-            <button (click)="cancel()" class="btn btn-sec-bg submit-button">Cancel</button>
-            <button data-toggle="modal" data-target="#prewiewProfile" class="btn btn-bg submit-button float-end mr-2">Save</button>
-          
-
-            <div class="modal right fade  right-xl-modal" id="prewiewProfile" tabindex="-1" role="dialog"
-                aria-labelledby="prewiewProfile">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="container">
-                            <div class="modal-header">
-                                <h3 class="">Save Template</h3>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                        aria-hidden="true">&times;</span></button>
-                            </div>
-
-                            <div class="mt-2 mb-4">
-                                <p class="p12 mb-2"> <b>Template Name</b></p>
-                                <input [(ngModel)]="templateName" class="w-100 input-field p14 p-3 inputField" placeholder="Enter Template name"
-                                    type="text" />
-                            </div>
-
-                            <div class="mt-2">
-                                <p class="p12 mb-2"> <b>Description </b>(optional)</p>
-                                <textarea [(ngModel)]="description" class="w-100 desc py-2 input-field p14 pl-3 inputField" placeholder="Enter description"
-                                     ></textarea>
-                            </div>
-
-
-                            <div class="mt-4">
-                                <button class="close" data-dismiss="modal" aria-label="Close" class="btn btn-sec-bg float-end submit-button">Cancel</button>
-                                <button (click)="submit()" data-dismiss="modal" aria-label="Close" class="btn btn-bg submit-button float-end mr-2">Save</button>
-                            
-                            </div>
-                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
-
-
-    </div>
 
 </div>

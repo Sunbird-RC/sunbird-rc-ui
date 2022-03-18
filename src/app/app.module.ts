@@ -127,6 +127,7 @@ import { DashboardComponent } from './issure/dashboard/dashboard.component';
 import { AddCertificateComponent } from './issure/add-certificate/add-certificate.component';
 import { GetRecordsComponent } from './issure/get-records/get-records.component';
 import { AddRecordsComponent } from './issure/add-records/add-records.component';
+import { PreviewHtmlComponent } from './issure/preview-html/preview-html.component';
 // import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
 
 @NgModule({
@@ -164,7 +165,8 @@ import { AddRecordsComponent } from './issure/add-records/add-records.component'
     DashboardComponent,
     AddCertificateComponent,
     GetRecordsComponent,
-    AddRecordsComponent
+    AddRecordsComponent,
+    PreviewHtmlComponent
   ],
   imports: [
     BrowserModule,
