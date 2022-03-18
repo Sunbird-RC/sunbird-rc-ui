@@ -101,6 +101,7 @@ const routes: Routes = [
  { path: 'template', component: CreateCertificateComponent },
  
  { path: 'dashboard', component: DashboardComponent , canActivate: [AuthGuard] },
+ { path: 'records', component: GetRecordsComponent , canActivate: [AuthGuard] },
  { path: 'records/:document', component: GetRecordsComponent , canActivate: [AuthGuard] },
  { path: 'add-records/:document', component: AddRecordsComponent , canActivate: [AuthGuard] },
  { path: 'certificate/:form', component: AddCertificateComponent , canActivate: [AuthGuard] },

@@ -47,7 +47,7 @@ export class HeaderComponent implements OnInit {
       });
       this.headerSchema = filtered[0][this.headerFor];
 
-      if(this.headerSchema.hasOwnProperty('left'))
+    /*  if(this.headerSchema.hasOwnProperty('left'))
       {
         this.headerSchema['left'][0]["activeTab"] = (this.headerSchema['left'].length == 1 || (localStorage.getItem('activeTab') == null)) ? 'active' : '';
       }
@@ -63,7 +63,7 @@ export class HeaderComponent implements OnInit {
 
         console.log(this.headerSchema);
 
-      }
+      }*/
 
     }, (error) => {
       console.error('headers.json not found in src/assets/config/ - You can refer to examples folder to create the file')

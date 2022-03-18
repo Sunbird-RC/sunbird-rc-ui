@@ -14,6 +14,8 @@ export class GetRecordsComponent implements OnInit {
   recordItems: any;
   vcOsid: any;
   headerName: string = 'records'
+  //headerName : string = 'issuer';
+
   documentName: string;
   constructor(public router: Router, public route: ActivatedRoute,
     public generalService: GeneralService, private http: HttpClient,) { 
