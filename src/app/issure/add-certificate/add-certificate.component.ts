@@ -63,45 +63,14 @@ export class AddCertificateComponent implements OnInit {
 
   ngOnInit(): void {
 
-
-    // this.http.get('https://sunbird-certificate-demo.xiv.in/github/dileepbapat/ref-sunbirdrc-certificate/main/schemas/TrainingCertificate.json').subscribe((res)=>{
-    //   console.log({res});
-    //  }, err => {
-    //   console.log(err.message);
-    // })  
-
-    // this.generalService.getData('/github/dileepbapat/ref-sunbirdrc-certificate/main/schemas/TrainingCertificate.json').subscribe((res)=>{
-    //   console.log({res});
-    //  }, err => {
-    //   console.log(err.message);
-    // })  
-
-
-
-    //  this.isPreview = (localStorage.getItem('isPreview') == 'yes') ? true : false;
-
     this.getDocument();
 
-    // if (localStorage.getItem('iframe')) {
-    //   fetch(localStorage.getItem('iframe'))
-    //     .then(response => response.text())
-    //     .then(data => {
-    //       this.userHtml = data;
-    //     });
-    // }
-
-
-    // if (localStorage.getItem('content')) {
-    //   console.log('------------------- ', JSON.parse(localStorage.getItem('content')));
-    //   this.previewScreen(JSON.parse(localStorage.getItem('content')));
-    // }
-
-    this.route.params.subscribe(params => {
-      console.log(params);
-      if (params['form'] != undefined) {
-        this.form = params['form'].split('/', 1)[0];
-      }
-    });
+    // this.route.params.subscribe(params => {
+    //   console.log(params);
+    //   if (params['form'] != undefined) {
+    //     this.form = params['form'].split('/', 1)[0];
+    //   }
+    // });
 
 
     // this.schemaService.getFormJSON().subscribe((FormSchemas) => {
@@ -186,27 +155,9 @@ export class AddCertificateComponent implements OnInit {
   }
 
   editTemplate() {
-   // this.isPreview = true;
    this.router.navigate(['/preview-html'], { state: { item: this.SampleData } });
   }
 
-  ngAfterViewInit() {
-    /*const iframe: HTMLIFrameElement = document.getElementById('frame') as HTMLIFrameElement;
-
-    iframe.contentWindow.addEventListener('mouseup', Handler);
-    let _self = this;
-    function Handler() {
-      _self.dataChange();
-      localStorage.setItem('isPreview', 'yes');
-      localStorage.setItem('iframe', iframe.src);
-    }*/
-  }
-
-  stringToHTML(str) {
-    var parser = new DOMParser();
-    var doc = parser.parseFromString(str, 'text/html');
-    return doc.body;
-  };
 
   getDocument() {
     let payout = {
@@ -227,84 +178,6 @@ export class AddCertificateComponent implements OnInit {
 
     // const iframe: HTMLIFrameElement = document.getElementById('frame') as HTMLIFrameElement;
     // iframe.src = this.selectedDecType.samples[0].certificateUrl;
-
-  }
-
-  replaceAll(str, find, replace) {
-    var escapedFind = find.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
-    return str.replace(new RegExp(escapedFind, 'g'), replace);
-  }
-
-  submit() {
-    console.log(this.description);
-    console.log(this.userHtml);
-    this.schemaContent = this.userJson;
-
-
-    // Creating a file object with some content
-    var fileObj = new File([this.userHtml], this.templateName.replace(/\s+/g, '') + '.html');
-    console.log(fileObj);
-
-    this.templateName = this.templateName.replace(/\s+/g, '');
-    // Create form data
-    const formData = new FormData();
-    // Store form name as "file" with file data
-    formData.append("files", fileObj, fileObj.name);
-    this.generalService.postData('/Issuer/' + this.issuerOsid + '/schema/documents', formData).subscribe((res) => {
-
-      console.log(this.schemaContent);
-      this.schemaContent = JSON.parse(this.schemaContent);
-      let _self = this;
-      Object.keys(this.schemaContent['properties']).forEach(function (key) {
-        _self.oldTemplateName = key;
-        console.log(key);
-      });
-
-
-      this.schemaContent._osConfig['certificateTemplates'] = { html: 'did:path:' + res.documentLocations[0] }
-
-      let result = JSON.stringify(this.schemaContent);
-
-      result = this.replaceAll(result, this.oldTemplateName, this.templateName);
-
-      console.log({ result });
-
-      let payload = {
-        "name": this.templateName,
-        "schema": result
-      }
-
-      if (res.documentLocations[0]) {
-        this.generalService.postData('/Schema', payload).subscribe((res) => {
-          localStorage.setItem('content', '');
-          this.router.navigate(['/dashboard']);
-        })
-      }
-    })
-
-
-
-    // Make http post request over api
-    // with formData as req
-    // this.http.post(this.baseApiUrl, formData)
-
-
-    // Verifying the contents of the file
-    // var reader = new FileReader();
-    // reader.onload = () => {
-    //   console.log('reader', reader.result);
-    // }
-    // reader.readAsText(fileObj);
-
-    // var a = document.createElement('a');
-    // a.setAttribute('href', 'data:text/plain;charset=utf-u,' + encodeURIComponent(this.userHtml));
-    // a.setAttribute('download', 'cer.html');
-    // a.click()
-
-    //     var fso = new ActiveXObject("Scripting.FileSystemObject");
-    // var a = fso.CreateTextFile("c:\\testfile.txt", true);
-    // a.WriteLine("This is a test.");
-    // a.Close();
 
   }
 
@@ -333,8 +206,5 @@ export class AddCertificateComponent implements OnInit {
       alert('Cannot inject dynamic contents into iframe.');
     }
   }
-
-
-
 
 }

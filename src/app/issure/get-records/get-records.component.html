@@ -43,10 +43,13 @@
         <tr>
           <th class="p12">Name</th>
           <th class="p12">Mobile Number </th>
+
         </tr>
         <tr *ngFor="let item of recordItems" class="p-3">
-          <td class="p16" *ngIf="item?.name" (click)="downloadVc(item)">{{item?.name}}</td>
-          <td class="p16" *ngIf="item?.name" (click)="downloadVc(item)">{{item?.contact}}</td>
+          <td class="p16" *ngIf="item?.name">{{item?.name}}</td>
+          <td class="p16" *ngIf="item?.name">{{item?.contact}}</td>
+          <td (click)="downloadVc(item)"><i class="fa fa-download primarybgColor float-end" aria-hidden="true"></i>
+          </td>
           <!-- <td class="float-end text-primary"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i></td> -->
         </tr>
       </table>
