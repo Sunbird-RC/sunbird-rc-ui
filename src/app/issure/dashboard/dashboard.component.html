@@ -3,8 +3,7 @@
     <div class="card-body mx-4">
         <img *ngIf="issuerInfo?.logoUrl"  src="{{issuerInfo?.logoUrl}}" class="p12 logo" alt='logo Url'/>
         <p *ngIf="issuerInfo?.name" class="p14 mb-1">{{issuerInfo?.name}}</p>
-        <p *ngIf="issuerInfo?.websiteUrl" class="p14 mb-1"><a>{{issuerInfo?.websiteUrl}}</a></p>
-
+        <p *ngIf="issuerInfo?.websiteUrl" class="p14 mb-1"><a href="{{issuerInfo?.websiteUrl}}">{{issuerInfo?.websiteUrl}}</a></p>
     </div>
 </div>
 

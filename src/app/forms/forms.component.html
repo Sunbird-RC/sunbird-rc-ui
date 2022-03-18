@@ -7,7 +7,7 @@
         <div>
           <form [formGroup]="form2" (ngSubmit)="submit()" *ngIf="fields">
             <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form2"></formly-form>
-            <button type="submit" class="btn btn-primary w-100 submit-button" [disabled]="!form2.valid">{{'SUBMIT' | translate}}</button>
+            <button type="submit" class="btn btn-primary float-end submit-button" [disabled]="!form2.valid">{{'REGISTER' | translate}} </button>
           </form>
         </div>
       </div>

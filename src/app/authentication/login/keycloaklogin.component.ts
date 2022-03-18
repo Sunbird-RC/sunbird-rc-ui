@@ -33,7 +33,6 @@ export class KeycloakloginComponent implements OnInit {
       localStorage.setItem('token', token);
       localStorage.setItem('loggedInUser', this.user);
       console.log('---------',this.config.getEnv('appType'))
-      
       if(this.config.getEnv('appType') && this.config.getEnv('appType') === 'digital_wallet'){
         this.profileUrl = this.entity+'/documents';
       } if(this.config.getEnv('appType') && this.config.getEnv('appType') === 'issuer'){

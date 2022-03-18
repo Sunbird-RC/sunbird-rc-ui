@@ -94,7 +94,8 @@ export class PreviewHtmlComponent implements OnInit {
     var fileObj = new File([this.userHtml], this.templateName.replace(/\s+/g, '') + '.html');
     console.log(fileObj);
 
-    this.templateName = this.templateName.replace(/\s+/g, '');
+    let str = this.templateName.replace(/\s+/g, '');
+     this.templateName = str.charAt(0).toUpperCase() + str.slice(1)
     // Create form data
     const formData = new FormData();
     // Store form name as "file" with file data
