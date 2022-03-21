@@ -30,7 +30,8 @@ export class AuthGuard extends KeycloakAuthGuard {
             this.keycloak
                 .getKeycloakInstance()
                 .login(<KeycloakLoginOptions>{
-                    locale: localStorage.getItem('setLanguage')
+                    locale: localStorage.getItem('setLanguage'),
+                    redirectUri: window.location.origin + state.url,
                 })
                 .then((res) => {
                     console.log({ res });

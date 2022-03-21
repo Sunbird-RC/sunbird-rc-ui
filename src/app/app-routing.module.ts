@@ -32,7 +32,7 @@ import { PreviewHtmlComponent } from './issure/preview-html/preview-html.compone
 const routes: Routes = [
 // Home
 // { path: '', component: HomeComponent },
-{ path: '', component: KeycloakloginComponent , canActivate: [AuthGuard]},
+{ path: '', component: KeycloakloginComponent,  canActivate: [AuthGuard]},
 
 
 // Auth

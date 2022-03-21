@@ -62,6 +62,8 @@ export class AddRecordsComponent implements OnInit {
       //  this.schema["title"] = this.formSchema.title;
       this.schema["definitions"] = this.definations;
       this.schema["properties"] = this.property;
+      this.schema["required"] = this.definations[this.schemaName].required;
+
       this.loadSchema();
 
     });
@@ -89,6 +91,10 @@ export class AddRecordsComponent implements OnInit {
 
         } else {
           this.fields[0].fieldGroup[index].templateOptions['label'] = 'Training Title';
+        }
+
+        if (this.schema.required.includes(str)) {
+          this.fields[0].fieldGroup[index]['templateOptions']['required'] = true;
 
         }
 
@@ -102,6 +108,11 @@ export class AddRecordsComponent implements OnInit {
 
           } else {
             this.fields[0].fieldGroup[index].templateOptions['label'] = 'Training Title';
+
+          }
+
+          if (this.schema.required.includes(str)) {
+            this.fields[0].fieldGroup[index]['templateOptions']['required'] = true;
 
           }
         }
