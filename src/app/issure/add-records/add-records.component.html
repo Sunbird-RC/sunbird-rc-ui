@@ -28,7 +28,7 @@
     <div class="container mt-2">
         <form [formGroup]="form2" (ngSubmit)="submit()" *ngIf="fields">
             <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form2"></formly-form>
-            <button  onClick="history.go(-1);" class="btn btn-sec-bg submit-button">Cancel</button>
+            <button type="button" onClick="history.go(-1);" class="btn btn-sec-bg">Cancel</button>
             <button type="submit" class="btn btn-primary float-end submit-button" [disabled]="!form2.valid">Save </button>
 
         </form>

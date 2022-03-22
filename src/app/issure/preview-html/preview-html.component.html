@@ -11,18 +11,18 @@
 <div class="container mt-2 bg-white py-1 px-3">
     <div>
         <div class="row d-flex mt-4 setHeight">
-            <div class=" p-0 col-12 col-sm-5 setHeight">
+            <div class=" p-0 col-12 col-sm-5 setHeight border-right">
                 <ul class="nav nav-tabs ui-tabs font-600">
-                    <li class="active col-sm-5"><a href="#htmlDiv" class="nav-link active fs-16" data-toggle="tab">Design</a>
+                    <li class="active col-sm-5"><a href="#htmlDiv" class="active fs-16" data-toggle="tab">Design</a>
                     </li>
-                    <li class="col-sm-6"><a href="#schenaDiv"  class="nav-link fs-16" data-toggle="tab">Schema</a>
+                    <li class="col-sm-6"><a href="#schenaDiv"  class="fs-16" data-toggle="tab">Schema</a>
                     </li>
                   </ul>
                 
                   <div class="tab-content">
                         <div class="tab-pane active" id="htmlDiv">
                             <div class="d-flex flex-justify-between p-3"> 
-                                <div>HTML</div>
+                                <div class="font-600">HTML</div>
                                 <!-- <button class="fs-14 btn btn-sec-bg submit-button float-end">
                                     <i aria-hidden="true" class="fa fa-pencil-square-o"></i> Edit 
                                 </button> -->
@@ -68,7 +68,7 @@
 
             <div class="col-12 col-sm-7 setHeight">
                 <h6 class="font-600">Preview</h6>
-                <div class=" card h-90">
+                <div class=" card h-90 border-0 bx-none">
 
                     <!-- <div class="card-body w-100" [innerHtml]="userHtml | safe : 'html'"></div> -->
                     <!-- <iframe id="frame" srcdoc='{{userHtml}}'></iframe> -->
@@ -79,6 +79,7 @@
                                     </div>
             </div>
             <div class="preview-footer">
+                <!-- <button class="btn btn-sec-bg submit-button mx-3">Preview on email</button> -->
                 <!-- <button (click)="cancel()" class="btn btn-sec-bg submit-button">Preview on eLocker</button> -->
                 <button  data-toggle="modal" data-target="#prewiewProfile" class="btn btn-bg submit-button float-end mr-2">Save</button>
             </div>

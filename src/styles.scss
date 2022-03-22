@@ -857,7 +857,7 @@ formly-field .col-6 {
         }
     }
     li.active{
-      border-bottom: solid 4px #007bff;
+      border-bottom: solid 2px #007bff;
     }
   }
   .preview-footer{
@@ -873,3 +873,20 @@ formly-field .col-6 {
   .h-90{
       height: 90%;
   }
+  .bx-none{
+    box-shadow: none !important;
+}
+.cursor-pointer{
+    cursor: pointer;
+}
+.pt-70{
+    padding-top: 70px;
+}
+.modal-open .fixed-bottom{
+    display: none;
+}
+
+.modal-open .preview-footer{
+    background: rgb(145 142 142 / 10%);
+    z-index: 9;
+}
