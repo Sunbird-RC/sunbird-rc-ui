@@ -1,5 +1,5 @@
 <app-header [headerFor]='headerName'></app-header>
-<br />
+<!-- <br />
 
 <div class="container">
 
@@ -16,4 +16,21 @@
         <button type="submit" class="btn btn-primary float-end submit-button" [disabled]="!form2.valid">Save </button>
 
     </form>
-</div>
+</div> -->
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-header nav-b navbar-inverse">
+        <a class="nav-link" href="" onClick="history.go(-1); return false;"><i
+                class="fa fa-angle-left primary-text"></i> </a>
+        <span class="p16"><b>Add Record</b></span>
+    </nav>
+
+    <div class="container mt-2">
+        <form [formGroup]="form2" (ngSubmit)="submit()" *ngIf="fields">
+            <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form2"></formly-form>
+            <button  onClick="history.go(-1);" class="btn btn-sec-bg submit-button">Cancel</button>
+            <button type="submit" class="btn btn-primary float-end submit-button" [disabled]="!form2.valid">Save </button>
+
+        </form>
+    </div>
+</header>

@@ -1,6 +1,6 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-header nav-b navbar-inverse">
-        <a class="nav-link" href="" onClick="history.go(-1); return false;"><i
+        <a class="nav-link pl-1" href="" onClick="history.go(-1); return false;"><i
                 class="fa fa-angle-left primary-text"></i> </a>
         <span class="p16" [hidden]="isPreview"><b>Add Document</b></span>
         <span class="p16" [hidden]="!isPreview"><b>Edit Template</b></span>
@@ -9,65 +9,90 @@
 
 </header>
 
-<div class="container mt-2">
+<div class="container-fluid mt-2">
     <div [hidden]="isPreview">
         <!-- <form [formGroup]="form2" (ngSubmit)="submit()" *ngIf="fields">
             <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form2"></formly-form>
         </form> -->
 
         <div class="row d-flex">
-            <div class=" p-3 col-12 col-sm-4 card h-card ">
+            <div class=" p-4 col-12 col-sm-4 card h-card ">
                 <!-- <form [formGroup]="form2" (ngSubmit)="submit()" *ngIf="fields">
                             <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form2"></formly-form>
                         </form> -->
-
-                <div>
-                    <label>Select Document</label> <br />
-                    <select id="select-type-basic" [(ngModel)]="template" (change)="onChange($event.target.value)">
-                        <option value="{{i}}" *ngFor="let item of documentTypeList; let i = index">
-                            {{item?.name}}
-                        </option>
-                    </select>
-                </div>
-
-
-                <!-- <select id="select-type-basic" [(ngModel)]="status" (change)="onChange($event.target.value)">
-                            <option *ngFor="let status_item of status_values" value="{{status_item}}">
-                            {{status_item}}
-                            </option>
-                        </select> -->
-
-
-                <h6 class="mt-4"><b>General Templates (A4) </b></h6>
-
-           
-                <div class="wrapper">
-                    <div class="mb-2" *ngFor="let doctype of selectedDecType">
-                        <p> {{doctype?.name}} </p>
-                        <div class="mb-2" *ngFor="let doc of doctype.samples">
-                        <div class="box" >
-                            <img (click)="previewScreen(doc)" class="templateThumb" src="{{doc?.thumbnailUrl}}" />
-                            <!-- <iframe src="/assets/template/sec.html" allowfullscreen="" width="100%"
-                                height="200px"></iframe> -->
-                               
-                                <!-- <button class="prevBtn" (click)="previewScreen(doc)"> <i class="fa fa-eye" aria-hidden="true"></i></button>
-                                <iframe id="frame" width="1024" height="726" src="/assets/template/sec.html"
-                                style="margin: -263px 0 0 -357px !important; -webkit-transform:scale(0.3);-moz-transform:scale(0.3);"></iframe>
-                       -->
+                        <ul class="nav nav-tabs ui-tabs font-600">
+                            <li class="active"><a href="#tab3" data-toggle="tab">General Templates</a></li>
+                            <!-- <li><a href="#tab4" data-toggle="tab">My Template</a></li> -->
+                          </ul>
+                        
+                          <div class="tab-content">
+                            
+                            <div class="tab-pane active" id="tab3">
+                                <div>
+                                    <label>Select Document</label> <br />
+                                    <select id="select-type-basic" [(ngModel)]="template" (change)="onChange($event.target.value)">
+                                        <option value="{{i}}" *ngFor="let item of documentTypeList; let i = index">
+                                            {{item?.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <!-- <label class="font-600 fs-14 mt-3">Proof of work</label>
+                                <div class="form-check pl-4">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                      I want to make the document org name complaint
+                                    </label>
+                                  </div> -->
+                                  
+                
+                
+                                <!-- <select id="select-type-basic" [(ngModel)]="status" (change)="onChange($event.target.value)">
+                                            <option *ngFor="let status_item of status_values" value="{{status_item}}">
+                                            {{status_item}}
+                                            </option>
+                                        </select> -->
+                
+                
+                                <h6 class="mt-4"><b>General Templates (A4) </b></h6>
+                
+                           
+                                <div class="wrapper">
+                                    <div class="mb-2" *ngFor="let doctype of selectedDecType">
+                                        <p> {{doctype?.name}} </p>
+                                        <div class="mb-2" *ngFor="let doc of doctype.samples">
+                                        <div class="box" >
+                                            <img (click)="previewScreen(doc)" class="templateThumb" src="{{doc?.thumbnailUrl}}" />
+                                            <!-- <iframe src="/assets/template/sec.html" allowfullscreen="" width="100%"
+                                                height="200px"></iframe> -->
+                                               
+                                                <!-- <button class="prevBtn" (click)="previewScreen(doc)"> <i class="fa fa-eye" aria-hidden="true"></i></button>
+                                                <iframe id="frame" width="1024" height="726" src="/assets/template/sec.html"
+                                                style="margin: -263px 0 0 -357px !important; -webkit-transform:scale(0.3);-moz-transform:scale(0.3);"></iframe>
+                                       -->
+                                            </div>
+                                            </div>
+                                    </div>
+                                </div>                            
                             </div>
+                            <div class="tab-pane" id="tab4">
+                              <div class="fs-14 mt-2">You don't have any templates. You can upload SVG or HTML code</div>
+                                <button class="fs-14 btn btn-sec-bg submit-button mt-2">
+                                    <i aria-hidden="true" class="fa fa-upload"></i> Upload Template 
+                                </button>
                             </div>
-                    </div>
-                </div>
+                          </div>
+
+                
              
 
             </div>
             <div class=" col-12 col-sm-8" *ngIf="userHtml">
                 <div class=" card">
-                    <div class="d-flexcard-body m-2">
-                        <div> <span>Preview</span></div>
+                    <div class="d-flex flex-justify-between card-body px-4 py-2">
+                        <div class="font-600">Preview</div>
                         <div>
                             <button (click)="editTemplate()"
-                                class="float-end mt-23 btn btn-sec-bg submit-button float-end"><i
+                                class="float-end fs-14 btn btn-sec-bg submit-button"><i
                                     class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit Template</button>
                         </div>
                     </div>
@@ -75,11 +100,16 @@
 
                 </div>
 
-                <div class=" card div-scroll h-75">
+                <div class=" card div-scroll h-90">
+                    
                     <!-- <div class="card-body w-100" [innerHtml]="userHtml | safe : 'html'"></div> -->
                     <iframe id="iframe1" src="about:blank" class="w-100 h-100"></iframe>
 
                 </div>
+                <!-- <div class="preview-footer">
+                    <button class="btn btn-sec-bg submit-button">Cancel</button>
+                    <button class="btn btn-bg submit-button float-end mr-2">Save Document</button>
+                </div> -->
             </div>
         </div>
 
