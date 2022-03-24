@@ -79,6 +79,18 @@
             <a class="my-2 fs-14 btn btn-sec-bg submit-button align-self-start">View / Add</a>
         </div>
     </div> -->
+
+    <!-- <div *ngIf="templatesItems">
+        <div class="d-flex flex-row flex-wrap p-0">
+            <div  *ngFor="let item of templatesItems" routerLink="/records/{{item?.name}}"
+                class="card card-block mr-2 mb-2 p-4  col-sm-3">
+                <p class="p16 mb-1 font-600">{{item?.name}}</p>
+                <h2 class="font-600">0</h2>
+                <p class="p12 mb-1">Records</p>
+                <a class="my-2 fs-14 btn btn-sec-bg submit-button align-self-start">View / Add</a>
+            </div>
+        </div> -->
+
     <div class="card" *ngIf="templatesItems">
     <table class="card-body">
         <tr>

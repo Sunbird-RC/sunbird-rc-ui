@@ -43,11 +43,13 @@
         <tr>
           <th class="p12 text-secondary">Name</th>
           <th class="p12 text-secondary">Mobile Number </th>
+          <th class="p12 text-secondary">Date</th>
           <th></th>
         </tr>
         <tr *ngFor="let item of recordItems" class="p-3">
           <td class="p16">{{item?.name}}</td>
           <td class="p16">{{item?.contact}}</td>
+          <td class="p16">{{item?.date}}</td>
           <td class="d-flex justify-content-end">
               <div (click)="downloadVc(item)">
                 <i class="fa fa-download text-primary cursor-pointer" aria-hidden="true" title="Download"></i>

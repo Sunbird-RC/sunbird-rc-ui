@@ -79,6 +79,12 @@ export class AddRecordsComponent implements OnInit {
     this.fields[0].fieldGroup.forEach((fieldObj, index) => {
       console.log({ fieldObj });
 
+      if(fieldObj.hasOwnProperty('type') && fieldObj.type)
+      {
+        fieldObj.templateOptions['type'] = fieldObj.type;
+        fieldObj.type = 'string';
+      }
+
 
       if (!fieldObj.templateOptions.hasOwnProperty('label') || fieldObj.templateOptions.label == undefined) {
         // let str: any = (fieldObj.templateOptions.label) ? fieldObj.templateOptions.label : fieldObj.key;
