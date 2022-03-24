@@ -25,7 +25,7 @@
         <span class="p16"><b>Add Record</b></span>
     </nav>
 
-    <div class="container mt-2">
+    <div class="container mt-3">
         <form [formGroup]="form2" (ngSubmit)="submit()" *ngIf="fields">
             <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form2"></formly-form>
             <button type="button" onClick="history.go(-1);" class="btn btn-sec-bg">Cancel</button>
