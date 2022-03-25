@@ -48,6 +48,7 @@ export class FormsComponent implements OnInit {
 
   type: string;
   apiUrl: string;
+  entityUrl: string;
   redirectTo: any;
   add: boolean;
   dependencies: any;
@@ -65,6 +66,7 @@ export class FormsComponent implements OnInit {
   enumVal;
   titleVal
   isSignupForm: boolean = false;
+  propertyId: any;
   constructor(private route: ActivatedRoute,
     public translate: TranslateService,
     public toastMsg: ToastMessageService, public router: Router, public schemaService: SchemaService, private formlyJsonschema: FormlyJsonschema, public generalService: GeneralService, private location: Location) { }
@@ -95,6 +97,7 @@ export class FormsComponent implements OnInit {
 
       if (this.formSchema.api) {
         this.apiUrl = this.formSchema.api;
+        this.entityUrl = this.formSchema.api;
       }
 
       if (this.formSchema.header) {
@@ -152,33 +155,33 @@ export class FormsComponent implements OnInit {
             let _self = this;
             Object.keys(fieldset.dependencies).forEach(function (key) {
               let above13 = fieldset.dependencies[key];
-              if(typeof(above13) === 'object'){
-              Object.keys(above13).forEach(function (key1) {
-                let oneOf = above13[key1];
+              if (typeof (above13) === 'object') {
+                Object.keys(above13).forEach(function (key1) {
+                  let oneOf = above13[key1];
 
-                if (oneOf.length) {
-                  for (let i = 0; i < oneOf.length; i++) {
+                  if (oneOf.length) {
+                    for (let i = 0; i < oneOf.length; i++) {
 
-                    if (oneOf[i].hasOwnProperty('properties')) {
+                      if (oneOf[i].hasOwnProperty('properties')) {
 
-                      Object.keys(oneOf[i].properties).forEach(function (key2) {
-                        let pro = oneOf[i].properties[key2];
+                        Object.keys(oneOf[i].properties).forEach(function (key2) {
+                          let pro = oneOf[i].properties[key2];
 
-                        if (pro.hasOwnProperty('properties')) {
-                          Object.keys(pro['properties']).forEach(function (key3) {
-                            console.log(pro.properties[key3]);
-                            if (pro.properties[key3].hasOwnProperty('title')) {
-                              fieldset.dependencies[key][key1][i].properties[key2].properties[key3]['title'] = _self.translate.instant(pro.properties[key3].title);
-                            }
-                          });
-                        }
+                          if (pro.hasOwnProperty('properties')) {
+                            Object.keys(pro['properties']).forEach(function (key3) {
+                              console.log(pro.properties[key3]);
+                              if (pro.properties[key3].hasOwnProperty('title')) {
+                                fieldset.dependencies[key][key1][i].properties[key2].properties[key3]['title'] = _self.translate.instant(pro.properties[key3].title);
+                              }
+                            });
+                          }
 
-                      })
+                        })
+                      }
                     }
                   }
-                }
-              })
-            }
+                })
+              }
             })
 
             this.dependencies = fieldset.dependencies;
@@ -903,6 +906,7 @@ export class FormsComponent implements OnInit {
           if (this.type && this.type.includes("property")) {
             var property = this.type.split(":")[1];
           }
+
           var url = [this.apiUrl, this.identifier, property, 'documents']
           this.generalService.postData(url.join('/'), formData).subscribe((res) => {
             var documents_list: any[] = [];
@@ -931,13 +935,16 @@ export class FormsComponent implements OnInit {
               if (this.model[property]) {
                 this.model = this.model[property];
               }
-              if (this.model.hasOwnProperty('attest') && this.model['attest']) {
-                this.apiUrl = (url.join("/")) + '?send=true';
-              } else {
-                this.apiUrl = (url.join("/")) + '?send=false';
-              }
 
-              this.postData()
+
+              // if (this.model.hasOwnProperty('attest') && this.model['attest']) {
+              //   this.apiUrl = (url.join("/")) + '?send=true';
+              // } else {
+              //   this.apiUrl = (url.join("/")) + '?send=false';
+              // }
+
+              // this.postData()
+              this.raiseClaim(property);
             }
           }, (err) => {
             console.log(err);
@@ -966,16 +973,18 @@ export class FormsComponent implements OnInit {
             if (this.model[property]) {
               this.model = this.model[property];
             }
-            if (this.model.hasOwnProperty('attest') && this.model['attest']) {
-              this.apiUrl = (url.join("/")) + '?send=true';
-            } else {
-              this.apiUrl = (url.join("/")) + '?send=false';
-            }
+
+            // if (this.model.hasOwnProperty('attest') && this.model['attest']) {
+            //   this.apiUrl = (url.join("/")) + '?send=true';
+            // } else {
+            //   this.apiUrl = (url.join("/")) + '?send=false';
+            // }
 
             if (this.identifier != null && this.entityId != undefined) {
               this.updateClaims()
             } else {
-              this.postData()
+             // this.postData()
+             this.raiseClaim(property);
             }
 
           }
@@ -1004,21 +1013,74 @@ export class FormsComponent implements OnInit {
         if (this.model[property]) {
           this.model = this.model[property];
         }
-        if (this.model.hasOwnProperty('attest') && this.model['attest']) {
-          this.apiUrl = (url.join("/")) + '?send=true';
-        } else {
-          this.apiUrl = (url.join("/")) + '?send=false';
-        }
+
+
+
+        // if (this.model.hasOwnProperty('attest') && this.model['attest']) {
+        //   this.apiUrl = (url.join("/")) + '?send=true';
+        // } else {
+        //   this.apiUrl = (url.join("/")) + '?send=false';
+        // }
 
 
         if (this.identifier != null && this.entityId != undefined) {
           this.updateClaims()
         } else {
-          this.postData()
+          this.raiseClaim(property);
         }
-
       }
     }
+  }
+
+
+  raiseClaim(property) {
+    this.generalService.postData(this.apiUrl, this.model).subscribe((res) => {
+      if (res.params.status == 'SUCCESSFUL') {
+        this.router.navigate([this.redirectTo])
+
+
+        if (this.model.hasOwnProperty('attest') && this.model['attest']) {
+          this.generalService.getData(this.entityUrl).subscribe((res) => {
+            this.entityId = res[0].osid;
+            this.propertyId = res[0][property][0]["osid"];
+
+            var temp = {};
+            temp[property] = [this.propertyId];
+            let propertyUniqueName = localStorage.getItem('entity').toLowerCase() + property.charAt(0).toUpperCase() + property.slice(1);
+
+            propertyUniqueName = (localStorage.getItem('entity').toLowerCase() == 'student') ? 'studentInstituteAttest' : propertyUniqueName;
+
+            let data = {
+              "entityName": localStorage.getItem('entity').charAt(0).toUpperCase() + localStorage.getItem('entity').slice(1),
+              "entityId": this.entityId,
+              "name": propertyUniqueName,
+              "propertiesOSID": temp
+            }
+            this.sentToAttestation(data);
+          });
+        }
+      }
+      else if (res.params.errmsg != '' && res.params.status == 'UNSUCCESSFUL') {
+        this.toastMsg.error('error', res.params.errmsg)
+      }
+    }, (err) => {
+      this.toastMsg.error('error', err.error.params.errmsg)
+    });
+
+  }
+
+  sentToAttestation(data) {
+    this.generalService.attestationReq('/send', data).subscribe((res) => {
+      if (res.params.status == 'SUCCESSFUL') {
+        this.router.navigate([this.redirectTo])
+      }
+      else if (res.params.errmsg != '' && res.params.status == 'UNSUCCESSFUL') {
+        this.toastMsg.error('error', res.params.errmsg)
+      }
+    }, (err) => {
+      this.toastMsg.error('error', err.error.params.errmsg)
+    });
+
   }
 
   filtersearchResult(term: string) {
@@ -1071,6 +1133,8 @@ export class FormsComponent implements OnInit {
     if (Array.isArray(this.model)) {
       this.model = this.model[0];
     }
+
+    console.log(this.model);
     this.generalService.postData(this.apiUrl, this.model).subscribe((res) => {
       if (res.params.status == 'SUCCESSFUL') {
         this.router.navigate([this.redirectTo])

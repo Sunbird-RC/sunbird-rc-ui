@@ -174,12 +174,26 @@ export class AttestationComponent implements OnInit {
         this.denyFields[0].templateOptions.description = noteDesc;
         this.noteFields[0].templateOptions.description = noteDesc;
 
-        this.generalService.getData("/"+this.claimData.propertyURI).subscribe((res) => {
+        this.attestationData = JSON.parse(this.claimData.propertyData);
+        let _self = this;
+        Object.keys(this.attestationData).forEach(function (key) {
+        if(typeof(_self.attestationData[key]) == 'object')
+        {
+          _self.attestationData = _self.attestationData[key][0];
+          _self.removeCommonFields();
+          _self.generateData()
+        }
+      
+        });
+
+        this.generalService.getData("/"+ this.claimData.propertyURI).subscribe((res) => {
           console.log("res2",res)
           this.attestationData = res;
           this.removeCommonFields();
           this.generateData()
         })
+
+
         this.generalService.getData(this.claimEntity+"/"+this.claimEntityId).subscribe((res) => {
           console.log("profileData",res);
 
@@ -230,7 +244,7 @@ export class AttestationComponent implements OnInit {
   }
 
   removeCommonFields() {
-    var commonFields = ['osCreatedAt', 'osCreatedBy', 'osUpdatedAt', 'osUpdatedBy','OsUpdatedBy','_osAttestedData', 'osid','_osClaimId','_osState','Osid'];
+    var commonFields = ['osCreatedAt', 'osCreatedBy', 'osUpdatedAt', 'osUpdatedBy','OsUpdatedBy','_osAttestedData', 'osid','_osClaimId','_osState','Osid', 'InstituteOSID', 'TeacherOSID'];
     commonFields.forEach(element => {
       if(this.attestationData.hasOwnProperty(element)){
         delete this.attestationData[element]
@@ -271,6 +285,11 @@ export class AttestationComponent implements OnInit {
     // window.location.reload();
   }
 
+
+  typeOf(value) {
+    return typeof value;
+  }
+  
   onConsent() { }
 
   saveNote(event){

@@ -252,6 +252,20 @@ export class LayoutsComponent implements OnInit, OnChanges {
                   var osid;
                   var osState;
                   var temp_array = [];
+                  let tempName = localStorage.getItem('entity').toLowerCase() +  element.charAt(0).toUpperCase() + element.slice(1);
+
+                  tempName = (localStorage.getItem('entity') == 'student' ) ? 'studentInstituteAttest' : tempName;
+                  if(this.model.hasOwnProperty(tempName))
+                  {
+                    this.model[tempName].forEach((objects1, j) => {
+                      if(objects.osid == objects1.propertiesOSID[element][0])
+                      {
+                        this.model[element][i]['_osState'] = objects1._osState;
+                      }
+                      console.log({objects1});
+                    });
+                  }
+                 
 
                   for (const [index, [key, value]] of Object.entries(Object.entries(objects))) {
                     if ('$ref' in this.responseData['definitions'][block.definition]['properties'][element]) {
@@ -323,14 +337,14 @@ export class LayoutsComponent implements OnInit, OnChanges {
     return object;
   }
 
-  getData() {
+  async getData() {
     var get_url;
     if (this.identifier) {
       get_url = this.apiUrl + '/' + this.identifier
     } else {
       get_url = this.apiUrl
     }
-    this.generalService.getData(get_url).subscribe((res) => {
+    await this.generalService.getData(get_url).subscribe((res) => {
       if (this.identifier) {
         this.model = res
       }
