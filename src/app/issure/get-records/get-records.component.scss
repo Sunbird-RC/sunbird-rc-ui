@@ -15,6 +15,10 @@ table {
     padding: 1.2rem;
   }
   
-  tr:nth-child(even) {
+  tr:nth-child(odd) td {
     background-color: #F6F8FC;
+  }
+
+  .line-height32{
+    line-height: 32px;
   }

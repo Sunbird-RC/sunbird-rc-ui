@@ -1,6 +1,6 @@
 <app-header [headerFor]='headerName'></app-header>
-<!-- <br />
-
+ <br />
+<!--
 <div class="container">
 
     <div class="d-flex mt-3 mb-3">
@@ -18,12 +18,19 @@
     </form>
 </div> -->
 
-<header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-header nav-b navbar-inverse">
-        <a class="nav-link" href="" onClick="history.go(-1); return false;"><i
-                class="fa fa-angle-left primary-text"></i> </a>
-        <span class="p16"><b>Add Record</b></span>
-    </nav>
+<div class="container">
+<br />
+
+ 
+    <div class="d-flex mt-3">
+        <a  href="" class="line-height32" onClick="history.go(-1); return false;"><i
+            class="fa fa-angle-left primary-text mt-2"></i> </a> &nbsp; &nbsp;
+            
+        <span class="heading-2">Add Record</span>
+        
+    </div>
+
+   
 
     <div class="container mt-3">
         <form [formGroup]="form2" (ngSubmit)="submit()" *ngIf="fields">
@@ -33,4 +40,4 @@
 
         </form>
     </div>
-</header>
+</div>

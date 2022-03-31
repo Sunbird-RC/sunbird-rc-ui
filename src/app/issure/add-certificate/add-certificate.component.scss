@@ -1,15 +1,20 @@
 select {
-    height: 34px;
-    width: 100%;
-    left: 1px;
-    top: 22px;
+    // height: 34px;
+    // width: 100%;
+    // left: 1px;
+    // top: 22px;
     border-radius: 4px;
-    background: white;
+    background: #FFFFFF;
+    border: 1px solid #EFEFEF;
+    box-sizing: border-box;
+    border-radius: 4px;
+    padding: 11px 10px;
+    width: 100%;
 }
 
-select option {
-    height: 34px; 
-}
+// select option {
+//     height: 34px; 
+// }
 
 
 .inputField {
@@ -27,21 +32,25 @@ select option {
     overflow-y: scroll; /* Show vertical scrollbar */
     overflow-x: scroll; /* Show horizontal scrollbar */
   }
+@media(min-width:768px){
+    .h-card{
+        min-height: 570px !important;
+        height: auto;
+      }
+      .setHeight{
+        height: 614px !important;
+        max-height: 614px !important;
+    }
+}
+@media(max-width:768px){
+    .p-sm-0{
+        padding: 0 !important;
+    }
+}
 
-  .h-card{
-    height: 570px !important;
-  }
-
-
-  .mt-23{
+.mt-23{
     margin-top: -23px;
 }
-
-.setHeight{
-    height: 614px !important;
-    max-height: 614px !important;
-}
-
 .modal-content {
     width: 45%;
     height: 425px;
@@ -56,7 +65,7 @@ select option {
 
 .box{
     float:left;
-    margin-right:20px;
+    margin-right:10px;
 }
 .clear{
     clear:both;
@@ -64,7 +73,7 @@ select option {
 
 .wrapper {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);;
+    //grid-template-columns: repeat(2, 1fr);;
   }
 
   .desc {
@@ -79,6 +88,10 @@ select option {
 }
 
 .templateThumb {
-    width: 122px;
-    border: 1px solid;
+    width: 120px;
+    height: 172px;
+    //border: 2px solid #1987B6;
+    border: 1px solid #d7d5d5;
+    box-sizing: border-box;
+    margin: 4px 0 2px 2px;
 }

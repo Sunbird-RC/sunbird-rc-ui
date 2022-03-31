@@ -13,22 +13,22 @@
         </div>
 
     </div> -->
-
+<br />
     <div class="d-flex mt-3">
-        <a  href="" onClick="history.go(-1); return false;"><i
+        <a  href="" class="line-height32" onClick="history.go(-1); return false;"><i
             class="fa fa-angle-left primary-text"></i> </a> &nbsp; &nbsp;
             
-        <span class="p16"><b>{{documentName}}</b></span>
+        <span class="heading-2">{{documentName}}</span>
         
     </div>
 
-    <div class="my-3">
-        <span class="p16" *ngIf="recordItems?.length == 1 || !recordItems?.length"><b>{{recordItems?.length}} Record</b></span>
-        <span class="p16" *ngIf="recordItems?.length > 1"><b>{{recordItems?.length}} Records</b></span>
+    <div class="mb-3 ">
+        <span class="heading-2" *ngIf="recordItems?.length == 1 || !recordItems?.length">{{recordItems?.length}} Record</span>
+        <span class="heading-2" *ngIf="recordItems?.length > 1">{{recordItems?.length}} Records</span>
         
 
-        <a class=""> <button type="button" routerLink="/add-records/{{documentName}}"
-            class="btn p16 btn-bg pl-3 pr-3 text-capitalize float-end btn-sm label-primary btn-primary">Add </button></a>
+        <a> <button type="button" routerLink="/add-records/{{documentName}}"
+            class="btn btn-primary btn-primary-sm text-capitalize float-end p0">Add </button></a>
     </div>
 
     <div class="card" *ngIf="!recordItems?.length">
@@ -41,18 +41,18 @@
     <div class="card" *ngIf="recordItems?.length">
     <table class="card-body">
         <tr>
-          <th class="p12 text-secondary">Name</th>
-          <th class="p12 text-secondary">Mobile Number </th>
-          <th class="p12 text-secondary">Date</th>
+          <th class="heading-4 sb-gray-color">Name</th>
+          <th class="heading-4 sb-gray-color">Mobile Number </th>
+          <th class="heading-4 sb-gray-color">Date</th>
           <th></th>
         </tr>
         <tr *ngFor="let item of recordItems" class="p-3">
-          <td class="p16">{{item?.name}}</td>
-          <td class="p16">{{item?.contact}}</td>
-          <td class="p16">{{item?.date}}</td>
+          <td class="heading-3 sb-text-primary">{{item?.name}}</td>
+          <td class="heading-3">{{item?.contact}}</td>
+          <td class="heading-3">{{item?.date}}</td>
           <td class="d-flex justify-content-end">
               <div (click)="downloadVc(item)">
-                <i class="fa fa-download text-primary cursor-pointer" aria-hidden="true" title="Download"></i>
+                <i class="fa fa-download sb-text-primary cursor-pointer" aria-hidden="true" title="Download"></i>
             </div>
             <!-- <div class="ml-4">
                 <div data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">            

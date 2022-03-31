@@ -1,8 +1,8 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-header nav-b navbar-inverse">
-        <a class="nav-link pl-1" href="" onClick="history.go(-1); return false;"><i
+        <a class="nav-link pl-4" href="" onClick="history.go(-1); return false;"><i
                 class="fa fa-angle-left primary-text"></i> </a>
-        <span class="p16" [hidden]="isPreview"><b>Add Document</b></span>
+        <span class="heading-2" [hidden]="isPreview">Add Document</span>
         <span class="p16" [hidden]="!isPreview"><b>Edit Template</b></span>
     </nav>
 
@@ -16,20 +16,21 @@
         </form> -->
 
         <div class="row d-flex">
-            <div class=" p-4 col-12 col-sm-4 card h-card ">
+            <div class="col-12 col-sm-4 card h-card ">
                 <!-- <form [formGroup]="form2" (ngSubmit)="submit()" *ngIf="fields">
                             <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form2"></formly-form>
                         </form> -->
+                        <div class="container mt-4">
                         <ul class="nav nav-tabs ui-tabs font-600">
-                            <li class="active"><a href="#tab3" data-toggle="tab">General Templates</a></li>
-                            <!-- <li><a href="#tab4" data-toggle="tab">My Template</a></li> -->
+                            <li class="active heading-2"><a href="#tab3" data-toggle="tab">General Templates</a></li>
+                            <!-- <li class="heading-2"><a href="#tab4" data-toggle="tab">My Template</a></li> -->
                           </ul>
                         
                           <div class="tab-content">
                             
                             <div class="tab-pane active" id="tab3">
                                 <div>
-                                    <label>Select Document</label> <br />
+                                    <label class="heading-4">Select Document Type</label> <br />
                                     <select id="select-type-basic" [(ngModel)]="template" (change)="onChange($event.target.value)">
                                         <option value="{{i}}" *ngFor="let item of documentTypeList; let i = index">
                                             {{item?.name}}
@@ -53,15 +54,18 @@
                                         </select> -->
                 
                 
-                                <h6 class="mt-4"><b>General Templates (A4) </b></h6>
+                                <!-- <h6 class="mt-4"><b>General Templates (A4) </b></h6> -->
                 
                            
                                 <div class="wrapper">
                                     <div class="mb-2" *ngFor="let doctype of selectedDecType">
-                                        <p> {{doctype?.name}} </p>
-                                        <div class="mb-2" *ngFor="let doc of doctype.samples">
+                                        <br />
+                                        <p class="heading-3 mb-1"> {{doctype?.name}} </p>
+                                        <div class="mb-2" *ngFor="let doc of doctype.samples; let index = index">
                                         <div class="box" >
-                                            <img (click)="previewScreen(doc)" class="templateThumb" src="{{doc?.thumbnailUrl}}" />
+                                            <img *ngIf="doc?.thumbnailUrl" (click)="previewScreen(doc)" class="templateThumb" src="{{doc?.thumbnailUrl}}" />
+                                            <img *ngIf="!doc?.thumbnailUrl" (click)="previewScreen(doc)" class="templateThumb" src="/assets/images/thumbnail.png" />
+
                                             <!-- <iframe src="/assets/template/sec.html" allowfullscreen="" width="100%"
                                                 height="200px"></iframe> -->
                                                
@@ -70,7 +74,7 @@
                                                 style="margin: -263px 0 0 -357px !important; -webkit-transform:scale(0.3);-moz-transform:scale(0.3);"></iframe>
                                        -->
                                             </div>
-                                            </div>
+                                            </div> 
                                     </div>
                                 </div>                            
                             </div>
@@ -81,18 +85,18 @@
                                 </button>
                             </div>
                           </div>
-
+                        </div>
                 
              
 
             </div>
-            <div class=" col-12 col-sm-8" *ngIf="userHtml">
-                <div class=" card">
+            <div class=" col-12 col-sm-8 p-sm-0" *ngIf="userHtml">
+                <div class="card">
                     <div class="d-flex flex-justify-between card-body px-4 py-2">
-                        <div class="font-600">Preview</div>
+                        <div class="heading-2">Preview</div>
                         <div>
                             <button (click)="editTemplate()"
-                                class="float-end fs-14 btn btn-sec-bg submit-button"><i
+                                class="float-end heading-3 btn btn-sec-bg submit-button"><i
                                     class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit Template</button>
                         </div>
                     </div>
@@ -100,10 +104,10 @@
 
                 </div>
 
-                <div class=" card div-scroll h-90">
-                    
-                    <!-- <div class="card-body w-100" [innerHtml]="userHtml | safe : 'html'"></div> -->
-                    <iframe id="iframe1" src="about:blank" class="w-100 h-100 bg-light"></iframe>
+                <!-- <div class=" card div-scroll h-90"> -->
+                    <div class="embed-responsive embed-responsive-1by1">
+                        <!-- <div class="card-body w-100" [innerHtml]="userHtml | safe : 'html'"></div> -->
+                    <iframe id="iframe1" src="about:blank" class="iframe-container w-100 h-100 embed-responsive-item"></iframe>
 
                 </div>
                 <!-- <div class="preview-footer">

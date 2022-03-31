@@ -1,97 +1,52 @@
 <app-header [headerFor]='headerName'></app-header>
+
 <div class="card mt-5">
-    <div class="card-body ml-3 mt-3 d-flex flex-justify-between">
+    <div class="card-body ml-5 mt-3 d-flex flex-justify-between">
         <div>
             <img *ngIf="issuerInfo?.logoUrl"  src="{{issuerInfo?.logoUrl}}" class="logo" alt='logo Url'/>
             <p *ngIf="issuerInfo?.name" class="p14 mb-1">{{issuerInfo?.name}}</p>
             <p *ngIf="issuerInfo?.websiteUrl" class="p14 mb-1"><a href="{{issuerInfo?.websiteUrl}}"  target="_blank">{{issuerInfo?.websiteUrl}}</a></p>
         </div>
-        <!-- <div>
-            <button class="mt-23 fs-14 btn btn-sec-bg submit-button float-end">
+        <div>
+            <button class="mt-23 fs-14 btn btn-sec-bg submit-button float-end" data-toggle="modal" data-target="#prewiewProfile" (click)="getFormJSON()">
                 <i aria-hidden="true" class="fa fa-pencil-square-o"></i> Edit 
             </button>
-        </div> -->
+        </div>
     </div>
 </div>
 
 
-<div class="container-fluid">
-    <!-- <div class="d-flex flex-row flex-nowrap overflow-auto">
-        <div class="card card-block small-card p-2 mr-2 " *ngFor="let card of cards">
-            <p class="p16 mb-1">{{card?.title}}</p>
-            <h2>{{card?.records}}</h2>
-            <p class="p12 mb-1">Records</p>
+<div class="container">
+    <div class="row">
+        <div class="mt-4 mb-3 px-0">
+            <span class="heading-2">Documents</span>
+            <!-- <a class=" p-2 p14 btn-bg label-primary btn-style float-end" href="/add-doc-types"> Add Document type</a> -->
+            <!-- <button type="button" class="btn p14 btn-bg text-capitalize float-end btn-sm label-primary btn-primary"
+                data-toggle="modal" data-target="#prewiewProfile">Add New Document</button> -->
+            <a routerLink="/certificate/add-document" class=""> <button type="button"
+                    class="btn text-capitalize float-end btn-primary btn-primary-sm p2">Add New
+                    Document</button></a>
         </div>
+     <div class="card" *ngIf="!templatesItems">
+            <div class="p16 card-body">
+                <p class="mb-1">You have not added certificates yet.</p>
+                <p class="mb-1">Add New to Setup and issue Verified Credentials</p>
+            </div>
+        </div>
+   
 
-    </div> -->
-
-    <div class="my-4">
-        <span class="p16"><b>Documents</b></span>
-        <!-- <a class=" p-2 p14 btn-bg label-primary btn-style float-end" href="/add-doc-types"> Add Document type</a> -->
-        <!-- <button type="button" class="btn p14 btn-bg text-capitalize float-end btn-sm label-primary btn-primary"
-            data-toggle="modal" data-target="#prewiewProfile">Add New Document</button> -->
-        <a routerLink="/certificate/add-document" class=""> <button type="button"
-                class="btn p14 btn-bg text-capitalize float-end btn-md fs-14 label-primary btn-primary font-600">Add New
-                Document</button></a>
-    </div>
-
-    <div class="card mt-4" *ngIf="!templatesItems">
-        <div class="p16 card-body">
-            <p class="mb-1">You have not added certificates yet.</p>
-            <p class="mb-1">Add New to Setup and issue Verified Credentials</p>
-        </div>
-    </div>
-    <!-- <div class="d-flex flex-row flex-wrap p-0">
-        <div class="card card-block mr-2 mb-2 p-4  col-sm-3">
-            <p class="p16 mb-1 font-600">Volunteers</p>
-            <h2 class="font-600">0</h2>
-            <p class="p12 mb-1">Records</p>
-            <a class="my-2 fs-14 btn btn-sec-bg submit-button align-self-start">View / Add</a>
-        </div>
-        <div class="card card-block mr-2 mb-2 p-4  col-sm-3">
-            <p class="p16 mb-1 font-600">Volunteers</p>
-            <h2 class="font-600">0</h2>
-            <p class="p12 mb-1">Records</p>
-            <a class="my-2 fs-14 btn btn-sec-bg submit-button align-self-start">View / Add</a>
-        </div>
-        <div class="card card-block  mr-2 mb-2 p-4 col-sm-3">
-            <p class="p16 mb-1 font-600">Volunteers</p>
-            <h2 class="font-600">0</h2>
-            <p class="p12 mb-1">Records</p>
-            <a class="my-2 fs-14 btn btn-sec-bg submit-button align-self-start">View / Add</a>
-        </div>
-        <div class="card card-block mr-2 mb-2 p-4 col-sm-3">
-            <p class="p16 mb-1 font-600">Volunteers</p>
-            <h2 class="font-600">0</h2>
-            <p class="p12 mb-1">Records</p>
-            <a class="my-2 fs-14 btn btn-sec-bg submit-button align-self-start">View / Add</a>
-        </div>
-        <div class="card card-block mr-2 mb-2  p-4 col-sm-3">
-            <p class="p16 mb-1 font-600">Volunteers</p>
-            <h2 class="font-600">0</h2>
-            <p class="p12 mb-1">Records</p>
-            <a class="my-2 fs-14 btn btn-sec-bg submit-button align-self-start">View / Add</a>
-        </div>
-        <div class="card card-block mr-2 mb-2 p-4 col-sm-3">
-            <p class="p16 mb-1 font-600">Volunteers</p>
-            <h2 class="font-600">0</h2>
-            <p class="p12 mb-1">Records</p>
-            <a class="my-2 fs-14 btn btn-sec-bg submit-button align-self-start">View / Add</a>
-        </div>
-    </div> -->
-
-    <!-- <div *ngIf="templatesItems">
+    <div *ngIf="templatesItems; else loader">
         <div class="d-flex flex-row flex-wrap p-0">
-            <div  *ngFor="let item of templatesItems" routerLink="/records/{{item?.name}}"
+            <div  *ngFor="let item of templatesItems" 
                 class="card card-block mr-2 mb-2 p-4  col-sm-3">
                 <p class="p16 mb-1 font-600">{{item?.name}}</p>
                 <h2 class="font-600">0</h2>
                 <p class="p12 mb-1">Records</p>
-                <a class="my-2 fs-14 btn btn-sec-bg submit-button align-self-start">View / Add</a>
+                <a routerLink="/records/{{item?.name}}" class="my-2 fs-14 btn btn-sec-bg submit-button align-self-start">View / Add</a>
             </div>
-        </div> -->
+        </div>
 
-    <div class="card" *ngIf="templatesItems">
+    <!-- <div class="card" *ngIf="templatesItems; else loader">
     <table class="card-body">
         <tr>
           <th class="p12">Certificate</th>
@@ -99,33 +54,39 @@
         <tr *ngFor="let item of templatesItems" class="p-3">
           <td class="p16" *ngIf="item?.name" routerLink="/records/{{item?.name}}" >{{item?.name}}</td>
         
-          <!-- <td class="float-end text-primary"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i></td> -->
+           <td class="float-end text-primary"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i></td> 
         </tr>
       </table>
-    </div>
-
-
-
-
-    <!-- <div class="modal right fade right-xl-modal" id="prewiewProfile" tabindex="-1" role="dialog"
-        aria-labelledby="prewiewProfile">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-
-                <div class="modal-header">
-                    <h6 class="modal-title">Add Document type</h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    hi
-                </div>
-            </div>
-        </div>
     </div> -->
 
-
-    <!-- <iframe id="test_iframe" src="about:blank" width=400 height=400></iframe>
-<button (click)="injectHTML();">Inject HTML</button> -->
-
 </div>
+
+<!-- Public Profile -->
+<div class="modal right fade right-xl-modal" id="prewiewProfile" tabindex="-1" role="dialog"
+  aria-labelledby="prewiewProfile">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title primary-text" id="prewiewProfile">Edit issuer details</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body" *ngIf="fields; else loader">
+        <form [formGroup]="form2" (ngSubmit)="submit()">
+            <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form2"></formly-form>
+            <button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-sec-bg">Cancel</button>
+            <button type="submit" class="btn btn-primary float-end submit-button" [disabled]="!form2.valid">Save </button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #loader>
+    <br>
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border loader" role="status">
+            <span class="sr-only">{{'LOADING'| translate}}</span>
+        </div>
+    </div>
+</ng-template>

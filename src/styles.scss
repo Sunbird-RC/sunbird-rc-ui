@@ -199,7 +199,7 @@ legend {
 
 .btn-sec-bg{
     background-color: var( --secondaryBtnBgColor) !important;
-    color: #3c93f0 !important;
+    color: #1987B6 !important;
     font-weight: 600 !important;
 }
 .badge-secondary {
@@ -336,8 +336,8 @@ body {
     font-size: 0.7rem;
 }
 
-.font-600{
-    font-weight: 600 !important;
+.font-700{
+    font-weight: 700 !important;
 }
 
 .w-70 {
@@ -440,10 +440,10 @@ button.calendar:active {
     padding-right: 0;
 }
 
-.modal-dialog{
-    max-width: 100% !important;
-    width: 100% !important;
-}
+// .modal-dialog{
+//     max-width: 100% !important;
+//     width: 100% !important;
+// }
 
 .modal-dialog.panel-right {
     position: fixed !important;
@@ -491,9 +491,15 @@ button.calendar:active {
 
 .container {
     //margin-top: 100px;
-    padding-bottom: 100px;
-    margin-top: 50px;
+    // padding-bottom: 100px;
+    // margin-top: 50px;
     max-width: 94% !important; 
+}
+
+.modal{
+    .container{
+        padding-bottom: 38px;
+    }
 }
 
 .sub-container {
@@ -564,7 +570,7 @@ formly-autocomplete-type .ng-select {
 
 .logo {
     // width: 50px;
-    height: 50px;
+    height: 35px;
     display: block;
     text-indent: -9999px;
 }
@@ -849,6 +855,7 @@ formly-field .col-6 {
 .ui-tabs{
     border-bottom: 1px solid #dee2e6 !important;
     margin-bottom: 10px !important;
+    text-align: center;
     li{
         margin-right: 15px;
         a{
@@ -857,7 +864,10 @@ formly-field .col-6 {
         }
     }
     li.active{
-      border-bottom: solid 2px #007bff;
+      border-bottom: solid 2px #1987B6;
+      a{
+        color: #1987B6;
+      }
     }
   }
   .preview-footer{
@@ -890,3 +900,71 @@ formly-field .col-6 {
     background: rgb(145 142 142 / 10%);
     z-index: 9;
 }
+.heading-5{
+    font-size: 24px !important;
+    font-weight: 700 !important;
+    line-height: 32px !important;
+}
+
+.heading-2{
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 32px;
+}
+.heading-3{
+    font-size: 14px !important;
+    line-height: 32px !important;
+    font-weight: 700 !important;
+}
+.heading-4{
+    font-size: 12px !important;
+    font-weight: 400;
+    line-height: 16px !important;  
+}
+
+.sb-gray-color{
+    color: #8D9091;
+}
+
+.btn-primary-sm{
+    background: #1987B6;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    line-height: 32px !important;
+}
+.p1{
+    padding: 0.175rem 2.5rem !important;
+}
+.p2{
+    padding: 0.275rem .85rem !important;
+}
+.p0{
+    padding:0.175rem 1.5rem !important
+}
+.sb-text-primary{
+    color: #1987B6 !important;
+}
+.iframe-container{
+    background: #EFEFEF;
+    border: solid 1px #EFEFEF;
+}
+.border-light-color{
+    border: 1px solid #EFEFEF;
+}
+.mtn-28{
+    margin-top: -28px;
+}
+.pt-34{
+    padding-top: 34px;
+}
+.mb-05{
+    margin-bottom: 0.5rem !important;
+}
+.bg-none{
+    background: none !important;
+}
+.navbar-inverse{
+    justify-content: flex-start !important;
+  }

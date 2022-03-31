@@ -17,6 +17,7 @@ export class GetRecordsComponent implements OnInit {
   //headerName : string = 'issuer';
 
   documentName: string;
+  pdfName: any;
   constructor(public router: Router, public route: ActivatedRoute,
     public generalService: GeneralService, private http: HttpClient,) { 
       this.documentName = this.route.snapshot.paramMap.get('document'); 
@@ -58,6 +59,7 @@ this.getRecords();
 
   downloadVc(item){
     this.vcOsid = item.osid;
+    this.pdfName = (item.name) ? item.name : this.documentName;
 
     let headers = {
       Accept: 'text/html',
@@ -95,7 +97,7 @@ this.getRecords();
         });
         var link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
-        link.download = this.documentName + '.pdf';
+        link.download = this.pdfName + '.pdf';
         link.click();
         window.URL.revokeObjectURL(link.href);
 
