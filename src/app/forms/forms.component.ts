@@ -48,7 +48,6 @@ export class FormsComponent implements OnInit {
 
   type: string;
   apiUrl: string;
-  entityUrl: string;
   redirectTo: any;
   add: boolean;
   dependencies: any;
@@ -66,7 +65,9 @@ export class FormsComponent implements OnInit {
   enumVal;
   titleVal
   isSignupForm: boolean = false;
+  entityUrl: any;
   propertyId: any;
+  entityName: string;
   constructor(private route: ActivatedRoute,
     public translate: TranslateService,
     public toastMsg: ToastMessageService, public router: Router, public schemaService: SchemaService, private formlyJsonschema: FormlyJsonschema, public generalService: GeneralService, private location: Location) { }
@@ -88,6 +89,8 @@ export class FormsComponent implements OnInit {
       }
 
     });
+
+    this.entityName = localStorage.getItem('entity');
 
     this.schemaService.getFormJSON().subscribe((FormSchemas) => {
       var filtered = FormSchemas.forms.filter(obj => {
@@ -126,6 +129,7 @@ export class FormsComponent implements OnInit {
 
       if (this.type != 'entity') {
         this.propertyName = this.type.split(":")[1];
+        this.propertyId = this.identifier;
         this.getEntityData(this.apiUrl);
       }
 
@@ -907,7 +911,8 @@ export class FormsComponent implements OnInit {
             var property = this.type.split(":")[1];
           }
 
-          var url = [this.apiUrl, this.identifier, property, 'documents']
+          let id = (this.entityId) ? this.entityId : this.identifier;
+          var url = [this.apiUrl, id , property, 'documents']
           this.generalService.postData(url.join('/'), formData).subscribe((res) => {
             var documents_list: any[] = [];
             var documents_obj = {
@@ -930,21 +935,24 @@ export class FormsComponent implements OnInit {
             }
             else if (this.type && this.type.includes("property")) {
               var property = this.type.split(":")[1];
-              var url = [this.apiUrl, this.identifier, property];
+
+              if (this.identifier != null && this.entityId != undefined) {
+                var url = [this.apiUrl, this.entityId, property, this.identifier];
+              } else {
+                var url = [this.apiUrl, this.identifier, property];
+              }
+  
               this.apiUrl = (url.join("/"));
               if (this.model[property]) {
                 this.model = this.model[property];
               }
 
 
-              // if (this.model.hasOwnProperty('attest') && this.model['attest']) {
-              //   this.apiUrl = (url.join("/")) + '?send=true';
-              // } else {
-              //   this.apiUrl = (url.join("/")) + '?send=false';
-              // }
+              this.postData();
 
-              // this.postData()
-              this.raiseClaim(property);
+              if (this.model.hasOwnProperty('attest') && this.model['attest']) {
+                this.raiseClaim(property);
+              }
             }
           }, (err) => {
             console.log(err);
@@ -974,17 +982,15 @@ export class FormsComponent implements OnInit {
               this.model = this.model[property];
             }
 
-            // if (this.model.hasOwnProperty('attest') && this.model['attest']) {
-            //   this.apiUrl = (url.join("/")) + '?send=true';
-            // } else {
-            //   this.apiUrl = (url.join("/")) + '?send=false';
-            // }
 
             if (this.identifier != null && this.entityId != undefined) {
               this.updateClaims()
             } else {
-             // this.postData()
-             this.raiseClaim(property);
+              this.postData()
+            }
+
+            if (this.model.hasOwnProperty('attest') && this.model['attest']) {
+              this.raiseClaim(property);
             }
 
           }
@@ -1014,57 +1020,53 @@ export class FormsComponent implements OnInit {
           this.model = this.model[property];
         }
 
-
-
-        // if (this.model.hasOwnProperty('attest') && this.model['attest']) {
-        //   this.apiUrl = (url.join("/")) + '?send=true';
-        // } else {
-        //   this.apiUrl = (url.join("/")) + '?send=false';
-        // }
-
-
         if (this.identifier != null && this.entityId != undefined) {
           this.updateClaims()
         } else {
+          this.postData()
+        }
+
+        if (this.model.hasOwnProperty('attest') && this.model['attest']) {
           this.raiseClaim(property);
         }
+
       }
     }
   }
 
+  async raiseClaim(property) {
+    await this.generalService.getData(this.entityUrl).subscribe((res) => {
 
-  raiseClaim(property) {
-    this.generalService.postData(this.apiUrl, this.model).subscribe((res) => {
-      if (res.params.status == 'SUCCESSFUL') {
-        this.router.navigate([this.redirectTo])
+      res = (res[0]) ? res[0] : res;
+      this.entityId = res.osid;
+      if (res.hasOwnProperty(property)) {
 
+        if (!this.propertyId) {
 
-        if (this.model.hasOwnProperty('attest') && this.model['attest']) {
-          this.generalService.getData(this.entityUrl).subscribe((res) => {
-            this.entityId = res[0].osid;
-            this.propertyId = res[0][property][0]["osid"];
+          var tempObj = []
+          for (let j = 0; j < res[property].length; j++) {
+            res[property][j].osUpdatedAt = new Date(res[property][j].osUpdatedAt);
+            tempObj.push(res[property][j])
+          }
 
-            var temp = {};
-            temp[property] = [this.propertyId];
-            let propertyUniqueName = localStorage.getItem('entity').toLowerCase() + property.charAt(0).toUpperCase() + property.slice(1);
-
-            propertyUniqueName = (localStorage.getItem('entity').toLowerCase() == 'student') ? 'studentInstituteAttest' : propertyUniqueName;
-
-            let data = {
-              "entityName": localStorage.getItem('entity').charAt(0).toUpperCase() + localStorage.getItem('entity').slice(1),
-              "entityId": this.entityId,
-              "name": propertyUniqueName,
-              "propertiesOSID": temp
-            }
-            this.sentToAttestation(data);
-          });
+          tempObj.sort((a, b) => (b.osUpdatedAt) - (a.osUpdatedAt));
+          this.propertyId = tempObj[0]["osid"];
         }
+
+        var temp = {};
+        temp[property] = [this.propertyId];
+        let propertyUniqueName = this.entityName.toLowerCase() + property.charAt(0).toUpperCase() + property.slice(1);
+
+        propertyUniqueName = (this.entityName == 'student' || this.entityName == 'Student') ? 'studentInstituteAttest' : propertyUniqueName;
+
+        let data = {
+          "entityName": this.entityName.charAt(0).toUpperCase() + this.entityName.slice(1),
+          "entityId": this.entityId,
+          "name": propertyUniqueName,
+          "propertiesOSID": temp
+        }
+        this.sentToAttestation(data);
       }
-      else if (res.params.errmsg != '' && res.params.status == 'UNSUCCESSFUL') {
-        this.toastMsg.error('error', res.params.errmsg)
-      }
-    }, (err) => {
-      this.toastMsg.error('error', err.error.params.errmsg)
     });
 
   }
@@ -1104,10 +1106,44 @@ export class FormsComponent implements OnInit {
     }
   }
 
-  async getNotes(claimId) {
-    await this.generalService.getData("Teacher/claims/" + claimId).subscribe((res) => {
-      this.notes = res.notes;
-    })
+  getNotes() {
+let entity = this.entityName.charAt(0).toUpperCase() + this.entityName.slice(1);
+    this.generalService.getData(entity).subscribe((res) => {
+      res = (res[0]) ? res[0] : res;
+
+
+      let propertyUniqueName = this.entityName.toLowerCase() + this.propertyName.charAt(0).toUpperCase() + this.propertyName.slice(1);
+      propertyUniqueName = (this.entityName.toLowerCase() == 'student') ? 'studentInstituteAttest' : propertyUniqueName;
+
+      if (res.hasOwnProperty(propertyUniqueName)) {
+
+      let  attestionRes= res[propertyUniqueName];
+
+
+        var tempObj = [];
+
+        for (let j = 0; j < attestionRes.length; j++) {
+          if (this.propertyId == attestionRes[j].propertiesOSID[this.propertyName][0]) {
+            attestionRes[j].propertiesOSID.osUpdatedAt = new Date(attestionRes[j].propertiesOSID.osUpdatedAt);
+            tempObj.push(attestionRes[j])
+          }
+        }
+
+        tempObj.sort((a, b) => (b.propertiesOSID.osUpdatedAt) - (a.osUpdatedAt));
+        let claimId = tempObj[0]["_osClaimId"];
+
+
+        if(claimId)
+        {
+          this.generalService.getData(entity + "/claims/" + claimId).subscribe((res) => {
+            this.notes = res.notes;
+          });
+        }
+       
+      }
+    });
+
+
   }
 
   getData() {
@@ -1120,7 +1156,7 @@ export class FormsComponent implements OnInit {
     this.generalService.getData(get_url).subscribe((res) => {
       res = (res[0]) ? res[0] : res;
       if (this.propertyName && this.entityId) {
-        this.getNotes(res._osClaimId);
+        this.getNotes();
       }
 
       this.model = res;
@@ -1129,13 +1165,11 @@ export class FormsComponent implements OnInit {
     });
   }
 
-  postData() {
+  async postData() {
     if (Array.isArray(this.model)) {
       this.model = this.model[0];
     }
-
-    console.log(this.model);
-    this.generalService.postData(this.apiUrl, this.model).subscribe((res) => {
+    await this.generalService.postData(this.apiUrl, this.model).subscribe((res) => {
       if (res.params.status == 'SUCCESSFUL') {
         this.router.navigate([this.redirectTo])
       }
