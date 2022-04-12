@@ -132,6 +132,8 @@ export class LayoutsComponent implements OnInit, OnChanges {
               if (typeof this.model[element] == 'string') {
                 temp_object = this.responseData['definitions'][block.definition]['properties'][element]
                 if (temp_object != undefined) {
+
+                  temp_object.property = element;
                   temp_object.title = this.check(element, temp_object.title);
                   temp_object['value'] = this.model[element];
                   this.property.push(temp_object)
@@ -145,6 +147,8 @@ export class LayoutsComponent implements OnInit, OnChanges {
                       temp_object = this.responseData['definitions'][ref_defination]['properties'][key]
 
                       if (temp_object != undefined && typeof value != 'object') {
+
+                        temp_object.property = key;
                         temp_object.title = this.check(key, temp_object.title);
                         temp_object['value'] = value
                         this.property.push(temp_object)
@@ -155,6 +159,8 @@ export class LayoutsComponent implements OnInit, OnChanges {
                         temp_object = this.responseData['definitions'][block.definition]['properties'][element]['properties'][key]
 
                         if (temp_object != undefined && typeof value != 'object') {
+                           
+                          temp_object.property = key;
                           temp_object.title = this.check(key, temp_object.title);
                           temp_object['value'] = value
                           this.property.push(temp_object)
@@ -163,6 +169,8 @@ export class LayoutsComponent implements OnInit, OnChanges {
                       else {
                         temp_object = this.responseData['definitions'][block.definition]['properties'][element]
                         if (temp_object != undefined) {
+                          
+                          temp_object.property = element;
                           temp_object.title = this.check(element, temp_object.title);
                           temp_object['value'] = this.model[element]
                           this.property.push(temp_object)
@@ -182,6 +190,8 @@ export class LayoutsComponent implements OnInit, OnChanges {
                         var ref_defination = (this.responseData['definitions'][block.definition]['properties'][element]['$ref']).split('/').pop()
                         temp_object = this.responseData['definitions'][ref_defination]['properties'][key]
                         if (temp_object != undefined && typeof value != 'object') {
+                           
+                          temp_object.property = key;
                           temp_object.title = this.check(key, temp_object.title);
                           temp_object['value'] = value;
                           this.property.push(temp_object);
@@ -190,6 +200,8 @@ export class LayoutsComponent implements OnInit, OnChanges {
                       else {
                         temp_object = this.responseData['definitions'][block.definition]['properties'][element]['items']['properties'][key];
                         if (temp_object != undefined && typeof value != 'object') {
+                           
+                          temp_object.property = key;
                           temp_object.title = this.check(key, temp_object.title);
                           temp_object['value'] = value;
                           this.property.push(temp_object);
@@ -220,6 +232,8 @@ export class LayoutsComponent implements OnInit, OnChanges {
                         //   temp_object['_osClaimNotes'] = element._osClaimNotes;
                         // }
                       }
+
+                      temp_object.property = key;
                       temp_object.title = this.check(key, temp_object.title);
                       temp_object['value'] = value
                       this.property.push(temp_object)
@@ -236,6 +250,8 @@ export class LayoutsComponent implements OnInit, OnChanges {
                       if (element.osid) {
                         temp_object['_osState'] = element._osState;
                       }
+
+                      temp_object.property = key;
                       temp_object.title = this.check(key, temp_object.title);
                       temp_object['value'] = value;
                       this.property.push(temp_object);
@@ -295,6 +311,8 @@ export class LayoutsComponent implements OnInit, OnChanges {
                         if (objects.osid) {
                           temp_object['_osState'] = objects._osState;
                         }
+
+                        temp_object.property = key;
                         temp_object.title = this.check(key, temp_object.title);
                         temp_object['value'] = value;
                         temp_array.push(this.pushData(temp_object))
@@ -304,6 +322,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
                       temp_object = this.responseData['definitions'][block.definition]['properties'][element]['items']['properties'][key];
 
                       if (temp_object != undefined && temp_object.hasOwnProperty('title')) {
+                        temp_object.property = key;
                         temp_object.title = this.check(key, temp_object.title);
                       }
 
@@ -315,6 +334,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
                           temp_object['_osState'] = objects._osState;
                         }
 
+                        temp_object.property = key;
                         temp_object.title = this.check(key, temp_object.title);
                         temp_object['value'] = value;
                         temp_array.push(this.pushData(temp_object));

@@ -45,7 +45,7 @@ export class FormsComponent implements OnInit {
   fields: FormlyFieldConfig[];
   customFields = [];
   header = null;
-
+exLength : number = 0
   type: string;
   apiUrl: string;
   redirectTo: any;
@@ -68,6 +68,7 @@ export class FormsComponent implements OnInit {
   entityUrl: any;
   propertyId: any;
   entityName: string;
+  sorder: any;
   constructor(private route: ActivatedRoute,
     public translate: TranslateService,
     public toastMsg: ToastMessageService, public router: Router, public schemaService: SchemaService, private formlyJsonschema: FormlyJsonschema, public generalService: GeneralService, private location: Location) { }
@@ -1035,22 +1036,36 @@ export class FormsComponent implements OnInit {
   }
 
   async raiseClaim(property) {
-    await this.generalService.getData(this.entityUrl).subscribe((res) => {
+    setTimeout(() => {
+     this.generalService.getData(this.entityUrl).subscribe((res) => {
 
       res = (res[0]) ? res[0] : res;
       this.entityId = res.osid;
       if (res.hasOwnProperty(property)) {
 
-        if (!this.propertyId) {
+        if (!this.propertyId && !this.sorder) {
 
-          var tempObj = []
+        /*  var tempObj = []
           for (let j = 0; j < res[property].length; j++) {
             res[property][j].osUpdatedAt = new Date(res[property][j].osUpdatedAt);
             tempObj.push(res[property][j])
           }
 
-          tempObj.sort((a, b) => (b.osUpdatedAt) - (a.osUpdatedAt));
-          this.propertyId = tempObj[0]["osid"];
+         // tempObj.sort((a, b) => (b.osUpdatedAt) - (a.osUpdatedAt));
+          this.propertyId = tempObj[0]["osid"];*/
+
+          res[property].sort((a, b) => (b.sorder) - (a.sorder));
+           this.propertyId = res[property][0]["osid"];
+
+        }
+
+        if(this.sorder)
+        {
+          var result = res[property].filter(obj => {
+            return obj.sorder === this.sorder
+          })
+
+          this.propertyId = result[0]["osid"];
         }
 
         var temp = {};
@@ -1063,11 +1078,16 @@ export class FormsComponent implements OnInit {
           "entityName": this.entityName.charAt(0).toUpperCase() + this.entityName.slice(1),
           "entityId": this.entityId,
           "name": propertyUniqueName,
-          "propertiesOSID": temp
+          "propertiesOSID": temp,
+           "additionalInput":{
+            "notes": this.model['notes']
+          }
         }
         this.sentToAttestation(data);
       }
+      
     });
+  }, 1000);
 
   }
 
@@ -1169,9 +1189,10 @@ let entity = this.entityName.charAt(0).toUpperCase() + this.entityName.slice(1);
     if (Array.isArray(this.model)) {
       this.model = this.model[0];
     }
+    this.model['sorder']  = this.exLength;
     await this.generalService.postData(this.apiUrl, this.model).subscribe((res) => {
-      if (res.params.status == 'SUCCESSFUL') {
-        this.router.navigate([this.redirectTo])
+      if (res.params.status == 'SUCCESSFUL' && !this.model['attest']) {
+       this.router.navigate([this.redirectTo])
       }
       else if (res.params.errmsg != '' && res.params.status == 'UNSUCCESSFUL') {
         this.toastMsg.error('error', res.params.errmsg)
@@ -1184,7 +1205,7 @@ let entity = this.entityName.charAt(0).toUpperCase() + this.entityName.slice(1);
 
   updateData() {
     this.generalService.putData(this.apiUrl, this.identifier, this.model).subscribe((res) => {
-      if (res.params.status == 'SUCCESSFUL') {
+      if (res.params.status == 'SUCCESSFUL'  && !this.model['attest']) {
         this.router.navigate([this.redirectTo])
       }
       else if (res.params.errmsg != '' && res.params.status == 'UNSUCCESSFUL') {
@@ -1274,14 +1295,22 @@ let entity = this.entityName.charAt(0).toUpperCase() + this.entityName.slice(1);
     if (this.identifier !== undefined) {
       this.generalService.getData(apiUrl).subscribe((res) => {
         this.entityId = res[0].osid;
+        this.exLength = res[0][this.propertyName].length;
+
+      });
+    }else{
+      this.generalService.getData(apiUrl).subscribe((res) => {
+        this.exLength = res[0][this.propertyName].length;
       });
     }
 
   }
 
   updateClaims() {
+    this.sorder = this.model.hasOwnProperty('sorder')? this.model['sorder'] : '';
+
     this.generalService.updateclaims(this.apiUrl, this.model).subscribe((res) => {
-      if (res.params.status == 'SUCCESSFUL') {
+      if (res.params.status == 'SUCCESSFUL' && !this.model['attest']) {
         this.router.navigate([this.redirectTo])
       }
       else if (res.params.errmsg != '' && res.params.status == 'UNSUCCESSFUL') {
