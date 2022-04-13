@@ -69,6 +69,7 @@ exLength : number = 0
   propertyId: any;
   entityName: string;
   sorder: any;
+  isSubmitForm: boolean = false;
   constructor(private route: ActivatedRoute,
     public translate: TranslateService,
     public toastMsg: ToastMessageService, public router: Router, public schemaService: SchemaService, private formlyJsonschema: FormlyJsonschema, public generalService: GeneralService, private location: Location) { }
@@ -899,7 +900,7 @@ exLength : number = 0
   };
 
   submit() {
-
+this.isSubmitForm = true;
     if (this.fileFields.length > 0) {
       this.fileFields.forEach(fileField => {
         if (this.model[fileField]) {
@@ -1098,10 +1099,14 @@ exLength : number = 0
         this.router.navigate([this.redirectTo])
       }
       else if (res.params.errmsg != '' && res.params.status == 'UNSUCCESSFUL') {
-        this.toastMsg.error('error', res.params.errmsg)
+        this.toastMsg.error('error', res.params.errmsg);
+        this.isSubmitForm = false;
+
       }
     }, (err) => {
-      this.toastMsg.error('error', err.error.params.errmsg)
+      this.toastMsg.error('error', err.error.params.errmsg);
+      this.isSubmitForm = false;
+
     });
 
   }
@@ -1196,10 +1201,13 @@ let entity = this.entityName.charAt(0).toUpperCase() + this.entityName.slice(1);
        this.router.navigate([this.redirectTo])
       }
       else if (res.params.errmsg != '' && res.params.status == 'UNSUCCESSFUL') {
-        this.toastMsg.error('error', res.params.errmsg)
+        this.toastMsg.error('error', res.params.errmsg);
+        this.isSubmitForm = false;
+
       }
     }, (err) => {
-      this.toastMsg.error('error', err.error.params.errmsg)
+      this.toastMsg.error('error', err.error.params.errmsg);
+      this.isSubmitForm = false;
     });
 
   }
@@ -1210,10 +1218,13 @@ let entity = this.entityName.charAt(0).toUpperCase() + this.entityName.slice(1);
         this.router.navigate([this.redirectTo])
       }
       else if (res.params.errmsg != '' && res.params.status == 'UNSUCCESSFUL') {
-        this.toastMsg.error('error', res.params.errmsg)
+        this.toastMsg.error('error', res.params.errmsg);
+        this.isSubmitForm = false;
       }
     }, (err) => {
-      this.toastMsg.error('error', err.error.params.errmsg)
+      this.toastMsg.error('error', err.error.params.errmsg);
+      this.isSubmitForm = false;
+
     });
   }
 
@@ -1318,7 +1329,7 @@ let entity = this.entityName.charAt(0).toUpperCase() + this.entityName.slice(1);
         this.toastMsg.error('error', res.params.errmsg)
       }
     }, (err) => {
-      this.toastMsg.error('error', err.error.params.errmsg)
+      this.toastMsg.error('error', err.error.params.errmsg);
     });
   }
 
