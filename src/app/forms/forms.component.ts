@@ -899,6 +899,7 @@ exLength : number = 0
   };
 
   submit() {
+
     if (this.fileFields.length > 0) {
       this.fileFields.forEach(fileField => {
         if (this.model[fileField]) {
