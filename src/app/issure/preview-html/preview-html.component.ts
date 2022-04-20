@@ -31,7 +31,6 @@ export class PreviewHtmlComponent implements OnInit {
   description: any;
 
   private editor: any = '';
-  name = 'Angular 6';
 
   demoBaseConfig: {
     width: number; height: number; resize: boolean; autosave_ask_before_unload: boolean; codesample_dialog_width: number; codesample_dialog_height: number; template_popup_width: number; template_popup_height: number; powerpaste_allow_local_images: boolean; plugins: string[]; //removed:  charmap insertdatetime print
@@ -41,10 +40,10 @@ export class PreviewHtmlComponent implements OnInit {
   constructor(public router: Router, public route: ActivatedRoute,
     public generalService: GeneralService) {
 
-      this.editorOptions = new JsonEditorOptions()
-     // this.editorOptions.modes = ['code']; // set all allowed modes
-          
-      this.editorOptions.mode = 'code';
+    this.editorOptions = new JsonEditorOptions()
+    // this.editorOptions.modes = ['code']; // set all allowed modes
+
+    this.editorOptions.mode = 'code';
     this.userHtml = '';
 
 
@@ -70,24 +69,24 @@ export class PreviewHtmlComponent implements OnInit {
     this.editor.on('load', () => {
       var panelManager = this.editor.Panels;
 
-     panelManager.removePanel('devices-c');
-     panelManager.removeButton('options', 'gjs-toggle-images');
-     panelManager.removeButton('options', 'gjs-open-import-webpage');
-     panelManager.removeButton('options', 'undo');
+      panelManager.removePanel('devices-c');
+      panelManager.removeButton('options', 'gjs-toggle-images');
+      panelManager.removeButton('options', 'gjs-open-import-webpage');
+      panelManager.removeButton('options', 'undo');
 
 
-     const um = this.editor.UndoManager;
-     um.clear();
+      const um = this.editor.UndoManager;
+      um.clear();
     })
 
     this.editor.on('asset:add', () => {
       this.editor.runCommand('open-assets');
     });
-    
 
-     // This will execute once asset manager will be open
-     this.editor.on("run:select-assets", function () {
-      var dateNow = 'img-'+Date.now();
+
+    // This will execute once asset manager will be open
+    this.editor.on("run:select-assets", function () {
+      var dateNow = 'img-' + Date.now();
 
       // Using below line i am changing the id of img tag on which user has clicked.
       this.editor.getSelected().setId(dateNow);
@@ -101,7 +100,7 @@ export class PreviewHtmlComponent implements OnInit {
       id: "views"
     });
 
-  
+
     panelViews.get("buttons").add([
       {
         attributes: {
@@ -130,7 +129,7 @@ export class PreviewHtmlComponent implements OnInit {
       }
     ]);
 
-  
+
   }
 
 
@@ -165,15 +164,15 @@ export class PreviewHtmlComponent implements OnInit {
           formsOpts: false,
           blocksBasicOpts: {
             blocks: ['link-block', 'quote', 'column1', 'column2', 'column3', 'column3-7', 'text', 'link', 'image', 'video'],
-           // flexGrid: false,
+            // flexGrid: false,
           }
         },
-        'gjs-preset-newsletter' : {
-        
+        'gjs-preset-newsletter': {
+
         }
-        
+
       },
-      
+
       assetManager: {
         uploadText: 'Add image through link or upload image',
         modalTitle: 'Select Image',
@@ -181,8 +180,8 @@ export class PreviewHtmlComponent implements OnInit {
         inputPlaceholder: 'http://url/to/the/image.jpg',
         addBtnText: 'Add image',
         showUrlInput: true,
-        embedAsBase64 : true,
-        dropzone : 0, // Enable an upload dropzone on the entire editor (not document) when dragging files over it
+        embedAsBase64: true,
+        dropzone: 0, // Enable an upload dropzone on the entire editor (not document) when dragging files over it
         handleAdd: (textFromInput) => {
           this.editor.AssetManager.add(textFromInput);
         },
@@ -196,6 +195,11 @@ export class PreviewHtmlComponent implements OnInit {
     window.location.reload();
   }
 
+  back() {
+    history.back();    //this.router.navigate(['/certificate']);
+    this.editor.runCommand('core:canvas-clear')
+  }
+
   cancel() {
     // this.isPreview = false;
     localStorage.setItem('sampleData', '');
@@ -203,7 +207,7 @@ export class PreviewHtmlComponent implements OnInit {
   }
 
   async readHtmlSchemaContent(doc) {
-    
+
     this.userHtml = '';
     await fetch(doc.schemaUrl)
       .then(response => response.text())
@@ -216,7 +220,7 @@ export class PreviewHtmlComponent implements OnInit {
       .then(response => response.text())
       .then(data => {
         this.userHtml = data;
-  
+
         //   this.injectHTML();
       });
   }
