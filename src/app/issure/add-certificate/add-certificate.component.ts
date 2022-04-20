@@ -144,8 +144,6 @@ export class AddCertificateComponent implements OnInit {
         this.certificateContent = data;
         this.userHtml = data;
         this.injectHTML();
-        // Do something with your data
-        console.log(data);
       });
 
 
@@ -183,28 +181,27 @@ export class AddCertificateComponent implements OnInit {
 
   injectHTML() {
 
-    const iframe: HTMLIFrameElement = document.getElementById('iframe1') as HTMLIFrameElement;
-    // step 2: obtain the document associated with the iframe tag
-    // most of the browser supports .document. 
-    // Some supports (such as the NetScape series) .contentDocumet, 
-    // while some (e.g. IE5/6) supports .contentWindow.document
-    // we try to read whatever that exists.
+    setTimeout(() => {
+      const iframe: HTMLIFrameElement = document.getElementById('iframe1') as HTMLIFrameElement;
+      var iframedoc;
 
-    var iframedoc;
-    if (iframe.contentDocument)
-      iframedoc = iframe.contentDocument;
-    else if (iframe.contentWindow)
-      iframedoc = iframe.contentWindow.document;
+      if (iframe.contentDocument) {
+        iframedoc = iframe.contentDocument;
+      }
+      else if (iframe.contentWindow) {
+        iframedoc = iframe.contentWindow.document;
+      }
 
-
-    if (iframedoc) {
-      // Put the content in the iframe
-      iframedoc.open();
-      iframedoc.writeln(this.userHtml);
-      iframedoc.close();
-    } else {
-      alert('Cannot inject dynamic contents into iframe.');
-    }
+      if (iframedoc) {
+        // Put the content in the iframe
+        iframedoc.open();
+        iframedoc.writeln(this.userHtml);
+        iframedoc.close();
+      } else {
+        alert('Cannot inject dynamic contents into iframe.');
+      }
+    }, 500)
   }
+
 
 }
