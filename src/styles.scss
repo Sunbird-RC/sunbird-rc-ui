@@ -13,6 +13,8 @@
 
 @import '~bootstrap/scss/bootstrap';
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import "~jsoneditor/dist/jsoneditor.min.css";
+
 :root {
     // SB-RC
     // --primaryColor: #1987B6;
@@ -874,10 +876,10 @@ formly-field .col-6 {
     position: fixed;
     width: 100%;
     bottom: 0px;
-    z-index: 99999999;
+    z-index: 9999;
     background: #fff;
     left: 0;
-    padding: 20px;
+    padding: 10px;
   }
 
   .h-90{
@@ -968,3 +970,23 @@ formly-field .col-6 {
 .navbar-inverse{
     justify-content: flex-start !important;
   }
+
+  .tox .tox-dialog--width-lg, .tox .tox-dialog {
+    height: 547px !important;
+    max-height: 70% !important
+}
+
+.tox .tox-dialog-wrap__backdrop {
+    z-index: 5000;
+}
+
+  /*  Json Editor : start*/
+
+  .json-editor, div.jsoneditor-outer , .ace-jsoneditor, textarea.jsoneditor-text{
+    min-height: 400px !important;
+  }
+
+.jsoneditor-menu{
+    display: none;
+}
+ /*  Json Editor : end */

@@ -14,7 +14,7 @@
 
     </div> -->
 <br />
-    <div class="d-flex mt-3">
+    <div class="d-flex mt-3" *ngIf="documentName">
         <a  href="" class="line-height32" onClick="history.go(-1); return false;"><i
             class="fa fa-angle-left primary-text"></i> </a> &nbsp; &nbsp;
             
@@ -22,7 +22,7 @@
         
     </div>
 
-    <div class="mb-3 ">
+    <div class="mb-3 mt-3">
         <span class="heading-2" *ngIf="recordItems?.length == 1 || !recordItems?.length">{{recordItems?.length}} Record</span>
         <span class="heading-2" *ngIf="recordItems?.length > 1">{{recordItems?.length}} Records</span>
         

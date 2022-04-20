@@ -53,10 +53,10 @@ import { SearchComponent } from '../app/discovery/search/search.component';
 import { AuthConfigService } from './authentication/auth-config.service';
 import { DocumentsComponent } from './documents/documents.component';
 import { AddDocumentComponent } from './documents/add-document/add-document.component';
-import {WebcamModule} from 'ngx-webcam';
+import { WebcamModule} from 'ngx-webcam';
 import { ScanDocumentComponent } from './documents/scan-document/scan-document.component';
 import { ScanQrCodeComponent } from './documents/scan-qr-code/scan-qr-code.component';
-import {QuarModule} from '@altack/quar';
+import { QuarModule} from '@altack/quar';
 import { BrowseDocumentsComponent } from './documents/browse-documents/browse-documents.component';
 
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -64,7 +64,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import { config } from 'process';
 import { ColorPickerModule } from 'ngx-color-picker';
-
 
 //form validations
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
@@ -129,6 +128,7 @@ import { GetRecordsComponent } from './issure/get-records/get-records.component'
 import { AddRecordsComponent } from './issure/add-records/add-records.component';
 import { PreviewHtmlComponent } from './issure/preview-html/preview-html.component';
 // import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
+import { NgJsonEditorModule } from 'ang-jsoneditor' 
 
 @NgModule({
   declarations: [
@@ -238,6 +238,7 @@ import { PreviewHtmlComponent } from './issure/preview-html/preview-html.compone
       preventDuplicates: true,
     }),
     NgxPaginationModule,
+    NgJsonEditorModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   exports: [TranslateModule],

@@ -1,7 +1,8 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-header nav-b navbar-inverse pl-4">
-        <a class="nav-link" href="" onClick="history.go(-1); return false;"><i
-                class="fa fa-angle-left primary-text"></i> </a>
+        <a class="nav-link" href="" onClick="history.go(-1); return false;">
+            <i class="fa fa-angle-left primary-text"></i>
+        </a>
         <span class="heading-2">Edit Template</span>
     </nav>
 
@@ -15,40 +16,58 @@
             <div class="preview-footer">
                 <!-- <button class="btn btn-sec-bg submit-button mx-3">Preview on email</button> -->
                 <!-- <button (click)="cancel()" class="btn btn-sec-bg submit-button">Preview on eLocker</button> -->
-                <button  data-toggle="modal" data-target="#prewiewProfile" class="btn text-capitalize float-end btn-primary btn-primary-sm p1">Save</button>
+                <button data-toggle="modal" data-target="#prewiewProfile" class="btn text-capitalize float-end btn-primary btn-primary-sm p1">Save</button>
             </div>
-            <div class=" p-0 col-12 col-sm-5 setHeight border-right mtn-28">
-                <ul class="nav nav-tabs ui-tabs font-600 pt-34">
+            <div class=" p-0 setHeight border-right mtn-28">
+                <ul class="nav nav-tabs ui-tabs font-600 pt-3">
                     <li class="active col-sm-5"><a href="#htmlDiv" class="active heading-2" data-toggle="tab">Design</a>
                     </li>
-                    <li class="col-sm-6"><a href="#schenaDiv"  class="heading-2" data-toggle="tab">Schema</a>
+                    <li class="col-sm-6"><a href="#schenaDiv" class="heading-2" data-toggle="tab">Schema</a>
                     </li>
-                  </ul>
-                
-                  <div class="tab-content">
-                        <div class="tab-pane active" id="htmlDiv">
-                            <div class="d-flex flex-justify-between py-1 px-4"> 
-                                <div class="heading-2">HTML</div>
-                                <!-- <button class="fs-14 btn btn-sec-bg submit-button float-end">
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane active" id="htmlDiv">
+                        <div class="d-flex flex-justify-between py-1 px-4">
+                            <div class="heading-2">HTML</div>
+                            <!-- <button class="fs-14 btn btn-sec-bg submit-button float-end">
                                     <i aria-hidden="true" class="fa fa-pencil-square-o"></i> Edit 
                                 </button> -->
-                              </div>
-                            <textarea rows="20" cols="70" class="card-body w-100 h-90 border-light-color" [(ngModel)]="userHtml"
-                            (ngModelChange)="injectHTML();"  placeholder="Enter html code ..."></textarea>
-                            <!-- <code-input (click)="codeInput();" style="height: 600px; width: 100%; float: left; margin: 1%; font-size: 10px; line-height: normal;" lang="HTML" value="{{userHtml}}" name="html_code" placeholder="HTML"></code-input> -->
+                        </div>
+                        <div class="mx-5">
+                            <!-- <editor   
+                            [init]="demoBaseConfig"
+                            outputFormat="html"     
+                            initialValue="{{userHtml}}"
+                        
+                            [(ngModel)]="userHtml"
+                            ></editor> -->
 
-                        </div>                           
-                        <div class="tab-pane fade" id="schenaDiv">
-                            <div class="d-flex flex-justify-between py-1 px-4"> 
-                                <div class="heading-2">JSON Schema</div>
-                                <!-- <button class="fs-14 btn btn-sec-bg submit-button float-end">
+                            <div id="gjs">
+                              {{userHtml}}
+                            </div>
+                            <div id="blocks"></div>
+                        </div>
+                        <!-- (onSelectionChange)="injectHTML()" -->
+
+
+                        <!-- <textarea rows="20" cols="70" class="card-body w-100 h-90 border-light-color" [(ngModel)]="userHtml"
+                            (ngModelChange)="injectHTML();"  placeholder="Enter html code ..."></textarea> -->
+                        <!-- <code-input (click)="codeInput();" style="height: 600px; width: 100%; float: left; margin: 1%; font-size: 10px; line-height: normal;" lang="HTML" value="{{userHtml}}" name="html_code" placeholder="HTML"></code-input> -->
+
+                    </div>
+                    <div class="tab-pane fade" id="schenaDiv">
+                        <div class="d-flex flex-justify-between py-1 px-4">
+                            <div class="heading-2">JSON Schema</div>
+                            <!-- <button class="fs-14 btn btn-sec-bg submit-button float-end">
                                     <i aria-hidden="true" class="fa fa-pencil-square-o"></i> Advance Editor 
                                 </button> -->
-                              </div>
-                            <textarea rows="20" cols="70" class="card-body w-100 h-90 border-light-color" [(ngModel)]="userJson"
-                                placeholder="Enter html code ..."></textarea>
                         </div>
-                  </div>
+                        <json-editor [options]="editorOptions" style="min-height: 500px;" [data]="userJson" [(ngModel)]="userJson"></json-editor>
+                        <!-- <textarea rows="20" cols="70" class="card-body w-100 h-90 border-light-color"
+                            [(ngModel)]="userJson" placeholder="Enter html code ..."></textarea> -->
+                    </div>
+                </div>
 
                 <!-- <div class="bs-example">
                     <ul class="nav nav-tabs">
@@ -74,20 +93,15 @@
                 </div> -->
             </div>
 
-            <div class="col-12 col-sm-7 setHeight">
+            <!-- <div class="col-12 col-sm-7 setHeight">
                 <h6 class="heading-2">Preview</h6>
                 <div class="card h-90 border-light-color bx-none">
-
-                    <!-- <div class="card-body w-100" [innerHtml]="userHtml | safe : 'html'"></div> -->
-                    <!-- <iframe id="frame" srcdoc='{{userHtml}}'></iframe> -->
                     <div class="embed-responsive embed-responsive-1by1">
                         <iframe id="iframe2" src="about:blank" class="w-100 h-100 embed-responsive-item"></iframe>
                     </div>
-                   
-                    <!-- <iframe width="560" height="315" srcdoc="{{userHtml}}" frameborder="0" allowfullscreen></iframe> -->
-                                    </div>
-            </div>
-            
+                </div>
+            </div> -->
+
         </div>
 
         <div>
@@ -99,34 +113,38 @@
                 aria-labelledby="prewiewProfile">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                            <div class="modal-header pt-4 border-0">
-                                <h3 class="heading-5">Save Document</h3>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                        aria-hidden="true">&times;</span></button>
-                            </div>
-                            <div class="container mt-4">
+                        <div class="modal-header pt-4 border-0">
+                            <h3 class="heading-5">Save Document</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="container mt-4">
                             <div class="mb-4">
                                 <p class="heading-4 font-700 mb-05">Name</p>
-                                <input [(ngModel)]="templateName" class="w-100 input-field p14 p-3 inputField" placeholder="Enter Document name"
-                                    type="text" />
+                                <input [(ngModel)]="templateName" class="w-100 input-field p14 p-3 inputField"
+                                    placeholder="Enter Document name" type="text" />
                             </div>
 
                             <div class="mt-2">
-                                <p class="heading-4 font-700 mb-05">Description<span class="text-muted">(optional)</span></p>
-                                <textarea [(ngModel)]="description" class="w-100 desc py-2 input-field p14 pl-3 inputField" placeholder="Enter description"
-                                     ></textarea>
+                                <p class="heading-4 font-700 mb-05">Description<span
+                                        class="text-muted">(optional)</span></p>
+                                <textarea [(ngModel)]="description"
+                                    class="w-100 desc py-2 input-field p14 pl-3 inputField"
+                                    placeholder="Enter description"></textarea>
                             </div>
 
 
                             <div class="mt-4">
-                                <button (click)="submit()" data-dismiss="modal" aria-label="Close" class="btn text-capitalize float-end btn-primary btn-primary-sm p1">Save</button>
-                                <button class="close" data-dismiss="modal" aria-label="Close" class="btn text-capitalize float-end btn-primary btn-primary-sm p1 sb-text-primary mr-2 bg-none">Cancel</button>                            
+                                <button (click)="submit()" data-dismiss="modal" aria-label="Close"
+                                    class="btn text-capitalize float-end btn-primary btn-primary-sm p1">Save</button>
+                                <button class="close" data-dismiss="modal" aria-label="Close"
+                                    class="btn text-capitalize float-end btn-primary btn-primary-sm p1 sb-text-primary mr-2 bg-none">Cancel</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
         </div>
 
 
