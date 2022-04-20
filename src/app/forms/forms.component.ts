@@ -76,6 +76,8 @@ export class FormsComponent implements OnInit {
       if (params['form'] != undefined) {
         this.form = params['form'].split('/', 1)[0];
         this.identifier = params['form'].split('/', 2)[1];
+      }else{
+        this.form = 'signup'
       }
 
       if (params['id'] != undefined) {

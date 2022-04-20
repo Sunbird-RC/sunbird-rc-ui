@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AnyARecord } from 'dns';
 import { map } from 'rxjs/operators';
 import { GeneralService } from 'src/app/services/general/general.service';
-const Prism = require('prismjs');
 declare var grapesjs: any;
 
 
@@ -336,25 +335,6 @@ export class PreviewHtmlComponent implements OnInit {
       alert('Cannot inject dynamic contents into iframe.');
     }
   }
-
-
-  codeInput() {
-    let result_element = document.querySelector("#highlighting-content");
-    // Update code
-    // result_element.innerText = text;
-    // Syntax Highlight
-    Prism.highlightElement(result_element);
-
-  }
-
-  update(text) {
-    let result_element = document.querySelector("#highlighting-content");
-    // Update code
-    result_element.innerHTML = text;
-    // Syntax Highlight
-    Prism.highlightElement(result_element);
-  }
-
 
 
 }
