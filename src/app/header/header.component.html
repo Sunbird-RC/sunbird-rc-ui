@@ -70,7 +70,7 @@
                 </span> -->
 
                 <span class="p12" *ngIf="loggedInUser">{{loggedInUser}}</span> &nbsp;
-                <a href="/logout" class="p12"> <img style="width: 25px;" src="assets/images/logout.png" /></a>
+                <a *ngIf="loggedInUser" href="/logout" class="p12"> <img style="width: 25px;" src="assets/images/logout.png" /></a>
             </div>
 
         </div>
