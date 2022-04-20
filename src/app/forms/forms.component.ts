@@ -77,7 +77,14 @@ export class FormsComponent implements OnInit {
         this.form = params['form'].split('/', 1)[0];
         this.identifier = params['form'].split('/', 2)[1];
       }else{
-        this.form = 'signup'
+        let loggedInUser = localStorage.getItem('loggedInUser');
+
+        if(loggedInUser)
+        {
+          this.router.navigate(['/dashboard'])
+        }else{
+          this.form = 'signup'
+        }
       }
 
       if (params['id'] != undefined) {
