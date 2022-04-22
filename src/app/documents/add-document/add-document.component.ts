@@ -256,8 +256,14 @@ export class AddDocumentComponent implements OnInit {
         } else if (this.model['fileUrl'] && this.model['name']) {
 
           this.loading = true;
-          file = this.model['fileUrl'];
-          formData.append("files", file[0]);
+
+
+          var file = this.model['fileUrl'][0];
+          let fileName = file.name.replace(/\s+/g, '');
+          var blob = file.slice(0, file.size, file.type); 
+          file = new File([blob], fileName , {type: file.type});
+          
+          formData.append("files", file);
         }
           this.generalService.getData(this.entity).subscribe((res) => {
             var url = [this.entity, res[0]['osid'], 'attestation', 'documents']
