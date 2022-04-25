@@ -292,10 +292,10 @@ export class AttestationComponent implements OnInit {
   
   onConsent() { }
 
-  saveNote(event){
+  saveNote(){
     // localStorage.setItem('note', JSON.stringify(event));
-    console.log('evv',event.note);
-    this.note = event.note
+    console.log('evv noteForm -- ', this.noteForm.value.note);
+    this.note =  this.noteForm.value.note;
     this.noteAdded = true;
   }
 

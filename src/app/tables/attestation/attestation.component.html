@@ -7,11 +7,11 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarExample01">
                 <div class="nav-item active logo-text">
-                    <a class="nav-link" aria-current="page" style="color: black;">{{'ATTEST_DETAILS' | translate}}</a>
+                    <a class="nav-link primary-text" aria-current="page">{{'ATTEST_DETAILS' | translate}}</a>
                 </div>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <button type="button" (click)="close()" class="close float-right"><span _ngcontent-fni-c481=""
+                        <button type="button" (click)="close()" class="close float-right primary-text"><span _ngcontent-fni-c481=""
                                 aria-hidden="true">×</span></button>
                     </li>
                 </ul>
@@ -75,13 +75,13 @@
                                 </div>
                                 <ng-template #noFile>
                                     <div class="lh-lg"> <span class="p14 text-grey-color"> {{item?.title}}: </span>
-                                        <!-- <span class="p14 text-dark"> {{item?.value}}
+                                        <!-- <span class="p14 primary-text"> {{item?.value}}
                                         </span> -->
 
-                                        <span class="p14 text-dark" *ngIf="typeOf(item?.value) != 'object'"> {{item?.value}}
+                                        <span class="p14 primary-text" *ngIf="typeOf(item?.value) != 'object'"> {{item?.value}}
                                         </span>
 
-                                        <span class="p14 text-dark" *ngIf="typeOf(item?.value) === 'object'"> 
+                                        <span class="p14 primary-text" *ngIf="typeOf(item?.value) === 'object'"> 
                                             <span *ngFor="let subField of item?.value; let i = index">  <br/>
                                                 <span *ngIf="item?.value[i]?.grades">
                                                      Grades : {{item?.value[i]?.grades}} ,  
@@ -132,12 +132,12 @@
                                 </formly-form>
                                 <button type="button" [disabled]="!noteForm.valid"
                                     class="btn btn-primary text-capitalize font-weight-bold submit-button"
-                                    (click)="saveNote($event)">{{'SAVE_NOTE' | translate}}</button>
+                                    (click)="saveNote()">{{'SAVE_NOTE' | translate}}</button>
                             </form>
 
                             <div class="mt-3">
                                 <ng-template class="pt-4 mb-1"  *ngFor="let noteData of notes" [ngIf]="noteData.notes != ''">
-                                    <h6 class="mb-1 p14 text-dark lh-1"> <b>{{noteData.notes}}</b></h6>
+                                    <h6 class="mb-1 p14 primary-text lh-1"> <b>{{noteData.notes}}</b></h6>
                                     <span class="fs-7 text-grey-color lh-1">
                                         <span *ngIf="noteData.addedBy"> {{'BY' | translate}} {{noteData.addedBy}}, </span>
                                         <span *ngIf="noteData.createdAt"> {{noteData.createdAt | date : 'd MMM y'}}
@@ -205,7 +205,7 @@
                                         [form]="denyForm">
                                     </formly-form>
                                     <button type="button" class="btn large btn-style btn-bg submit-button">
-                                        <span aria-hidden="true" ata-dismiss="modal" aria-label="Close"
+                                        <span aria-hidden="true" data-dismiss="modal" aria-label="Close"
                                             class="label-primary font-weight-bold text-capitalize">{{'CANCEL' | translate}}</span></button>
 
                                     <button type="button" [disabled]="!denyForm.valid"

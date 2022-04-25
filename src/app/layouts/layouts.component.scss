@@ -176,7 +176,7 @@ img {
 
 
 .noDataMsg {
-    background-color: white !important;
+    background-color: var(--cardBackground) !important;
     margin-top: -33px !important;
     position: relative !important;
 }

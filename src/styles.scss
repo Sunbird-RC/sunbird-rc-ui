@@ -37,9 +37,8 @@
     --primaryTextColor: #000000;
     --secondaryTextColor: #000000;
     --linkColor: #443DF6;
-
-    
     --secondaryBtnBgColor: #e8f3f8;
+    --cardBorder: #00000020;
 
 
     //   dark
@@ -681,6 +680,7 @@ formly-autocomplete-type .ng-select {
 
 .card {
     background-color: var(--cardBackground) !important;
+    border: 1px solid  var(--cardBorder) !important;
 }
 
 .floating-bottom {
@@ -776,5 +776,8 @@ label {
 {
     background-color: var(--headerColor) !important;
 }
+
+.table td, .table th {
+    color: var(--primaryTextColor)}
 
 
