@@ -1139,7 +1139,7 @@ let entity = this.entityName.charAt(0).toUpperCase() + this.entityName.slice(1);
 
 
       let propertyUniqueName = this.entityName.toLowerCase() + this.propertyName.charAt(0).toUpperCase() + this.propertyName.slice(1);
-      propertyUniqueName = (this.entityName.toLowerCase() == 'student') ? 'studentInstituteAttest' : propertyUniqueName;
+      propertyUniqueName = (this.entityName == 'student' || this.entityName == 'Student') ? 'studentInstituteAttest' : propertyUniqueName;
 
       if (res.hasOwnProperty(propertyUniqueName)) {
 

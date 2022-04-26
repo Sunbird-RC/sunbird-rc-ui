@@ -4,6 +4,7 @@ import { GeneralService } from 'src/app/services/general/general.service';
 
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
+import { AppConfig } from '../../app.config';
 
 @Component({
   selector: 'app-form-detail',
@@ -132,11 +133,16 @@ export class AttestationComponent implements OnInit {
   table: any;
   documents = null;
   notes: any[] = [];
+  logo: any;
+  fileURL: string;
   constructor(
     public router: Router,
     private route: ActivatedRoute,
-    public generalService: GeneralService
+    public generalService: GeneralService,
+     private config: AppConfig
   ) {
+    this.logo = this.config.getEnv(localStorage.getItem('ELOCKER_THEME') + '_theme').logoPath;
+
   }
 
   ngOnInit(): void {
@@ -284,6 +290,11 @@ export class AttestationComponent implements OnInit {
     // this.router.navigate(['institute-attestation']);
     // window.location.reload();
   }
+
+ getPathUrl(filepath)
+ {
+ this.generalService.openPDF('/' + filepath );
+ }
 
 
   typeOf(value) {

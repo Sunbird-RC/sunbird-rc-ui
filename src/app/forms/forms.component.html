@@ -28,7 +28,7 @@
            </span></span>
       </div>
       <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form2"></formly-form>
-      <button type="submit" id="btn-one" class="btn btn-primary submit-button" [disabled]="!form2.valid || isSubmitForm">{{'SUBMIT' | translate}}</button>
+      <button type="submit" id="btn-one" class="btn btn-primary submit-button" [disabled]="!form2.valid || isSubmitForm || form2.pristine">{{'SUBMIT' | translate}}</button>
     </form>
 
 

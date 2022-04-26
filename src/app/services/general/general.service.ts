@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { DataService } from '../data/data-request.service';
 import { environment } from '../../../environments/environment';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subscriber } from 'rxjs';
 import { AppConfig } from 'src/app/app.config';
 import { TranslateService } from '@ngx-translate/core';
+import { map } from 'rxjs/operators';
 
 
 @Injectable({
@@ -13,7 +14,8 @@ import { TranslateService } from '@ngx-translate/core';
 export class GeneralService {
   baseUrl = this.config.getEnv('baseUrl');
   translatedString: string;
-  constructor(public dataService: DataService, private config: AppConfig, public translate: TranslateService) {
+  constructor(public dataService: DataService, 
+    private http: HttpClient, private config: AppConfig, public translate: TranslateService) {
   }
 
   postData(apiUrl, data) {
@@ -127,6 +129,30 @@ export class GeneralService {
       data: data
     };
     return this.dataService.put(req);
+  }
+
+
+  openPDF(url){
+    url = `${this.baseUrl}` + '/' + `${url}`;
+
+    let requestOptions = { responseType: 'blob' as 'blob' };
+    // post or get depending on your requirement
+    this.http.get(url, requestOptions).pipe(map((data: any) => {
+
+        let blob = new Blob([data], {
+            type: 'application/pdf' // must match the Accept type
+            // type: 'application/octet-stream' // for excel 
+        });
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+
+        window.open(link.href, '_blank')
+       // link.download =  'temp.pdf';
+       // link.click();
+       // window.URL.revokeObjectURL(link.href);
+
+    })).subscribe((result: any) => {
+    });
   }
   
 }

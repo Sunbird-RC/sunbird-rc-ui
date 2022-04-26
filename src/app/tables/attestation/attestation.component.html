@@ -6,6 +6,9 @@
                 <i class="fas fa-bars"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarExample01">
+                <div class="nav-item active logo-text" style="width: auto;">
+                    <a role="link" aria-disabled="true"><img class="logo" src={{logo}} /></a>
+                </div>
                 <div class="nav-item active logo-text">
                     <a class="nav-link primary-text" aria-current="page">{{'ATTEST_DETAILS' | translate}}</a>
                 </div>
@@ -99,9 +102,13 @@
                             </div>
                             <div *ngIf="documents != null" class="mb-3">
                                 <ng-template ngFor let-document [ngForOf]="documents" let-i="index">
-                                    <a href="/document/view?u={{document.fileName}}"
+                                    <a (click)="getPathUrl(document?.fileName)"
+                                    class="badge badge-pill badge-primary mr-1"><i
+                                        class="fa fa-paperclip" aria-hidden="true"></i>{{'DOCUMENT' | translate}} {{i + 1}}</a>
+                  
+                                    <!-- <a href="/documents/view/{{document.fileName}}"
                                         class="badge badge-pill badge-primary mr-1" target="_blank"><i
-                                            class="fa fa-paperclip" aria-hidden="true"></i>{{'DOCUMENT' | translate}} {{i + 1}}</a>
+                                            class="fa fa-paperclip" aria-hidden="true"></i>{{'DOCUMENT' | translate}} {{i + 1}}</a> -->
                                 </ng-template>
                             </div>
                         </dd>
