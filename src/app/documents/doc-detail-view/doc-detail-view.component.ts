@@ -37,6 +37,7 @@ export class DocDetailViewComponent implements OnInit {
         if(params.type != 'attestation-SELF'){
           this.router.navigate([this.router.url+'/view'])
         }
+
         this.id = params.id;
         this.generalService.getData(params.type + '/' + params.id).subscribe((res) => {
           console.log('pub res', res);

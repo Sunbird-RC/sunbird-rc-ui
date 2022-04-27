@@ -49,22 +49,18 @@
 
 
 
-    <!-- <ng-template [ngIf]="extension != 'pdf'">
-        <div class="doc-view-deatils mt-4 mx-3 fs-14">
+    <ng-template [ngIf]="docDetails" class="mt-4">
+        <div style="text-align: center; margin-top: 100px; " >
+            <img style="height: 100px;  
+            width: 100px;   " src="assets/images/success.png" />
+        </div>
+        <div class=" col-md-6 offset-md-3 mt-5">
             <div *ngFor="let item of document" class="row mb-2">
-                <div class="col-4"><label>{{item.key | uppercase}}</label></div>
+                <div class="col-4"><label>{{item.title | uppercase}}</label></div>
                 <div class="col-8 font-weight-bold primary-text">{{item.value}}</div>
             </div>
-            <div class="row mb-2">
-                <div class="col-4"><label>Document Number</label></div>
-                <div class="col-8 font-weight-bold">1231 12321 12313</div>
-            </div>
-            <div class="row mb-2">
-                <div class="col-4"><label>Date of Birth</label></div>
-                <div class="col-8 font-weight-bold">01.06.1984</div>
-            </div>
             <hr class="hr-0">
-            <div class="row mb-2">
+            <!-- <div class="row mb-2">
                 <div class="col-8">
                     <label>Issued By</label>
                     <div class="font-weight-bold primary-text">Government of Sri Lanka</div>
@@ -73,13 +69,13 @@
             </div>
             <div class="mt-5 text-center">
                 <button class="btn btn-primary min-220">Download Certificate</button>
-            </div>
+            </div> -->
         </div>
-    </ng-template> -->
+    </ng-template>
 </div>
 <footer>
     <div class="row mb-2">
-        <div *ngIf="document[0].type == 'attestation-SELF'; else elseBlock" class="col-8 text ml-4">
+        <div *ngIf="document[0]?.type == 'attestation-SELF'; else elseBlock" class="col-8 text ml-4">
             <i class="fas fa-check primarybgColor fs-12 mr-1"></i> {{'SELF_ATTTESTED'|translate}}
         </div>
         <ng-template #elseBlock>

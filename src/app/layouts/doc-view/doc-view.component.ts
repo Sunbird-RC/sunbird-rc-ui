@@ -36,6 +36,7 @@ export class DocViewComponent implements OnInit {
     document = [];
     loader: boolean = true;
   docName: any;
+  docDetails: any;
     constructor(private route: ActivatedRoute, public generalService: GeneralService,
         private keycloakService: KeycloakService, private config: AppConfig,private router: Router) {
         this.token = this.keycloakService.getToken();
@@ -81,8 +82,28 @@ export class DocViewComponent implements OnInit {
                             } 
                           }
                           this.loader = false;
-                    }
-                    else{
+                    }else if (res.name == 'attestation-DIVOC')
+                    {
+                    
+                      this.docDetails = (JSON.parse(res['additionalInput'])).signedCredentials.credentialSubject;
+                      this.docName = this.docDetails.name;
+                      console.log(this.docDetails);
+            
+                      this.loader = false;
+                      let _self = this;
+                        Object.keys( this.docDetails).forEach(function (key) {
+                          var temp_object : any = {};
+                          if (_self.docDetails[key] != undefined && typeof _self.docDetails[key] != 'object') {
+                        console.log({key});
+                         temp_object['title'] = key;
+                         temp_object['value'] = _self.docDetails[key];
+                        _self.document.push(temp_object);
+                          }
+                      });
+                  
+            
+            
+                    }else{
                         if(res['_osAttestedData'] && JSON.parse(res['_osAttestedData'])['files']){
                             this.docUrl = this.baseUrl + '/' + JSON.parse(res['_osAttestedData'])['files'][0];
                             this.extension = this.docUrl.split('.').slice(-1)[0];

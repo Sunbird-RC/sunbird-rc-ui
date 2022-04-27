@@ -5,8 +5,8 @@
                 <i class="fa fa-bars toggler"></i>
                 <!-- <span class="navbar-toggler-icon"></span> -->
             </button>
-            <div class="nav-item active logo-text" style="width: 60%;">
-                <a href=""><img class="logo" src={{logo}} /></a>
+            <div class="nav-item active logo-text">
+                <a><img class="logo" src={{logo}} /></a>
             </div>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <ng-template [ngIf]="headerSchema?.left">
@@ -26,8 +26,8 @@
                     </ul>
                 </ng-template>
                 <ng-template [ngIf]="headerSchema?.right">
-                    <ul *ngFor="let header of headerSchema.right" class="navbar-nav ms-auto">
-                        <li class="nav-item">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item" *ngFor="let header of headerSchema.right">
                             <a *ngIf="header?.title" class="nav-link p14 {{header?.className}}" [routerLink]="[header.redirectTo]">{{header?.title | translate}}</a>
                             <a *ngIf="header?.image" class="nav-link" [routerLink]="[header.redirectTo]">
                                 <img style="width: 25px;" src={{header?.image}} />

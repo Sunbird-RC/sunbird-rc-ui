@@ -38,11 +38,11 @@
 //     padding: 5px;
 //   }
 .modal-dialog {
-    top: calc(100% - 300px);
+    top: calc(100% - 350px);
 }
 
 .modal.show .modal-dialog {
-    margin: -15px -2px 0px -2px;
+  //  margin: -15px -2px 0px -2px;
 }
 
 .animate-bottom {

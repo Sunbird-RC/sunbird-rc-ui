@@ -2,7 +2,8 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-header nav-b navbar-inverse">
 
         <div class="navbar-brand d-contents" id="navbarExample01">
-            <h6 class="font-weight-bold mt-2"><i onClick="history.go(-1); return false;" class="fas fa-chevron-left mr-2" aria-hidden="true"></i> Document Details
+            <h6 class="font-weight-bold mt-2"><i onClick="history.go(-1); return false;"
+                    class="fas fa-chevron-left mr-2" aria-hidden="true"></i> Document Details
             </h6>
 
             <!-- <div class="col-2 col-lg-1">
@@ -42,33 +43,25 @@
                                 <div class="card-intro-info">
 
                                     <div class="card-title mb-2 fs-14">
-                                        <i class="fas fa-check primarybgColor fs-12 mr-1"></i> {{'SELF_ATTTESTED'|translate}}
+                                        <i class="fas fa-check primarybgColor fs-12 mr-1"></i>
+                                        {{'SELF_ATTTESTED'|translate}}
                                     </div>
 
                                     <div class="fs-12">
                                         <div class="text-grey"> {{doc.name}} </div>
                                         <div class="text-grey"> Uploaded on Feb 10, 2022 </div>
-
-                                        <!-- <div class="tags-list">
-                                                        <ul>
-                                                            <li>ID Card</li>
-                                                            <li>ID Card</li>
-                                                            <li>ID Card</li>
-                                                            <li>ID Card</li>
-                                                            <li>ID Card</li>
-                                                            <li>ID Card</li>
-                                                            <li>ID Card</li>
-                                                        </ul>
-                                                    </div> -->
                                     </div>
                                 </div>
                                 <div class="card-image">
-                                    <ng-template [ngIf]="doc.extension === 'jpg' || doc.extension === 'png' || doc.extension === 'jpeg'">
-                                        <img class="img-fluid" [src]="doc.file | authImage: doc.extension | async" onError="this.src='https://cdn.dribbble.com/users/789033/screenshots/2346667/finalloader2-2.gif'" />
+                                    <ng-template
+                                        [ngIf]="doc.extension === 'jpg' || doc.extension === 'png' || doc.extension === 'jpeg'">
+                                        <img class="img-fluid" [src]="doc.file | authImage: doc.extension | async"
+                                            onError="this.src='https://cdn.dribbble.com/users/789033/screenshots/2346667/finalloader2-2.gif'" />
                                     </ng-template>
                                     <ng-template [ngIf]="doc.extension === 'pdf'">
                                         <!-- <ngx-extended-pdf-viewer [src]="doc.file | authImage | async" onError="this.src='https://cdn.dribbble.com/users/789033/screenshots/2346667/finalloader2-2.gif'"></ngx-extended-pdf-viewer> -->
-                                        <img [src]="'https://www.learningcontainer.com/wp-content/uploads/2019/09/sample-pdf-files-for-testing-300x300.png'" onError="this.src='https://cdn.dribbble.com/users/789033/screenshots/2346667/finalloader2-2.gif'" />
+                                        <img [src]="'https://www.learningcontainer.com/wp-content/uploads/2019/09/sample-pdf-files-for-testing-300x300.png'"
+                                            onError="this.src='https://cdn.dribbble.com/users/789033/screenshots/2346667/finalloader2-2.gif'" />
                                     </ng-template>
 
 
