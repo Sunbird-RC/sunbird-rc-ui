@@ -52,7 +52,7 @@ export class VerifyComponent implements OnInit {
         redirect: 'follow'
       };
 
-      fetch("https://ndear.xiv.in/skills/api/v1/verify", requestOptions)
+      fetch("https://skills.xiv.in/skills/api/v1/verify", requestOptions)
         .then(response => response.json())
         .then(result => {
           console.log('res', { "signedCredentials": { result } })
@@ -122,7 +122,7 @@ export class VerifyComponent implements OnInit {
       redirect: 'follow'
     };
 
-    fetch("https://ndear.xiv.in/skills/api/v1/verify", requestOptions)
+    fetch("https://skills.xiv.in/skills/api/v1/verify", requestOptions)
       .then(response => response.json())
       .then(result => console.log('res', result))
       .catch(error => console.log('error', error));

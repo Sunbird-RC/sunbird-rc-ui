@@ -28,7 +28,7 @@ export class ViewCertificateComponent implements OnInit {
           redirect: 'follow'
         };
 
-        fetch("https://ndear.xiv.in/skills/api/v1/Certificates/"+params['id'], requestOptions)
+        fetch("https://skills.xiv.in/skills/api/v1/Certificates/"+params['id'], requestOptions)
           .then(response => response.blob())
           .then(result => {
             var blob = new Blob([result], {type: 'application/pdf'});
