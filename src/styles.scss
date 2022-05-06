@@ -223,6 +223,7 @@ legend {
     font-size: 14px !important;
     padding-left: 0 !important;
     padding-right: 5px !important;
+    color: var(--primaryTextColor) !important;
 }
 
 form-group {
@@ -781,3 +782,4 @@ label {
     color: var(--primaryTextColor)}
 
 
+   a, li { cursor: pointer; }

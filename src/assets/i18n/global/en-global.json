@@ -6,6 +6,7 @@
     "ATTESTATIONS": "Attestations",
     "REGISTER": "Register",
     "EMAILT_NOT_VALID": "Email is not valid.",
+    "WEBSITE_NOT_VALID": "Website is not valid.",
     "ACCEPT_TERMS_CONDITIONS": "I accept Terms & Conditions",
     "INSTITUTE_SETUP": "School Setup",
     "BASIC_DETAILS": "Basic details",

@@ -5,6 +5,7 @@ import { GeneralService } from 'src/app/services/general/general.service';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { AppConfig } from '../../app.config';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-form-detail',
@@ -37,9 +38,14 @@ export class AttestationComponent implements OnInit {
       key: 'note',
       type: 'textarea',
       templateOptions: {
-        label: 'Note',
-        required: true,
-        description: "note sent on user"
+        label: 'Note (Maximum Characters limit 250)',
+        maxLength: 250,
+        description: "note sent on user",
+      },
+      validation: {
+        messages: {
+          maxlength: "Maximum Characters limit exceeded (250)"
+        }
       }
     }
   ];
@@ -135,11 +141,12 @@ export class AttestationComponent implements OnInit {
   notes: any[] = [];
   logo: any;
   fileURL: string;
+  titleVal: any;
   constructor(
     public router: Router,
     private route: ActivatedRoute,
     public generalService: GeneralService,
-     private config: AppConfig
+     private config: AppConfig, public translate: TranslateService
   ) {
     this.logo = this.config.getEnv(localStorage.getItem('ELOCKER_THEME') + '_theme').logoPath;
 
@@ -250,7 +257,7 @@ export class AttestationComponent implements OnInit {
   }
 
   removeCommonFields() {
-    var commonFields = ['osCreatedAt', 'osCreatedBy', 'osUpdatedAt', 'osUpdatedBy','OsUpdatedBy','_osAttestedData', 'osid','_osClaimId','_osState','Osid', 'InstituteOSID', 'TeacherOSID'];
+    var commonFields = ['osCreatedAt', 'osCreatedBy', 'osUpdatedAt', 'osUpdatedBy','OsUpdatedBy','_osAttestedData', 'osid','_osClaimId','_osState','Osid', 'InstituteOSID', 'TeacherOSID', 'sorder'];
     commonFields.forEach(element => {
       if(this.attestationData.hasOwnProperty(element)){
         delete this.attestationData[element]
