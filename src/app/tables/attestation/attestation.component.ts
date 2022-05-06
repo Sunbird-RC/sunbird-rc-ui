@@ -6,6 +6,7 @@ import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { AppConfig } from '../../app.config';
 import { TranslateService } from '@ngx-translate/core';
+import { SchemaService } from 'src/app/services/data/schema.service';
 
 @Component({
   selector: 'app-form-detail',
@@ -142,11 +143,15 @@ export class AttestationComponent implements OnInit {
   logo: any;
   fileURL: string;
   titleVal: any;
+  formSchema: any;
+  langKey: any;
   constructor(
     public router: Router,
     private route: ActivatedRoute,
     public generalService: GeneralService,
-     private config: AppConfig, public translate: TranslateService
+     private config: AppConfig, 
+     public translate: TranslateService,
+     public schemaService: SchemaService
   ) {
     this.logo = this.config.getEnv(localStorage.getItem('ELOCKER_THEME') + '_theme').logoPath;
 
@@ -188,6 +193,22 @@ export class AttestationComponent implements OnInit {
         this.noteFields[0].templateOptions.description = noteDesc;
 
         this.attestationData = JSON.parse(this.claimData.propertyData);
+
+        this.schemaService.getFormJSON().subscribe((FormSchemas) => {
+          let temp =  this.claimEntity.toLowerCase() + '-' + 'setup';
+          var filtered = FormSchemas.forms.filter(obj => {
+            
+            return Object.keys(obj)[0] === temp
+          })
+
+          this.formSchema = filtered[0][temp]
+
+          if (this.formSchema.langKey) {
+            this.langKey = this.formSchema.langKey;
+          }
+    
+       
+
         let _self = this;
         Object.keys(this.attestationData).forEach(function (key) {
         if(typeof(_self.attestationData[key]) == 'object')
@@ -215,6 +236,8 @@ export class AttestationComponent implements OnInit {
           // this.removeCommonFields();
           // this.generateData()
         })
+
+      });
       }
     })
 
@@ -248,12 +271,26 @@ export class AttestationComponent implements OnInit {
         //   this.propertyData.push(temp_object);
         // }
         var temp_object = {};
-          temp_object['title'] = (key).charAt(0).toUpperCase() + key.slice(1);
+         // temp_object['title'] = (key).charAt(0).toUpperCase() + key.slice(1);
+          temp_object['title'] = this.check(key);
           temp_object['value'] = value;
           this.propertyData.push(temp_object);
       }
     }
     console.log("propertyData",this.propertyData)
+  }
+
+
+  check(conStr) {
+    this.translate.get(this.langKey + '.' + conStr).subscribe(res => {
+      let constr = this.langKey + '.' + conStr;
+      if (res != constr) {
+        this.titleVal = res;
+      } else {
+        this.titleVal = conStr;
+      }
+    });
+    return this.titleVal;
   }
 
   removeCommonFields() {
