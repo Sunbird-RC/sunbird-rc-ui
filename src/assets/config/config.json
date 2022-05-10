@@ -1,13 +1,13 @@
 {
     "environment": "development",
     "keycloak": {
-        "url": "https://ndear.xiv.in/auth",
-        "realm": "ndear",
+        "url": "https://skills.xiv.in/auth",
+        "realm": "sunbird-rc",
         "clientId": "registry-frontend"
     },
     "configFolder": "/assets/config/ui-config",
     "logoPath": "/assets/images/logo.png",
-    "title": "Education Use Case",
+    "title": "Skill Use Case",
     "baseUrl": "http://localhost:4200/skills/api/v1",
     "schemaUrl": "http://localhost:4200/skills/api/docs/swagger.json",
     "footerText": "Sunbird RC"

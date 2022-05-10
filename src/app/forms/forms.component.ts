@@ -65,12 +65,14 @@ export class FormsComponent implements OnInit {
   notes: any;
   headingTitle;
   isSignupForm: boolean = false;
+  edit: boolean;
   constructor(private route: ActivatedRoute,
     public toastMsg: ToastMessageService, public router: Router, public schemaService: SchemaService, private formlyJsonschema: FormlyJsonschema, public generalService: GeneralService, private location: Location) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.add = this.router.url.includes('add');
+      this.edit = this.router.url.includes('edit');
 
       if (params['form'] != undefined) {
         this.form = params['form'].split('/', 1)[0];
@@ -133,7 +135,10 @@ export class FormsComponent implements OnInit {
             this.privateFields = (this.responseData.definitions[fieldset.privacyConfig].hasOwnProperty('privateFields') ? this.responseData.definitions[fieldset.privacyConfig].privateFields : []);
             this.internalFields = (this.responseData.definitions[fieldset.privacyConfig].hasOwnProperty('internalFields') ? this.responseData.definitions[fieldset.privacyConfig].internalFields : []);
           }
-          this.getData();
+
+          if (this.identifier != null || this.edit) {
+            this.getData();
+          }
 
           this.definations[fieldset.definition] = {}
           this.definations[fieldset.definition]['type'] = "object";

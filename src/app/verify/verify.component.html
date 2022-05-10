@@ -5,13 +5,17 @@
         <h3 *ngIf="!scannerEnabled" class="text-center">Verify a certificate</h3>
         <zxing-scanner *ngIf="scannerEnabled" #scanner (scanSuccess)="scanSuccessHandler($event)" style="width: 50%">
         </zxing-scanner>
-        <button (click)="enableScanner()" *ngIf="!scannerEnabled" type="button" class="btn btn-success">
+        <button (click)="enableScanner()" *ngIf="!scannerEnabled && !success" type="button" class="btn btn-success">
             <span>Scan QR code </span>
             <img style="display: inline; height: 20px;margin-left: 5px;"
                 src="https://cdn-icons-png.flaticon.com/512/3126/3126504.png" alt="">
         </button>
-        <button (click)="enableScanner()" *ngIf="scannerEnabled" type="button" class="btn btn-success">Stop
+        <button (click)="enableScanner()" *ngIf="scannerEnabled && !success" type="button" class="btn btn-success">Stop
             Scanner</button>
+<br />
+            <h6 *ngIf="!scannerEnabled && success"><i class="fa fa-check btn-success m-2" aria-hidden="true"></i>
+                This Certificate is valid
+            </h6>
     </div>
 </div>
 
@@ -21,22 +25,15 @@
     </div>
 </div>
 
-<div style="margin-left: 12.5%;width: 75%;" class="card" *ngIf="!scannerEnabled && success">
+<!-- <div style="margin-left: 12.5%;width: 75%;" class="card" *ngIf="!scannerEnabled && success">
     <div class="card-body contain ">
         <h3>Verify Certificate </h3>
         <h7><i class="fa fa-check btn-success m-2" aria-hidden="true"></i>
             This Certificate is valid
         </h7>
-        <!-- <br>
-        <span><b>{{name}}</b></span>
-        <br>
-        <span>{{item.educationalLevel}} </span>
-        <br>
-        <span>{{item.credentialCategory}}</span>
-        <br>
-        <span>{{item.dateCreated}}</span> -->
+     
     </div>
-</div>
+</div> -->
 
 <div style="margin-left: 12.5%;width: 75%;" class="card w-50" *ngIf="!scannerEnabled && notValid">
     <div class="card-body contain ">
