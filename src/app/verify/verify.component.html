@@ -12,10 +12,13 @@
         </button>
         <button (click)="enableScanner()" *ngIf="scannerEnabled && !success" type="button" class="btn btn-success">Stop
             Scanner</button>
-<br />
-            <h6 *ngIf="!scannerEnabled && success"><i class="fa fa-check btn-success m-2" aria-hidden="true"></i>
-                This Certificate is valid
-            </h6>
+        <br />
+        <h6 *ngIf="!scannerEnabled && success"><i class="fa fa-check btn-success m-2" aria-hidden="true"></i>
+            This Certificate is valid
+        </h6>
+        <h7 *ngIf="!scannerEnabled && notValid" style="color: red"><i class="fa fa-times btn-error m-2" aria-hidden="true"></i>
+            This Certificate is not valid
+        </h7>
     </div>
 </div>
 
@@ -35,11 +38,11 @@
     </div>
 </div> -->
 
-<div style="margin-left: 12.5%;width: 75%;" class="card w-50" *ngIf="!scannerEnabled && notValid">
+<!-- <div style="margin-left: 12.5%;width: 75%;" class="card w-50" *ngIf="!scannerEnabled && notValid">
     <div class="card-body contain ">
         <h3>Verify Certificate </h3>
         <h7 style="color: red"><i class="fa fa-times btn-error m-2" aria-hidden="true"></i>
             This Certificate is not valid
         </h7>
     </div>
-</div>
+</div> -->
