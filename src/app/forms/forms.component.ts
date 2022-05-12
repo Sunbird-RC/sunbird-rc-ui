@@ -136,7 +136,7 @@ export class FormsComponent implements OnInit {
             this.internalFields = (this.responseData.definitions[fieldset.privacyConfig].hasOwnProperty('internalFields') ? this.responseData.definitions[fieldset.privacyConfig].internalFields : []);
           }
 
-          if (this.identifier != null || this.edit) {
+          if (this.identifier != null || this.edit || this.add) {
             this.getData();
           }
 
