@@ -41,6 +41,7 @@ export class DocumentsComponent implements OnInit {
       // this.toastMsg.error('error', err.error.params.errmsg)
       console.log('error', err)
     });
+
     this.generalService.getData(this.entity).subscribe((res) => {
       console.log('res', res)
       if (res[0]['attestation-MOSIP'] && res[0]['attestation-MOSIP'].length > 0) {
@@ -67,7 +68,15 @@ export class DocumentsComponent implements OnInit {
           this.docs.push(doc);
           this.hasDocs = true;
         });
-        
+      }
+
+      if (res[0]['attestation-DIVOC-PDF'] && res[0]['attestation-DIVOC-PDF'].length > 0) {
+        res[0]['attestation-DIVOC-PDF'].forEach(doc => {
+          if(doc._osState == "PUBLISHED"){
+          this.docs.push(doc);
+          this.hasDocs = true;
+          }
+        });
       }
 
       if (!res[0]['attestation-SELF'] && !res[0]['attestation-MOSIP'] && res[0]['attestation-DIVOC']) {
