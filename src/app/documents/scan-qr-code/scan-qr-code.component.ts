@@ -55,7 +55,7 @@ export class ScanQrCodeComponent implements OnInit {
         this.postData('send', attest);
       });
 
-      // fetch("https://ndear.xiv.in/skills/api/v1/verify", requestOptions)
+      // fetch("https://demo-education-registry.xiv.in/skills/api/v1/verify", requestOptions)
       //   .then(response => response.json())
       //   .then(result => {
       //     console.log('res', { "signedCredentials": { result } })

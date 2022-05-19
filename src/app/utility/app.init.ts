@@ -43,7 +43,7 @@ export function initializeKeycloak(keycloak: KeycloakService, configService: Aut
 //     return () =>
 //         keycloak.init({
 //             config: {
-//                 url: 'https://ndear.xiv.in/auth',
+//                 url: 'https://demo-education-registry.xiv.in/auth',
 //                 realm: 'ndear',
 //                 clientId: 'registry-frontend',
 //             },
