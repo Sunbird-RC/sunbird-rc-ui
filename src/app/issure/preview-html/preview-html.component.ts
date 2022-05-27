@@ -8,6 +8,7 @@ declare var grapesjs: any;
 
 import 'grapesjs-preset-webpage';
 import { JsonEditorComponent, JsonEditorOptions } from 'ang-jsoneditor';
+import { ToastMessageService } from 'src/app/services/toast-message/toast-message.service';
 
 
 @Component({
@@ -37,15 +38,18 @@ export class PreviewHtmlComponent implements OnInit {
     external_plugins: { mentions: string; }; templates: { title: string; description: string; content: string; }[]; toolbar: string; content_css: string[];
   };
 
-  constructor(public router: Router, public route: ActivatedRoute,
+  constructor(public router: Router, public route: ActivatedRoute,public toastMsg: ToastMessageService,
     public generalService: GeneralService) {
 
     this.editorOptions = new JsonEditorOptions()
     // this.editorOptions.modes = ['code']; // set all allowed modes
 
     this.editorOptions.mode = 'code';
-    this.userHtml = '';
+    this.editorOptions.history = true;
+   // this.editorOptions.onChange = () => console.log(this.jsonEditor.get());
+   this.editorOptions.onChange = () => this.jsonEditor.get();
 
+    this.userHtml = '';
 
     if (localStorage.getItem('sampleData')) {
       this.sampleData = JSON.parse(localStorage.getItem('sampleData'));
@@ -59,7 +63,6 @@ export class PreviewHtmlComponent implements OnInit {
       this.issuerOsid = res[0].osid;
     });
   }
-
 
   async ngOnInit() {
     this.userHtml = '';
@@ -238,7 +241,7 @@ export class PreviewHtmlComponent implements OnInit {
   }
 
   submit() {
-    this.schemaContent = JSON.stringify(this.userJson);
+    this.schemaContent = this.jsonEditor.get();
 
 
     var htmlWithCss = this.editor.runCommand('gjs-get-inlined-html');
@@ -260,7 +263,7 @@ export class PreviewHtmlComponent implements OnInit {
     formData.append("files", fileObj, fileObj.name);
     this.generalService.postData('/Issuer/' + this.issuerOsid + '/schema/documents', formData).subscribe((res) => {
 
-      this.schemaContent = JSON.parse(this.schemaContent);
+     // this.schemaContent = JSON.parse(this.schemaContent);
       let _self = this;
       Object.keys(this.schemaContent['properties']).forEach(function (key) {
         _self.oldTemplateName = key;
@@ -275,6 +278,7 @@ export class PreviewHtmlComponent implements OnInit {
 
       let payload = {
         "name": this.templateName,
+        "description": this.description,
         "schema": result
       }
 
@@ -282,6 +286,9 @@ export class PreviewHtmlComponent implements OnInit {
         this.generalService.postData('/Schema', payload).subscribe((res) => {
           localStorage.setItem('content', '');
           this.router.navigate(['/dashboard']);
+        }, (err)=>{
+          this.toastMsg.error('error', err.error.params.errmsg)
+
         })
       }
     })

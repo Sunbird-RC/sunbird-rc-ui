@@ -77,8 +77,6 @@ export class DashboardComponent implements OnInit {
         this.schema["properties"] = this.responseData.definitions[this.entityName].properties;
         this.schema["required"] = this.responseData.definitions[this.entityName].required;
         this.loadSchema();
-
-
       });
 
     }, (error) => {
