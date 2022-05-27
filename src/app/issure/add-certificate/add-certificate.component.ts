@@ -52,7 +52,7 @@ export class AddCertificateComponent implements OnInit {
   schemaContent: any;
   certificateContent: any;
   oldTemplateName;
-  SampleData: any;
+  sampleData: any;
   constructor(public schemaService: SchemaService,
     public toastMsg: ToastMessageService,
     public router: Router,
@@ -126,7 +126,7 @@ export class AddCertificateComponent implements OnInit {
 
   previewScreen(doc) {
     console.log({ doc });
-    this.SampleData = doc;
+    this.sampleData = doc;
 
 
     fetch(doc.schemaUrl)
@@ -153,7 +153,8 @@ export class AddCertificateComponent implements OnInit {
   }
 
   editTemplate() {
-   this.router.navigate(['/preview-html'], { state: { item: this.SampleData } });
+    localStorage.setItem('sampleData', JSON.stringify(this.sampleData));
+   this.router.navigate(['/preview-html'], { state: { item: this.sampleData } });
   }
 
 
