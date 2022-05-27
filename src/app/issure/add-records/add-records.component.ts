@@ -35,6 +35,7 @@ export class AddRecordsComponent implements OnInit {
   property: any;
   schemaName: any;
   item: any;
+  fieldKey: any;
 
   constructor(public schemaService: SchemaService,
     public toastMsg: ToastMessageService,
@@ -59,7 +60,7 @@ export class AddRecordsComponent implements OnInit {
 
 
       this.schema["type"] = "object";
-      //  this.schema["title"] = this.formSchema.title;
+    //  this.schema["title"] = this.formSchema.title;
       this.schema["definitions"] = this.definations;
       this.schema["properties"] = this.property;
       this.schema["required"] = this.definations[this.schemaName].required;
@@ -79,12 +80,12 @@ export class AddRecordsComponent implements OnInit {
     this.fields[0].fieldGroup.forEach((fieldObj, index) => {
       console.log({ fieldObj });
 
-      if(fieldObj.hasOwnProperty('type') && fieldObj.type)
-      {
+      if (fieldObj.hasOwnProperty('type') && fieldObj.type) {
         fieldObj.templateOptions['type'] = fieldObj.type;
         fieldObj.type = 'string';
       }
 
+      this.fieldKey = fieldObj.key;
 
       if (!fieldObj.templateOptions.hasOwnProperty('label') || fieldObj.templateOptions.label == undefined) {
         // let str: any = (fieldObj.templateOptions.label) ? fieldObj.templateOptions.label : fieldObj.key;
@@ -125,6 +126,20 @@ export class AddRecordsComponent implements OnInit {
 
       }
 
+      if (fieldObj.templateOptions['type'] == 'enum' || fieldObj.templateOptions.hasOwnProperty('options') ) {
+        this.fields[0].fieldGroup[index].type = 'select';
+        this.fields[0].fieldGroup[index]['templateOptions']['options'] = fieldObj.templateOptions.options;
+      }
+
+      if(this.property[this.fieldKey].hasOwnProperty('format'))
+      {
+        this.fields[0].fieldGroup[index]['templateOptions']['type'] = this.property[this.fieldKey].format;
+      }
+
+      if(this.property[this.fieldKey].hasOwnProperty('placeholder'))
+      {
+        this.fields[0].fieldGroup[index]['templateOptions']['placeholder'] = this.property[this.fieldKey].placeholder;
+      }
 
       // this.fields[0].fieldGroup[0]['label'] = (fieldObj.name).toUpperCase();
 
