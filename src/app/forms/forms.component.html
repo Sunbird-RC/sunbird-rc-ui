@@ -2,7 +2,7 @@
 <ng-template #noModal>
   <div class="col-md-6 offset-md-3 mt-5">
     <h3 class="font-weight-bold">  {{headingTitle}}</h3>
-    <div class="card p-4">
+    <div class="card mb-5">
       <div *ngIf="schemaloaded; else loader" class="card-body">
         <div>
           <form [formGroup]="form2" (ngSubmit)="submit()" *ngIf="fields">
@@ -10,6 +10,9 @@
             <button type="submit" class="btn btn-primary w-100 submit-button" [disabled]="!form2.valid">{{'SUBMIT' | translate}}</button>
           </form>
         </div>
+        <div class="text-center text-secondary-color p-3 font-weight-bold" *ngIf="isSignupForm"> 
+          <a  href="/login"> {{'ALREADY_REGISTERED_LOGIN' | translate}}? </a>
+         </div>
       </div>
     </div>
   </div>
