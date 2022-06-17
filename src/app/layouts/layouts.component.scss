@@ -22,18 +22,20 @@ dl,dt{
         margin: 0 auto !important;
     }
 }
-
-.right-s-modal{
-    &.modal{
-        right: 0 !important;
-      //  width: 70% !important;
-        left: inherit !important;
-    }
-    .modal-dialog{
-        max-width: 480px !important;
-        margin: 0 auto !important;
-    }
+pt-1{
+    padding-top: 1rem;
 }
+// .right-s-modal{
+//     &.modal{
+//         right: 0 !important;
+//       //  width: 70% !important;
+//         left: inherit !important;
+//     }
+//     .modal-dialog{
+//         max-width: 480px !important;
+//         margin: 0 auto !important;
+//     }
+// }
 
 .right-l-modal{
     &.modal{
