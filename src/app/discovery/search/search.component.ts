@@ -137,7 +137,7 @@ export class SearchComponent implements OnInit {
             let fieldObj = {
               key: filter.key,
               type: 'input',
-              className: 'col-4',
+              className: 'col-sm-4',
               templateOptions: {
                 label: this.translate.instant(filter.title),
               }
