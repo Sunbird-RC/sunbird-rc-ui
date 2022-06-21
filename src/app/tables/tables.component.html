@@ -5,6 +5,7 @@
         <thead>
             <tr>
                 <th class="p12 text-grey-color" *ngFor="let th of tableSchema?.fields;" scope="col">{{th?.title | translate}}</th>
+            
                 <!-- <th scope="col">Name</th>
         <th scope="col"></th> -->
             </tr>
@@ -12,6 +13,7 @@
         <tbody>
             <ng-template ngFor let-item [ngForOf]="tableSchema?.items | paginate: { itemsPerPage: limit, currentPage: page }" let-i="index">
                 <!-- {{i}}
+
         {{item | json}}
         <hr> -->
 
@@ -38,17 +40,19 @@
             </ng-template>
         </tbody>
     </table>
-    <pagination-controls class="my-1 float-end" (pageChange)="page = $event" previousLabel="{{'PREVIOUS' | translate}}"
-    nextLabel="{{'NEXT' | translate}}"></pagination-controls>
+   
 
     <table class="mx-5 my-5 w-50">
         <tbody class="fs-5">
-            <tr *ngIf="tableSchema?.items && !tableSchema?.items.length">
-              <td class="float-end" [attr.colspan]="tableSchema?.items.length">
-                {{NO_RECORDS_FOUND| translate }}
+           
+            <tr *ngIf="!tableSchema?.items?.length">
+               
+              <td class="float-end" [attr.colspan]="tableSchema?.items?.length">
+                {{'NO_RECORDS_FOUND' | translate }}
               </td>
             </tr>
           </tbody>
       </table>
-
+      <pagination-controls class="my-1 float-end" (pageChange)="page = $event" previousLabel="{{'PREVIOUS' | translate}}"
+      nextLabel="{{'NEXT' | translate}}"></pagination-controls>
 </div>
