@@ -1,9 +1,16 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-header nav-b navbar-inverse pl-4">
-        <span (click)="back();">
+        <span  *ngIf="htmlDiv" (click)="back();">
             <i class="fa fa-angle-left primary-text"></i>
+            <span class="heading-2 ml-2">Edit Template</span>
+
         </span>
-        <span class="heading-2 ml-2">Edit Template</span>
+
+        <span *ngIf="schemaDiv" (click)="backToHtmlEditor();">
+            <i class="fa fa-angle-left primary-text"></i>
+            <span  class="heading-2 ml-2">Advance Editor</span>
+
+        </span>
     </nav>
 
 
@@ -19,22 +26,21 @@
                 <button data-toggle="modal" data-target="#prewiewProfile" class="btn text-capitalize float-end btn-primary btn-primary-sm p1">Save</button>
             </div>
             <div class=" p-0 setHeight border-right mtn-28">
-                <ul class="nav nav-tabs ui-tabs font-600 pt-3">
-                    <li class="active col-sm-5"><a href="#htmlDiv" class="active heading-2" data-toggle="tab">Design</a>
+                <!-- <ul class="nav nav-tabs ui-tabs font-600 pt-3">
+                    <li class="active col-sm-5"><a href="#htmlDiv" class="heading-2" data-toggle="tab">Design</a>
                     </li>
-                    <li class="col-sm-6"><a href="#schenaDiv" class="heading-2" data-toggle="tab">Schema</a>
+                    <li class="col-sm-6"><a href="#schemaDiv" class="heading-2" data-toggle="tab">Schema</a>
                     </li>
-                </ul>
-
-                <div class="tab-content">
-                    <div class="tab-pane active" id="htmlDiv">
+                </ul> -->
+                <div  id="htmlDiv" [hidden]="!htmlDiv">
+                    
                         <div class="d-flex flex-justify-between py-1 px-4">
                             <div class="heading-2">HTML</div>
                             <!-- <button class="fs-14 btn btn-sec-bg submit-button float-end">
                                     <i aria-hidden="true" class="fa fa-pencil-square-o"></i> Edit 
                                 </button> -->
                         </div>
-                        <div class="mx-5">
+                        <div class="mx-3">
                             <!-- <editor   
                             [init]="demoBaseConfig"
                             outputFormat="html"     
@@ -55,19 +61,25 @@
                             (ngModelChange)="injectHTML();"  placeholder="Enter html code ..."></textarea> -->
                         <!-- <code-input (click)="codeInput();" style="height: 600px; width: 100%; float: left; margin: 1%; font-size: 10px; line-height: normal;" lang="HTML" value="{{userHtml}}" name="html_code" placeholder="HTML"></code-input> -->
 
-                    </div>
-                    <div class="tab-pane fade" id="schenaDiv">
+         
+                </div>
+               
+                    <div  id="schemaDiv"[hidden]="!schemaDiv">
                         <div class="d-flex flex-justify-between py-1 px-4">
                             <div class="heading-2">JSON Schema</div>
                             <!-- <button class="fs-14 btn btn-sec-bg submit-button float-end">
                                     <i aria-hidden="true" class="fa fa-pencil-square-o"></i> Advance Editor 
                                 </button> -->
                         </div>
-                        <json-editor [options]="editorOptions" style="min-height: 500px;" [data]="userJson" [(ngModel)]="userJson"></json-editor>
+                        <advance-editor *ngIf="userJson" [jsonSchema]="userJson" (newItemEvent)="jsonSchemaData($event)"></advance-editor>
+                        <!-- <div class="disabledbutton">
+                            <json-editor [options]="editorOptions" style="min-height: 500px;" [data]="userJson" [(ngModel)]="userJson"></json-editor>
+
+                        </div> -->
                         <!-- <textarea rows="20" cols="70" class="card-body w-100 h-90 border-light-color"
                             [(ngModel)]="userJson" placeholder="Enter html code ..."></textarea> -->
                     </div>
-                </div>
+               
 
                 <!-- <div class="bs-example">
                     <ul class="nav nav-tabs">
@@ -75,7 +87,7 @@
                             <a href="#htmlDiv" class="nav-link active" data-toggle="tab">HTML</a>
                         </li>
                         <li class="nav-item">
-                            <a href="#schenaDiv" class="nav-link" data-toggle="tab">Schema</a>
+                            <a href="#schemaDiv" class="nav-link" data-toggle="tab">Schema</a>
                         </li>
 
                     </ul>
@@ -84,7 +96,7 @@
                             <textarea rows="20" cols="70" class="card-body w-100 h-75" [(ngModel)]="userHtml"
                             (ngModelChange)="injectHTML();"  placeholder="Enter html code ..."></textarea>
                         </div>
-                        <div class="tab-pane fade" id="schenaDiv">
+                        <div class="tab-pane fade" id="schemaDiv">
                             <textarea rows="20" cols="70" class="card-body w-100 h-75" [(ngModel)]="userJson"
                                 placeholder="Enter html code ..."></textarea>
                         </div>

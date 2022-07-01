@@ -9,7 +9,7 @@ declare var grapesjs: any;
 import 'grapesjs-preset-webpage';
 import { JsonEditorComponent, JsonEditorOptions } from 'ang-jsoneditor';
 import { ToastMessageService } from 'src/app/services/toast-message/toast-message.service';
-
+import { SchemaService } from '../../services/data/schema.service';
 
 @Component({
   selector: 'app-preview-html',
@@ -21,7 +21,7 @@ export class PreviewHtmlComponent implements OnInit {
   public editorOptions: JsonEditorOptions;
   public data: any;
   @ViewChild(JsonEditorComponent, { static: false }) jsonEditor: JsonEditorComponent;
-
+  name1: string = 'pratik';
   sampleData: any;
   schemaContent: any;
   userJson: any;
@@ -30,24 +30,38 @@ export class PreviewHtmlComponent implements OnInit {
   issuerOsid: string;
   oldTemplateName: string;
   description: any;
-
+  item = [
+    {
+      'name': 'Pratiksha'
+    },
+    {
+      'name': 'Pratiksha1'
+    },
+    {
+      'name': 'Pratiksha2'
+    },
+  ]
   private editor: any = '';
+  schemaDiv = false;
+  htmlDiv = true;
 
   demoBaseConfig: {
     width: number; height: number; resize: boolean; autosave_ask_before_unload: boolean; codesample_dialog_width: number; codesample_dialog_height: number; template_popup_width: number; template_popup_height: number; powerpaste_allow_local_images: boolean; plugins: string[]; //removed:  charmap insertdatetime print
     external_plugins: { mentions: string; }; templates: { title: string; description: string; content: string; }[]; toolbar: string; content_css: string[];
   };
+  certificateTemplate: any;
+  certificateProperties: any;
 
-  constructor(public router: Router, public route: ActivatedRoute,public toastMsg: ToastMessageService,
-    public generalService: GeneralService) {
+  constructor(public router: Router, public route: ActivatedRoute, public toastMsg: ToastMessageService,
+    public generalService: GeneralService, public schemaService: SchemaService) {
 
     this.editorOptions = new JsonEditorOptions()
     // this.editorOptions.modes = ['code']; // set all allowed modes
 
     this.editorOptions.mode = 'code';
     this.editorOptions.history = true;
-   // this.editorOptions.onChange = () => console.log(this.jsonEditor.get());
-   this.editorOptions.onChange = () => this.jsonEditor.get();
+    // this.editorOptions.onChange = () => console.log(this.jsonEditor.get());
+    this.editorOptions.onChange = () => this.jsonEditor.get();
 
     this.userHtml = '';
 
@@ -62,10 +76,15 @@ export class PreviewHtmlComponent implements OnInit {
 
       this.issuerOsid = res[0].osid;
     });
+
+
+
+
   }
 
+
   async ngOnInit() {
-    this.userHtml = '';
+
     await this.readHtmlSchemaContent(this.sampleData);
 
     this.editor = this.initializeEditor();
@@ -76,6 +95,11 @@ export class PreviewHtmlComponent implements OnInit {
       panelManager.removeButton('options', 'gjs-toggle-images');
       panelManager.removeButton('options', 'gjs-open-import-webpage');
       panelManager.removeButton('options', 'undo');
+
+
+      // panelManager.removeButton("views", "open-layers");
+      // panelManager.removeButton("views", "settings");
+      //sw-visibility
 
 
       const um = this.editor.UndoManager;
@@ -109,18 +133,19 @@ export class PreviewHtmlComponent implements OnInit {
         attributes: {
           title: "Open Code"
         },
-        className: "fa fa-file-code-o pr-4",
+        className: "fa fa-file-code-o",
         command: "open-code",
         togglable: false, //do not close when button is clicked again
         id: "open-code"
       }
     ]);
 
-    const panelOp = pn.addPanel({
+
+    const panelOp1 = pn.addPanel({
       id: "options"
     });
 
-    panelOp.get("buttons").add([
+    panelOp1.get("buttons").add([
       {
         attributes: {
           title: "preview"
@@ -133,12 +158,119 @@ export class PreviewHtmlComponent implements OnInit {
     ]);
 
 
-  }
+    /* ---------Start----------------------Advance Editor ----------------------- */
 
+
+    const panelOp = pn.addPanel({
+      id: "options"
+    });
+
+
+    let temp = `
+  <div id="your-content">
+  <div class="card m-3 p-3">
+   ${this.name1} 
+      <div class="card-body p-1" *ngFor="let it of ${this.item} ">
+     
+<hr />
+</div>
+      </div>
+       <button>Button</button> 
+        <!-- eg. bind a click event on button and do something with GrapesJS API -->
+  </div>
+`
+    console.log(temp);
+    let editPanel = null
+    let self = this;
+    pn.addButton('views', {
+      id: 'editMenu',
+      attributes: { class: 'fa fa-address-card-o', title: "Edit Menu" },
+      active: false,
+      togglable: false,
+      command: {
+        run: function (editor) {
+          if (editPanel == null) {
+
+
+
+            const editMenuDiv = document.createElement('div');
+
+            const arr = ['alpha', 'bravo', 'charlie', 'delta', 'echo', 'alpha', 'bravo', 'charlie', 'delta', 'echo', 'alpha', 'bravo', 'charlie', 'delta', 'echo'];
+
+            const cardDiv = document.createElement('div');
+            cardDiv.className = 'pcard p-3';
+            cardDiv.setAttribute('style', 'text-align: left; color:white');
+            cardDiv.innerHTML = ` <div class="d-flex flex-justify-between px-2 py-2">
+            <div class="heading-2">Preview</div>
+            <div>
+                <button id="advanceBtn" (click)="editTemplate()"
+                    class="float-end adv-btn btn"><i
+                        class="fa fa-pencil-square-o" aria-hidden="true"></i>Advance Editor</button>
+            </div>
+        </div>
+        <p style="color:white;font-size:12px"> <i class="fa fa-asterisk" style="color: #FFD965; font-size: 8px;" aria-hidden="true"></i>
+        These propeties are mandatory to make it <org> complaint</p>`;
+
+            const cardBContainer = document.createElement('div');
+            cardBContainer.className = 'card-body-container p-3';
+            cardDiv.appendChild(cardBContainer);
+
+            // ul.setAttribute('id', 'theList');
+            for (let i = 0; i <= arr.length - 1; i++) {
+              const cardBdiv = document.createElement('div');	// create li element.
+              cardBdiv.innerHTML = arr[i];	                        // assigning text to li using array value.
+              cardBdiv.className = 'pcard-body  mt-4';
+              cardBdiv.setAttribute('style', 'padding-bottom: 10px; border-bottom: 2px solid #000');	// remove the bullets.
+              cardBContainer.appendChild(cardBdiv);		// append li to ul.
+            }
+
+
+
+            editMenuDiv.appendChild(cardDiv);
+
+
+
+            const panels = pn.getPanel('views-container')
+            panels.set('appendContent', editMenuDiv).trigger('change:appendContent')
+            editPanel = editMenuDiv;
+
+            const urlInputElemen = document.getElementById('advanceBtn');
+            urlInputElemen.onclick = function () {
+
+
+              // here is where you put your ajax logic
+              self.editTemplate();
+
+
+            };
+          }
+          editPanel.style.display = 'block';
+
+
+
+        },
+        stop: function (editor) {
+          if (editPanel != null) {
+            editPanel.style.display = 'none'
+          }
+        }
+
+      }
+    })
+
+
+
+    /* ------END-------------------------Advance Editor ----------------------- */
+
+  }  //onInit();
+
+  editTemplate() {
+    this.schemaDiv = true;
+    this.htmlDiv = false;
+  }
 
   private initializeEditor(): any {
 
-    console.log(this.userHtml);
     return grapesjs.init({
       // Indicate where to init the editor. You can also pass an HTMLElement
       container: '#gjs',
@@ -190,7 +322,7 @@ export class PreviewHtmlComponent implements OnInit {
         },
         assets: [
         ]
-      }
+      },
     });
   }
 
@@ -201,6 +333,11 @@ export class PreviewHtmlComponent implements OnInit {
   back() {
     history.back();    //this.router.navigate(['/certificate']);
     this.editor.runCommand('core:canvas-clear')
+  }
+
+  backToHtmlEditor() {
+    this.schemaDiv = false;
+    this.htmlDiv = true;
   }
 
   cancel() {
@@ -215,8 +352,12 @@ export class PreviewHtmlComponent implements OnInit {
     await fetch(doc.schemaUrl)
       .then(response => response.text())
       .then(data => {
-        this.schemaContent = data;
+        //    this.schemaContent = data;
+        // console.log({ data });
         this.userJson = JSON.parse(data);
+      //  this.addCrtTemplateFields();
+       // this.certificateTemplate = this.userJson['_osConfig']['credentialTemplate'];
+       // this.getCrtTempFields(this.certificateTemplate);
       });
 
     await fetch(doc.certificateUrl)
@@ -226,6 +367,11 @@ export class PreviewHtmlComponent implements OnInit {
 
         //   this.injectHTML();
       });
+  }
+
+  getCrtTempFields(certificateTemplate) {
+
+
   }
 
   stringToHTML(str) {
@@ -240,9 +386,21 @@ export class PreviewHtmlComponent implements OnInit {
     return str.replace(new RegExp(escapedFind, 'g'), replace);
   }
 
-  submit() {
-    this.schemaContent = this.jsonEditor.get();
+  addCrtTemplateFields() {
+    let certTmpJson = (this.schemaContent) ? this.schemaContent : this.userJson;
+    certTmpJson = certTmpJson['_osConfig']['credentialTemplate']['credentialSubject'];
+    // let propertyArr ;
+    let _self = this;
+    Object.keys(certTmpJson).forEach(function (key) {
+      console.log({key});
+    });
 
+  }
+
+  async submit() {
+    // this.schemaContent = this.jsonEditor.get();//JSON.stringify(this.userJson);
+
+    this.schemaContent = await this.addCrtTemplateFields();
 
     var htmlWithCss = this.editor.runCommand('gjs-get-inlined-html');
 
@@ -263,14 +421,14 @@ export class PreviewHtmlComponent implements OnInit {
     formData.append("files", fileObj, fileObj.name);
     this.generalService.postData('/Issuer/' + this.issuerOsid + '/schema/documents', formData).subscribe((res) => {
 
-     // this.schemaContent = JSON.parse(this.schemaContent);
+      // this.schemaContent = JSON.parse(this.schemaContent);
       let _self = this;
       Object.keys(this.schemaContent['properties']).forEach(function (key) {
         _self.oldTemplateName = key;
       });
 
 
-      this.schemaContent._osConfig['certificateTemplates'] = { html: 'did:path:' + res.documentLocations[0] }
+      this.schemaContent._osConfig['certificateTemplates'] = { html: 'minio://' + res.documentLocations[0] }
 
       let result = JSON.stringify(this.schemaContent);
 
@@ -286,7 +444,9 @@ export class PreviewHtmlComponent implements OnInit {
         this.generalService.postData('/Schema', payload).subscribe((res) => {
           localStorage.setItem('content', '');
           this.router.navigate(['/dashboard']);
-        }, (err)=>{
+        }, (err) => {
+          console.log('err ----', err);
+          // alert('error');
           this.toastMsg.error('error', err.error.params.errmsg)
 
         })
@@ -319,6 +479,7 @@ export class PreviewHtmlComponent implements OnInit {
 
   }
 
+
   injectHTML() {
 
     const iframe: HTMLIFrameElement = document.getElementById('iframe2') as HTMLIFrameElement;
@@ -345,6 +506,11 @@ export class PreviewHtmlComponent implements OnInit {
     } else {
       alert('Cannot inject dynamic contents into iframe.');
     }
+  }
+
+  jsonSchemaData(jsonSchema) {
+    this.schemaContent = jsonSchema._data;
+    console.log(jsonSchema._data);
   }
 
 

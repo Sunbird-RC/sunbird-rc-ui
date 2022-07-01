@@ -83,6 +83,15 @@ export class SchemaService {
     return this.dataService.get(req);
   }
 
+  getJSON(url) {
+  
+    const req = {
+      url: url
+    };
+
+    return this.dataService.get(req);
+  }
+
 
 }
 

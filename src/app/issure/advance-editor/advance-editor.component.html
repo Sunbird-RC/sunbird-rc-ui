@@ -1,0 +1,24 @@
+<!-- <app-header></app-header> -->
+<!-- <div class="mt-6 mx-1"> -->
+  <div>
+
+  <div class="d-flex">
+    <div class="col-sm-8 well">
+      <form-builder [form]="myForm" (change)="onChange($event)" (submit)="onSubmit($event)" 
+      [options]="options"></form-builder> 
+    </div>
+    <div class="col-sm-4">
+      <!-- <div class="well jsonviewer">
+        <pre id="json"><code class="language-json" #json></code></pre>
+      </div> -->
+      <div class="well">
+      <json-editor [options]="editorOptions" style="min-height: 700px;" [data]="jsonFields" [(ngModel)]="jsonFields"></json-editor>
+
+      </div>
+
+    </div>
+  </div>
+   
+
+     
+</div>

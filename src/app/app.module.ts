@@ -65,6 +65,8 @@ import { HttpClient } from '@angular/common/http';
 import { config } from 'process';
 import { ColorPickerModule } from 'ngx-color-picker';
 
+import { VerifyModule} from 'vc-verification'
+
 //form validations
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
   return `should NOT have fewer than ${field.templateOptions.minItems} items`;
@@ -128,7 +130,13 @@ import { GetRecordsComponent } from './issure/get-records/get-records.component'
 import { AddRecordsComponent } from './issure/add-records/add-records.component';
 import { PreviewHtmlComponent } from './issure/preview-html/preview-html.component';
 // import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
-import { NgJsonEditorModule } from 'ang-jsoneditor' 
+import { NgJsonEditorModule } from 'ang-jsoneditor';
+import { VerifyComponent } from './issure/verify/verify.component' 
+import { FormioModule } from 'angular-formio';
+
+import * as configData from '../assets/config/config.json';
+import { AdvanceEditorComponent } from './issure/advance-editor/advance-editor.component'; 
+console.log(configData['default']);
 
 @NgModule({
   declarations: [
@@ -166,7 +174,9 @@ import { NgJsonEditorModule } from 'ang-jsoneditor'
     AddCertificateComponent,
     GetRecordsComponent,
     AddRecordsComponent,
-    PreviewHtmlComponent
+    PreviewHtmlComponent,
+    VerifyComponent,
+    AdvanceEditorComponent
   ],
   imports: [
     BrowserModule,
@@ -239,7 +249,9 @@ import { NgJsonEditorModule } from 'ang-jsoneditor'
     }),
     NgxPaginationModule,
     NgJsonEditorModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    VerifyModule.forChild(configData['default']),
+    FormioModule
   ],
   exports: [TranslateModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

@@ -20,7 +20,6 @@ export class KeycloakloginComponent implements OnInit {
 
   ngOnInit(): void {
     this.keycloakService.loadUserProfile().then((res)=>{
-      console.log(res['attributes'].entity[0]);
 
       this.entity = res['attributes'].entity[0];
       if(res['attributes'].hasOwnProperty('locale') && res['attributes'].locale.length){

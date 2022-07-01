@@ -27,14 +27,16 @@ import { AddCertificateComponent } from './issure/add-certificate/add-certificat
 import { GetRecordsComponent } from './issure/get-records/get-records.component';
 import { AddRecordsComponent } from './issure/add-records/add-records.component';
 import { PreviewHtmlComponent } from './issure/preview-html/preview-html.component';
+import { VerifyComponent } from './issure/verify/verify.component';
+import { AdvanceEditorComponent } from './issure/advance-editor/advance-editor.component';
 // import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
 // import { FaqComponent } from './custom-components/faq/faq.component';
 const routes: Routes = [
 // Home
 // { path: '', component: HomeComponent },
-//{ path: '', component: KeycloakloginComponent,  canActivate: [AuthGuard]},
+{ path: '', component: KeycloakloginComponent,  canActivate: [AuthGuard]},
 
-{ path: '', component: FormsComponent },
+//{ path: '', component: FormsComponent },
 // Auth
 { path: 'login', component: KeycloakloginComponent ,  canActivate: [AuthGuard]},
 { path: 'logout', component: LogoutComponent},
@@ -108,6 +110,9 @@ const routes: Routes = [
 { path: 'certificate', component: AddCertificateComponent , canActivate: [AuthGuard] },
 
  { path: 'preview-html', component: PreviewHtmlComponent  , canActivate: [AuthGuard] },
+ { path: 'verify', component: VerifyComponent  },
+ { path: 'advance-editor', component: AdvanceEditorComponent  },
+
 
 
 

@@ -108,4 +108,28 @@ select option {
       height: auto;
       min-height: auto;
    }
+
+
     /* grapesjs : end*/
+
+//disable json editor
+    .disabledbutton {
+      pointer-events: none;
+  }
+
+
+  .adv-btn {
+    color: #A6D4FF;
+    background-color: #000000;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 700 !important;
+  }
+
+  .adv-label {
+    font-size: 14px !important;
+    line-height: 18px !important;
+    font-weight: 700 !important;
+    color: #A6D4FF !important;
+    background-color: #000000 !important;
+}

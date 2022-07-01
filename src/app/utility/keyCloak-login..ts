@@ -19,7 +19,6 @@ export class KeyCloakLogin {
 
     ngOnInit(): void {
     
-    
         this.user = this.keycloak.getUsername();
         this.keycloak.getToken().then((token)=>{
           console.log('keyCloak token - ', token);

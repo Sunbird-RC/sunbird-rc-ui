@@ -80,25 +80,14 @@ export class AddRecordsComponent implements OnInit {
     this.fields[0].fieldGroup.forEach((fieldObj, index) => {
       console.log({ fieldObj });
 
-      if (fieldObj.hasOwnProperty('type') && fieldObj.type) {
-        fieldObj.templateOptions['type'] = fieldObj.type;
-        fieldObj.type = 'string';
-      }
-
-      this.fieldKey = fieldObj.key;
+       this.fieldKey = fieldObj.key;
 
       if (!fieldObj.templateOptions.hasOwnProperty('label') || fieldObj.templateOptions.label == undefined) {
         // let str: any = (fieldObj.templateOptions.label) ? fieldObj.templateOptions.label : fieldObj.key;
 
 
         let str: any = fieldObj.key;
-
-        if (str !== "trainingTitle") {
           this.fields[0].fieldGroup[index].templateOptions['label'] = str.charAt(0).toUpperCase() + str.slice(1);
-
-        } else {
-          this.fields[0].fieldGroup[index].templateOptions['label'] = 'Training Title';
-        }
 
         if (this.schema.required.includes(str)) {
           this.fields[0].fieldGroup[index]['templateOptions']['required'] = true;
@@ -110,18 +99,12 @@ export class AddRecordsComponent implements OnInit {
         if (fieldObj.templateOptions.label == undefined) {
           let str: any = fieldObj.key;
 
-          if (str !== "trainingTitle") {
             this.fields[0].fieldGroup[index].templateOptions['label'] = str.charAt(0).toUpperCase() + str.slice(1);
 
-          } else {
-            this.fields[0].fieldGroup[index].templateOptions['label'] = 'Training Title';
+          // if (this.schema.required.includes(str)) {
+          //   this.fields[0].fieldGroup[index]['templateOptions']['required'] = true;
 
-          }
-
-          if (this.schema.required.includes(str)) {
-            this.fields[0].fieldGroup[index]['templateOptions']['required'] = true;
-
-          }
+          // }
         }
 
       }
@@ -153,8 +136,6 @@ export class AddRecordsComponent implements OnInit {
     this.generalService.postData('/' + this.schemaName, this.model).subscribe((res) => {
 
       this.router.navigate(['records/' + this.schemaName]);
-
-
     })
   }
 
