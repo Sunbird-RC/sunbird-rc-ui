@@ -17,7 +17,7 @@ export class AddRecordsComponent implements OnInit {
   form2: FormGroup;
   model = {};
   schemaloaded = false;
-  headerName: string = 'records'
+  headerName: string = 'plain'
 
   options: FormlyFormOptions;
   fields: FormlyFieldConfig[];

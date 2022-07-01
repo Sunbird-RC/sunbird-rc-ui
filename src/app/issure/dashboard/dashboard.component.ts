@@ -14,7 +14,7 @@ import { ToastMessageService } from 'src/app/services/toast-message/toast-messag
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  headerName: string = 'issuer';
+  headerName: string = 'plain';
 
   templatesItems: any;
   issuerInfo: any;
