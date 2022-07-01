@@ -62,6 +62,7 @@
     "iso-639-1": "^2.1.11",
     "jexl": "^2.3.0",
     "json-refs": "^3.0.4",
+    "jsoneditor": "^9.9.0",
     "keycloak-angular": "^8.1.0",
     "keycloak-js": "^11.0.3",
     "libphonenumber-js": "^1.6.8",
@@ -114,4 +115,3 @@
     "https": false
   }
 }
-
