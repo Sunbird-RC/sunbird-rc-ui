@@ -30,17 +30,7 @@ export class PreviewHtmlComponent implements OnInit {
   issuerOsid: string;
   oldTemplateName: string;
   description: any;
-  item = [
-    {
-      'name': 'Pratiksha'
-    },
-    {
-      'name': 'Pratiksha1'
-    },
-    {
-      'name': 'Pratiksha2'
-    },
-  ]
+
   private editor: any = '';
   schemaDiv = false;
   htmlDiv = true;
@@ -51,6 +41,8 @@ export class PreviewHtmlComponent implements OnInit {
   };
   certificateTemplate: any;
   certificateProperties: any;
+  certificateTitle: any;
+  propertyArr : any = [];
 
   constructor(public router: Router, public route: ActivatedRoute, public toastMsg: ToastMessageService,
     public generalService: GeneralService, public schemaService: SchemaService) {
@@ -86,7 +78,14 @@ export class PreviewHtmlComponent implements OnInit {
   async ngOnInit() {
 
     await this.readHtmlSchemaContent(this.sampleData);
+    this.grapesJSDefine();
+    /* ------END-------------------------Advance Editor ----------------------- */
 
+  }  //onInit();
+
+
+  grapesJSDefine()
+  {
     this.editor = this.initializeEditor();
     this.editor.on('load', () => {
       var panelManager = this.editor.Panels;
@@ -166,25 +165,11 @@ export class PreviewHtmlComponent implements OnInit {
     });
 
 
-    let temp = `
-  <div id="your-content">
-  <div class="card m-3 p-3">
-   ${this.name1} 
-      <div class="card-body p-1" *ngFor="let it of ${this.item} ">
-     
-<hr />
-</div>
-      </div>
-       <button>Button</button> 
-        <!-- eg. bind a click event on button and do something with GrapesJS API -->
-  </div>
-`
-    console.log(temp);
     let editPanel = null
     let self = this;
     pn.addButton('views', {
-      id: 'editMenu',
-      attributes: { class: 'fa fa-address-card-o', title: "Edit Menu" },
+      id: 'advanceEditor',
+      attributes: { class: 'fa fa-pencil-square-o', title: "Advance Editor" },
       active: false,
       togglable: false,
       command: {
@@ -208,7 +193,7 @@ export class PreviewHtmlComponent implements OnInit {
                         class="fa fa-pencil-square-o" aria-hidden="true"></i>Advance Editor</button>
             </div>
         </div>
-        <p style="color:white;font-size:12px"> <i class="fa fa-asterisk" style="color: #FFD965; font-size: 8px;" aria-hidden="true"></i>
+        <p style="color:white;font-size:12px"> <i class="fa fa-asterisk" style="color: #FFD965; font-size: 7px;" aria-hidden="true"></i>
         These propeties are mandatory to make it <org> complaint</p>`;
 
             const cardBContainer = document.createElement('div');
@@ -216,9 +201,15 @@ export class PreviewHtmlComponent implements OnInit {
             cardDiv.appendChild(cardBContainer);
 
             // ul.setAttribute('id', 'theList');
-            for (let i = 0; i <= arr.length - 1; i++) {
+            for (let i = 0; i <= self.propertyArr.length - 1; i++) {
               const cardBdiv = document.createElement('div');	// create li element.
-              cardBdiv.innerHTML = arr[i];	                        // assigning text to li using array value.
+
+              if(self.propertyArr[i].require)
+              {
+                cardBdiv.innerHTML = `<i class="fa fa-asterisk" style="color: red; font-size: 7px;" aria-hidden="true"></i> &nbsp` + self.propertyArr[i].propertyTag;
+              }else{
+             cardBdiv.innerHTML = `&nbsp &nbsp` + self.propertyArr[i].propertyTag;	                        // assigning text to li using array value.
+              }
               cardBdiv.className = 'pcard-body  mt-4';
               cardBdiv.setAttribute('style', 'padding-bottom: 10px; border-bottom: 2px solid #000');	// remove the bullets.
               cardBContainer.appendChild(cardBdiv);		// append li to ul.
@@ -258,11 +249,7 @@ export class PreviewHtmlComponent implements OnInit {
       }
     })
 
-
-
-    /* ------END-------------------------Advance Editor ----------------------- */
-
-  }  //onInit();
+  }
 
   editTemplate() {
     this.schemaDiv = true;
@@ -354,10 +341,12 @@ export class PreviewHtmlComponent implements OnInit {
       .then(data => {
         //    this.schemaContent = data;
         // console.log({ data });
-        this.userJson = JSON.parse(data);
-      //  this.addCrtTemplateFields();
+        data = JSON.parse(data);
+        this.certificateTitle = data['title'];
+        this.userJson = data;
+       this.addCrtTemplateFields(this.userJson);
        // this.certificateTemplate = this.userJson['_osConfig']['credentialTemplate'];
-       // this.getCrtTempFields(this.certificateTemplate);
+        this.getCrtTempFields(this.userJson);
       });
 
     await fetch(doc.certificateUrl)
@@ -369,7 +358,34 @@ export class PreviewHtmlComponent implements OnInit {
       });
   }
 
-  getCrtTempFields(certificateTemplate) {
+ 
+  addCrtTemplateFields(userJson){
+    let url = this.userJson['_osConfig']['credentialTemplate'];
+
+    this.userHtml = '';
+     fetch(url)
+      .then(response => response.text())
+      .then(data => {
+        //    this.schemaContent = data;
+        console.log({ data });
+      });
+
+  }
+
+  getCrtTempFields(certificateSchema) {
+    this.propertyArr = [];
+    let temp =  certificateSchema.definitions[this.certificateTitle].properties;
+    let required =  certificateSchema.definitions[this.certificateTitle].required;
+    let _self = this;
+    Object.keys(temp).forEach(function (key) {
+      let propertyName = "{{credentialSubject." + key + "}}";
+     let isRequire = required.includes(key) ? true : false;
+      console.log(propertyName);
+     _self.propertyArr.push({ 'propertyTag' : propertyName, 'require': isRequire});
+    });
+
+   this.grapesJSDefine();
+    console.log(this.propertyArr);
 
 
   }
@@ -386,10 +402,9 @@ export class PreviewHtmlComponent implements OnInit {
     return str.replace(new RegExp(escapedFind, 'g'), replace);
   }
 
-  addCrtTemplateFields() {
+  addCrtTemplateFields1() {
     let certTmpJson = (this.schemaContent) ? this.schemaContent : this.userJson;
     certTmpJson = certTmpJson['_osConfig']['credentialTemplate']['credentialSubject'];
-    // let propertyArr ;
     let _self = this;
     Object.keys(certTmpJson).forEach(function (key) {
       console.log({key});
@@ -400,7 +415,8 @@ export class PreviewHtmlComponent implements OnInit {
   async submit() {
     // this.schemaContent = this.jsonEditor.get();//JSON.stringify(this.userJson);
 
-    this.schemaContent = await this.addCrtTemplateFields();
+    this.schemaContent = (this.schemaContent) ? this.schemaContent : this.userJson;
+   // this.schemaContent = await this.addCrtTemplateFields();
 
     var htmlWithCss = this.editor.runCommand('gjs-get-inlined-html');
 
@@ -453,43 +469,12 @@ export class PreviewHtmlComponent implements OnInit {
       }
     })
 
-
-
-    // Make http post request over api
-    // with formData as req
-    // this.http.post(this.baseApiUrl, formData)
-
-
-    // Verifying the contents of the file
-    // var reader = new FileReader();
-    // reader.onload = () => {
-    //   console.log('reader', reader.result);
-    // }
-    // reader.readAsText(fileObj);
-
-    // var a = document.createElement('a');
-    // a.setAttribute('href', 'data:text/plain;charset=utf-u,' + encodeURIComponent(this.userHtml));
-    // a.setAttribute('download', 'cer.html');
-    // a.click()
-
-    //     var fso = new ActiveXObject("Scripting.FileSystemObject");
-    // var a = fso.CreateTextFile("c:\\testfile.txt", true);
-    // a.WriteLine("This is a test.");
-    // a.Close();
-
   }
 
 
   injectHTML() {
 
     const iframe: HTMLIFrameElement = document.getElementById('iframe2') as HTMLIFrameElement;
-
-
-    // step 2: obtain the document associated with the iframe tag
-    // most of the browser supports .document. 
-    // Some supports (such as the NetScape series) .contentDocumet, 
-    // while some (e.g. IE5/6) supports .contentWindow.document
-    // we try to read whatever that exists.
 
     var iframedoc;
     if (iframe.contentDocument)
@@ -510,6 +495,7 @@ export class PreviewHtmlComponent implements OnInit {
 
   jsonSchemaData(jsonSchema) {
     this.schemaContent = jsonSchema._data;
+    this.getCrtTempFields(this.schemaContent);
     console.log(jsonSchema._data);
   }
 
