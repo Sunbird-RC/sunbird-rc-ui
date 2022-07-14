@@ -1,4 +1,13 @@
 <header class="header">
+    <div class="banner">
+        <span class="span-1"></span>
+        <span class="span-2">This is a demo of the Education Portal. Check documentation <a href="https://docs.sunbirdrc.dev/"><u>here</u></a></span>
+        <span class="span-3" (click)="changeTheme()">
+            <a class="nav-link">
+              <img style="padding:0;margin:0;" src="https://sunbird-certificate-demo.xiv.in/auth/resources/sr2et/login/sunbird-rc/img/theme-icon.svg" /> 
+            </a>
+        </span>
+     </div> 
     <nav class="navbar navbar-expand-lg navbar-light bg-header nav-b navbar-inverse">
         <div class="container-fluid custom-header">
             <button class="navbar-toggler p-0 m-0 custom-toggler mr-2" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,11 +72,11 @@
                             [selected]="(lang.code == langCode)? true : false">{{lang.name}}</option>
                     </select>
                 </span>
-                <span (click)="changeTheme()">
+                <!-- <span (click)="changeTheme()">
                     <a class="nav-link pr-0">
                         <img style="width: 20px;" src="assets/images/theme_icon.svg" />
                     </a>
-                </span>
+                </span> -->
             </div>
 
         </div>
