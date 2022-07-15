@@ -84,8 +84,6 @@ export class AddRecordsComponent implements OnInit {
 
       if (fieldObj.type == 'object') {
 
-       
-
         tempFields[index]['templateOptions']['label'] = fieldObj.hasOwnProperty('label') ? fieldObj['label'] : undefined;
         tempFields[index]['templateOptions']['description'] = fieldObj.hasOwnProperty('description') ? fieldObj['description'] : undefined;
 

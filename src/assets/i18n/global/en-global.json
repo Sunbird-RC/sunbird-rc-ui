@@ -180,7 +180,37 @@
     "ONLY_BY_CONSENT": "Only by consent",
     "ONLY_BY_ME" :"Only by me",
     "ANYONE" : "Anyone",
-    "SOMETHING_WENT_WRONG": "Something went wrong while uploading files, please try again"
+    "SOMETHING_WENT_WRONG": "Something went wrong while uploading files, please try again",
+    "ADD_NEW_DOCUMENT":"Add New Document",
+    "GENRAL_TEMPLATES":"General Templates",
+    "SELECT_DOCUMENT_TYPE":"Select Document Type",
+    "YOU_DONT_HAVE_TEMPLATE":"You don't have any templates. You can upload SVG or HTML code",
+    "UPLOAD_TEMPLATE":"Upload Template",
+    "PREVIEW":"Preview",
+    "EDIT_TEMPLATE":"Edit Template",
+    "ADD_RECORD":"Add Record",
+    "DOCUMENTS":"Documents",
+    "YOU_DO_NOT_HAVE_CERTIFICATE":"You have not added certificates yet.",
+    "ADD_NEW_SETUP_AND_ISSUE_CREDENTIALS":"Add New to Setup and issue Verified Credentials",
+    "RECORD":"Record",
+    "VIEW_ADD":"View / Add",
+    "EDIT_ISSUER_DETAILS":"Edit issuer details",
+    "RECORDS":"Records",
+    "NO_RECORDS_ISSUED":"No Records issued documents.",
+    "UPLOADING_OR_ADDING_RECORDS":"Getting started by uploading or adding records",
+    "MOBILE_NUMBER":"Mobile Number",
+    "DATE":"Date",
+    "DESIGN":"Design",
+    "SCHEMA":"Schema",
+    "HTML":"HTML",
+    "JSON_SCHEMA":"JSON Schema",
+    "SAVE_DOCUMENT":"Save Document",
+    "DESCRIPTION":"Description",
+    "DOWNLOAD_DOCUMENT":"Download Document",
+    "DOWNLOAD":"Download",
+    "DEMO":"This is a demo of the Issuance Portal. Check documentation"
+
+
 
     
 }

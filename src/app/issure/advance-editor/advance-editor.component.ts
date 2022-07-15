@@ -17,9 +17,9 @@ export class AdvanceEditorComponent implements OnInit {
   @ViewChild('json') jsonElement?: ElementRef;
   public editorOptions: JsonEditorOptions;
   public vcEditorOptions: JsonEditorOptions;
- @ViewChild(JsonEditorComponent) jsonEditor: JsonEditorComponent;
- @ViewChild(JsonEditorComponent) vcEditor: JsonEditorComponent;
- 
+  @ViewChild(JsonEditorComponent) jsonEditor: JsonEditorComponent;
+  @ViewChild(JsonEditorComponent) vcEditor: JsonEditorComponent;
+
   @Output() newItemEvent = new EventEmitter<any>();
 
   public myForm: Object = { components: [] };
@@ -32,7 +32,7 @@ export class AdvanceEditorComponent implements OnInit {
   vcFieldsText: any;
   isShowLessJson = false;
   isShowLessVc = false;
-isVcString = false;
+  isVcString = false;
   constructor() {
     this.editorOptions = new JsonEditorOptions();
     this.editorOptions.mode = 'code';
@@ -43,17 +43,15 @@ isVcString = false;
     this.vcEditorOptions.mode = 'text';
     this.vcEditorOptions.history = true;
     this.vcEditorOptions.onChange = () => this.vcEditor.get();
-}
+  }
 
-showLessJson()
-{
-  this.isShowLessJson = !this.isShowLessJson;
-}
+  showLessJson() {
+    this.isShowLessJson = !this.isShowLessJson;
+  }
 
-showLessVc()
-{
-  this.isShowLessVc = !this.isShowLessVc;
-}
+  showLessVc() {
+    this.isShowLessVc = !this.isShowLessVc;
+  }
 
   ngOnInit(): void {
     this.formioJsonBuild(this.jsonSchema);
@@ -61,7 +59,7 @@ showLessVc()
     var coll = document.getElementsByClassName("collapsible");
 
     for (let i = 0; i < coll.length; i++) {
-      coll[i].addEventListener("click", function() {
+      coll[i].addEventListener("click", function () {
         this.classList.toggle("active");
         var content = this.nextElementSibling;
         if (content.style.display === "block") {
@@ -70,19 +68,19 @@ showLessVc()
           content.style.display = "block";
         }
       });
-      }
+    }
   }
 
   formioJsonBuild(jsonFields) {
 
-    if (typeof (jsonFields['_osConfig']['credentialTemplate']) == 'string') { 
+    if (typeof (jsonFields['_osConfig']['credentialTemplate']) == 'string') {
       fetch(jsonFields['_osConfig']['credentialTemplate'])
-      .then(response => response.text())
-      .then(data => {
-        this.vcFields  = data;
-        console.log( data );
-        this.isVcString = true;
-      });
+        .then(response => response.text())
+        .then(data => {
+          this.vcFields = data;
+          console.log(data);
+          this.isVcString = true;
+        });
 
     } else {
       this.isVcString = false;
@@ -238,7 +236,7 @@ showLessVc()
 
 
       this.jsonFields.definitions[this.jsonTitle].properties = tempField;
-    
+
 
       this.jsonEditor.set(this.jsonFields);
       // this.jsonEditor['_data']['_osConfig']['credentialTemplate'] = this.vcFields;
@@ -247,21 +245,19 @@ showLessVc()
     }
   }
 
-  showJson(event)
-  {
+  showJson(event) {
     console.log(event);
     this.vcFields = JSON.parse(event.target.value);
     this.vcFieldsText = event.target.value;
-   // this.vcEditor.set(this.vcFields);
+    // this.vcEditor.set(this.vcFields);
   }
 
-  saveAdvance()
-  {
+  saveAdvance() {
     console.log(this.vcFields);
-   // console.log(this.jsonEditor['_data']);
-    
+    // console.log(this.jsonEditor['_data']);
+
     //let value = this.vcEditorOptions.onChange  = () => { this.vcEditor.getText();}
-   // console.log( this.vcEditor.getText())
+    // console.log( this.vcEditor.getText())
 
     this.jsonEditor['_data']['_osConfig']['credentialTemplate'] = this.vcFields;
     this.newItemEvent.emit(this.jsonEditor);
@@ -276,10 +272,14 @@ showLessVc()
         let temp = element.label.replaceAll(/\s/g, '');
 
         element.key = temp.charAt(0).toLowerCase() + temp.slice(1);
-        if(element.type == 'container')
-        {
-          jsonDefination.properties[element.key]= { 'type' : 'object' };
+        if (element.type == 'container') {
+          jsonDefination.properties[element.key] = { 'type': 'object' };
         }
+      }
+
+      tempFjson[element.key] = this.signleFieldData(element);
+      if (element.hasOwnProperty('validate') && element.validate.required == true) {
+        this.jsonFields.definitions[this.jsonTitle].required.push(element.key);
       }
 
       if (element.type == 'container') {
@@ -291,12 +291,63 @@ showLessVc()
           tempFjson[element.key] = this.arrayTypeFieldData(element);
         }
 
-      } else {
-        tempFjson[element.key] = this.signleFieldData(element);
-        if (element.hasOwnProperty('validate') && element.validate.required == true) {
-          this.jsonFields.definitions[this.jsonTitle].required.push(element.key);
+      } if (element.type == 'select' ) {
+        tempFjson[element.key] = {
+          "type": "string",
+          "title": element.label,
+          "widget": {
+            "formlyConfig": {
+              "type": "enum",
+              "templateOptions": {
+                "options": element['data']['values']
+              }
+            }
+          }
+        }
+        console.log({ tempFjson });
+      }
+      if (element.type == 'checkbox') {
+        tempFjson[element.key] = {
+          "type": "boolean",
+          "title": element.label,
+          "default": false
+        }
+      }  if (element.type == 'selectboxes') {
+        tempFjson[element.key] = {  type: 'select',
+        templateOptions: {
+          label: element.label,
+          multiple: true,
+          options: element['values']
+        }
+      //   tempFjson[element.key] = {
+      //     "type": "array",
+      //   "title": element.label,
+      //   "uniqueItems": true,
+      //   "items": {
+      //     "type": "string",
+      //     "enum": element['values']
+      //   }
+      // }
+      } 
+    }if (element.type == 'radio') {
+      /*  tempFjson[element.key] = {
+          "type": "radio",
+          "title": element.label,
+          "templateOptions": {
+            "options": element['values']
+          }
+        }*/
+
+        tempFjson[element.key] = { 
+           "enum":element['values'],
+           "title": element.label,
+        "widget": {
+          "formlyConfig": {
+            "type": "radio"
+          }
         }
       }
+    }
     });
 
     return tempFjson;
@@ -318,21 +369,21 @@ showLessVc()
 
         if ((event.type == "addComponent" || event.type == 'saveComponent') && !this.propertyArr.includes(element.key)) {
           let temp = element.label.replaceAll(/\s/g, '');
-  
+
           element.key = temp.charAt(0).toLowerCase() + temp.slice(1);
-        
+
         }
 
         if (element.type == 'container') {
-  
+
           let containerType = jsonObj.components[element.key].type;
           if (containerType == 'object') {
             fieldContainer.properties[element.key] = this.objectTypeFieldData(event, element);
           } else {
             fieldContainer.properties[element.key] = this.arrayTypeFieldData(element);
           }
-  
-  
+
+
         } else {
           fieldContainer.properties[element.key] = this.signleFieldData(element);
           if (element.hasOwnProperty('validate') && element.validate.required == true) {
@@ -340,9 +391,9 @@ showLessVc()
           }
         }
       });
-        }
+    }
 
-      return fieldContainer;
+    return fieldContainer;
 
   }
 
@@ -359,25 +410,25 @@ showLessVc()
     }
 
     if (arrayJson.hasOwnProperty('components') && arrayJson.components.length) {
-     arrayJson.components.forEach(element => {
-      if (element.type == 'container') {
+      arrayJson.components.forEach(element => {
+        if (element.type == 'container') {
 
-        let containerType = arrayJson.components[element.key].type;
-        if (containerType == 'object') {
-          fieldContainer.items.properties[element.key] = this.objectTypeFieldData(event, element);
+          let containerType = arrayJson.components[element.key].type;
+          if (containerType == 'object') {
+            fieldContainer.items.properties[element.key] = this.objectTypeFieldData(event, element);
+          } else {
+            fieldContainer.items.properties[element.key] = this.arrayTypeFieldData(element);
+          }
+
+
         } else {
-          fieldContainer.items.properties[element.key] = this.arrayTypeFieldData(element);
+          fieldContainer.items.properties[element.key] = this.signleFieldData(element);
+          if (element.hasOwnProperty('validate') && element.validate.required == true) {
+            fieldContainer.items['required'].push(element.key);
+          }
         }
-
-
-      } else {
-        fieldContainer.items.properties[element.key] = this.signleFieldData(element);
-        if (element.hasOwnProperty('validate') && element.validate.required == true) {
-          fieldContainer.items['required'].push(element.key);
-        }
-      }
-    });
-    } 
+      });
+    }
 
     return fieldContainer;
   }

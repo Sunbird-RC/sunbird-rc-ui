@@ -179,7 +179,39 @@
   "ONLY_BY_CONSENT": "केवल सहमति से",
   "ONLY_BY_ME" :"केवल मेरे द्वारा",
   "ANYONE" : "कोई भी",
-  "SOMETHING_WENT_WRONG": "फ़ाइल अपलोड करते समय कुछ गलत हुआ, कृपया पुनः प्रयास करें"
+  "SOMETHING_WENT_WRONG": "फ़ाइल अपलोड करते समय कुछ गलत हुआ, कृपया पुनः प्रयास करें",
+  "ADD_NEW_DOCUMENT":"नया दस्तावेज़ जोड़ें",
+  "GENRAL_TEMPLATES":"सामान्य टेम्प्लेट",
+  "SELECT_DOCUMENT_TYPE":"दस्तावेज़ प्रकार चुनें",
+  "YOU_DONT_HAVE_TEMPLATE":"आपके पास कोई टेम्प्लेट नहीं है। आप SVG या HTML कोड अपलोड कर सकते हैं",
+  "UPLOAD_TEMPLATE":"टेम्प्लेट अपलोड करें",
+  "PREVIEW":"पूर्वावलोकन",
+  "EDIT_TEMPLATE":"टेम्पलेट संपादित करें",
+  "ADD_RECORD":"रिकॉर्ड जोड़ें",
+  "DOCUMENTS":"दस्तावेज़",
+  "YOU_DO_NOT_HAVE_CERTIFICATE":"आपने अभी तक प्रमाणपत्र नहीं जोड़े हैं।",
+  "ADD_NEW_SETUP_AND_ISSUE_CREDENTIALS":"सेटअप में नया जोड़ें और सत्यापित क्रेडेंशियल जारी करें",
+  "RECORD":"रिकॉर्ड",
+  "VIEW_ADD": "देखें / जोड़ें",
+  "EDIT_ISSUER_DETAILS":"जारीकर्ता विवरण संपादित करें",
+  "RECORDS":"रिकॉर्ड",
+  "NO_RECORDS_ISSUED":"कोई रिकॉर्ड जारी किए गए दस्तावेज़ नहीं।",
+  "UPLOADING_OR_ADDING_RECORDS":"रिकॉर्ड अपलोड या जोड़कर प्रारंभ करना",
+  "MOBILE_NUMBER":"मोबाइल नंबर",
+  "DATE":"तारीख",
+  "DESIGN":"डिज़ाइन",
+  "SCHEMA":"स्कीमा",
+  "HTML":"एचटीएमएल",
+  "JSON_SCHEMA":"JSON स्कीमा",
+  "SAVE_DOCUMENT":"दस्तावेज़ सहेजें",
+  "DESCRIPTION":"विवरण",
+  "DOWNLOAD_DOCUMENT":"दस्तावेज़ डाउनलोड करें",
+  "DOWNLOAD":"डाउनलोड",
+  "DEMO":"यह निर्गम पोर्टल का डेमो है। दस्तावेज़ीकरण की जाँच करें"
+
+
+
+  
 
 
 }

@@ -51,9 +51,16 @@
           <td class="heading-3">{{item?.contact}}</td>
           <td class="heading-3">{{item?.date}}</td>
           <td class="d-flex justify-content-end">
-              <div (click)="downloadVc(item)">
+               <!--   <div (click)="downloadVc(item)">
                 <i class="fa fa-download sb-text-primary cursor-pointer" aria-hidden="true" title="Download"></i>
-            </div>
+            </div> -->
+         <a routerLink="/pdf-view/{{documentName}}/{{item?.osid}}">
+              <div (click)="onPress(item)"> 
+              
+                <i class="fa fa-eye sb-text-primary cursor-pointer" aria-hidden="true" title="View Certificate" ></i>
+            </div> 
+        </a>
+     
             <!-- <div class="ml-4">
                 <div data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">            
                     <i class="fa fa-ellipsis-h text-secondary cursor-pointer" aria-hidden="true"></i>

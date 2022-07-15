@@ -224,6 +224,149 @@ var editTextfieldCompValidation = [
     },
 ];
 
+var editSelectCompData = [
+    {
+        "key": "idPath",
+        "ignore": true
+    },
+    {
+        "key": "multiple",
+        "ignore": true
+    },
+    {
+        "key": "dataSrc",
+        "ignore": true
+    },
+    {
+        "key": "defaultValue",
+        "ignore": true
+    },
+    {
+        "key": "indexeddb.database",
+        "ignore": true
+    },
+    {
+        "key": "dataType",
+        "ignore": true
+    },
+    {
+        "key": "valueProperty",
+        "ignore": true
+    },
+    {
+        "key": "selectFields",
+        "ignore": true
+    },
+    {
+        "key": "selectThreshold",
+        "ignore": true
+    },
+    {
+        "key": "searchEnabled",
+        "ignore": true
+    },
+    {
+        "key": "clearOnRefresh",
+        "ignore": true
+    },
+    {
+        "key": "clearOnHide",
+        "ignore": true
+    },
+    {
+        "key": "allowCalculateOverride",
+        "ignore": true
+    },
+    {
+        "key": "calculateServer",
+        "ignore": true
+    },
+    {
+        "key": "calculateValuePanel",
+        "ignore": true
+    },
+    {
+        "key": "customDefaultValuePanel",
+        "ignore": true
+    },
+    {
+        "key": "redrawOn",
+        "ignore": true
+    },
+    {
+        "key": "dbIndex",
+        "ignore": true
+    },
+    {
+        "key": "protected",
+        "ignore": true
+    },
+    {
+        "key": "persistent",
+        "ignore": true
+    },
+    {
+        "key": "ignoreCache",
+        "ignore": true
+    },
+    {
+        "key": "template",
+        "ignore": true
+    },
+    {
+        "key": "refreshOn",
+        "ignore": true
+    },
+    {
+        "key": "refreshOnBlur",
+        "ignore": true
+    },
+    {
+        "key": "addResource",
+        "ignore": true
+    },
+    {
+        "key": "encrypted",
+        "ignore": true
+    },
+    {
+        "key": "useExactSearch",
+        "ignore": true
+    },
+    {
+        "key": "customOptions",
+        "ignore": true
+    },
+    {
+        "key": "readOnlyValue",
+        "ignore": true
+    },
+    {
+        "key": "multiple",
+        "ignore": true
+    },
+    {
+        "key": "multiple",
+        "ignore": true
+    },
+    {
+        "key": "multiple",
+        "ignore": true
+    },
+    {
+        "key": "multiple",
+        "ignore": true
+    },
+    {
+        "key": "multiple",
+        "ignore": true
+    },
+    {
+        "key": "multiple",
+        "ignore": true
+    }
+];
+
 var editTextfieldApiTabs = { key: 'api', ignore: true };
 var editTextfieldDataTabs = { key: 'data', ignore: true };
 var editTextfieldConditionalTabs = { key: 'conditional', ignore: true };
@@ -249,6 +392,30 @@ var hideShowFormComponentConfig = [
 
 ]
 
+
+var selectHideShowFormComponentConfig = [
+    {
+        "key": "display",
+        "ignore": false,
+        "components": editTextfieldCompDisplay
+    },
+    {
+        "key": "validation",
+        "ignore": false,
+        "components": editTextfieldCompValidation
+    },
+    {
+        "key": "data",
+        "ignore": false,
+        "components": editSelectCompData
+    },
+    editTextfieldApiTabs,
+    editTextfieldConditionalTabs,
+    editTextfieldLogicTabs,
+    editTextfieldLayoutTabs
+
+]
+
 export const editorConfig = {
     disabled: [],
     builder: {
@@ -261,9 +428,8 @@ export const editorConfig = {
                 container: true,
                 datetime: true,
                 radio: false,
-                select: false,
                 selectboxes: false,
-                checkbox: false
+                checkbox: true
             }
         },
         advanced: false,
@@ -276,10 +442,10 @@ export const editorConfig = {
         textfield: hideShowFormComponentConfig,
         textarea: hideShowFormComponentConfig,
         number: hideShowFormComponentConfig,
-        select: hideShowFormComponentConfig,
-        selectboxes: hideShowFormComponentConfig,
+        select: selectHideShowFormComponentConfig,
+        selectboxes: selectHideShowFormComponentConfig,
         checkbox: hideShowFormComponentConfig,
-        radio: hideShowFormComponentConfig,
+        radio: selectHideShowFormComponentConfig,
         container: hideShowFormComponentConfig
     }
 };

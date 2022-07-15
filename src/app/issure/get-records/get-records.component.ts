@@ -81,6 +81,10 @@ this.getRecords();
 
    
   }
+  onPress(){
+    this.router.navigateByUrl['/pdf-view'];
+    
+  }
 
   downloadPDF() {
 
