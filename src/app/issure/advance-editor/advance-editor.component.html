@@ -1,24 +1,53 @@
 <!-- <app-header></app-header> -->
 <!-- <div class="mt-6 mx-1"> -->
-  <div>
+<div>
 
   <div class="d-flex">
-    <div class="col-sm-8 well">
-      <form-builder [form]="myForm" (change)="onChange($event)" (submit)="onSubmit($event)" 
-      [options]="options"></form-builder> 
+    <div class="col-sm-7 well">
+      <form-builder [form]="myForm" (change)="onChange($event)" (submit)="onSubmit($event)" [options]="options">
+      </form-builder>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-5">
       <!-- <div class="well jsonviewer">
         <pre id="json"><code class="language-json" #json></code></pre>
       </div> -->
-      <div class="well">
-      <json-editor [options]="editorOptions" style="min-height: 700px;" [data]="jsonFields" [(ngModel)]="jsonFields"></json-editor>
-
+      <div>
+        <button type="button" class="collapsible" (click)="showLessJson()">JSON Schema 
+          <i [hidden]="isShowLessJson" class="fa fa-plus float-end arrIcon"></i>
+          <i [hidden]="!isShowLessJson" class="fa fa-minus float-end arrIcon"></i>
+        </button>
+        <div class="well content">
+          <json-editor [options]="editorOptions" style="min-height: 700px;" [data]="jsonFields"
+            [(ngModel)]="jsonFields"></json-editor>
+        </div>
       </div>
+
+      <div>
+        <button type="button" class="collapsible" (click)="showLessVc()">Credential Template
+          <i [hidden]="isShowLessVc" class="fa fa-plus float-end arrIcon"></i>
+          <i [hidden]="!isShowLessVc" class="fa fa-minus float-end arrIcon"></i>
+        </button>
+        <div class="well content">
+          <!-- <input type="text"  [value]="vcFields"  [(ngModel)]="vcFields"/> -->
+          <div [hidden]="!isVcString">
+            <ngx-text-editor [(ngModel)]="vcFields"></ngx-text-editor>
+          </div>
+
+          <div [hidden]="isVcString">
+            <json-editor [options]="vcEditorOptions" style="min-height: 700px;"
+              (change)="showJson($event)" [data]="vcFields" [(ngModel)]="vcFields"></json-editor>
+          </div>
+
+        </div>
+      </div>
+
 
     </div>
   </div>
-   
 
-     
+  <div class="preview-footer">
+    <button data-toggle="modal" (click)="saveAdvance()"
+      class="btn text-capitalize float-end btn-primary btn-primary-sm p1">Save</button>
+  </div>
+
 </div>

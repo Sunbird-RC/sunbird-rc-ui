@@ -142,33 +142,6 @@ export class DashboardComponent implements OnInit {
   openPreview() {
   }
 
-  // openRecord(Doc)
-  // {
-  //   this.router.navigate(['records'], { state: { item: Doc } });
-  // }
-
-
-  /* injectHTML() {
-
-    const iframe: HTMLIFrameElement = document.getElementById('test_iframe') as HTMLIFrameElement;
-  
-    var html_string = '<html><head></head><body><p style="color:blue">iframe content injection</p></body></html>';
-  
-  
-      var iframedoc = iframe.contentWindow.document;
-  
-    if (iframedoc) {
-      // Put the content in the iframe
-      iframedoc.open();
-      iframedoc.writeln(html_string);
-      iframedoc.close();
-    } else {
-      //just in case of browsers that don't support the above 3 properties.
-      //fortunately we don't come across such case so far.
-      alert('Cannot inject dynamic contents into iframe.');
-    }
-  }*/
-
 
   submit() {
     this.generalService.putData('/issuer', this.model['osid'], this.model).subscribe((res) => {

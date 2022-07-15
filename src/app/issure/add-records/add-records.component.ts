@@ -36,6 +36,7 @@ export class AddRecordsComponent implements OnInit {
   schemaName: any;
   item: any;
   fieldKey: any;
+  fieldName;
 
   constructor(public schemaService: SchemaService,
     public toastMsg: ToastMessageService,
@@ -50,8 +51,6 @@ export class AddRecordsComponent implements OnInit {
 
   ngOnInit(): void {
 
-
-
     this.schemaService.getSchemas().subscribe((res) => {
       this.responseData = res;
 
@@ -60,7 +59,7 @@ export class AddRecordsComponent implements OnInit {
 
 
       this.schema["type"] = "object";
-    //  this.schema["title"] = this.formSchema.title;
+      //  this.schema["title"] = this.formSchema.title;
       this.schema["definitions"] = this.definations;
       this.schema["properties"] = this.property;
       this.schema["required"] = this.definations[this.schemaName].required;
@@ -76,59 +75,98 @@ export class AddRecordsComponent implements OnInit {
     this.form2 = new FormGroup({});
     this.options = {};
     this.fields = [this.formlyJsonschema.toFieldConfig(this.schema)];
+    let tempFields = [];
 
     this.fields[0].fieldGroup.forEach((fieldObj, index) => {
       console.log({ fieldObj });
+      this.fieldName = fieldObj.key;
+      tempFields[index] = this.formBuildingSingleField(fieldObj, this.fields[0].fieldGroup[index], this.schema);
 
-       this.fieldKey = fieldObj.key;
+      if (fieldObj.type == 'object') {
 
-      if (!fieldObj.templateOptions.hasOwnProperty('label') || fieldObj.templateOptions.label == undefined) {
-        // let str: any = (fieldObj.templateOptions.label) ? fieldObj.templateOptions.label : fieldObj.key;
+       
 
+        tempFields[index]['templateOptions']['label'] = fieldObj.hasOwnProperty('label') ? fieldObj['label'] : undefined;
+        tempFields[index]['templateOptions']['description'] = fieldObj.hasOwnProperty('description') ? fieldObj['description'] : undefined;
 
-        let str: any = fieldObj.key;
-          this.fields[0].fieldGroup[index].templateOptions['label'] = str.charAt(0).toUpperCase() + str.slice(1);
-
-        if (this.schema.required.includes(str)) {
-          this.fields[0].fieldGroup[index]['templateOptions']['required'] = true;
-
+        if (fieldObj.hasOwnProperty('label')) {
+          tempFields[index]['wrappers'] = ['panel'];
         }
 
-      } else {
-
-        if (fieldObj.templateOptions.label == undefined) {
-          let str: any = fieldObj.key;
-
-            this.fields[0].fieldGroup[index].templateOptions['label'] = str.charAt(0).toUpperCase() + str.slice(1);
-
-          // if (this.schema.required.includes(str)) {
-          //   this.fields[0].fieldGroup[index]['templateOptions']['required'] = true;
-
-          // }
-        }
+        fieldObj.fieldGroup.forEach((sfieldObj, sIndex) => {
+          fieldObj.fieldGroup[sIndex] = this.formBuildingSingleField(sfieldObj, fieldObj.fieldGroup[sIndex], this.schema['properties'][this.fieldName]);
+        });
+        tempFields[index]['type'] = '';
+        tempFields[index]['fieldGroup'] = fieldObj.fieldGroup
+        // this.schema.properties[this.fieldKey]['required'].includes();
 
       }
-
-      if (fieldObj.templateOptions['type'] == 'enum' || fieldObj.templateOptions.hasOwnProperty('options') ) {
-        this.fields[0].fieldGroup[index].type = 'select';
-        this.fields[0].fieldGroup[index]['templateOptions']['options'] = fieldObj.templateOptions.options;
+      else if (fieldObj.type == 'array') {
       }
-
-      if(this.property[this.fieldKey].hasOwnProperty('format'))
-      {
-        this.fields[0].fieldGroup[index]['templateOptions']['type'] = this.property[this.fieldKey].format;
-      }
-
-      if(this.property[this.fieldKey].hasOwnProperty('placeholder'))
-      {
-        this.fields[0].fieldGroup[index]['templateOptions']['placeholder'] = this.property[this.fieldKey].placeholder;
-      }
-
-      // this.fields[0].fieldGroup[0]['label'] = (fieldObj.name).toUpperCase();
-
     });
 
+
+    this.fields[0].fieldGroup = tempFields;
+
+    console.log(tempFields);
+
     this.schemaloaded = true;
+  }
+
+  formBuildingSingleField(fieldObj, fieldSchena, requiredF) {
+
+    this.fieldKey = fieldObj.key;
+    let tempObj = fieldSchena;
+
+    if (!fieldObj['templateOptions'].hasOwnProperty('label') || fieldObj.templateOptions.label == undefined) {
+      // let str: any = (fieldObj.templateOptions.label) ? fieldObj.templateOptions.label : fieldObj.key;
+
+
+      //   let str: any = fieldObj.key;
+      tempObj['templateOptions']['label'] = this.fieldKey.charAt(0).toUpperCase() + this.fieldKey.slice(1);
+
+      if (requiredF.hasOwnProperty('required')) {
+        if (requiredF.required.includes(this.fieldKey)) {
+          tempObj['templateOptions']['required'] = true;
+        }
+      }
+
+    } else {
+
+      if (fieldObj.templateOptions.label == undefined) {
+        // let str: any = fieldObj.key;
+
+        tempObj['templateOptions']['label'] = this.fieldKey.charAt(0).toUpperCase() + this.fieldKey.slice(1);
+      }
+    }
+
+
+    // if (requiredF.hasOwnProperty('required')) {
+    //   if (requiredF.required.includes(this.fieldKey)) {
+    //     tempObj['templateOptions']['required'] = true;
+    //   }
+    // }
+
+    if (fieldObj.templateOptions['type'] == 'enum' || fieldObj.templateOptions.hasOwnProperty('options')) {
+      tempObj['type'] = 'select';
+      tempObj['templateOptions']['options'] = fieldObj.templateOptions.options;
+    }
+
+    if (this.property.hasOwnProperty(this.fieldKey) && this.property[this.fieldKey].hasOwnProperty('format')) {
+      tempObj['templateOptions']['type'] = this.property[this.fieldKey].format;
+    }
+
+    if (this.property.hasOwnProperty(this.fieldKey) && this.property[this.fieldKey].hasOwnProperty('placeholder')) {
+      tempObj['templateOptions']['placeholder'] = this.property[this.fieldKey].placeholder;
+    }
+
+    if (fieldObj['type'] == 'string' || fieldObj['type'] == 'number') {
+      tempObj['type'] = 'input';
+    }
+
+    return tempObj;
+
+    // this.fields[0].fieldGroup[0]['label'] = (fieldObj.name).toUpperCase();
   }
 
   submit() {

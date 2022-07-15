@@ -13,3 +13,53 @@
     -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 5%);
     box-shadow: inset 0 1px 1px rgb(0 0 0 / 5%);
 }
+
+.disabledbutton {
+    pointer-events: none;
+}
+
+.ace-jsoneditor .ace_scroller {
+  pointer-events: none !important;
+}
+
+
+/* Start - ngx-editor css */
+.collapsible {
+    background-color: #777;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    margin-bottom: 5px;
+  }
+  
+  .active, .collapsible:hover {
+    background-color: #555;
+  }
+  
+  .content {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    background-color: #f1f1f1;
+  }
+  
+  .ngx-text-editor{
+    background-color: #ffffff !important;
+    font-size: 14px;
+  }
+
+  .ngx-toolbar {
+    display: none !important;
+  }
+
+  /* End - ngx-editor css */
+
+  .arrIcon {
+    font-size: x-small;
+    padding: 5px;
+  }

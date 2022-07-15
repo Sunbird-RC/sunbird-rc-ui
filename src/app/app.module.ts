@@ -133,6 +133,7 @@ import { PreviewHtmlComponent } from './issure/preview-html/preview-html.compone
 import { NgJsonEditorModule } from 'ang-jsoneditor';
 import { VerifyComponent } from './issure/verify/verify.component' 
 import { FormioModule } from 'angular-formio';
+import { NgxTextEditorModule } from 'ngx-text-editor';
 
 import * as configData from '../assets/config/config.json';
 import { AdvanceEditorComponent } from './issure/advance-editor/advance-editor.component'; 
@@ -251,7 +252,8 @@ console.log(configData['default']);
     NgJsonEditorModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     VerifyModule.forChild(configData['default']),
-    FormioModule
+    FormioModule,
+    NgxTextEditorModule
   ],
   exports: [TranslateModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

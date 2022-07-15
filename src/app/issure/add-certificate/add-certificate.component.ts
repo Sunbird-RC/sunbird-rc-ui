@@ -65,41 +65,6 @@ export class AddCertificateComponent implements OnInit {
 
     this.getDocument();
 
-    // this.route.params.subscribe(params => {
-    //   console.log(params);
-    //   if (params['form'] != undefined) {
-    //     this.form = params['form'].split('/', 1)[0];
-    //   }
-    // });
-
-
-    // this.schemaService.getFormJSON().subscribe((FormSchemas) => {
-    //   var filtered = FormSchemas.forms.filter(obj => {
-    //     return Object.keys(obj)[0] === this.form
-    //   })
-    //   this.formSchema = filtered[0][this.form];
-    //   this.templatePath = filtered[0][this.form]['template'];
-
-    //   this.schemaService.getSchemas().subscribe((res) => {
-    //     this.responseData = res;
-    //     this.formSchema.fieldsets.forEach(fieldset => {
-
-    //       this.definations = this.responseData.definitions;
-    //       this.property = this.definations[fieldset.definition].properties;
-
-
-    //       this.schema["type"] = "object";
-    //       this.schema["title"] = this.formSchema.title;
-    //       this.schema["definitions"] = this.definations;
-    //       this.schema["properties"] = this.property;
-    //       this.loadSchema();
-    //     });
-    //   });
-
-    // }, (error) => {
-    //   this.toastMsg.error('error', 'forms.json not found in src/assets/config/ - You can refer to examples folder to create the file')
-    // })
-
     this.generalService.getData('/Issuer').subscribe((res) => {
       console.log(res);
       this.issuerOsid = res[0].osid;
@@ -107,13 +72,6 @@ export class AddCertificateComponent implements OnInit {
 
   }
 
-  // loadSchema() {
-  //   this.form2 = new FormGroup({});
-  //   this.options = {};
-  //   this.fields = [this.formlyJsonschema.toFieldConfig(this.schema)];
-
-  //   this.schemaloaded = true;
-  // }
 
   dataChange() {
     window.location.reload();
@@ -146,8 +104,6 @@ export class AddCertificateComponent implements OnInit {
         this.injectHTML();
       });
 
-
-
     //  this.isPreview = true;
     //  localStorage.setItem('isPreview', 'yes');
   }
@@ -174,10 +130,6 @@ export class AddCertificateComponent implements OnInit {
     console.log(index);
     this.selectedDecType = [];
     this.selectedDecType = [this.documentTypeList[index]];
-
-    // const iframe: HTMLIFrameElement = document.getElementById('frame') as HTMLIFrameElement;
-    // iframe.src = this.selectedDecType.samples[0].certificateUrl;
-
   }
 
   injectHTML() {
