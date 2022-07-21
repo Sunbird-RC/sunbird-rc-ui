@@ -147,7 +147,7 @@ export class SearchComponent implements OnInit {
             if (filter.type == 'autocomplete') {
               fieldObj.type = 'autocomplete';
               fieldObj['templateOptions']['label'] = this.translate.instant(filter.title);
-              fieldObj['templateOptions']['placeholder'] = filter.placeholder;
+              fieldObj['templateOptions']['placeholder'] = this.translate.instant(filter.placeholder);
 
 
               fieldObj['templateOptions']['search$'] = (term) => {
