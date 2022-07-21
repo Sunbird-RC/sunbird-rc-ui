@@ -181,7 +181,9 @@
     "ONLY_BY_CONSENT": "Only by consent",
     "ONLY_BY_ME" :"Only by me",
     "ANYONE" : "Anyone",
-    "SOMETHING_WENT_WRONG": "Something went wrong while uploading files, please try again"
+    "SOMETHING_WENT_WRONG": "Something went wrong while uploading files, please try again",
+    "DEMO":"This is a demo of the Education Portal. Check documentation",
+    "HERE" : "here"
 
     
 }
