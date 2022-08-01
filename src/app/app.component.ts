@@ -20,12 +20,23 @@ export class AppComponent {
       }
     }
     
-
+   
     this.ELOCKER_THEME = localStorage.getItem('ELOCKER_THEME');
 
     if (this.ELOCKER_THEME) {
       this.themeService.setTheme(this.ELOCKER_THEME);
     }
+
+    // changeTheme() {
+    //   if (this.ELOCKER_THEME == 'default') {
+    //     this.ELOCKER_THEME = "dark";
+    //   } else {
+    //     this.ELOCKER_THEME = "default";
+    //   }
+    //   this.themeService.setTheme(this.ELOCKER_THEME);
+    //   localStorage.setItem('ELOCKER_THEME', this.ELOCKER_THEME);
+  //  }
+
 
   }
 }
