@@ -182,12 +182,8 @@
     "ONLY_BY_ME" :"Only by me",
     "ANYONE" : "Anyone",
     "SOMETHING_WENT_WRONG": "Something went wrong while uploading files, please try again",
-<<<<<<< HEAD
-    "DEMO":"This is a demo of the Education Portal. Check documentation"
-=======
     "DEMO":"This is a demo of the Education Portal. Check documentation",
     "HERE" : "here"
->>>>>>> 68df0533710f1e341ab5ab559a71a1078da69816
 
     
 }
