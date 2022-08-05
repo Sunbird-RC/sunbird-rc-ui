@@ -274,7 +274,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
                   // alert(i + ' ----1--- ' + objects.osid);
 
                   let tempName = localStorage.getItem('entity').toLowerCase() + element.charAt(0).toUpperCase() + element.slice(1);
-                  tempName = (localStorage.getItem('entity') == 'student' || localStorage.getItem('entity') == 'Student') ? 'studentInstituteAttest' : tempName;
+                  tempName = (localStorage.getItem('entity') == 'student' || localStorage.getItem('entity') == 'Student' ) ? 'studentInstituteAttest' : tempName;
                   if (this.model.hasOwnProperty(tempName)) {
                     let objects1;
                     var tempObj = []
@@ -359,7 +359,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
         });
       }
 
-      if (block.hasOwnProperty('propertyShowFirst')) {
+      if (block.hasOwnProperty('propertyShowFirst') && this.property.length) {
         let fieldsArray = (this.property[0].length) ? this.property[0] : this.property;
         let fieldsArrayTemp = [];
 
