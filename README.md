@@ -32,6 +32,7 @@ Eg : ln -s Documents/Ndear/demo-education-registry/ui-config
 
 5. Add `config.json` and `home.html` file on below mentioned path
 (config.json file will generate by dynamically once user fill up the installation form and home.html page need to construct as per user requirment)
+
 `sunbird-rc-ui/src/assets/config`
 
 6. Go to root folder means sunbird-rc-ui folder 
