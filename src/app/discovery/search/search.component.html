@@ -6,17 +6,13 @@
     <div class="card-body">
       <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item" *ngFor="let tab of filtered;let index = index;">
-          <a class="nav-link {{tab?.activeTab}} text-capitalize p14" (click)="onTabChange($event, tab?.tab);" data-toggle="tab"
-            href="#{{tab?.tab}}"><b>{{tab?.tabTitle}}</b></a>
+          <a class="nav-link primary-text {{tab?.activeTab}} text-capitalize p14" (click)="onTabChange($event, tab?.tab);"
+            data-toggle="tab" href="#{{tab?.tab}}">{{tab?.tabTitle | translate}}</a>
         </li>
       </ul>
 
       <!-- Select filter dropdown list -->
-
       <div class="d-flex mt-4">
-
-        <!-- <span class="mr-3 text-primary">
-        </span> -->
         <span class="card col-10">
           <angular2-multiselect [data]="dropdownList" [(ngModel)]="selectedItems" [settings]="dropdownSettings"
             (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)"
@@ -24,16 +20,15 @@
         </span>
       </div>
 
-
-
       <!-- Tab panes -->
       <div class="tab-content">
         <div *ngFor="let tab of filtered;let index = index;" id="{{tab?.tab}}" class=" tab-pane {{tab?.activeTab}}"><br>
           <form [formGroup]="form" (ngSubmit)="submit()">
             <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form"></formly-form>
-            <button type="submit" class="btn btn-primary text-capitalize btn-style float-end mt-2 submit-button" [disabled]="!form.valid">Search</button>
-            <button type="button" class="btn btn-bg text-capitalize btn-style ml-2 mt-2 label-primary" (click)="resetModel(index)">Reset</button>
-
+            <button type="submit" class="btn btn-primary text-capitalize btn-style float-end mt-2 submit-button"
+              [disabled]="!form.valid">{{'SEARCH' | translate}}</button>
+            <button type="button" class="btn btn-bg text-capitalize btn-style ml-2 mt-2 nav-link-color btn-sec-bg"
+              (click)="resetModel(index)">{{'RESET' | translate}}</button>
           </form>
         </div>
       </div>
@@ -47,16 +42,16 @@
       *ngFor="let item of items | paginate: { itemsPerPage: limit, currentPage: page }">
       <div *ngFor="let field of item.fields">
         <div data-toggle="modal" data-target="#prewiewProfile" (click)="showDetails(item?.data)">
-          <div *ngIf="field?.value" class="p14">
-            <span *ngIf="field?.title"> {{field?.title}} : </span>
+          <div *ngIf="field?.value" class="p14 primary-text">
+            <span *ngIf="field?.title"> {{field?.title | translate}} : </span>
             <span class="" *ngIf="typeOf(field?.value) != 'object'"><b>{{field?.value}} </b> </span>
             <span class="" *ngIf="typeOf(field?.value) === 'object'"><b>
-             
+
                 <span *ngFor="let subField of field?.value; let i = index">
-                <span *ngIf="!subField?.status">
-                  {{field?.value[i].value}} 
-                </span>
-                  
+                  <span *ngIf="!subField?.status">
+                    {{field?.value[i].value}}
+                  </span>
+
                   <span *ngIf="subField?.status == 'PUBLISHED' || subField?.status == 'ATTESTATION_REQUESTED'">
 
                     {{subField?.value}}
@@ -66,14 +61,10 @@
 
                     <img *ngIf="subField?.status == 'ATTESTATION_REQUESTED'" class="img16"
                       src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yNTYsMEMxMTQuNjE1LDAsMCwxMTQuNjE1LDAsMjU2czExNC42MTUsMjU2LDI1NiwyNTZzMjU2LTExNC42MTUsMjU2LTI1NlMzOTcuMzg1LDAsMjU2LDB6IE0yNTYsNDgwICAgICBDMTMyLjI4OCw0ODAsMzIsMzc5LjcxMiwzMiwyNTZTMTMyLjI4OCwzMiwyNTYsMzJzMjI0LDEwMC4yODgsMjI0LDIyNFMzNzkuNzEyLDQ4MCwyNTYsNDgweiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPgoJCQk8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjMyIiBmaWxsPSIjMDRhM2UxIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIj48L2NpcmNsZT4KCQkJPGNpcmNsZSBjeD0iMzY4IiBjeT0iMjU2IiByPSIzMiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9jaXJjbGU+CgkJCTxjaXJjbGUgY3g9IjE0NCIgY3k9IjI1NiIgcj0iMzIiIGZpbGw9IiMwNGEzZTEiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiPjwvY2lyY2xlPgoJCTwvZz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+" />
-
-                    
                   </span>
                   <span *ngIf="(field?.value.length - 1) > i">, &nbsp;</span>
-
                 </span>
               </b> </span>
-
           </div>
         </div>
       </div>
@@ -81,15 +72,16 @@
 
     <!-- pagination-controls -->
     <div class="my-1 float-end" *ngIf="!isLoading && items?.length">
-      <pagination-controls (pageChange)="page = $event"></pagination-controls>
+      <pagination-controls (pageChange)="page = $event" previousLabel="{{'PREVIOUS' | translate}}"
+      nextLabel="{{'NEXT' | translate}}"></pagination-controls>
     </div>
 
     <!-- Data Not Found -->
     <table class="mx-5 my-5 w-50">
       <tbody class="fs-5" *ngIf="!isLoading && !items?.length">
         <tr>
-          <td class="float-end" [attr.colspan]="items?.length">
-            Data Not Found!
+          <td class="float-end primary-text" [attr.colspan]="items?.length">
+            {{'DATA_NOT_FOUND' | translate}}
           </td>
         </tr>
       </tbody>
@@ -99,13 +91,10 @@
     <div *ngIf="isLoading && !items?.length">
       <div class="d-flex justify-content-center">
         <div class="spinner-border" role="status">
-          <span class="sr-only">Loading...</span>
+          <span class="sr-only">{{'LOADING' | translate}}</span>
         </div>
       </div>
     </div>
-
-
-
   </div>
 
 </div>
@@ -116,15 +105,13 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h6 class="modal-title" id="prewiewProfile">Public Profile</h6>
+        <h6 class="modal-title primary-text" id="prewiewProfile">{{'PUBLIC_PROFILE' | translate}}</h6>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
             aria-hidden="true">&times;</span></button>
       </div>
-
       <div class="modal-body" *ngIf="user">
         <app-layouts layout={{activeTabIs}} [publicData]="user" public="true"></app-layouts>
       </div>
-
     </div>
   </div>
 </div>

@@ -1,0 +1,9 @@
+.mt-150{
+    margin-top: 120px;
+}
+
+@media (max-width: 767.98px) {
+    .mt-150{
+        margin-top: 150px;
+    }
+}

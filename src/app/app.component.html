@@ -1,8 +1,15 @@
+
+
 <router-outlet></router-outlet>
-<footer class="bg-dark fixed-bottom">
+
+<ng-template [ngIf]="isFooter">
+  <div class="pt-70"></div> 
+  <footer class="footer fixed-bottom">
     <div class="container-fluid">
       <div class="p-3">
-        <!-- <a class="text-muted fs-7" href="#">&copy; {{footerText}}</a> -->
+        <a class="text-muted fs-7" href="#">&copy; {{footerText}}</a>
       </div>
     </div>
   </footer>
+</ng-template>
+

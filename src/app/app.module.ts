@@ -6,12 +6,12 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { APP_INITIALIZER } from '@angular/core';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
-import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import { NgSelectModule } from '@ng-select/ng-select';
-import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 // formly
 import { FormlyModule, FormlyFieldConfig } from '@ngx-formly/core';
@@ -21,7 +21,10 @@ import { ObjectTypeComponent } from '../app/forms/types/object.type';
 import { MultiSchemaTypeComponent } from '../app/forms/types/multischema.type';
 import { NullTypeComponent } from '../app/forms/types/null.type';
 import { AutocompleteTypeComponent } from '../app/forms/types/autocomplete.type';
+import { FormlyColorInput } from '../app/forms/types/color.type';
 import { initializeKeycloak } from './utility/app.init';
+import { initLang } from './multilingual.init';
+
 
 //Local imports
 import { FormsComponent } from './forms/forms.component';
@@ -48,6 +51,20 @@ import { PanelWrapperComponent } from './forms/types/group.type';
 import { LogoutComponent } from './authentication/logout/logout.component';
 import { SearchComponent } from '../app/discovery/search/search.component';
 import { AuthConfigService } from './authentication/auth-config.service';
+import { DocumentsComponent } from './documents/documents.component';
+import { AddDocumentComponent } from './documents/add-document/add-document.component';
+import {WebcamModule} from 'ngx-webcam';
+import { ScanDocumentComponent } from './documents/scan-document/scan-document.component';
+import { ScanQrCodeComponent } from './documents/scan-qr-code/scan-qr-code.component';
+import {QuarModule} from '@altack/quar';
+import { BrowseDocumentsComponent } from './documents/browse-documents/browse-documents.component';
+
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
+import { config } from 'process';
+import { ColorPickerModule } from 'ngx-color-picker';
+
 
 //form validations
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
@@ -90,9 +107,22 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
   return `should be equal to constant "${field.templateOptions.const}"`;
 }
 
-function initConfig(config: AppConfig){
+function initConfig(config: AppConfig) {
   return () => config.load()
 }
+
+import ISO6391 from 'iso-639-1';
+import { PagesComponent } from './pages/pages.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+
+import {AuthImagePipe} from '../app/layouts/doc-view/doc-view.component';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { DocDetailViewComponent } from './documents/doc-detail-view/doc-detail-view.component';
+// import { FaqComponent } from './custom-components/faq/faq.component';
+import { SafeHtmlPipe } from './safe-html.pipe';
+import { initTheme } from './theme.config';
+// import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
 
 @NgModule({
   declarations: [
@@ -108,6 +138,7 @@ function initConfig(config: AppConfig){
     ModalRouterAddLinkDirective,
     PanelsComponent, EditPanelComponent, AddPanelComponent, TablesComponent,
     AutocompleteTypeComponent,
+    FormlyColorInput,
     HeaderComponent,
     AttestationComponent,
     FileValueAccessor,
@@ -116,7 +147,13 @@ function initConfig(config: AppConfig){
     FormlyFieldNgSelect,
     InstallComponent,
     HomeComponent,
-    LogoutComponent
+    LogoutComponent,
+    DocumentsComponent,
+    AddDocumentComponent,
+    ScanDocumentComponent,
+    ScanQrCodeComponent,
+    BrowseDocumentsComponent,
+    AuthImagePipe
   ],
   imports: [
     BrowserModule,
@@ -126,19 +163,27 @@ function initConfig(config: AppConfig){
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
+    NgbAccordionModule,
     FormlyBootstrapModule,
     KeycloakAngularModule,
-    NgxDocViewerModule,
     Bootstrap4FrameworkModule,
     AngularMultiSelectModule,
     NgSelectModule,
+
+    HttpClientModule,
+    TranslateModule.forRoot(),
+
+    WebcamModule,
+    ColorPickerModule,
+    QuarModule,
+    NgxExtendedPdfViewerModule,
     FormlyModule.forRoot({
       extras: { resetFieldOnHide: true },
       wrappers: [{ name: 'form-field-horizontal', component: FormlyHorizontalWrapper },
       { name: 'panel', component: PanelWrapperComponent }],
       validationMessages: [
-        { name: 'required', message: 'This field is required' },
-        
+        { name: 'required', message: '' },
+
       ],
       types: [
         { name: 'string', extends: 'input' },
@@ -171,29 +216,76 @@ function initConfig(config: AppConfig){
           component: AutocompleteTypeComponent
         },
         { name: 'file', component: FormlyFieldFile, wrappers: ['form-field'] },
-        { name: 'multiselect', component: FormlyFieldNgSelect }
+        { name: 'multiselect', component: FormlyFieldNgSelect },
+        { name: 'color', component: FormlyColorInput },
       ],
     }),
     ToastrModule.forRoot({
-      positionClass: 'toast-bottom-center',
-    preventDuplicates: true,
+      positionClass: 'toast-bottom-full-width',
+      preventDuplicates: true,
     }),
-    NgxPaginationModule
+    NgxPaginationModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
+  exports: [TranslateModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   entryComponents: [],
   bootstrap: [AppComponent],
   providers: [
     AppConfig,
+    AuthImagePipe,
     { provide: APP_INITIALIZER, useFactory: initConfig, deps: [AppConfig], multi: true },
     {
-    provide: APP_INITIALIZER,
-    useFactory: initializeKeycloak,
-    multi: true,
-    deps: [KeycloakService,AuthConfigService],
-  },
-  { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'always' } }]
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService, AuthConfigService],
+    },
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'always' } },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initLang,
+      deps: [HttpClient, TranslateService],
+      multi: true
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initTheme,
+      deps: [HttpClient, TranslateService],
+      multi: true
+    }]
 })
+
+
 export class AppModule {
-  
+  languages;
+  constructor(translate: TranslateService, authConfig: AuthConfigService) {
+
+    authConfig.getConfig().subscribe((config) => {
+      this.languages = config.languages;
+      var installed_languages = [];
+
+      for (let i = 0; i < this.languages.length; i++) {
+        installed_languages.push({
+          "code": this.languages[i],
+          "name": ISO6391.getNativeName(this.languages[i])
+        });
+      }
+
+      localStorage.setItem('languages', JSON.stringify(installed_languages));
+      translate.addLangs(this.languages);
+
+      if (localStorage.getItem('setLanguage') && this.languages.includes(localStorage.getItem('setLanguage'))) {
+        translate.use(localStorage.getItem('setLanguage'));
+
+      } else {
+        const browserLang = translate.getBrowserLang();
+        let lang = this.languages.includes(browserLang) ? browserLang : 'en';
+        translate.use(lang);
+        localStorage.setItem('setLanguage', lang);
+      }
+    });
+
+  }
 }
+

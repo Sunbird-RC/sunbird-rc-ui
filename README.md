@@ -10,16 +10,55 @@ Please use the community repo for reporting issues & participating in discussion
 ## Installation
 This is an Angular 8 project, and you need to install the dependencies, and run the project. 
 
+## Frontend Setup Steps
+
+1. Clone Sunbird RC UI code from here - https://github.com/code-blooded-guy/sunbird-rc-ui
+
+2. Clone UI config files from git - https://github.com/Sunbird-RC/demo-education-registry
+
+ 3. Go to into the `demo-education-registry/ui-config` and copy this folder path
+
+ 4. Then go to into the `/sunbird-rc-ui/src/assets/config` folder  and open terminal 
+ 
+Run blow command in the following folder path : `sunbird-rc-ui/src/assets/config`
+
+  
+ln -s (path-of-your-UI-config files folder)
+
+
+Eg : ln -s Documents/Ndear/demo-education-registry/ui-config 
+
+
+
+5. Add `config.json` and `home.html` file on below mentioned path
+(config.json file will generate by dynamically once user fill up the installation form and home.html page need to construct as per user requirment)
+
+`sunbird-rc-ui/src/assets/config`
+
+6. Go to root folder means sunbird-rc-ui folder 
+
+ Run - `npm start`
+
+7. Once project run completely then you will get `http://localhost:4200` url
+
+to open an angular application in the browser.
+
+8. Copy that url( http://localhost:4200) and paste in your browser.
+
+
 ## Configuration
-The application needs to be configured with the appropriate fields to be able to use it. Example configuration is provided in the `src/examples` folder.
+Fill up the all configuration details in installation page. The application needs to be configured with the appropriate fields to be able to use it. 
 
-### Environment Config
+### Required Configuration details
 
-Key | Value
+Fields | Info
 ------------          | -------------
 `baseUrl`             | Base URL for the Sunbird RC backend. Eg: https://registry.com/api
 `schemaUrl`           | URL to the OpenAPI schema definition. This could be a HTTP path or a path to a local file Eg: https://registry.com/api/schema.json OR /assets/schema.json
 `logo`                | URL to logo. This logo is displayed in the header of the UI
+`project name`        | Name of Application
+`keycloak Configuration`             | Required url, clientId and realm to initialize keycloak into application
+`theme color code`             | To change application theme mode 
 
 
 ### Forms
@@ -35,7 +74,8 @@ Key | Value
 `form.title`          | Title of form
 `form.redirectTo`     | Redirect URL on after form submit
 `form.fieldsets`      | List of fieldsets(multiple) for this form. At least one fieldset is needed
-
+`form.isSignupForm`   | Set `true` if defination is writting for signup form.
+`form.langKey`      | This is the name of key, which contains the all language constants strings for this form in the en-local.json file. Eg:  <br>  **form.json:** <pre> {<br> "langKey": "instituteLang"  <br>} </pre>  **en-local.json:** <pre> { <br> 'instituteLang' : { <br> ..language constants.. <br>} <br> } </pre>
 
 **fieldsets**
 
@@ -67,6 +107,9 @@ Key | Value
 `layout.api`    | URL Path of API
 `layout.title`  | Title of form
 `layout.blocks` | Cards/Blocks (multiple) to populate in `layout`.
+`layout.headerName` | Set Name of logged in user in header section.
+`layout.subHeadername` | Set Address of logged in user in sub-header section..
+`layout.langKey`      | This is the name of key, which contains the all language constants strings for this layout in the en-local.json file. Eg:  <br>  **layout.json:** <pre> {<br> "langKey": "instituteLang"  <br>} </pre>  **en-local.json:** <pre> { <br> 'instituteLang' : { <br> ..language constants.. <br>} <br> } </pre>
 
 **blocks**
 
@@ -89,6 +132,54 @@ Key | Value
 `fields.includes` | Array/list of Included Fields from response or `[*]` for all fields
 `fields.excludes` | Array/list of Excluded Fields from response
 
+### Search
+The `search.json` needs to be placed in `src/assets/config`. In this file defines the tabs, filters and result cards attribute names which are displayed on the discovery page.
+
+
+In this file `searches` is an array with key/value pairs. Each search definition will have the below fields -
+
+Key | Value
+------------    | -------------
+`search.tab`    |  Key name of tab
+`search.tabTitle`  | Title of tab
+`search.api`    | URL Path of API
+`search.activeTab` | Set active tab as a default.
+`search.privateFields` | Field visibility configuration.
+
+
+**filters**
+
+Key | Value
+------------ | -------------
+`filters.key` | unique key of filter/property
+`filters.title` | Title of filter
+`filters.type` | Type of filter
+`filters.propertyPath` | Actul path of property in your api responce
+`filters.default` | Set filter as default
+`filters.placeholder` | Set placeholder in the filter input box
+
+**fields**
+
+Key | Value
+------------ | -------------
+`fields.title` | Title of field 
+`fields.property` | Set property path in you api responce (eg : "address.district" )
+`fields.attest` | Set state check property key name 
+`fields.autocomplete` | Auto auto suggestion field  <pre> <br /> Example :  "autocomplete": { "apiURL": "_search_api_url_",
+                            "body": {
+                                "filters": {
+                                    "instituteName": {
+                                        "startsWith": "{{value}}"
+                                    },
+                                    "affiliation._State": {
+                                        "eq": "PUBLISHED"
+                                    }
+                                },
+                                "limit": 20,
+                                "offset": 0
+                            }
+                        }
+                        </pre>
 
 # Examples
 

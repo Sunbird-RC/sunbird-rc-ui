@@ -1,32 +1,36 @@
 import { Injectable } from '@angular/core';
 import { DataService } from '../data/data-request.service';
-import { environment} from '../../../environments/environment';
-import { HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subscriber } from 'rxjs';
 import { AppConfig } from 'src/app/app.config';
+import { TranslateService } from '@ngx-translate/core';
+import { map } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class GeneralService {
   baseUrl = this.config.getEnv('baseUrl');
-
-  constructor(public dataService: DataService, private config: AppConfig) {
+  translatedString: string;
+  constructor(public dataService: DataService, 
+    private http: HttpClient, private config: AppConfig, public translate: TranslateService) {
   }
 
-  postData(apiUrl,data) {
+  postData(apiUrl, data) {
     var url;
-    if(apiUrl.indexOf('http') > -1){
+    if (apiUrl.indexOf('http') > -1) {
       url = apiUrl
-    }else{
-      if(apiUrl.charAt(0) == '/'){
+    } else {
+      if (apiUrl.charAt(0) == '/') {
         url = `${this.baseUrl}${apiUrl}`
       }
-      else{
+      else {
         url = `${this.baseUrl}/${apiUrl}`;
       }
     }
-    
+
     const req = {
       url: url,
       data: data
@@ -37,15 +41,15 @@ export class GeneralService {
 
   getDocument(url: string): Observable<any> {
     return this.dataService.getDocument(url);
-}
+  }
 
 
   getData(apiUrl, outside: boolean = false) {
     var url;
-    if(outside) {
+    if (outside) {
       url = apiUrl;
     }
-    else{
+    else {
       url = `${this.baseUrl}/${apiUrl}`;
     }
     url.replace('//', '/');
@@ -77,12 +81,12 @@ export class GeneralService {
     return this.dataService.post(req);
   }
 
-  putData(apiUrl,id, data) {
+  putData(apiUrl, id, data) {
     var url;
-    if(apiUrl.charAt(0) == '/'){
+    if (apiUrl.charAt(0) == '/') {
       url = `${this.baseUrl}${apiUrl}/${id}`
     }
-    else{
+    else {
       url = `${this.baseUrl}/${apiUrl}/${id}`;
     }
     const req = {
@@ -102,7 +106,7 @@ export class GeneralService {
     return this.dataService.get(req);
   }
 
-updateclaims(apiUrl, data) {
+  updateclaims(apiUrl, data) {
     let url = `${this.baseUrl}${apiUrl}`;
     const req = {
       url: url,
@@ -111,5 +115,45 @@ updateclaims(apiUrl, data) {
     return this.dataService.put(req);
   }
 
+  translateString(constantStr){
+    this.translate.get(constantStr).subscribe((val)=>{
+       this.translatedString = val;
+    });
+    return this.translatedString;
+  }
+
+  attestationReq(apiUrl, data) {
+    let url = `${this.baseUrl}${apiUrl}`;
+    const req = {
+      url: url,
+      data: data
+    };
+    return this.dataService.put(req);
+  }
+
+
+  openPDF(url){
+    url = `${this.baseUrl}` + '/' + `${url}`;
+
+    let requestOptions = { responseType: 'blob' as 'blob' };
+    // post or get depending on your requirement
+    this.http.get(url, requestOptions).pipe(map((data: any) => {
+
+        let blob = new Blob([data], {
+            type: 'application/pdf' // must match the Accept type
+            // type: 'application/octet-stream' // for excel 
+        });
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+
+        window.open(link.href, '_blank')
+       // link.download =  'temp.pdf';
+       // link.click();
+       // window.URL.revokeObjectURL(link.href);
+
+    })).subscribe((result: any) => {
+    });
+  }
+  
 }
 

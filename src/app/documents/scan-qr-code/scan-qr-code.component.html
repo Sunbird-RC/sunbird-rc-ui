@@ -1,0 +1,9 @@
+<h6 class="font-weight-bold mt-3 ml-3"><i onClick="history.go(-1); return false;" class="fas fa-chevron-left mr-2" aria-hidden="true"></i> {{'SCAN_THE_QR_CODE'|translate}}</h6>
+<quar-scanner (scanSuccess)="scanSuccessHandler($event)"></quar-scanner>
+<div class="scanner">
+    <div *ngIf="loader" class="d-flex justify-content-center">
+        <div class="spinner-border" style="width: 5rem; height: 5rem;" role="status">
+            <span class="sr-only">{{'LOADING'|translate}}</span>
+        </div>
+    </div>
+</div>

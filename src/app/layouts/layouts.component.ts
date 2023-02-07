@@ -5,6 +5,7 @@ import { GeneralService } from '../services/general/general.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 import { Title } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-layouts',
@@ -34,9 +35,11 @@ export class LayoutsComponent implements OnInit, OnChanges {
   headerName: any;
   subHeadername = [];
   params: any;
+  langKey;
+  titleVal;
   constructor(private route: ActivatedRoute, public schemaService: SchemaService, private titleService: Title, public generalService: GeneralService, private modalService: NgbModal,
-    public router: Router) {
-     }
+    public router: Router, public translate: TranslateService) {
+  }
 
   ngOnChanges(): void {
     this.Data = [];
@@ -53,8 +56,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
 
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.route.params.subscribe(params => {
-      console.log(params);
-    this.params = params;
+      this.params = params;
       if (params['layout'] != undefined) {
         this.layout = params['layout']
         this.titleService.setTitle(params['layout'].charAt(0).toUpperCase() + params['layout'].slice(1));
@@ -65,11 +67,10 @@ export class LayoutsComponent implements OnInit, OnChanges {
       if (params['tab']) {
         this.tab = params['tab']
       }
-      localStorage.setItem('entity',this.layout);
+      localStorage.setItem('entity', this.layout);
       this.layout = this.layout.toLowerCase()
     });
-    this.schemaService.getSchemas().subscribe(async (res) => 
-    {
+    this.schemaService.getSchemas().subscribe(async (res) => {
       this.responseData = res;
       this.schemaService.getLayoutJSON().subscribe(async (LayoutSchemas) => {
         var filtered = LayoutSchemas.layouts.filter(obj => {
@@ -96,17 +97,34 @@ export class LayoutsComponent implements OnInit, OnChanges {
         console.error('layouts.json not found in src/assets/config/ - You can refer to examples folder to create the file')
       });
     },
-    (error) => {
-      //Schema Error callback
-      console.error('Something went wrong with Schema URL or Path not found')
+      (error) => {
+        //Schema Error callback
+        console.error('Something went wrong with Schema URL or Path not found')
+      });
+  }
+
+  check(conStr, title) {
+    this.translate.get(this.langKey + '.' + conStr).subscribe(res => {
+      let constr = this.langKey + '.' + conStr;
+      if (res != constr) {
+        this.titleVal = res;
+      } else {
+        this.titleVal = title;
+      }
     });
+    return this.titleVal;
   }
 
   addData() {
     this.layoutSchema.blocks.forEach(block => {
-      this.property = []
+      this.property = [];
       block['items'] = [];
       var temp_object;
+
+      if (this.layoutSchema.hasOwnProperty('langKey')) {
+        this.langKey = this.layoutSchema.langKey;
+      }
+
       if (block.fields.includes && block.fields.includes.length > 0) {
         if (block.fields.includes == "*") {
           for (var element in this.model) {
@@ -114,7 +132,10 @@ export class LayoutsComponent implements OnInit, OnChanges {
               if (typeof this.model[element] == 'string') {
                 temp_object = this.responseData['definitions'][block.definition]['properties'][element]
                 if (temp_object != undefined) {
-                  temp_object['value'] = this.model[element]
+
+                  temp_object.property = element;
+                  temp_object.title = this.check(element, temp_object.title);
+                  temp_object['value'] = this.model[element];
                   this.property.push(temp_object)
                 }
               }
@@ -126,6 +147,9 @@ export class LayoutsComponent implements OnInit, OnChanges {
                       temp_object = this.responseData['definitions'][ref_defination]['properties'][key]
 
                       if (temp_object != undefined && typeof value != 'object') {
+
+                        temp_object.property = key;
+                        temp_object.title = this.check(key, temp_object.title);
                         temp_object['value'] = value
                         this.property.push(temp_object)
                       }
@@ -135,6 +159,9 @@ export class LayoutsComponent implements OnInit, OnChanges {
                         temp_object = this.responseData['definitions'][block.definition]['properties'][element]['properties'][key]
 
                         if (temp_object != undefined && typeof value != 'object') {
+
+                          temp_object.property = key;
+                          temp_object.title = this.check(key, temp_object.title);
                           temp_object['value'] = value
                           this.property.push(temp_object)
                         }
@@ -142,6 +169,9 @@ export class LayoutsComponent implements OnInit, OnChanges {
                       else {
                         temp_object = this.responseData['definitions'][block.definition]['properties'][element]
                         if (temp_object != undefined) {
+
+                          temp_object.property = element;
+                          temp_object.title = this.check(element, temp_object.title);
                           temp_object['value'] = this.model[element]
                           this.property.push(temp_object)
                         }
@@ -160,6 +190,9 @@ export class LayoutsComponent implements OnInit, OnChanges {
                         var ref_defination = (this.responseData['definitions'][block.definition]['properties'][element]['$ref']).split('/').pop()
                         temp_object = this.responseData['definitions'][ref_defination]['properties'][key]
                         if (temp_object != undefined && typeof value != 'object') {
+
+                          temp_object.property = key;
+                          temp_object.title = this.check(key, temp_object.title);
                           temp_object['value'] = value;
                           this.property.push(temp_object);
                         }
@@ -167,6 +200,9 @@ export class LayoutsComponent implements OnInit, OnChanges {
                       else {
                         temp_object = this.responseData['definitions'][block.definition]['properties'][element]['items']['properties'][key];
                         if (temp_object != undefined && typeof value != 'object') {
+
+                          temp_object.property = key;
+                          temp_object.title = this.check(key, temp_object.title);
                           temp_object['value'] = value;
                           this.property.push(temp_object);
                         }
@@ -196,6 +232,9 @@ export class LayoutsComponent implements OnInit, OnChanges {
                         //   temp_object['_osClaimNotes'] = element._osClaimNotes;
                         // }
                       }
+
+                      temp_object.property = key;
+                      temp_object.title = this.check(key, temp_object.title);
                       temp_object['value'] = value
                       this.property.push(temp_object)
                     }
@@ -211,6 +250,9 @@ export class LayoutsComponent implements OnInit, OnChanges {
                       if (element.osid) {
                         temp_object['_osState'] = element._osState;
                       }
+
+                      temp_object.property = key;
+                      temp_object.title = this.check(key, temp_object.title);
                       temp_object['value'] = value;
                       this.property.push(temp_object);
                     }
@@ -221,10 +263,42 @@ export class LayoutsComponent implements OnInit, OnChanges {
             }
             else {
               if (this.model[element]) {
-                this.model[element].forEach((objects, i) => {
+                // this.model[element].forEach((objects, i) => {
+                for (let i = 0; i < this.model[element].length; i++) {
+                  let objects = this.model[element][i];
                   var osid;
                   var osState;
                   var temp_array = [];
+
+
+                  // alert(i + ' ----1--- ' + objects.osid);
+
+                  let tempName = localStorage.getItem('entity').toLowerCase() + element.charAt(0).toUpperCase() + element.slice(1);
+                  tempName = (localStorage.getItem('entity') == 'student' || localStorage.getItem('entity') == 'Student' ) ? 'studentInstituteAttest' : tempName;
+                  if (this.model.hasOwnProperty(tempName)) {
+                    let objects1;
+                    var tempObj = []
+                    //this.model[tempName].forEach((objects1, j) => {
+                    for (let j = 0; j < this.model[tempName].length; j++) {
+                      objects1 = this.model[tempName][j];
+                      console.log(objects.osid + '  ' + objects1.propertiesOSID[element][0]);
+                      if (objects.osid == objects1.propertiesOSID[element][0]) {
+                        objects1.propertiesOSID.osUpdatedAt = new Date(objects1.propertiesOSID.osUpdatedAt);
+                        tempObj.push(objects1)
+                      }
+
+                    }
+
+                    if (tempObj.length) {
+
+                      tempObj.sort((a, b) => (b.propertiesOSID.osUpdatedAt) - (a.propertiesOSID.osUpdatedAt));
+                      this.model[element][i]['_osState'] = tempObj[0]._osState;
+                      console.log({ tempObj });
+                    }
+
+
+                  }
+
 
                   for (const [index, [key, value]] of Object.entries(Object.entries(objects))) {
                     if ('$ref' in this.responseData['definitions'][block.definition]['properties'][element]) {
@@ -237,12 +311,21 @@ export class LayoutsComponent implements OnInit, OnChanges {
                         if (objects.osid) {
                           temp_object['_osState'] = objects._osState;
                         }
+
+                        temp_object.property = key;
+                        temp_object.title = this.check(key, temp_object.title);
                         temp_object['value'] = value;
                         temp_array.push(this.pushData(temp_object))
                       }
                     }
                     else {
                       temp_object = this.responseData['definitions'][block.definition]['properties'][element]['items']['properties'][key];
+
+                      if (temp_object != undefined && temp_object.hasOwnProperty('title')) {
+                        temp_object.property = key;
+                        temp_object.title = this.check(key, temp_object.title);
+                      }
+
                       if (temp_object != undefined && typeof value != 'object') {
                         if (objects.osid) {
                           temp_object['osid'] = objects.osid;
@@ -250,6 +333,9 @@ export class LayoutsComponent implements OnInit, OnChanges {
                         if (objects.osid) {
                           temp_object['_osState'] = objects._osState;
                         }
+
+                        temp_object.property = key;
+                        temp_object.title = this.check(key, temp_object.title);
                         temp_object['value'] = value;
                         temp_array.push(this.pushData(temp_object));
                       }
@@ -259,7 +345,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
                     }
                   }
                   this.property.push(temp_array);
-                });
+                };
               }
             }
           });
@@ -272,9 +358,28 @@ export class LayoutsComponent implements OnInit, OnChanges {
           }
         });
       }
+
+      if (block.hasOwnProperty('propertyShowFirst') && this.property.length) {
+        let fieldsArray = (this.property[0].length) ? this.property[0] : this.property;
+        let fieldsArrayTemp = [];
+
+        for (let i = 0; i < block.propertyShowFirst.length; i++) {
+          fieldsArray = fieldsArray.filter(function (obj) {
+            if(obj.property === block.propertyShowFirst[i])
+            {
+              fieldsArrayTemp.push(obj);
+            }
+            return obj.property !== block.propertyShowFirst[i];
+          });
+
+        }
+
+        this.property = (this.property[0].length) ? [fieldsArrayTemp.concat(fieldsArray)] : fieldsArrayTemp.concat(fieldsArray);
+
+      }
+
       block.items.push(this.property)
       this.Data.push(block)
-      console.log("main",this.Data);
       this.schemaloaded = true;
     });
   }
@@ -288,14 +393,14 @@ export class LayoutsComponent implements OnInit, OnChanges {
     return object;
   }
 
-  getData() {
+  async getData() {
     var get_url;
     if (this.identifier) {
       get_url = this.apiUrl + '/' + this.identifier
     } else {
       get_url = this.apiUrl
     }
-    this.generalService.getData(get_url).subscribe((res) => {
+    await this.generalService.getData(get_url).subscribe((res) => {
       if (this.identifier) {
         this.model = res
       }
@@ -307,7 +412,7 @@ export class LayoutsComponent implements OnInit, OnChanges {
       this.getHeadingTitle(this.model);
 
       this.Data = [];
-      localStorage.setItem('osid',this.identifier);
+      localStorage.setItem('osid', this.identifier);
       this.addData()
     });
   }
@@ -344,44 +449,44 @@ export class LayoutsComponent implements OnInit, OnChanges {
     if (this.layoutSchema.hasOwnProperty('headerName')) {
       var propertySplit = this.layoutSchema.headerName.split(".");
 
-    let fieldValue = [];
+      let fieldValue = [];
 
-    for (let j = 0; j < propertySplit.length; j++) {
-      let a = propertySplit[j];
+      for (let j = 0; j < propertySplit.length; j++) {
+        let a = propertySplit[j];
 
-      if (j == 0 && item.hasOwnProperty(a)) {
-        fieldValue = item[a];
-      } else if (fieldValue.hasOwnProperty(a)) {
+        if (j == 0 && item.hasOwnProperty(a)) {
+          fieldValue = item[a];
+        } else if (fieldValue.hasOwnProperty(a)) {
 
-        fieldValue = fieldValue[a];
+          fieldValue = fieldValue[a];
 
-      } else if (fieldValue[0]) {
-        let arryItem = []
-        if (fieldValue.length > 0) {
-          for (let i = 0; i < fieldValue.length; i++) {
-            //  arryItem.push({ 'value': fieldValue[i][a], "status": fieldValue[i][key.attest] });
+        } else if (fieldValue[0]) {
+          let arryItem = []
+          if (fieldValue.length > 0) {
+            for (let i = 0; i < fieldValue.length; i++) {
+              //  arryItem.push({ 'value': fieldValue[i][a], "status": fieldValue[i][key.attest] });
+            }
+
+            fieldValue = arryItem;
+
+          } else {
+            fieldValue = fieldValue[a];
           }
 
-          fieldValue = arryItem;
-
         } else {
-          fieldValue = fieldValue[a];
+          fieldValue = [];
         }
-
-      } else {
-        fieldValue = [];
       }
+
+      this.headerName = fieldValue;
+      this.getSubHeadername(item);
     }
 
-    this.headerName = fieldValue;
-    this.getSubHeadername(item);
-    }
-    
   }
 
 
 
- getSubHeadername(item) {
+  getSubHeadername(item) {
 
     if (this.layoutSchema.hasOwnProperty('subHeadername')) {
       var propertySplit = this.layoutSchema.subHeadername.split(",");

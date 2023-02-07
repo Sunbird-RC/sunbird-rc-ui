@@ -1,23 +1,23 @@
 
 <div class="col-md-6 offset-md-3 mt-5">
-    <div style="text-align:center;font-size:x-large;font-weight:bold;margin-top: 30px;color:green;">Installation</div>
+    <div style="text-align:center;font-size:x-large;font-weight:bold;margin-top: 30px;color:green;">{{'INSTALLATION' | translate}}</div>
     <div class="card p-4">
         <div class="card-body">
             <div *ngIf="!installed && !message; else elseBlock">
                 <!-- <sf-form [schema]="schema"></sf-form> -->
                 <form [formGroup]="form" (ngSubmit)="submit()">
                     <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form"></formly-form>
-                    <button type="submit" class="btn btn-primary submit-button" [disabled]="!form.valid">Install</button>
+                    <button type="submit" class="btn btn-primary submit-button" [disabled]="!form.valid">{{'INSTALL' | translate}}</button>
                 </form>
             </div>
             <ng-template #elseBlock>
-                <h1>Installation Completed</h1>
+                <h1>{{'INSTALLATION_COMPLETED' | translate}}</h1>
                 <div>
-                    Add downloaded <b style="font-style: italic;color:rgba(214, 74, 31, 0.905)">config.json</b> file to <b style="font-style: italic;color:rgba(214, 74, 31, 0.905)">/assets/config/</b> folder to complete initial configuration..
+                    {{'ADD_DOWNLOADED' | translate}} <b style="font-style: italic;color:rgba(214, 74, 31, 0.905)">config.json</b> {{'FILE_TO' | translate}} <b style="font-style: italic;color:rgba(214, 74, 31, 0.905)">/assets/config/</b>{{'FOLDER_TO_COMPLETE_INITIAL_CONFIGURATION' | translate}}.
                 </div>
-                <input type="checkbox" [(ngModel)]="added">I have you added the config file.
+                <input type="checkbox" [(ngModel)]="added">{{'I_HAVE_YOU_ADDED_THE_CONFIG_FILE' | translate}}.
                 <br>
-                <button [disabled]="!added" class="btn btn-primary submit-button" [routerLink]="['']">Finish</button>
+                <button [disabled]="!added" class="btn btn-primary submit-button" [routerLink]="['']">{{'FINISH' | translate}}</button>
             </ng-template>
         </div>
        

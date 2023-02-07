@@ -27,7 +27,12 @@ export class AppConfig {
      * Use to get the data found in the first file (environment file)
      */
     public getEnv(key: any) {
-        return this.environment[key];
+        try {
+            return this.environment[key];
+        }
+        catch(err) {
+            this.router.navigate(['install'])
+          }
     }
 
     /**
@@ -52,7 +57,7 @@ export class AppConfig {
                         request = this.http.get('/assets/config/config.json');
                     } break;
 
-                    case 'default': {
+                    case 'install': {
                         console.error('environment is not set or invalid in config.json file');
                         this.router.navigate(['install'])
                         resolve(true);
@@ -65,19 +70,19 @@ export class AppConfig {
                             this.config = responseData;
                             this.titleService.setTitle(responseData.title);
                             resolve(true);
-                        }, err => {console.log('Error reading config.json configuration file', err);
-                        this.titleService.setTitle("Sunbird RC");
+                        }, err => {console.log('Error reading config.json configuration file . Please find Sample ->> https://demo-education-registry.xiv.in/assets/config/config.json', err);
+                        // this.titleService.setTitle("Sunbird RC");
                         this.router.navigate(['install'])});
                 } else {
-                    console.error('config.json file is not valid');
-                    this.titleService.setTitle("Sunbird RC");
+                    console.error('config.json file is not valid . Please find Sample ->> https://demo-education-registry.xiv.in/assets/config/config.json');
+                    // this.titleService.setTitle("Sunbird RC");
                     this.router.navigate(['install'])
                     resolve(true);
                 }
             }, 
             
-            err => {console.log('Error reading config.json configuration file', err);
-                    this.titleService.setTitle("Sunbird RC");
+            err => {console.log('Error reading config.json configuration file. Please find Sample ->> https://demo-education-registry.xiv.in/assets/config/config.json', err);
+                    // this.titleService.setTitle("Sunbird RC");
                     this.router.navigate(['install'])
                     resolve(true);
                     }

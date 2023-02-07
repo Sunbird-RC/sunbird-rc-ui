@@ -6,6 +6,7 @@ import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 import { GeneralService } from '../../services/general/general.service';
 import { ChangeDetectionStrategy } from '@angular/core';
 import { of as observableOf } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-search',
@@ -40,15 +41,7 @@ export class SearchComponent implements OnInit {
   searchResult: any;
   dropdownList = [];
   selectedItems = [];
-  dropdownSettings = {
-    singleSelection: false,
-    text: "Select filter",
-    selectAllText: 'Select All',
-    unSelectAllText: 'Unselect All',
-    enableSearchFilter: true,
-    noDataLabel: 'Filter Not Available',
-    classes: "myclass custom-class"
-  };
+  dropdownSettings = {};
   responseData;
   privateFields;
   searchFields = {
@@ -69,11 +62,26 @@ export class SearchComponent implements OnInit {
   constructor(
     public schemaService: SchemaService,
     private formlyJsonschema: FormlyJsonschema,
-    public generalService: GeneralService
-  ) { }
+    public generalService: GeneralService,
+    public translate: TranslateService
+  ) { 
+    this.dropdownSettings = {
+      singleSelection: false,
+      text: this.translate.instant("SELECT_FILTER"),
+      selectAllText: this.translate.instant("SELECT_ALL"),
+      unSelectAllText:this.translate.instant("UNSELECT_ALL"),
+      searchPlaceholderText : this.translate.instant("SEARCH"),
+      enableSearchFilter: true,
+      noDataLabel: this.translate.instant("FILTER_NOT_AVAILABLE"),
+      classes: "myclass custom-class"
+    };
+  }
 
 
   ngOnInit(): void {
+
+   
+
     this.schemaService.getSearchJSON().subscribe((searchSchemas) => {
       this.searchSchemas = searchSchemas;
 
@@ -129,17 +137,17 @@ export class SearchComponent implements OnInit {
             let fieldObj = {
               key: filter.key,
               type: 'input',
-              className: 'col-4',
+              className: 'col-sm-4',
               templateOptions: {
-                label: filter.title,
+                label: this.translate.instant(filter.title),
               }
             }
 
 
             if (filter.type == 'autocomplete') {
               fieldObj.type = 'autocomplete';
-              fieldObj['templateOptions']['label'] = filter.title;
-              fieldObj['templateOptions']['placeholder'] = filter.placeholder;
+              fieldObj['templateOptions']['label'] = this.translate.instant(filter.title);
+              fieldObj['templateOptions']['placeholder'] = this.translate.instant(filter.placeholder);
 
 
               fieldObj['templateOptions']['search$'] = (term) => {
@@ -168,11 +176,11 @@ export class SearchComponent implements OnInit {
               }
             }
 
-            this.dropdownList.push({ "id": filter.key, "itemName": filter.title, "data": fieldObj });
+            this.dropdownList.push({ "id": filter.key, "itemName": this.translate.instant(filter.title), "data": fieldObj });
 
             if (filter.default) {
               this.data[0].fieldGroup.push(fieldObj);
-              this.selectedItems.push({ "id": filter.key, "itemName": filter.title });
+              this.selectedItems.push({ "id": filter.key, "itemName": this.translate.instant(filter.title) });
             }
           }
         });
@@ -181,8 +189,7 @@ export class SearchComponent implements OnInit {
         this.fields = [this.data[0]];
 
         fieldset.results.fields.forEach((fields) => {
-          if(this.privateFields != [] && !this.privateFields.includes('$.' + fields.property))
-          {
+          if (this.privateFields != [] && !this.privateFields.includes('$.' + fields.property)) {
             this.cardFields.push(fields);
           }
         });
@@ -241,7 +248,7 @@ export class SearchComponent implements OnInit {
       this.cardFields.forEach((key, i) => {
 
         var property = key.property;
-        var title = key.title;
+        var title = this.translate.instant(key.title);
         var propertySplit = property.split(".");
 
         let fieldValue = [];
@@ -275,7 +282,7 @@ export class SearchComponent implements OnInit {
         }
 
 
-        this.fieldsTemp.push({ 'title': title, "value": fieldValue });
+        this.fieldsTemp.push({ 'title': this.translate.instant(title), "value": fieldValue });
 
       });
 

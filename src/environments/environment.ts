@@ -11,7 +11,7 @@ export const environment = {
   logo: 'assets/images/logo.png', //asset path OR URL
   keycloakConfig: {
     url: 'https://ndear.xiv.in/auth',
-    realm: 'ndear',
+    realm: 'sunbird-rc',
     clientId: 'registry-frontend'
   }
 };

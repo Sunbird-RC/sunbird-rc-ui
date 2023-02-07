@@ -3,6 +3,7 @@ import { FieldType } from '@ngx-formly/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { GeneralService } from 'src/app/services/general/general.service';
+
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -13,7 +14,7 @@ import { DomSanitizer } from '@angular/platform-browser';
       <div (click)="openFileInput()">
         <div></div>
           
-           <label class="p12 text-primary-color"> + Upload </label>
+           <label class="p12 text-primary-color"> {{'UPLOAD_FILE' | translate}} </label>
           
         <input
           #fileinput
@@ -52,6 +53,9 @@ export class FormlyFieldFile extends FieldType {
   openFileInput() {
     this.el.nativeElement.click();
   }
+
+  //    this.uploadLAbel = this.generalService.translateString(generalService);
+
   onDelete(index) {
     // this.formControl.reset();
     console.log(this.selectedFiles);

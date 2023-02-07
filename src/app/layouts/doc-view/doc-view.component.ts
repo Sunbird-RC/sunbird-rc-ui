@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
+
 import {
-  Pipe,
-  PipeTransform,
-  OnDestroy,
-  WrappedValue,
-  ChangeDetectorRef
+    Pipe,
+    PipeTransform,
+    OnDestroy,
+    WrappedValue,
+    ChangeDetectorRef
 } from '@angular/core';
 
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -14,128 +15,120 @@ import { GeneralService } from 'src/app/services/general/general.service';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { KeycloakService } from 'keycloak-angular';
 import { AppConfig } from 'src/app/app.config';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 
 
 @Component({
-  selector: 'app-doc-view',
-  templateUrl: './doc-view.component.html',
-  styleUrls: ['./doc-view.component.css']
+    selector: 'app-doc-view',
+    templateUrl: './doc-view.component.html',
+    styleUrls: ['./doc-view.component.css']
 })
 export class DocViewComponent implements OnInit {
-  docUrl: string;
-  baseUrl = this.config.getEnv('baseUrl');
-  extension;
-  public bearerToken: string | undefined = undefined;
-  constructor(private route: ActivatedRoute,
-    private keycloakService: KeycloakService, private config: AppConfig) { }
+    docUrl: string;
+    baseUrl = this.config.getEnv('baseUrl');
+    extension;
+    token
+    public bearerToken: string | undefined = undefined;
+    id: any;
+    excludedFields: any = ['osid','id', 'type','fileUrl'];
+    document = [];
+    constructor(private route: ActivatedRoute, public generalService: GeneralService,
+        private keycloakService: KeycloakService, private config: AppConfig) {
+        this.token = this.keycloakService.getToken();
 
-  ngOnInit(): void {
-    this.route.queryParams.subscribe(async params => {
-      console.log("r",params)
-      this.bearerToken = 'Bearer ' + this.keycloakService.getToken();
-      this.docUrl = this.baseUrl +'/'+ params.u;
-      this.extension = params.u.split('.').slice(-1);
-      console.log("d",this.docUrl)
-    })
+    }
+
+    ngOnInit(): void {
+        this.route.params.subscribe(async params => {
+            if(params.id && params.type){
+                this.id = params.id;
+                this.generalService.getData(params.type+'/'+params.id).subscribe((res) => {
+                    console.log('pub res', res);
+                    if(res.name !== 'attestation-DIVOC'){
+                        for (const [key, value] of Object.entries(res['additionalInput'])) {
+                            var tempObject = {}
+                            if(key === 'fileUrl'){
+                                this.docUrl = this.baseUrl + '/' + value;
+                                this.extension = this.docUrl.split('.').slice(-1)[0];
+                            }
+                            if (typeof value != 'object') {
+                              if (!this.excludedFields.includes(key)) {
+                                tempObject['key'] = key;
+                                tempObject['value'] = value;
+                                tempObject['type'] = res['name'];
+                                tempObject['osid'] = res['osid'];
+                                if(res['logoUrl']){
+                                  tempObject['logoUrl'] = res['logoUrl']
+                                }
+                                this.document.push(tempObject);
+                              }
+                            } else {
+                              if (!this.excludedFields.includes(key)) {
+                                tempObject['key'] = key;
+                                tempObject['value'] = value[0];
+                                tempObject['type'] = res['name'];
+                                tempObject['osid'] = res['osid'];
+                                if(res['logoUrl']){
+                                  tempObject['logoUrl'] = res['logoUrl']
+                                }
+                                this.document.push(tempObject);
+                              }
+                            }
     
-  }
-
+                            
+                          }
+                    }
+                    
+                      console.log('this.document',this.document)
+                  }, (err) => {
+                    // this.toastMsg.error('error', err.error.params.errmsg)
+                    console.log('error', err)
+                  });
+                  
+            }
+           
+        })
+    }
 }
 
 
 // Using similarity from AsyncPipe to avoid having to pipe |secure|async in HTML.
+
 @Pipe({
-  name: 'secure',
-  pure: false
+    name: 'authImage'
 })
-export class SecurePipe implements PipeTransform, OnDestroy {
-  private _latestValue: any = null;
-  private _latestReturnedValue: any = null;
-  private _subscription: Subscription = null;
-  private _obj: Observable<any> = null;
+export class AuthImagePipe implements PipeTransform {
+    extension;
+    constructor(
+        private http: HttpClient, private route: ActivatedRoute,
+        private keycloakService: KeycloakService, // our service that provides us with the authorization token
+    ) {
 
-  private previousUrl: string;
-  private _result: BehaviorSubject<any> = new BehaviorSubject(null);
-  private result: Observable<any> = this._result.asObservable();
-  private _internalSubscription: Subscription = null;
+        // this.route.queryParams.subscribe(async params => {
+        //     this.extension = params.u.split('.').slice(-1)[0];
+        // })
+    }
 
-  constructor(
-      private _ref: ChangeDetectorRef,
-      public generalService: GeneralService,
-      private sanitizer: DomSanitizer
-  ) { }
+    async transform(src: string,extension:string): Promise<any> {
+        this.extension = extension;
+        const token = this.keycloakService.getToken();
+        const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
+        let imageBlob = await this.http.get(src, { headers, responseType: 'blob' }).toPromise();
 
-  ngOnDestroy(): void {
-      if (this._subscription) {
-          this._dispose();
-      }
-  }
+        if (this.extension == 'pdf') {
+            imageBlob = new Blob([imageBlob], { type: 'application/' + this.extension })
+        } else {
+            imageBlob = new Blob([imageBlob], { type: 'image/' + this.extension })
+        }
 
-  transform(link: string): any {
-      let obj = this.internalTransform(link);
-      return this.asyncTrasnform(obj);
-  }
+        const reader = new FileReader();
+        return new Promise((resolve, reject) => {
+            reader.onloadend = () => resolve(reader.result as string);
+            reader.readAsDataURL(imageBlob);
+        });
+    }
 
-  private internalTransform(link: string): Observable<any> {
-      if (!link) {
-          return this.result;
-      }
-
-      if (this.previousUrl !== link) {
-          this.previousUrl = link;
-          this._internalSubscription = this.generalService.getDocument(link).subscribe(m => {
-              let sanitized = this.sanitizer.bypassSecurityTrustUrl(m);
-              this._result.next(sanitized);
-          });
-      }
-
-      return this.result;
-  }
-
-  private asyncTrasnform(obj: Observable<any>): any {
-      if (!this._obj) {
-          if (obj) {
-              this._subscribe(obj);
-          }
-          this._latestReturnedValue = this._latestValue;
-          return this._latestValue;
-      }
-      if (obj !== this._obj) {
-          this._dispose();
-          return this.asyncTrasnform(obj);
-      }
-      if (this._latestValue === this._latestReturnedValue) {
-          return this._latestReturnedValue;
-      }
-      this._latestReturnedValue = this._latestValue;
-      return WrappedValue.wrap(this._latestValue);
-  }
-
-  private _subscribe(obj: Observable<any>) {
-      var _this = this;
-      this._obj = obj;
-
-      this._subscription = obj.subscribe({
-          next: function (value) {
-              return _this._updateLatestValue(obj, value);
-          }, error: (e: any) => { throw e; }
-      });
-  }
-
-  private _dispose() {
-      this._subscription.unsubscribe();
-      this._internalSubscription.unsubscribe();
-      this._internalSubscription = null;
-      this._latestValue = null;
-      this._latestReturnedValue = null;
-      this._subscription = null;
-      this._obj = null;
-  }
-
-  private _updateLatestValue(async: any, value: Object) {
-      if (async === this._obj) {
-          this._latestValue = value;
-          this._ref.markForCheck();
-      }
-  }
 }
+
+

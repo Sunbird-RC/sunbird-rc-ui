@@ -4,6 +4,9 @@ import { GeneralService } from 'src/app/services/general/general.service';
 
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
+import { AppConfig } from '../../app.config';
+import { TranslateService } from '@ngx-translate/core';
+import { SchemaService } from 'src/app/services/data/schema.service';
 
 @Component({
   selector: 'app-form-detail',
@@ -36,9 +39,14 @@ export class AttestationComponent implements OnInit {
       key: 'note',
       type: 'textarea',
       templateOptions: {
-        label: 'Note',
-        required: true,
-        description: "note sent on user"
+        label: 'Note (Maximum Characters limit 250)',
+        maxLength: 250,
+        description: "note sent on user",
+      },
+      validation: {
+        messages: {
+          maxlength: "Maximum Characters limit exceeded (250)"
+        }
       }
     }
   ];
@@ -132,11 +140,21 @@ export class AttestationComponent implements OnInit {
   table: any;
   documents = null;
   notes: any[] = [];
+  logo: any;
+  fileURL: string;
+  titleVal: any;
+  formSchema: any;
+  langKey: any;
   constructor(
     public router: Router,
     private route: ActivatedRoute,
-    public generalService: GeneralService
+    public generalService: GeneralService,
+     private config: AppConfig, 
+     public translate: TranslateService,
+     public schemaService: SchemaService
   ) {
+    this.logo = this.config.getEnv(localStorage.getItem('ELOCKER_THEME') + '_theme').logoPath;
+
   }
 
   ngOnInit(): void {
@@ -174,12 +192,42 @@ export class AttestationComponent implements OnInit {
         this.denyFields[0].templateOptions.description = noteDesc;
         this.noteFields[0].templateOptions.description = noteDesc;
 
-        this.generalService.getData("/"+this.claimData.propertyURI).subscribe((res) => {
+        this.attestationData = JSON.parse(this.claimData.propertyData);
+
+        this.schemaService.getFormJSON().subscribe((FormSchemas) => {
+          let temp =  this.claimEntity.toLowerCase() + '-' + 'setup';
+          var filtered = FormSchemas.forms.filter(obj => {
+            
+            return Object.keys(obj)[0] === temp
+          })
+
+          this.formSchema = filtered[0][temp]
+
+          if (this.formSchema.langKey) {
+            this.langKey = this.formSchema.langKey;
+          }
+    
+       
+
+        let _self = this;
+        Object.keys(this.attestationData).forEach(function (key) {
+        if(typeof(_self.attestationData[key]) == 'object')
+        {
+          _self.attestationData = _self.attestationData[key][0];
+          _self.removeCommonFields();
+          _self.generateData()
+        }
+      
+        });
+
+        this.generalService.getData("/"+ this.claimData.propertyURI).subscribe((res) => {
           console.log("res2",res)
           this.attestationData = res;
           this.removeCommonFields();
           this.generateData()
         })
+
+
         this.generalService.getData(this.claimEntity+"/"+this.claimEntityId).subscribe((res) => {
           console.log("profileData",res);
 
@@ -188,6 +236,8 @@ export class AttestationComponent implements OnInit {
           // this.removeCommonFields();
           // this.generateData()
         })
+
+      });
       }
     })
 
@@ -221,7 +271,8 @@ export class AttestationComponent implements OnInit {
         //   this.propertyData.push(temp_object);
         // }
         var temp_object = {};
-          temp_object['title'] = (key).charAt(0).toUpperCase() + key.slice(1);
+         // temp_object['title'] = (key).charAt(0).toUpperCase() + key.slice(1);
+          temp_object['title'] = this.check(key);
           temp_object['value'] = value;
           this.propertyData.push(temp_object);
       }
@@ -229,8 +280,21 @@ export class AttestationComponent implements OnInit {
     console.log("propertyData",this.propertyData)
   }
 
+
+  check(conStr) {
+    this.translate.get(this.langKey + '.' + conStr).subscribe(res => {
+      let constr = this.langKey + '.' + conStr;
+      if (res != constr) {
+        this.titleVal = res;
+      } else {
+        this.titleVal = conStr;
+      }
+    });
+    return this.titleVal;
+  }
+
   removeCommonFields() {
-    var commonFields = ['osCreatedAt', 'osCreatedBy', 'osUpdatedAt', 'osUpdatedBy','OsUpdatedBy','_osAttestedData', 'osid','_osClaimId','_osState','Osid'];
+    var commonFields = ['osCreatedAt', 'osCreatedBy', 'osUpdatedAt', 'osUpdatedBy','OsUpdatedBy','_osAttestedData', 'osid','_osClaimId','_osState','Osid', 'InstituteOSID', 'TeacherOSID', 'sorder'];
     commonFields.forEach(element => {
       if(this.attestationData.hasOwnProperty(element)){
         delete this.attestationData[element]
@@ -271,12 +335,22 @@ export class AttestationComponent implements OnInit {
     // window.location.reload();
   }
 
+ getPathUrl(filepath)
+ {
+ this.generalService.openPDF('/' + filepath );
+ }
+
+
+  typeOf(value) {
+    return typeof value;
+  }
+  
   onConsent() { }
 
-  saveNote(event){
+  saveNote(){
     // localStorage.setItem('note', JSON.stringify(event));
-    console.log('evv',event.note);
-    this.note = event.note
+    console.log('evv noteForm -- ', this.noteForm.value.note);
+    this.note =  this.noteForm.value.note;
     this.noteAdded = true;
   }
 

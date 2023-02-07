@@ -1,15 +1,19 @@
 <app-header *ngIf="header != null" [headerFor]='header'></app-header>
 <ng-template #noModal>
+  <div class="mt-120"></div>
   <div class="col-md-6 offset-md-3 mt-5">
     <h3 class="font-weight-bold">  {{headingTitle}}</h3>
-    <div class="card p-4">
+    <div class="card mb-5">
       <div *ngIf="schemaloaded; else loader" class="card-body">
         <div>
           <form [formGroup]="form2" (ngSubmit)="submit()" *ngIf="fields">
             <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form2"></formly-form>
-            <button type="submit" class="btn btn-primary w-100 submit-button" [disabled]="!form2.valid">Submit</button>
+            <button type="submit" class="btn btn-primary w-100 submit-button" [disabled]="!form2.valid">{{'SUBMIT' | translate}}</button>
           </form>
         </div>
+        <div class="text-center text-secondary-color p-3 font-weight-bold" *ngIf="isSignupForm"> 
+          <a  href="/login"> {{'ALREADY_REGISTERED_LOGIN' | translate}}? </a>
+         </div>
       </div>
     </div>
   </div>
@@ -20,18 +24,21 @@
   <div *ngIf="modal==='true'; else noModal" class="modal-body">
     <form [formGroup]="form2" (ngSubmit)="submit()" *ngIf="fields">
      <div *ngIf="globalPrivacy" class="mb-3">
-        <h6 class="mb-1 p12 font-weight-bold">Visibility</h6>
-        <span class="p12"> Privacy Attribute Define <span class="float-end {{globalPrivacy}}">
+        <h6 class="mb-1 p12 font-weight-bold">{{'VISIBILITY' | translate}}</h6>
+        <span class="p12"> {{'PRIVACY_ATTRIBUTE_DEFINE' | translate}} <span class="float-end {{globalPrivacy}}">
+          <span  *ngIf="globalPrivacy == 'public-access'"> &nbsp; {{'ANYONE' | translate}}</span>
+          <span *ngIf="globalPrivacy == 'internal-access'"> &nbsp;{{'ONLY_BY_ME' | translate}}</span>
+          <span *ngIf="globalPrivacy == 'private-access'"> &nbsp;{{'ONLY_BY_CONSENT' | translate}}</span>
            </span></span>
       </div>
       <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form2"></formly-form>
-      <button type="submit" id="btn-one" class="btn btn-primary submit-button" [disabled]="!form2.valid">Submit</button>
+      <button type="submit" id="btn-one" class="btn btn-primary submit-button" [disabled]="!form2.valid || isSubmitForm || form2.pristine">{{'SUBMIT' | translate}}</button>
     </form>
 
 
 
     <div class="notes-div my-5" *ngIf="notes">
-      <h6>Notes</h6>
+      <h6>{{'NOTES' | translate}}</h6>
       <div class=" p-3">
         <!-- multiple note -->
         <div class="mb-3" *ngFor="let note of notes">
@@ -48,14 +55,14 @@
   </div>
 </div>
 
-<div class="text-center text-secondary-color p14 font-weight-bold" *ngIf="isSignupForm">
- <a  href="/login"> Already Registered? Login </a>
-</div>
+<!-- <div class="text-center text-secondary-color p14 font-weight-bold" *ngIf="isSignupForm">
+ <a  href="/login"> {{'ALREADY_REGISTERED_LOGIN' | translate}}? </a>
+</div> -->
 <ng-template #loader>
   <br>
   <div class="d-flex justify-content-center">
     <div class="spinner-border" style="width: 5rem; height: 5rem;" role="status">
-      <span class="sr-only">Loading...</span>
+      <span class="sr-only">{{'LOADING'| translate}}| translate}}...</span>
     </div>
   </div>
 </ng-template>

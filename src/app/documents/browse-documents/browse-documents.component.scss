@@ -1,0 +1,41 @@
+.search-area {
+    .input-append {
+        position: relative;
+        .fa-search {
+            position: absolute;
+            right: 12px;
+            top: 15px;
+           // color: var(--gray2) !important;
+        }
+        input {
+            border: 1px solid #EFEFEF;
+            box-sizing: border-box;
+            border-radius: 4px;
+            padding: 11px 35px 11px 15px;
+        }
+    }
+}
+
+.card {
+    .card-body {
+        display: flex;
+    }
+    .card-image {
+        border: 1px solid #ddd;
+        height: 50px;
+        border-radius: 50%;
+        width: 50px;
+        text-align: center;
+        overflow: hidden;
+        img {
+            object-fit: cover;
+            // padding: 8px;
+            height: 45px;
+            border-radius: 100%;
+        }
+    }
+    .card-intro-info {
+        width: calc(100% - 45px);
+        padding-right: 5px;
+    }
+}

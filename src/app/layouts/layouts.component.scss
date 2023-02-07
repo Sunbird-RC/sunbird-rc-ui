@@ -14,14 +14,29 @@ dl,dt{
 .right-xl-modal{
     &.modal{
         right: 0 !important;
-        width: 70% !important;
+      //  width: 70% !important;
         left: inherit !important;
     }
     .modal-dialog{
-        max-width: 997px !important;
+        max-width: 680px !important;
         margin: 0 auto !important;
     }
 }
+pt-1{
+    padding-top: 1rem;
+}
+// .right-s-modal{
+//     &.modal{
+//         right: 0 !important;
+//       //  width: 70% !important;
+//         left: inherit !important;
+//     }
+//     .modal-dialog{
+//         max-width: 480px !important;
+//         margin: 0 auto !important;
+//     }
+// }
+
 .right-l-modal{
     &.modal{
         right: 0 !important;
@@ -52,7 +67,7 @@ dl,dt{
 .modal.right .modal-dialog {
     position: fixed;
     margin: auto;
-    width: 620px;
+    width: 100%;
     height: 100%;
     -webkit-transform: translate3d(0%, 0, 0);
         -ms-transform: translate3d(0%, 0, 0);
@@ -160,16 +175,43 @@ mb-2{
 nav {
     overflow: hidden;
     // padding: 1em;
-    position: fixed;
+    position: inherit;
     top: 0px;
     display: block;
     width: 100%;
     z-index: 1;
     height: 96px;
-    top: 60px
+    top: 57px
 }
 
 img {
     display: inline;
     width: 16px;
+}
+
+
+.noDataMsg {
+    background-color: var(--cardBackground) !important;
+    margin-top: -33px !important;
+    position: relative !important;
+}
+
+.header-fixed-height{
+   // height: 56px !important;
+    margin-bottom: 45px;
+}
+
+.mt-0 {
+    margin-top: 0 ;
+}
+
+.mt-85{
+    margin-top: 85px;
+}
+
+@media (max-width: 767.98px) {
+    .mt-85{
+        margin-top: 125px;
+    }
+    
 }

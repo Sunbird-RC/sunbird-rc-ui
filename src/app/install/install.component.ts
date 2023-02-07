@@ -18,7 +18,10 @@ export class InstallComponent implements OnInit {
   form = new FormGroup({});
   model: any = {};
   options: FormlyFormOptions = {};
-
+  languages = [
+    { value: "en", label: 'English' },
+    { value: "hi", label: 'Hindi'  }
+  ]
   fields: FormlyFieldConfig[] = [
     {
       key: 'title',
@@ -45,6 +48,23 @@ export class InstallComponent implements OnInit {
         options: [
           { label: 'Development', value: 'development' },
           { label: 'Production', value: 'production' }
+        ],
+      },
+    },
+    {
+      key: 'appType',
+      type: 'select',
+      defaultValue: 'Attestation',
+      templateOptions: {
+        label: 'Select type of appplication',
+        required: true,
+        addonLeft: {
+          text: 'appType:',
+        },
+        options: [
+          { label: 'Attestation', value: 'attestation' },
+          { label: 'Certification', value: 'certification' },
+          { label: 'Digital Wallet', value: 'digital_wallet'}
         ],
       },
     },
@@ -114,6 +134,18 @@ export class InstallComponent implements OnInit {
       ],
     },
     {
+      key: 'language',
+      type: 'select',
+      templateOptions: {
+        label: 'Select Default Language',
+        placeholder: 'Select Default language',
+        required: true,
+        multiple: true,
+        options: this.languages
+      
+      }
+    },
+    {
       key: 'configFolder',
       type: 'input',
       defaultValue: '/assets/config',
@@ -121,21 +153,337 @@ export class InstallComponent implements OnInit {
         addonLeft: {
           text: 'configFolder:',
         },
+        description:'Reference link : https://github.com/ref-registries/edu-core-registries/tree/main/ui-config',
         required: true,
-        label: 'Read config files(forms.json,etc.) from which folder?',
+        label: 'Read config files(forms.json,layouts.json,etc.) from which folder?',
       },
     },
-    {
-      key: 'logoPath',
-      type: 'input',
-      defaultValue: '/assets/images/logo.png',
-      templateOptions: {
-        addonLeft: {
-          text: 'logoPath:',
+    { 
+      key: 'default_theme',
+      wrappers: ['panel'],
+      templateOptions: { label: 'Default Theme' },
+      fieldGroup: [
+        {
+          key: 'logoPath',
+          type: 'input',
+          defaultValue: '/assets/images/default-logo.png',
+          templateOptions: {
+            addonLeft: {
+              text: 'logoPath:',
+            },
+            required: true,
+            label: 'what is the path of logo file?',
+          },
         },
-        required: true,
-        label: 'what is the path of logo file?',
-      },
+        {
+          key: 'primaryColor',
+          type: 'color',
+          defaultValue: '#000000',
+          templateOptions: {
+            addonLeft: {
+              text: 'Primary color:',
+            },
+            required: true,
+            label: 'Select color',
+          },
+        },
+        {
+          key: 'secondaryColor',
+          type: 'color',
+          defaultValue: '#000000',
+          templateOptions: {
+            addonLeft: {
+              text: 'Secondary color:',
+            },
+            required: true,
+            label: 'Select color',
+          },
+        },
+        {
+          key: 'bodyBackground',
+          type: 'color',
+          defaultValue: '#000000',
+          templateOptions: {
+            addonLeft: {
+              text: 'Body Backgroud color:',
+            },
+            required: true,
+            label: 'Select color',
+          },
+        },
+        {
+          key: 'cardBackground',
+          type: 'color',
+          defaultValue: '#000000',
+          templateOptions: {
+            addonLeft: {
+              text: 'Card Backgroud color:',
+            },
+            required: true,
+            label: 'Select color',
+          },
+        },
+        {
+          key: 'tagsBackground',
+          type: 'color',
+          defaultValue: '#000000',
+          templateOptions: {
+            addonLeft: {
+              text: 'Tags Backgroud color:',
+            },
+            required: true,
+            label: 'Select color',
+          },
+        },
+        {
+          key: 'navLabelColor',
+          type: 'color',
+          defaultValue: '#000000',
+          templateOptions: {
+            addonLeft: {
+              text: 'Navigation Lable color:',
+            },
+            required: true,
+            label: 'Select color',
+          },
+        },
+        {
+          key: 'headerColor',
+          type: 'color',
+          defaultValue: '#000000',
+          templateOptions: {
+            addonLeft: {
+              text: 'Header color:',
+            },
+            required: true,
+            label: 'Select color',
+          },
+        },
+        {
+          key: 'primaryTextColor',
+          type: 'color',
+          defaultValue: '#000000',
+          templateOptions: {
+            addonLeft: {
+              text: 'Primary Text color:',
+            },
+            required: true,
+            label: 'Select color',
+          },
+        },
+        {
+          key: 'secondaryTextColor',
+          type: 'color',
+          defaultValue: '#000000',
+          templateOptions: {
+            addonLeft: {
+              text: 'Secondary Text color:',
+            },
+            required: true,
+            label: 'Select color',
+          },
+        },
+        
+        {
+          key: 'headerLinkColor',
+          type: 'color',
+          defaultValue: '#000000',
+          templateOptions: {
+            addonLeft: {
+              text: 'Header Link color:',
+            },
+            required: true,
+            label: 'Select color',
+          },
+        },
+        {
+          key: 'linkColor',
+          type: 'color',
+          defaultValue: '#000000',
+          templateOptions: {
+            addonLeft: {
+              text: 'Link color:',
+            },
+            required: true,
+            label: 'Select color',
+          },
+        },
+        {
+          key: 'secondaryBtnBgColor',
+          type: 'color',
+          defaultValue: '#000000',
+          templateOptions: {
+            addonLeft: {
+              text: 'Secondary Button Background color:',
+            },
+            required: true,
+            label: 'Select color',
+          }
+        }
+      ]
+    },
+    { 
+      key: 'dark_theme',
+      wrappers: ['panel'],
+      templateOptions: { label: 'Dark Theme' },
+      fieldGroup: [
+        {
+          key: 'logoPath',
+          type: 'input',
+          defaultValue: '/assets/images/dark-logo.png',
+          templateOptions: {
+            addonLeft: {
+              text: 'logoPath:',
+            },
+            required: true,
+            label: 'what is the path of logo file?',
+          },
+        },
+        {
+          key: 'primaryColor',
+          type: 'color',
+          defaultValue: '#000000',
+          templateOptions: {
+            addonLeft: {
+              text: 'Primary color:',
+            },
+            required: true,
+            label: 'Select color',
+          },
+        },
+        {
+          key: 'secondaryColor',
+          type: 'color',
+          defaultValue: '#000000',
+          templateOptions: {
+            addonLeft: {
+              text: 'Secondary color:',
+            },
+            required: true,
+            label: 'Select color',
+          },
+        },
+        {
+          key: 'bodyBackground',
+          type: 'color',
+          defaultValue: '#000000',
+          templateOptions: {
+            addonLeft: {
+              text: 'Body Backgroud color:',
+            },
+            required: true,
+            label: 'Select color',
+          },
+        },
+        {
+          key: 'cardBackground',
+          type: 'color',
+          defaultValue: '#000000',
+          templateOptions: {
+            addonLeft: {
+              text: 'Card Backgroud color:',
+            },
+            required: true,
+            label: 'Select color',
+          },
+        },
+        {
+          key: 'tagsBackground',
+          type: 'color',
+          defaultValue: '#000000',
+          templateOptions: {
+            addonLeft: {
+              text: 'Tags Backgroud color:',
+            },
+            required: true,
+            label: 'Select color',
+          },
+        },
+        {
+          key: 'navLabelColor',
+          type: 'color',
+          defaultValue: '#000000',
+          templateOptions: {
+            addonLeft: {
+              text: 'Navigation Lable color:',
+            },
+            required: true,
+            label: 'Select color',
+          },
+        },
+        {
+          key: 'headerColor',
+          type: 'color',
+          defaultValue: '#000000',
+          templateOptions: {
+            addonLeft: {
+              text: 'Header color:',
+            },
+            required: true,
+            label: 'Select color',
+          },
+        },
+        {
+          key: 'primaryTextColor',
+          type: 'color',
+          defaultValue: '#000000',
+          templateOptions: {
+            addonLeft: {
+              text: 'Primary Text color:',
+            },
+            required: true,
+            label: 'Select color',
+          },
+        },
+        {
+          key: 'secondaryTextColor',
+          type: 'color',
+          defaultValue: '#000000',
+          templateOptions: {
+            addonLeft: {
+              text: 'Secondary Text color:',
+            },
+            required: true,
+            label: 'Select color',
+          },
+        },
+        {
+          key: 'headerLinkColor',
+          type: 'color',
+          defaultValue: '#000000',
+          templateOptions: {
+            addonLeft: {
+              text: 'Header Link color:',
+            },
+            required: true,
+            label: 'Select color',
+          },
+        },
+        {
+          key: 'linkColor',
+          type: 'color',
+          defaultValue: '#000000',
+          templateOptions: {
+            addonLeft: {
+              text: 'Link color:',
+            },
+            required: true,
+            label: 'Select color',
+          },
+        },
+        {
+          key: 'secondaryBtnBgColor',
+          type: 'color',
+          defaultValue: '#000000',
+          templateOptions: {
+            addonLeft: {
+              text: 'Secondary Button Background color:',
+            },
+            required: true,
+            label: 'Select color',
+          }
+        }
+      ]
     },
     {
       key: 'footerText',
@@ -155,8 +503,13 @@ export class InstallComponent implements OnInit {
   constructor(public router: Router, private httpClient: HttpClient) { }
 
   ngOnInit(): void {
-    this.checkConfig().subscribe((res) => { if (res) { this.router.navigate(['']) } },
-      (error) => this.installed = false);
+    try{
+      this.checkConfig().subscribe((res) => { if (res) { this.router.navigate(['']) } },
+        (error) => this.installed = false);
+    }
+    catch(error) {
+      console.log('---------------------',error);
+    }
   }
 
   checkConfig(): Observable<boolean> {

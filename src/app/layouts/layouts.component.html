@@ -1,26 +1,22 @@
-<div>
-    <app-header *ngIf="!public" [headerFor]='layout' [tab]='tab'></app-header>
-</div>
-<div *ngIf="params?.layout && !public"> 
-    <div>
-        <br />
-        <nav class="navbar navbar-expand-lg navbar-light bg-white">
-            <div class="container my-2">
-                <div class=" d-inline ">
-                    <h3 class="mb-1 text-body">
-                        {{headerName}}
-                    </h3>
-                    <p *ngIf="subHeadername.length"> <i class="fa fa-map-marker"></i> <span
-                            *ngFor="let a of subHeadername;let i = index">
-                            {{a}}
-                            <span *ngIf="subHeadername.length > 1 && subHeadername.length != i+1">, </span>
-                        </span></p>
-                </div>
-                <a *ngIf="!public" class=" p-2 p14 btn-bg label-primary btn-style float-end"
-                data-toggle="modal" data-target="#prewiewProfile" (click)="openPreview()">Preview Public Profile</a>
+<div *ngIf="!public" class="header-fixed-height"></div>
+
+<app-header *ngIf="!public" [headerFor]='layout' [tab]='tab'></app-header>
+ <div *ngIf="params?.layout && !public" class="mb-2">
+    <nav class="navbar navbar-expand-lg navbar-light bg-header mt-85">
+        <div class="container my-2 pt-2" >
+            <div class=" d-inline ">
+                <h3 class="mb-1 text-wb">
+                    {{headerName}}
+                </h3>
+                <p *ngIf="subHeadername.length"> <i class="fa fa-map-marker"></i> <span *ngFor="let a of subHeadername;let i = index">
+                        {{a}}
+                        <span *ngIf="subHeadername.length > 1 && subHeadername.length != i+1">, </span>
+                    </span>
+                </p>
             </div>
-        </nav>
-    </div>
+            <a *ngIf="!public" class=" p-2 p14 btn-bg label-primary btn-style float-end" data-toggle="modal" data-target="#prewiewProfile" (click)="openPreview()">{{'PREVIEW_PUBLIC_PROFILE' | translate}}</a>
+        </div>
+    </nav>
 </div>
 <br />
 
@@ -31,7 +27,7 @@
     <br>
     <div class="d-flex justify-content-center">
         <div class="spinner-border" style="width: 5rem; height: 5rem;" role="status">
-            <span class="sr-only">Loading...</span>
+            <span class="sr-only">{{'LOADING' | translate}}</span>
         </div>
     </div>
 </ng-template>
@@ -39,21 +35,22 @@
 <!-- <div [ngClass]="public ? 'container noToBottom' : 'container'" *ngIf="identifier != null"> -->
 
 
-<div [ngClass]="public ? 'container noToBottom' : 'container'" *ngIf="identifier != null && schemaloaded; else loader">
+<div [ngClass]="public ? 'container noToBottom' : 'container mt-0'" *ngIf="identifier != null && schemaloaded; else loader">
     <ng-template ngFor let-block [ngForOf]="Data" let-blockIndex="index">
         <div *ngIf="block.items[0].length > 0; else noData">
-            <div [ngClass]="public ? 'd-flex flex-justify-between' : 'd-flex flex-justify-between mt-3'">
-                <div>
-                    <p class="d-inline-block fs-6 font-weight-bold mb-2">{{block.title}}</p>
+            <div [ngClass]="public ? 'd-flex flex-justify-between' : 'd-flex flex-justify-between mt-1'">
+                <div class="mt-1">
+                    <p class="d-inline-block fs-6 font-weight-bold mb-2">{{block.title | translate}}</p>
                     <ng-template [ngIf]="block.edit">
-                        <a *ngIf="!public" panelEditLink="{{block.editform}}" class="pl-1 fs-7 text-secondary-color">edit
+                        <a *ngIf="!public" panelEditLink="{{block.editform}}" class="pl-1 fs-7 text-secondary-color">{{'EDIT'| translate}}
                             <!-- <i class="fa fa-pencil-square-o" aria-hidden="true"></i> -->
                         </a>
                     </ng-template>
                 </div>
                 <ng-template [ngIf]="block.add">
                     <a *ngIf="!public" panelAddLink="{{block.addform}}" class="fs-7 text-secondary-color"><i
-                            class="fa fa-plus pr-1" aria-hidden="true"></i><span class="text-secondary-color p12">{{block.title}}</span></a>
+                            class="fa fa-plus pr-1" aria-hidden="true"></i><span
+                            class="text-secondary-color p12">{{block.title | translate}}</span></a>
                 </ng-template>
                 <!-- <a *ngIf="!public" class="text-end d-block text-primary-color blue-shade-btn float-end" data-toggle="modal"
                 data-target="#prewiewProfile">Preview Public Profile</a> -->
@@ -65,55 +62,54 @@
                             <ng-template [ngIf]="element.length > 0">
                                 <ng-template ngFor let-objects [ngForOf]="element" let-objectIndex="index">
                                     <ng-template [ngIf]="element[objectIndex].value" class=" fs-6">
-                                        <h7 data-mdb-toggle="tooltip" title={{element[objectIndex].title}}
-                                            *ngIf="objectIndex == 0; else smallBlock"> <b
-                                                class="mr-1">{{element[objectIndex].value}} </b>
-                                            <img *ngIf="element[objectIndex]._osState == 'ATTESTATION_REQUESTED'; else icons"
-                                                data-mdb-toggle="tooltip"
-                                                title="{{element[objectIndex]._osState}} {{element[objectIndex]._osClaimNotes}}"
-                                                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yNTYsMEMxMTQuNjE1LDAsMCwxMTQuNjE1LDAsMjU2czExNC42MTUsMjU2LDI1NiwyNTZzMjU2LTExNC42MTUsMjU2LTI1NlMzOTcuMzg1LDAsMjU2LDB6IE0yNTYsNDgwICAgICBDMTMyLjI4OCw0ODAsMzIsMzc5LjcxMiwzMiwyNTZTMTMyLjI4OCwzMiwyNTYsMzJzMjI0LDEwMC4yODgsMjI0LDIyNFMzNzkuNzEyLDQ4MCwyNTYsNDgweiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPgoJCQk8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjMyIiBmaWxsPSIjMDRhM2UxIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIj48L2NpcmNsZT4KCQkJPGNpcmNsZSBjeD0iMzY4IiBjeT0iMjU2IiByPSIzMiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9jaXJjbGU+CgkJCTxjaXJjbGUgY3g9IjE0NCIgY3k9IjI1NiIgcj0iMzIiIGZpbGw9IiMwNGEzZTEiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiPjwvY2lyY2xlPgoJCTwvZz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+" />
+                                      
+                                        <h7 data-mdb-toggle="tooltip" title={{element[objectIndex].title}} *ngIf="(block.headValue) ? (element[objectIndex].property == block.headValue ? true : false) : objectIndex == 0;"> <b class="mr-1">{{element[objectIndex].value}}</b>
+                                          <span *ngIf="block?.canRaiseClaim">
+                                            <img *ngIf="element[objectIndex]._osState == 'ATTESTATION_REQUESTED'; else icons" data-mdb-toggle="tooltip" title="{{element[objectIndex]._osState | translate}} {{element[objectIndex]._osClaimNotes | translate}}" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yNTYsMEMxMTQuNjE1LDAsMCwxMTQuNjE1LDAsMjU2czExNC42MTUsMjU2LDI1NiwyNTZzMjU2LTExNC42MTUsMjU2LTI1NlMzOTcuMzg1LDAsMjU2LDB6IE0yNTYsNDgwICAgICBDMTMyLjI4OCw0ODAsMzIsMzc5LjcxMiwzMiwyNTZTMTMyLjI4OCwzMiwyNTYsMzJzMjI0LDEwMC4yODgsMjI0LDIyNFMzNzkuNzEyLDQ4MCwyNTYsNDgweiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPgoJCQk8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjMyIiBmaWxsPSIjMDRhM2UxIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIj48L2NpcmNsZT4KCQkJPGNpcmNsZSBjeD0iMzY4IiBjeT0iMjU2IiByPSIzMiIgZmlsbD0iIzA0YTNlMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiI+PC9jaXJjbGU+CgkJCTxjaXJjbGUgY3g9IjE0NCIgY3k9IjI1NiIgcj0iMzIiIGZpbGw9IiMwNGEzZTEiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiPjwvY2lyY2xlPgoJCTwvZz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+"
+                                            />
                                             <ng-template #icons>
-                                                <i *ngIf="element[objectIndex]._osState != 'DRAFT'"
-                                                    [ngClass]="element[objectIndex]._osState == 'PUBLISHED' ? 'fa fa-check-circle text-success' : 'fa fa-exclamation-circle red'"
-                                                    data-mdb-toggle="tooltip"
-                                                    title="{{element[objectIndex]._osState}} {{element[objectIndex]._osClaimNotes}}"></i>
+                                                <i *ngIf="element[objectIndex]._osState != 'DRAFT'" [ngClass]="(element[objectIndex]._osState == 'PUBLISHED' ? 'fa fa-check-circle text-success' : ( 
+                                                    (element[objectIndex]._osState == 'REJECTED' || element[objectIndex]._osState == 'INVALID') ?  'fa fa-exclamation-circle red' : 'DRAFT'))" data-mdb-toggle="tooltip" title="{{element[objectIndex]._osState | translate}} {{element[objectIndex]._osClaimNotes | translate}}"></i>
                                             </ng-template>
                                             <ng-template [ngIf]="element[objectIndex]._osState == 'DRAFT'">
 
-                                                <span class="badge font-weight-normal badge-secondary" data-mdb-toggle="tooltip"
-                                                    title="Saved to DRAFT">Draft</span>
+                                                <span class="badge font-weight-normal badge-secondary" data-mdb-toggle="tooltip" title="{{'SAVED_TO_DRAFT' | translate}}">{{'DRAFT' | translate}}</span>
 
 
                                                 <!-- <a panelEditLink="{{block.editform}}" identity="{{element[objectIndex].osid}}" class="pl-1 fs-7 text-primary-color">edit <i
                                                     class="fa fa-pencil pr-1" aria-hidden="true"></i></a> -->
                                             </ng-template>
-                                            <span *ngIf="element[objectIndex]._osState != 'PUBLISHED'"
-                                                class="float-end">
+                                            <ng-template [ngIf]="!element[objectIndex]?._osState">
+                                                <span class="badge font-weight-normal badge-secondary" data-mdb-toggle="tooltip" title="{{'SAVED_TO_DRAFT' | translate}}">{{'DRAFT' | translate}}</span>
+
+                                            </ng-template>
+                                        </span>
+
+                                            <span *ngIf="element[objectIndex]._osState != 'PUBLISHED'" class="float-end">
                                                 <a *ngIf="!public && block.claimEdit"
                                                     panelEditLink="{{block.editform}}/{{element[objectIndex].osid}}"
                                                     class="pl-1 fs-7 text-primary-color float-end">
                                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                                             </span>
                                         </h7>
+                                    </ng-template>
+        
+                                </ng-template>
 
-                                        <ng-template #smallBlock>
-                                            <div *ngIf="objectIndex + 1 != element.length; else greyBlock"
-                                                data-mdb-toggle="tooltip" title={{element[objectIndex].title}}>
+                                    <ng-template ngFor let-objects [ngForOf]="element" let-objectIndex="index">
+                                        <div *ngIf="element[objectIndex].property != block.headValue;">
+                                            <div *ngIf="objectIndex + 1 != element.length; else greyBlock" data-mdb-toggle="tooltip" title={{element[objectIndex].title}}>
                                                 <span class="text-grey-color p14">{{element[objectIndex].title}}:
                                                 </span> <span class="p14">{{element[objectIndex].value}}</span>
                                             </div>
                                             <ng-template #greyBlock>
-                                                <div class="fs-6" data-mdb-toggle="tooltip"
-                                                    title={{element[objectIndex].title}}><span
-                                                        class="text-grey-color p14">{{element[objectIndex].title}}:</span>
+                                                <div class="fs-6" data-mdb-toggle="tooltip" title={{element[objectIndex].title}}><span class="text-grey-color p14">{{element[objectIndex].title}}:</span>
 
                                                     <span class="p14"> {{element[objectIndex].value}}</span>
                                                 </div>
                                             </ng-template>
-
-                                        </ng-template>
+                                        </div>
                                     </ng-template>
-                                </ng-template>
                                 <hr *ngIf="elementIndex + 1 != item.length">
                             </ng-template>
                         </ng-template>
@@ -122,42 +118,39 @@
 
                 </div>
                 <ng-template #publicMultiBlock>
-                    <div class="card-body mt-4">
+                    <div class="card-body my-4">
+                        <div class="d-flex justify-content-center"> {{'NO_DATA_FOUND' | translate}}</div>
                         <ng-template ngFor let-item [ngForOf]="block.items" let-itemIndex="index">
                             <ng-template ngFor let-element [ngForOf]="item" let-elementIndex="index">
-                                <ng-template ngFor let-objects [ngForOf]="element" let-objectIndex="index">
-                                    <!-- {{element[objectIndex]}} {{objectIndex}} -->
-                                    <ng-template
-                                        [ngIf]="element[objectIndex].value && element[objectIndex]._osState == 'PUBLISHED'">
-                                        <!-- <div class="fs-7 text-grey-color">{{element[objectIndex].title}}</div> -->
-                                        <h6 data-mdb-toggle="tooltip" title={{element[objectIndex].title}}
-                                            *ngIf="objectIndex == 0; else smallBlock">
-                                            <h7 class="font-weight-bold">{{element[objectIndex].value}} </h7>
+                                <div class="noDataMsg">
+                                    <ng-template ngFor let-objects [ngForOf]="element" let-objectIndex="index">
+                                        <!-- {{element[objectIndex]}} {{objectIndex}} -->
+                                        <ng-template [ngIf]="(element[objectIndex].value && element[objectIndex]._osState == 'PUBLISHED') || !block?.canRaiseClaim">
+                                            <!-- <div class="fs-7 text-grey-color">{{element[objectIndex].title}}</div> -->
+                                            <h6 data-mdb-toggle="tooltip" title={{element[objectIndex].title}} *ngIf="objectIndex == 0; else smallBlock">
+                                                <h7 class="font-weight-bold">{{element[objectIndex].value}} </h7>
 
-                                            <i *ngIf="element[objectIndex]._osState == 'PUBLISHED'"
-                                                class="fa fa-check-circle text-success" data-mdb-toggle="tooltip"
-                                                title="Attested"></i>
-                                        </h6>
-                                        <ng-template #smallBlock>
-                                            <div *ngIf="objectIndex + 1 != element.length; else greyBlock"
-                                                data-mdb-toggle="tooltip" title={{element[objectIndex].title}}>
-                                               
-                                                <span class="text-grey-color p14">{{element[objectIndex].title}}: 
-                                                </span> <span class="p14">{{element[objectIndex].value}}</span>
-                                            </div>
+                                                <i *ngIf="element[objectIndex]._osState == 'PUBLISHED'" class="fa fa-check-circle text-success" data-mdb-toggle="tooltip" title="Attested"></i>
+                                            </h6>
+                                            <ng-template #smallBlock>
+                                                <div *ngIf="objectIndex + 1 != element.length; else greyBlock" data-mdb-toggle="tooltip" title={{element[objectIndex].title}}>
 
-                                            <ng-template #greyBlock>
-                                                <div class="fs-7" data-mdb-toggle="tooltip"
-                                                    title={{element[objectIndex].title}}>
                                                     <span class="text-grey-color p14">{{element[objectIndex].title}}:
-                                                    </span> <span class="p14">{{element[objectIndex].value}}</span></div>
-                                                <hr>
-                                            </ng-template>
+                                                </span> <span class="p14">{{element[objectIndex].value}}</span>
+                                                </div>
 
+                                                <ng-template #greyBlock>
+                                                    <div class="fs-7" data-mdb-toggle="tooltip" title={{element[objectIndex].title}}>
+                                                        <span class="text-grey-color p14">{{element[objectIndex].title}}:
+                                                    </span> <span class="p14">{{element[objectIndex].value}}</span>
+                                                    </div>
+                                                    <hr class="mb-5">
+                                                </ng-template>
+
+                                            </ng-template>
                                         </ng-template>
                                     </ng-template>
-                                </ng-template>
-
+                                </div>
                                 <!-- <hr *ngIf="elementIndex + 1 != item.length "> -->
                             </ng-template>
 
@@ -176,14 +169,14 @@
                                         <dl class="d-inline">
                                             <div class="row">
                                                 <div class="col ml-2">
-                                                    <dt class="fs-7 text-muted">{{item[elementIndex].title}}</dt>
-                                                    <dd class="text-body ">{{item[elementIndex].value}}</dd>
+                                                    <dt class="fs-7 text-grey">{{item[elementIndex].title}} </dt>
+                                                    <dd class="primary-text">{{item[elementIndex].value}}</dd>
                                                 </div>
                                                 <div class="col">
                                                     <ng-template [ngIf]="elementIndex + 1 != item.length">
-                                                        <dt class="fs-7 text-muted">{{item[elementIndex +
+                                                        <dt class="fs-7 text-grey">{{item[elementIndex +
                                                             1].title}}</dt>
-                                                        <dd class="text-body">{{item[elementIndex + 1].value}}</dd>
+                                                        <dd class="primary-text">{{item[elementIndex + 1].value}}</dd>
                                                     </ng-template>
                                                 </div>
                                             </div>
@@ -198,13 +191,12 @@
         </div>
 
         <!-- Preview Profile Modal -->
-        <div *ngIf="isPreview" class="modal right fade right-xl-modal" id="prewiewProfile" tabindex="-1" role="dialog"
-            aria-labelledby="prewiewProfile">
+        <div *ngIf="isPreview" class="modal right fade right-xl-modal" id="prewiewProfile" tabindex="-1" role="dialog" aria-labelledby="prewiewProfile">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h6 class="modal-title">Preview of Public Profile</h6>
+                        <h6 class="modal-title">{{'PREVIEW_PUBLIC_PROFILE' | translate}}</h6>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
                     </div>
@@ -217,9 +209,9 @@
 
         <ng-template #noData>
             <div *ngIf="!public">
-                <a panelAddLink="{{block.addform}}" class="text-end d-block btn-bg blue-shade-btn mt-4"><i
-                        class="fa fa-plus pr-1 label-primary" aria-hidden="true"></i> <span
-                        class="label-primary font-weight-bold">{{block.title}} </span></a>
+                <a panelAddLink="{{block.addform}}" class="text-end d-block btn-sec-bg blue-shade-btn mt-4"><i
+                        class="fa fa-plus pr-1 text-primary-color" aria-hidden="true"></i> <span
+                        class="text-primary-color font-weight-bold">{{block.title | translate}} </span></a>
             </div>
         </ng-template>
     </ng-template>
