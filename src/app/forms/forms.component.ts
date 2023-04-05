@@ -775,6 +775,14 @@ exLength : number = 0
           return observableOf(this.searchResult);
         }
       }
+      if (field.hasOwnProperty('required') && field.required) {
+        setTimeout(() => {
+          const labels = document.querySelectorAll('label > span');
+            labels.forEach(label => {
+              label.classList.add('red');
+            })
+        }, 100) 
+      }
       if (field.type) {
 
         if (field.type === 'multiselect') {
