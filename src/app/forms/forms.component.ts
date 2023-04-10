@@ -785,6 +785,19 @@ exLength : number = 0
       }
       if (field.type) {
 
+        if (field.type === 'radio' || field.type === 'rc-radio') {
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = field.type;
+
+          if (field.layout) {
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['layout'] = field.layout;
+          }
+
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['options'] = [];
+          this.responseData.definitions[fieldset.definition].properties[field.name]['enum'].forEach(enumval => {
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['options'].push({ label: enumval, value: enumval })
+          });
+        }
+
         if (field.type === 'multiselect') {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = field.type;
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['multiple'] = true;
@@ -828,6 +841,7 @@ exLength : number = 0
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['type'] = field.type;
         }
       }
+
       if (field.disabled || field.disable) {
         this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['disabled'] = field.disabled
       };

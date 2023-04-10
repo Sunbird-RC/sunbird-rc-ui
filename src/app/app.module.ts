@@ -40,6 +40,7 @@ import { FormlyFieldFile } from './forms/types/file.type';
 import { FileValueAccessor } from './forms/types/file-value-accessor';
 import { DocViewComponent } from './layouts/doc-view/doc-view.component';
 import { FormlyFieldNgSelect } from './forms/types/multiselect.type';
+import { FormlyFieldNgRadioButton } from './forms/types/rc-radio.type';
 import { Bootstrap4FrameworkModule } from 'angular6-json-schema-form';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { AttestationComponent } from './tables/attestation/attestation.component';
@@ -153,7 +154,8 @@ import { initTheme } from './theme.config';
     ScanDocumentComponent,
     ScanQrCodeComponent,
     BrowseDocumentsComponent,
-    AuthImagePipe
+    AuthImagePipe,
+    FormlyFieldNgRadioButton
   ],
   imports: [
     BrowserModule,
@@ -218,6 +220,7 @@ import { initTheme } from './theme.config';
         { name: 'file', component: FormlyFieldFile, wrappers: ['form-field'] },
         { name: 'multiselect', component: FormlyFieldNgSelect },
         { name: 'color', component: FormlyColorInput },
+        { name: 'rc-radio', component: FormlyFieldNgRadioButton}
       ],
     }),
     ToastrModule.forRoot({

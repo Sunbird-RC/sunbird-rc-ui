@@ -45,8 +45,15 @@ export class HeaderComponent implements OnInit {
       });
       this.headerSchema = filtered[0][this.headerFor];
 
-      this.headerSchema['left'][0]["activeTab"] = (this.headerSchema['left'].length == 1 || (localStorage.getItem('activeTab') == null)) ? 'active' : '';
-      this.headerSchema['right'][0]["activeTab"] = (this.headerSchema['right'].length == 1 || (localStorage.getItem('activeTab') == null)) ? 'active' : '';
+      if(this.headerSchema.hasOwnProperty('left'))
+      {
+        this.headerSchema['left'][0]["activeTab"] = (this.headerSchema['left'].length == 1 || (localStorage.getItem('activeTab') == null)) ? 'active' : '';
+      }
+
+      if(this.headerSchema.hasOwnProperty('left'))
+      {
+        this.headerSchema['right'][0]["activeTab"] = (this.headerSchema['right'].length == 1 || (localStorage.getItem('activeTab') == null)) ? 'active' : '';
+      }
 
 
       if (localStorage.getItem('activeTab')) {
