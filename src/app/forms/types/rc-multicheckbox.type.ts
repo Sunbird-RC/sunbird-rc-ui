@@ -5,7 +5,7 @@ import { FieldType } from '@ngx-formly/core';
   selector: 'formly-field-multicheckbox',
   styleUrls: [],
   template: `
-  <span class="fw-bold p12">{{ to.label }}</span> <br>
+  <span class="fw-bold p12">{{ to.label }} <span [hidden]="!to?.required"> * </span></span> <br>
   
   <ul class="{{field?.fieldGroupClassName}} mt-2 checkbox-list-style">
   <div [hidden]="!to?.setSelectAll">
