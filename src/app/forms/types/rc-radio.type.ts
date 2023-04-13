@@ -10,7 +10,7 @@ import { FormControl } from '@angular/forms';
   styleUrls: ["../forms.component.scss"],
   template: `
  
-    <span class="fw-bold p12">{{ to.label }}</span> <br>
+    <span class="fw-bold p12">{{ to.label }} <span [hidden]="!to?.required" class="red"> * </span></span> <br>
     <div [ngClass]="to.layout == 'inline' ? 'd-flex mt-1 mb-3 ' : 'mt-1 mb-3'">
     <div  *ngFor="let option of to.options ; let i = index"  class="form-check me-4 ms-2">
     <input
