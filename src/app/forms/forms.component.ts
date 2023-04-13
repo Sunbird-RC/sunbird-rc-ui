@@ -798,6 +798,31 @@ exLength : number = 0
           });
         }
 
+        if (field.type === 'rc-multicheckbox') {
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = field.type;
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['multiple'] = true;
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['formate'] = 'array';
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['setSelectAll'] = field.hasOwnProperty('setSelectAll') ? field.setSelectAll : true;
+
+          if (field.required) {
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = this.translate.instant("SELECT") + ' ' + this.generalService.translateString(this.langKey + '.' + field.name) + "*";
+          } else {
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = this.translate.instant("SELECT") + ' ' + this.generalService.translateString(this.langKey + '.' + field.name);
+          }
+
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['options'] = [];
+          if (this.responseData.definitions[fieldset.definition].properties[field.name].hasOwnProperty('enum')) {
+            this.responseData.definitions[fieldset.definition].properties[field.name]['enum'].forEach(enumval => {
+              this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['options'].push({ label: enumval, value: enumval })
+            });
+          } else {
+            this.responseData.definitions[fieldset.definition].properties[field.name]['items']['enum'].forEach(enumval => {
+              this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['options'].push({ label: enumval, value: enumval })
+            });
+          }
+        }
+
+
         if (field.type === 'multiselect') {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = field.type;
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['multiple'] = true;
