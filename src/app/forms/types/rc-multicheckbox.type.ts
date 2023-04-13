@@ -61,11 +61,7 @@ export class FormlyFieldMultiCheckbox extends FieldType {
   }
 
   isChecked(option: any) {
-
-
-
     const value = this.formControl.value;
-
     return value && (this.to.formate === 'array' ? value.indexOf(option.value) !== -1 : value[option.value]);
   }
 
