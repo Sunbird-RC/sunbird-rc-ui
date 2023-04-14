@@ -40,6 +40,7 @@ import { FormlyFieldFile } from './forms/types/file.type';
 import { FileValueAccessor } from './forms/types/file-value-accessor';
 import { DocViewComponent } from './layouts/doc-view/doc-view.component';
 import { FormlyFieldNgSelect } from './forms/types/multiselect.type';
+import { FormlyFieldMultiCheckbox } from './forms/types/rc-multicheckbox.type';
 import { FormlyFieldNgRadioButton } from './forms/types/rc-radio.type';
 import { Bootstrap4FrameworkModule } from 'angular6-json-schema-form';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
@@ -155,6 +156,7 @@ import { initTheme } from './theme.config';
     ScanQrCodeComponent,
     BrowseDocumentsComponent,
     AuthImagePipe,
+    FormlyFieldMultiCheckbox,
     FormlyFieldNgRadioButton
   ],
   imports: [
@@ -220,6 +222,7 @@ import { initTheme } from './theme.config';
         { name: 'file', component: FormlyFieldFile, wrappers: ['form-field'] },
         { name: 'multiselect', component: FormlyFieldNgSelect },
         { name: 'color', component: FormlyColorInput },
+        { name: 'rc-multicheckbox', component: FormlyFieldMultiCheckbox},
         { name: 'rc-radio', component: FormlyFieldNgRadioButton}
       ],
     }),
