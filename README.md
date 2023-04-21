@@ -188,6 +188,30 @@ You can find examples of config files [here](https://github.com/ref-registries)
 
 # FAQs
 
-## Proxy configuration
-To avoid CORS issues you can use proxy configuration. Run `npm start` or `ng serve --proxy-config proxy.conf.json`. For additional configuration please check `proxy.conf.json` file.
+## Proxy configuration (How to fix CORS issues)
+To avoid CORS issues you can use proxy configuration. 
+
+**Step 1**
+Firstly check a `proxy.conf.json` file in the root folder.
+
+**Step 2**
+Now we have to create the proxy configuration for API endpoints. So add your proxy configuration in your proxy.conf.json file as given in the below format-
+
+"/registry/api/docs": { <br>
+"target": "https://domainname/", <br>
+"secure": false, <br>
+"changeOrigin": true, <br>
+"logLevel": "debug" <br>
+} <br>
+
+**Definition of parameters is given below-**
+
+**"/echo”** is your API Path.<br>
+**"target"** is your domain name where your API’s are hosted.<br>
+**"secure"** is a boolean type parameter, if your domain has SSL then you should use true else you should use false as value.<br>
+**"changeOrigin"** should be true if your backend is not hosted on localhost server.<br>
+**“logLevel"** is used to check whether a proxy is working or not. Proxy log levels are info (the default), debug, warn, error, and silent.<br>
+
+**Step 3:**
+Run `npm start` or `ng serve --proxy-config proxy.conf.json`. 
 
