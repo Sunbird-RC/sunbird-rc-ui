@@ -213,5 +213,6 @@ Now we have to create the proxy configuration for API endpoints. So add your pro
 **“logLevel"** is used to check whether a proxy is working or not. Proxy log levels are info (the default), debug, warn, error, and silent.<br>
 
 **Step 3:**
-Run `npm start` or `ng serve --proxy-config proxy.conf.json`. 
+Now finally we have to replace domain name with `http://localhost:4200/` from config.json file.
+And Run `npm start` or `ng serve --proxy-config proxy.conf.json`. 
 
