@@ -19,6 +19,7 @@ import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { ArrayTypeComponent } from '../app/forms/types/array.type';
 import { ObjectTypeComponent } from '../app/forms/types/object.type';
 import { MultiSchemaTypeComponent } from '../app/forms/types/multischema.type';
+import { FormlyTemplateType } from './forms/types/template.type';
 import { NullTypeComponent } from '../app/forms/types/null.type';
 import { AutocompleteTypeComponent } from '../app/forms/types/autocomplete.type';
 import { FormlyColorInput } from '../app/forms/types/color.type';
@@ -157,7 +158,8 @@ import { initTheme } from './theme.config';
     BrowseDocumentsComponent,
     AuthImagePipe,
     FormlyFieldMultiCheckbox,
-    FormlyFieldNgRadioButton
+    FormlyFieldNgRadioButton,
+    FormlyTemplateType
   ],
   imports: [
     BrowserModule,
@@ -223,7 +225,8 @@ import { initTheme } from './theme.config';
         { name: 'multiselect', component: FormlyFieldNgSelect },
         { name: 'color', component: FormlyColorInput },
         { name: 'rc-multicheckbox', component: FormlyFieldMultiCheckbox},
-        { name: 'rc-radio', component: FormlyFieldNgRadioButton}
+        { name: 'rc-radio', component: FormlyFieldNgRadioButton},
+        { name: 'template', component: FormlyTemplateType }
       ],
     }),
     ToastrModule.forRoot({
