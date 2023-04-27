@@ -12,7 +12,7 @@ This is an Angular 8 project, and you need to install the dependencies, and run 
 
 ## Frontend Setup Steps
 
-1. Clone Sunbird RC UI code from here - https://github.com/code-blooded-guy/sunbird-rc-ui
+1. Clone Sunbird RC UI code from here - https://github.com/Sunbird-RC/sunbird-rc-ui
 
 2. Clone UI config files from git - https://github.com/Sunbird-RC/demo-education-registry
 
@@ -23,7 +23,7 @@ This is an Angular 8 project, and you need to install the dependencies, and run 
 Run blow command in the following folder path : `sunbird-rc-ui/src/assets/config`
 
   
-ln -s (path-of-your-UI-config files folder)
+`ln -s (path-of-your-UI-config files folder)`
 
 
 Eg : ln -s Documents/Ndear/demo-education-registry/ui-config 
