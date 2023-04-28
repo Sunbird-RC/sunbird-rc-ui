@@ -788,3 +788,15 @@ label {
 
 
    a, li { cursor: pointer; }
+   
+   .form-div {
+    background: aliceblue;
+    padding: 3px;
+}
+
+.line {
+    display: inline-block;
+    width: 100%;
+    border-bottom: 1px solid rgb(5, 5, 5);
+  }
+  

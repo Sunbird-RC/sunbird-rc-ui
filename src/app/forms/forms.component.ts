@@ -70,6 +70,7 @@ exLength : number = 0
   entityName: string;
   sorder: any;
   isSubmitForm: boolean = false;
+  fieldsetData: any;
   constructor(private route: ActivatedRoute,
     public translate: TranslateService,
     public toastMsg: ToastMessageService, public router: Router, public schemaService: SchemaService, private formlyJsonschema: FormlyJsonschema, public generalService: GeneralService, private location: Location) { }
@@ -200,8 +201,19 @@ exLength : number = 0
           this.property = this.definations[fieldset.definition].properties;
 
           if (fieldset.formclass) {
-            this.schema['widget'] = {};
+            if (!this.schema.hasOwnProperty('widget')) {
+              this.schema['widget'] = {};
+            }
             this.schema['widget']['formlyConfig'] = { fieldGroupClassName: fieldset.formclass }
+          }
+
+
+          if (this.formSchema.hasOwnProperty('wrappers')) {
+            if (!this.schema.hasOwnProperty('widget')) {
+              this.schema['widget'] = {};
+            }
+
+            this.schema['widget']['formlyConfig'] = { type: this.formSchema.wrappers }
           }
 
           if (fieldset.fields[0] === "*") {
@@ -313,6 +325,20 @@ exLength : number = 0
     var ref_properties = {}
     var ref_required = []
     if (field.children.fields && field.children.fields.length > 0) {
+
+      if(!this.responseData.definitions[fieldset.definition].properties[field.name]['widget'].hasOwnProperty('formlyConfig')){
+      this.responseData.definitions[fieldset.definition].properties[field.name]['widget'] = {
+        "formlyConfig": {
+          "templateOptions": {
+          }
+        }
+      }
+    }
+
+      if (field.children.formclass) {
+        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['fieldGroupClassName'] =  field.children.formclass 
+      }
+
       field.children.fields.forEach(reffield => {
 
         this.addWidget(field.children, reffield, field.name);
@@ -390,10 +416,25 @@ exLength : number = 0
     if (fieldset.fields.length) {
 
       fieldset.fields.forEach(field => {
+        if (this.responseData.definitions[fieldset.definition].properties.hasOwnProperty(field.name) && !this.responseData.definitions[fieldset.definition].properties[field.name].hasOwnProperty('widget')) {
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget'] = {
+            "formlyConfig": {
+              "wrappers" : {},
+              "templateOptions": {  }
+            }
+          }
+        
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']["formlyConfig"]['wrappers'] = field.wrappers;
+        }
+
+        if (field.formclass) {
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['fieldGroupClassName'] =  field.formclass 
+        }
 
         if (this.responseData.definitions[fieldset.definition] && this.responseData.definitions[fieldset.definition].hasOwnProperty('properties')) {
           let res = this.responseData.definitions[fieldset.definition].properties;
           if (field.children) {
+            this.fieldsetData = {};
             this.checkProperty(fieldset, field);
 
             if (this.responseData.definitions[fieldset.definition].properties[field.name].hasOwnProperty('properties')) {
@@ -416,6 +457,7 @@ exLength : number = 0
 
           } else if (this.responseData.definitions[fieldset.definition].properties.hasOwnProperty(field.name) && this.responseData.definitions[fieldset.definition].properties[field.name].hasOwnProperty('properties')) {
             let res = this.responseData.definitions[fieldset.definition].properties[field.name].properties;
+            this.fieldsetData = field;
             this.nastedChild(fieldset, field.name, res);
           }
         }
@@ -565,6 +607,12 @@ exLength : number = 0
         }
         if (field.class) {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['className'] = field.class;
+        }
+
+        if(this.fieldsetData){
+          if (this.fieldsetData.class) {
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['className'] = this.fieldsetData.class;
+          }
         }
 
         if (this.responseData.definitions[fieldset.definition].properties[field.name].hasOwnProperty('items')) {
@@ -904,6 +952,24 @@ exLength : number = 0
           },
           "validation": {},
           "expressionProperties": {}
+        }
+      }
+
+    
+      if(this.fieldsetData){
+        if (this.fieldsetData.formclass) {
+          this.res['widget'] = {
+            "formlyConfig": {
+              "fieldGroupClassName" : {},
+              "templateOptions": {},
+              "validation": {},
+              "expressionProperties": {}
+            }
+          }
+          this.res['widget']['formlyConfig']['fieldGroupClassName'] =  this.fieldsetData.formclass 
+        }
+        if (this.fieldsetData.class) {
+          this.res.properties[field.name]['widget']['formlyConfig']['className'] = this.fieldsetData.class;
         }
       }
 
