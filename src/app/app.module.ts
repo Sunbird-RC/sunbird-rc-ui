@@ -50,7 +50,7 @@ import { InstallComponent } from './install/install.component';
 import { HomeComponent } from './home/home.component';
 import { FormlyHorizontalWrapper } from './forms/types/horizontal.wrapper';
 import { AppConfig } from './app.config';
-import { PanelWrapperComponent } from './forms/types/group.type';
+import { PanelWrapperComponent } from './forms/types/panel.type';
 import { LogoutComponent } from './authentication/logout/logout.component';
 import { SearchComponent } from '../app/discovery/search/search.component';
 import { AuthConfigService } from './authentication/auth-config.service';
