@@ -37,7 +37,11 @@ Eg : ln -s Documents/Ndear/demo-education-registry/ui-config
 
 6. Go to root folder means sunbird-rc-ui folder 
 
- Run - `npm start`
+ Run below commands - 
+
+ > `yarn`
+
+ > `npm start`
 
 7. Once project run completely then you will get `http://localhost:4200` url
 
