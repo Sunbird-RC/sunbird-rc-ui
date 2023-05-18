@@ -39,7 +39,6 @@ import { FieldType } from '@ngx-formly/core';
   top: 50%;
   transform: translateY(-50%);
 }
-
     `
   ],
   template: `
@@ -58,20 +57,8 @@ import { FieldType } from '@ngx-formly/core';
 `
 })
 export class TooltipWrapper extends FieldType {
-  tooltipWrapper: any;
-  tooltipText: any;
   get tooltipContent(): string {
     return this.to.tooltip;
   }
-
-  ngOnInit() {
-    this.tooltipWrapper = document.querySelector('.tooltip-wrapper');
-    this.tooltipText = document.querySelector('.tooltip-text');
-    this.tooltipWrapper.addEventListener('mouseout', function () {
-      this.tooltipText.style.display = 'none';
-    });
-
-  }
-
 }
 
