@@ -870,6 +870,10 @@ exLength : number = 0
           }
         }
 
+        if (field.type === 'tooltip') {
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = field.type;
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['tooltip'] = field["templateOptions"]["tooltip"];
+        }
 
         if (field.type === 'multiselect') {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = field.type;

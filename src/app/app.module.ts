@@ -125,6 +125,7 @@ import { DocDetailViewComponent } from './documents/doc-detail-view/doc-detail-v
 // import { FaqComponent } from './custom-components/faq/faq.component';
 import { SafeHtmlPipe } from './safe-html.pipe';
 import { initTheme } from './theme.config';
+import { TooltipWrapper } from './forms/types/tooltip.type';
 // import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
 
 @NgModule({
@@ -159,7 +160,8 @@ import { initTheme } from './theme.config';
     AuthImagePipe,
     FormlyFieldMultiCheckbox,
     FormlyFieldNgRadioButton,
-    FormlyTemplateType
+    FormlyTemplateType,
+    TooltipWrapper
   ],
   imports: [
     BrowserModule,
@@ -226,7 +228,8 @@ import { initTheme } from './theme.config';
         { name: 'color', component: FormlyColorInput },
         { name: 'rc-multicheckbox', component: FormlyFieldMultiCheckbox},
         { name: 'rc-radio', component: FormlyFieldNgRadioButton},
-        { name: 'template', component: FormlyTemplateType }
+        { name: 'template', component: FormlyTemplateType },
+        { name: 'tooltip', component: TooltipWrapper }
       ],
     }),
     ToastrModule.forRoot({
