@@ -57,8 +57,5 @@ import { FieldType } from '@ngx-formly/core';
 `
 })
 export class TooltipWrapper extends FieldType {
-  get tooltipContent(): string {
-    return this.to.tooltip;
-  }
 }
 
