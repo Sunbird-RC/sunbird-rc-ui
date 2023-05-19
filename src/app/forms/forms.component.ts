@@ -9,6 +9,7 @@ import { GeneralService } from '../services/general/general.service';
 import { Location } from '@angular/common'
 import { of } from 'rxjs';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
+import { SharedService } from '../services/shared/shared.service';
 import { of as observableOf } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { throwError } from 'rxjs';
@@ -72,10 +73,11 @@ exLength : number = 0
   isSubmitForm: boolean = false;
   fieldsetData: any;
   constructor(private route: ActivatedRoute,
-    public translate: TranslateService,
+    public translate: TranslateService, public sharedService:SharedService,
     public toastMsg: ToastMessageService, public router: Router, public schemaService: SchemaService, private formlyJsonschema: FormlyJsonschema, public generalService: GeneralService, private location: Location) { }
 
   ngOnInit(): void {
+
     this.route.params.subscribe(params => {
       this.add = this.router.url.includes('add');
 
@@ -326,17 +328,17 @@ exLength : number = 0
     var ref_required = []
     if (field.children.fields && field.children.fields.length > 0) {
 
-      if(!this.responseData.definitions[fieldset.definition].properties[field.name]['widget'].hasOwnProperty('formlyConfig')){
-      this.responseData.definitions[fieldset.definition].properties[field.name]['widget'] = {
-        "formlyConfig": {
-          "templateOptions": {
+      if (!this.responseData.definitions[fieldset.definition].properties[field.name]['widget'].hasOwnProperty('formlyConfig')) {
+        this.responseData.definitions[fieldset.definition].properties[field.name]['widget'] = {
+          "formlyConfig": {
+            "templateOptions": {
+            }
           }
         }
       }
-    }
 
       if (field.children.formclass) {
-        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['fieldGroupClassName'] =  field.children.formclass 
+        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['fieldGroupClassName'] = field.children.formclass
       }
 
       field.children.fields.forEach(reffield => {
@@ -823,6 +825,7 @@ exLength : number = 0
           return observableOf(this.searchResult);
         }
       }
+
       if (field.hasOwnProperty('required') && field.required) {
         setTimeout(() => {
           const labels = document.querySelectorAll('label > span');
@@ -923,6 +926,98 @@ exLength : number = 0
         this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['disabled'] = field.disabled
       };
 
+      if (field.disabledConfig) {
+
+        if(field['disabledConfig'].hasOwnProperty('isFieldNotEmpty') || field['disabledConfig'].hasOwnProperty('condition')){
+        let temp = this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig'];
+        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig'] = {
+          'expressionProperties': {
+            "templateOptions.disabled": (model, formState, field1) => {
+
+              if (  !field1.formControl._pendingTouched) {
+                if (field['disabledConfig'].hasOwnProperty('isFieldNotEmpty') || field['disabledConfig']['isFieldNotEmpty'] == 'disabled') {
+
+                  if (this.model.hasOwnProperty(this.firstLowerCase(fieldset.definition)) ) {
+
+                    if (field.disabledConfig.isFieldNotEmpty && this.model[this.firstLowerCase(fieldset.definition)][field.name]) {
+                      let isVal;
+                      this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['expressionPropertiesCache'] = false;
+                      return isVal = (this.model[this.firstLowerCase(fieldset.definition)][field.name]) ? true : false;
+                    } else if (this.model[this.firstLowerCase(fieldset.definition)].hasOwnProperty(field.name)) {
+                      this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['expressionPropertiesCache'] = false;
+                      return false;
+                    }
+                  }else {
+                    if (field.disabledConfig.isFieldNotEmpty && this.model[field.name]) {
+                     let isVal : boolean;
+                     this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['expressionPropertiesCache'] = false;
+                     return isVal = (this.model[field.name]) ? true : false;
+                     } else if (this.model.hasOwnProperty(field.name)) {
+                      this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['expressionPropertiesCache'] = false;
+                      return false;
+                    } 
+                  }
+                }
+
+                if (field.disabledConfig.hasOwnProperty('condition')) {
+                  if (this.sharedService.isSetObjectPathVal(field.disabledConfig.condition.isValueSet, this.model, field.disabledConfig.condition.isAllValCheck)) {
+                    return false;
+                  }
+                  else {
+                    return true;
+                  }
+                }
+              } else {
+                return false;
+              }
+            }
+          }
+        }
+
+        if (temp != undefined) {
+          temp['expressionProperties'] = this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['expressionProperties'];
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig'] = temp;
+        }
+      }
+
+      };
+
+      if (field.hideConfig) {
+        if( field['hideConfig'].hasOwnProperty('condition')){
+          let temp = this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig'];
+
+        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig'] = {
+          "hideExpression": (model, formState, field1) => {
+            
+               let hData = field.hideConfig.condition;
+
+                if (hData.hasOwnProperty('valueDependent') && hData.valueDependent.hasOwnProperty('keyPath') && hData.valueDependent.hasOwnProperty('checkValTo')) {
+
+                  let val = this.sharedService.getObjPathVal(hData.valueDependent.keyPath, this.model)
+
+                  switch(hData.valueDependent.isValCondition)
+                  {
+                    case 'equal'  :  return !val.includes(hData.valueDependent.checkValTo);
+                    case 'notequal'  :  return (val.includes(hData.valueDependent.checkValTo));
+                  }
+                
+                }else if (hData.hasOwnProperty('isValueSet')) {
+                  if ((this.sharedService.getObjPathVal(hData.isValueSet, this.model)).length) {
+                    return false;
+                  }
+                  else {
+                    return true;
+                  }
+                }
+          }
+        }
+        if (temp != undefined) {
+          temp['hideExpression'] = this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['hideExpression'];
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig'] = temp;
+        }
+        }
+      };
+
 
       if ((this.privateFields.indexOf('$.' + childrenName) < 0) || (this.internalFields.indexOf('$.' + childrenName) < 0)) {
 
@@ -940,6 +1035,11 @@ exLength : number = 0
       }
     }
   }
+
+  firstLowerCase(value) {
+    return value = value.charAt(0).toLowerCase() + value.substring(1);
+  }
+
 
   addChildWidget(field, ParentName, childrenName) {
     this.res = this.responseData.definitions[ParentName.replace(/^./, ParentName[0].toUpperCase())].properties[childrenName];
