@@ -56,6 +56,6 @@ import { FieldType } from '@ngx-formly/core';
     </div>  
 `
 })
-export class TooltipWrapper extends FieldType {
+export class TooltipType extends FieldType {
 }
 
