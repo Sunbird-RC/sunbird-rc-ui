@@ -72,6 +72,7 @@ exLength : number = 0
   sorder: any;
   isSubmitForm: boolean = false;
   fieldsetData: any;
+  properties = {};
   constructor(private route: ActivatedRoute,
     public translate: TranslateService, public sharedService:SharedService,
     public toastMsg: ToastMessageService, public router: Router, public schemaService: SchemaService, private formlyJsonschema: FormlyJsonschema, public generalService: GeneralService, private location: Location) { }
@@ -202,20 +203,30 @@ exLength : number = 0
 
           this.property = this.definations[fieldset.definition].properties;
 
-          if (fieldset.formclass) {
-            if (!this.schema.hasOwnProperty('widget')) {
-              this.schema['widget'] = {};
-            }
-            this.schema['widget']['formlyConfig'] = { fieldGroupClassName: fieldset.formclass }
+          if (!this.schema.hasOwnProperty('widget')) {
+            this.schema['widget'] = {};
           }
+
+          if (this.formSchema.formclass) {
+          
+            this.schema['widget']['formlyConfig'] = { fieldGroupClassName: this.formSchema.formclass }
+          }
+
+         
 
 
           if (this.formSchema.hasOwnProperty('wrappers')) {
-            if (!this.schema.hasOwnProperty('widget')) {
-              this.schema['widget'] = {};
-            }
-
+           
             this.schema['widget']['formlyConfig'] = { type: this.formSchema.wrappers }
+
+            if(this.formSchema.wrappers == 'stepper')
+            {
+              this.schema['widget']['formlyConfig']['templateOptions'] = {
+                label :  fieldset.hasOwnProperty('stepConfig') ?  fieldset.stepConfig.stepTitle : "",
+                stepperConfig :  (this.formSchema.hasOwnProperty('formConfig')) ?  this.formSchema.formConfig : ""
+              }
+              
+            }
           }
 
           if (fieldset.fields[0] === "*") {
@@ -227,6 +238,9 @@ exLength : number = 0
             this.addFields(fieldset);
           }
 
+          this.properties = {...this.properties, ...this.definations[fieldset.definition].properties};
+
+
           if (fieldset.except) {
             this.removeFields(fieldset)
           }
@@ -236,7 +250,7 @@ exLength : number = 0
         this.schema["type"] = "object";
         this.schema["title"] = this.formSchema.title;
         this.schema["definitions"] = this.definations;
-        this.schema["properties"] = this.property;
+        this.schema["properties"] = this.properties;
         this.schema["required"] = this.required;
         this.schema["dependencies"] = this.dependencies;
         this.loadSchema();
@@ -421,12 +435,13 @@ exLength : number = 0
         if (this.responseData.definitions[fieldset.definition].properties.hasOwnProperty(field.name) && !this.responseData.definitions[fieldset.definition].properties[field.name].hasOwnProperty('widget')) {
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget'] = {
             "formlyConfig": {
-              "wrappers" : {},
-              "templateOptions": {  }
+              "templateOptions": {
+                "label" :  (fieldset.hasOwnProperty('stepConfig') && fieldset.stepConfig.hasOwnProperty('stepTitle')) ? fieldset.stepConfig.stepTitle : '',
+                'config' :  (fieldset.hasOwnProperty('stepConfig')) ?  fieldset.stepConfig : ""
+              }
             }
           }
-        
-          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']["formlyConfig"]['wrappers'] = field.wrappers;
+
         }
 
         if (field.formclass) {

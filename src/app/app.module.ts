@@ -25,7 +25,7 @@ import { AutocompleteTypeComponent } from '../app/forms/types/autocomplete.type'
 import { FormlyColorInput } from '../app/forms/types/color.type';
 import { initializeKeycloak } from './utility/app.init';
 import { initLang } from './multilingual.init';
-
+import { MatStepperModule } from '@angular/material/stepper';
 
 //Local imports
 import { FormsComponent } from './forms/forms.component';
@@ -67,6 +67,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import { config } from 'process';
 import { ColorPickerModule } from 'ngx-color-picker';
+import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';  
 
 
 //form validations
@@ -127,6 +128,7 @@ import { SafeHtmlPipe } from './safe-html.pipe';
 import { initTheme } from './theme.config';
 import { TooltipType } from './forms/types/tooltip.type';
 // import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
+import { FormlyFieldStepper } from '../app/forms/types/stepper.type';
 
 @NgModule({
   declarations: [
@@ -161,7 +163,8 @@ import { TooltipType } from './forms/types/tooltip.type';
     FormlyFieldMultiCheckbox,
     FormlyFieldNgRadioButton,
     FormlyTemplateType,
-    TooltipType
+    TooltipType,
+    FormlyFieldStepper
   ],
   imports: [
     BrowserModule,
@@ -229,7 +232,8 @@ import { TooltipType } from './forms/types/tooltip.type';
         { name: 'rc-multicheckbox', component: FormlyFieldMultiCheckbox},
         { name: 'rc-radio', component: FormlyFieldNgRadioButton},
         { name: 'template', component: FormlyTemplateType },
-        { name: 'tooltip', component: TooltipType }
+        { name: 'tooltip', component: TooltipType },
+        { name: 'stepper', component: FormlyFieldStepper, wrappers: [] }
       ],
     }),
     ToastrModule.forRoot({
@@ -237,6 +241,7 @@ import { TooltipType } from './forms/types/tooltip.type';
       preventDuplicates: true,
     }),
     NgxPaginationModule,
+    MatStepperModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   exports: [TranslateModule],
@@ -265,7 +270,11 @@ import { TooltipType } from './forms/types/tooltip.type';
       useFactory: initTheme,
       deps: [HttpClient, TranslateService],
       multi: true
-    }]
+    },
+    {  
+      provide: STEPPER_GLOBAL_OPTIONS,  
+      useValue: { displayDefaultIndicatorType: false }  
+    }  ]
 })
 
 
