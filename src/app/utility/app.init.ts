@@ -1,7 +1,7 @@
 
 import { KeycloakService } from 'keycloak-angular';
 import { switchMap } from 'rxjs/operators';
-import { from as fromPromise, Observable } from 'rxjs';
+import { from as fromPromise } from 'rxjs';
 import { AuthConfigService } from '../authentication/auth-config.service';
 
 export function initializeKeycloak(keycloak: KeycloakService, configService: AuthConfigService) {
@@ -19,7 +19,7 @@ export function initializeKeycloak(keycloak: KeycloakService, configService: Aut
                             },
                             initOptions: {
                                 checkLoginIframe: true,
-                                checkLoginIframeInterval: 25
+                                checkLoginIframeInterval: 25                            
                             },
                             loadUserProfileAtStartUp: true
                         }))

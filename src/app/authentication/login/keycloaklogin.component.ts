@@ -9,9 +9,9 @@ import { AppConfig } from '../../app.config';
   styleUrls: ['./keycloaklogin.component.css']
 })
 export class KeycloakloginComponent implements OnInit {
-  user : any;
+  user : string;
   entity: string;
-  profileUrl: string  = '';
+  profileUrl  = '';
   constructor(
     public keycloakService: KeycloakService,
     public router: Router, private config: AppConfig

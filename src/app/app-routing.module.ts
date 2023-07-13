@@ -20,8 +20,8 @@ import { ScanQrCodeComponent } from './documents/scan-qr-code/scan-qr-code.compo
 import { BrowseDocumentsComponent } from './documents/browse-documents/browse-documents.component';
 import { PagesComponent } from './pages/pages.component';
 import { DocDetailViewComponent } from './documents/doc-detail-view/doc-detail-view.component';
-// import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
-// import { FaqComponent } from './custom-components/faq/faq.component';
+import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
+import { FaqComponent } from './custom-components/faq/faq.component';
 const routes: Routes = [
 // Home
 { path: '', component: HomeComponent },

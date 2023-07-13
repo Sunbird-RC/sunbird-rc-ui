@@ -61,14 +61,11 @@ import { ScanDocumentComponent } from './documents/scan-document/scan-document.c
 import { ScanQrCodeComponent } from './documents/scan-qr-code/scan-qr-code.component';
 import {QuarModule} from '@altack/quar';
 import { BrowseDocumentsComponent } from './documents/browse-documents/browse-documents.component';
-
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
-import { config } from 'process';
 import { ColorPickerModule } from 'ngx-color-picker';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';  
-
+import { SafeHtml } from '@angular/platform-browser';
 
 //form validations
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
@@ -116,19 +113,17 @@ function initConfig(config: AppConfig) {
 }
 
 import ISO6391 from 'iso-639-1';
-import { PagesComponent } from './pages/pages.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
 import {AuthImagePipe} from '../app/layouts/doc-view/doc-view.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
-import { DocDetailViewComponent } from './documents/doc-detail-view/doc-detail-view.component';
-// import { FaqComponent } from './custom-components/faq/faq.component';
-import { SafeHtmlPipe } from './safe-html.pipe';
+import { FaqComponent } from './custom-components/faq/faq.component';
 import { initTheme } from './theme.config';
 import { TooltipType } from './forms/types/tooltip.type';
-// import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
+import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
 import { FormlyFieldStepper } from '../app/forms/types/stepper.type';
+import { SafeHtmlPipe } from './safe-html.pipe';
 
 @NgModule({
   declarations: [
@@ -164,7 +159,10 @@ import { FormlyFieldStepper } from '../app/forms/types/stepper.type';
     FormlyFieldNgRadioButton,
     FormlyTemplateType,
     TooltipType,
-    FormlyFieldStepper
+    FormlyFieldStepper,
+    CreateCertificateComponent,
+    FaqComponent,
+    SafeHtmlPipe
   ],
   imports: [
     BrowserModule,
@@ -284,7 +282,7 @@ export class AppModule {
 
     authConfig.getConfig().subscribe((config) => {
       this.languages = config.languages;
-      var installed_languages = [];
+      const installed_languages = [];
 
       for (let i = 0; i < this.languages.length; i++) {
         installed_languages.push({
@@ -301,7 +299,7 @@ export class AppModule {
 
       } else {
         const browserLang = translate.getBrowserLang();
-        let lang = this.languages.includes(browserLang) ? browserLang : 'en';
+        const lang = this.languages.includes(browserLang) ? browserLang : 'en';
         translate.use(lang);
         localStorage.setItem('setLanguage', lang);
       }

@@ -1,22 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { environment } from 'src/environments/environment';
-
-import {
-    Pipe,
-    PipeTransform,
-    OnDestroy,
-    WrappedValue,
-    ChangeDetectorRef
-} from '@angular/core';
-
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { Pipe, PipeTransform} from '@angular/core';
 import { GeneralService } from 'src/app/services/general/general.service';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { KeycloakService } from 'keycloak-angular';
 import { AppConfig } from 'src/app/app.config';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 
 
 @Component({
@@ -30,8 +18,8 @@ export class DocViewComponent implements OnInit {
     extension;
     token
     public bearerToken: string | undefined = undefined;
-    id: any;
-    excludedFields: any = ['osid','id', 'type','fileUrl'];
+    id: string;
+    excludedFields = ['osid','id', 'type','fileUrl'];
     document = [];
     constructor(private route: ActivatedRoute, public generalService: GeneralService,
         private keycloakService: KeycloakService, private config: AppConfig) {
@@ -47,7 +35,7 @@ export class DocViewComponent implements OnInit {
                     console.log('pub res', res);
                     if(res.name !== 'attestation-DIVOC'){
                         for (const [key, value] of Object.entries(res['additionalInput'])) {
-                            var tempObject = {}
+                            const tempObject = {}
                             if(key === 'fileUrl'){
                                 this.docUrl = this.baseUrl + '/' + value;
                                 this.extension = this.docUrl.split('.').slice(-1)[0];
@@ -110,7 +98,7 @@ export class AuthImagePipe implements PipeTransform {
         // })
     }
 
-    async transform(src: string,extension:string): Promise<any> {
+    async transform(src: string, extension:string): Promise<unknown> {
         this.extension = extension;
         const token = this.keycloakService.getToken();
         const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
@@ -123,7 +111,7 @@ export class AuthImagePipe implements PipeTransform {
         }
 
         const reader = new FileReader();
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             reader.onloadend = () => resolve(reader.result as string);
             reader.readAsDataURL(imageBlob);
         });

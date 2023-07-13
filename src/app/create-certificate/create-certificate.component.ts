@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -6,12 +6,9 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './create-certificate.component.html',
   styleUrls: ['./create-certificate.component.scss']
 })
-export class CreateCertificateComponent implements OnInit {
+export class CreateCertificateComponent {
   @ViewChild("userHtml", { static: false }) userHtml;
 
-  constructor(public translate: TranslateService,) { }
-
-  ngOnInit(): void {
-  }
+  constructor(public translate: TranslateService) { }
 
 }

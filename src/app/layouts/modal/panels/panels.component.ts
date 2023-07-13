@@ -1,12 +1,5 @@
-import {
-  Component,
-  OnInit,
-  AfterViewInit,
-  OnDestroy,
-  RendererFactory2,
-  Renderer2
-} from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Component, RendererFactory2} from '@angular/core';
+import { Router } from '@angular/router';
 import { Panel} from  './panel';
 
 @Component({

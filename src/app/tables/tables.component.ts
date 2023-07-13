@@ -10,30 +10,30 @@ import { GeneralService } from '../services/general/general.service';
   styleUrls: ['./tables.component.css']
 })
 export class TablesComponent implements OnInit {
-  table: any;
-  entity: any;
-  tab: string = 'attestation'
+  table: string;
+  entity: string;
+  tab = 'attestation'
   tableSchema: any;
-  apiUrl: any;
+  apiUrl: string;
   model: any;
   Data: string[] = [];
-  property: any[] = [];
+  property = [];
   field;
 
-  page: number = 1;
-  limit: number = 10;
+  page = 1;
+  limit = 10;
 
   constructor(public router: Router, private route: ActivatedRoute, public generalService: GeneralService, public schemaService: SchemaService) { }
 
   ngOnInit(): void {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    var tab_url = this.router.url
+    const tab_url = this.router.url
     this.route.params.subscribe(async params => {
       this.table = (params['table']).toLowerCase()
       this.entity = (params['entity']).toLowerCase();
       this.tab = tab_url.replace(this.table, "").replace(this.entity, "").split("/").join("")
       this.schemaService.getTableJSON().subscribe(async (TableSchemas) => {
-        var filtered = TableSchemas.tables.filter(obj => {
+        const filtered = TableSchemas.tables.filter(obj => {
           return Object.keys(obj)[0] === this.table
         })
         this.tableSchema = filtered[0][this.table]
@@ -46,7 +46,7 @@ export class TablesComponent implements OnInit {
   }
 
   getData() {
-    var get_url;
+    let get_url;
     if (this.entity) {
       get_url = this.apiUrl
     } else {
@@ -61,7 +61,7 @@ export class TablesComponent implements OnInit {
 
   addData() {
 
-    var temp_array;
+    let temp_array;
     let temp_object
     this.model.forEach(element => {
       if (element.status === "OPEN") {
@@ -80,7 +80,7 @@ export class TablesComponent implements OnInit {
           if (temp_object.custom) {
             if (temp_object.type == "button") {
               if (temp_object.redirectTo && temp_object.redirectTo.includes(":")) {
-                let urlParam = temp_object.redirectTo.split(":")
+                const urlParam = temp_object.redirectTo.split(":")
                 urlParam.forEach((paramVal, index) => {
                   if (paramVal in element) {
                     urlParam[index] = element[paramVal]
@@ -101,8 +101,8 @@ export class TablesComponent implements OnInit {
   }
 
   pushData(data) {
-    var object = {};
-    for (var key in data) {
+    const object = {};
+    for (const key in data) {
       if (data.hasOwnProperty(key))
         object[key] = data[key];
     }

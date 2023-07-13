@@ -9,14 +9,14 @@ import { GeneralService } from '../services/general/general.service';
 })
 export class DocumentsComponent implements OnInit {
   header = 'documents'
-  documentTypes: any;
-  docs: any = [];
-  hasDocs: boolean = false;
-  getStarted: boolean = false;
+  documentTypes: object[] | unknown;
+  docs = [];
+  hasDocs = false;
+  getStarted = false;
   entity;
-  loader: boolean = true;
-  documents: any = [];
-  excludedFields: any = ['osid','id', 'type','otp','transactionId'];
+  loader = true;
+  documents = [];
+  excludedFields = ['osid','id', 'type','otp','transactionId'];
   constructor(private route: ActivatedRoute, public generalService: GeneralService) {
 
   }
@@ -28,7 +28,7 @@ export class DocumentsComponent implements OnInit {
         this.entity = params['entity'];
       }
     });
-    var search = {
+    const search = {
       "entityType": [
         "Issuer"
       ],
@@ -85,14 +85,14 @@ export class DocumentsComponent implements OnInit {
 
   setDocument() {
     this.docs.forEach(element => {
-      var property = [];
+      const property = [];
       // console.log("docs",this.docs)
       if (element.name == 'attestation-DIVOC') {
         element['additionalInput'] = JSON.parse(element['additionalInput'])['signedCredentials']['credentialSubject'];
         console.log("dfd", element['additionalInput'])
       }
       for (const [key, value] of Object.entries(element['additionalInput'])) {
-        var tempObject = {}
+        const tempObject = {}
         if (typeof value != 'object') {
           if (!this.excludedFields.includes(key)) {
             tempObject['key'] = key;

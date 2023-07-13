@@ -12,7 +12,7 @@ import { FieldType } from '@ngx-formly/core';
  `,                                                                                                                 
 })  
 export class FormlyColorInput extends FieldType {
-    public color: string = '#FFFFFF';
+    public color = '#FFFFFF';
   test(event){
     this.formControl.patchValue(event);
     // this.field.model[this.key] = event;

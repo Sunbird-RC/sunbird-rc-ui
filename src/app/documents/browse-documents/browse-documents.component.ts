@@ -7,11 +7,11 @@ import { GeneralService } from 'src/app/services/general/general.service';
   styleUrls: ['./browse-documents.component.scss']
 })
 export class BrowseDocumentsComponent implements OnInit {
-  documentTypes: any;
+  documentTypes: object[] | unknown;
   constructor(public generalService: GeneralService) { }
 
   ngOnInit(): void {
-    var search = {
+    const search = {
       "entityType": [
         "Issuer"
       ],

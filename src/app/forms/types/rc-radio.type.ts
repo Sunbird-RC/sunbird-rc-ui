@@ -1,10 +1,6 @@
 import { Component } from '@angular/core';
 import { FieldType } from '@ngx-formly/core';
 
-import { FormControl } from '@angular/forms';
-
-
-
 @Component({
   selector: 'formly-field-radiobutton',
   styleUrls: ["../forms.component.scss"],
@@ -32,7 +28,4 @@ import { FormControl } from '@angular/forms';
         </div>
   `,
 })
-export class FormlyFieldNgRadioButton extends FieldType {
-  ngOnInit(): void { }
-  
-}
+export class FormlyFieldNgRadioButton extends FieldType {}

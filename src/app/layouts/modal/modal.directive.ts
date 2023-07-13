@@ -1,22 +1,8 @@
-import {
-    Directive,
-    OnChanges,
-    OnDestroy,
-    HostBinding,
-    Input,
-    isDevMode,
-    HostListener
-  } from '@angular/core';
-  import {
-    QueryParamsHandling,
-    Router,
-    ActivatedRoute,
-    NavigationEnd,
-    UrlTree
-  } from '@angular/router';
-  import { Subscription } from 'rxjs';
-  import { LocationStrategy } from '@angular/common';
-  @Directive({
+import { Directive, HostBinding, Input, isDevMode, HostListener} from '@angular/core';
+import { QueryParamsHandling, Router, ActivatedRoute, NavigationEnd, UrlTree } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { LocationStrategy } from '@angular/common';
+@Directive({
     selector: '[panelEditLink]'
   })
   export class ModalRouterEditLinkDirective {
@@ -28,7 +14,7 @@ import {
     @Input() skipLocationChange!: boolean;
     @Input() replaceUrl!: boolean;
     @Input() state?: { [k: string]: any };
-    private commands: any[] = [];
+    private commands = [];
     private subscription: Subscription;
     private preserve!: boolean;
     @HostBinding() href!: string;
@@ -38,16 +24,15 @@ import {
       private route: ActivatedRoute,
       private locationStrategy: LocationStrategy
     ) {
-      this.subscription = router.events.subscribe((s: any) => {
-        // console.log('ssssssssss',s)
-        if (s instanceof NavigationEnd) {
+      this.subscription = router.events.subscribe((s) => {
+          if (s instanceof NavigationEnd) {
           this.updateTargetUrlAndHref();
         }
       });
     }
   
     @Input()
-    set panelEditLink(commands: any[] | string) {
+    set panelEditLink(commands: [] | string) {
       if (commands != null && commands !== '') {
         this.commands = Array.isArray(commands) ? commands : [commands];
       } else {
@@ -66,7 +51,7 @@ import {
       this.preserve = value;
     }
   
-    ngOnChanges(changes: {}): any {
+    ngOnChanges(): any {
       this.updateTargetUrlAndHref();
     }
     ngOnDestroy(): any {
@@ -135,7 +120,7 @@ import {
     @Input() replaceUrl!: boolean;
     @Input() state?: { [k: string]: any };
     @Input() identity: string;
-    private commands: any[] = [];
+    private commands = [];
     private subscription: Subscription;
     private preserve!: boolean;
     @HostBinding() href!: string;
@@ -155,7 +140,7 @@ import {
     }
   
     @Input()
-    set panelAddLink(commands: any[] | string) {
+    set panelAddLink(commands: [] | string) {
       if (commands != null && commands !== '') {
         this.commands = Array.isArray(commands) ? commands : [commands];
       } else {
@@ -174,7 +159,7 @@ import {
       this.preserve = value;
     }
   
-    ngOnChanges(changes: {}): any {
+    ngOnChanges(): any {
       this.updateTargetUrlAndHref();
     }
     ngOnDestroy(): any {
@@ -228,6 +213,6 @@ import {
     }
   }
   
-  function attrBoolValue(s: any): boolean {
+  function attrBoolValue(s): boolean {
     return s === '' || !!s;
   }

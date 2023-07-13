@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { GeneralService } from '../services/general/general.service';
+import { Router } from '@angular/router';
 import { AppConfig } from '../app.config';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
@@ -12,9 +11,9 @@ import { catchError, map } from 'rxjs/operators';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  installed: boolean = false;
-  checkbox: any;
-  myTemplate: any;
+  installed = false;
+  checkbox: boolean;
+  myTemplate: unknown;
   constructor(public router: Router, private config: AppConfig, private httpClient: HttpClient) { }
 
   ngOnInit(): void {
@@ -23,9 +22,9 @@ export class HomeComponent implements OnInit {
         this.myTemplate = res;
       }
     },
-      (error) => {
-        var handler = document.getElementById('menu-open-handler');
-        var toggleInterval = setInterval(function () {
+      () => {
+        const handler = document.getElementById('menu-open-handler');
+        const toggleInterval = setInterval(function () {
           this.checkbox = document.getElementById('menu-open');
           this.checkbox.checked = !this.checkbox.checked;
         }, 4000);
@@ -39,10 +38,10 @@ export class HomeComponent implements OnInit {
 
   }
 
-  checkHtmlFile(): Observable<any> {
+  checkHtmlFile(): Observable<unknown> {
     return this.httpClient.get('/assets/config/home.html',{responseType:'text'})
       .pipe(
-        map((html: any) => {
+        map((html: unknown) => {
           // console.log('html',html);
           return html;
         }),

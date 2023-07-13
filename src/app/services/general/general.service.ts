@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DataService } from '../data/data-request.service';
-import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, Subscriber } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AppConfig } from 'src/app/app.config';
 import { TranslateService } from '@ngx-translate/core';
 import { map } from 'rxjs/operators';
@@ -19,7 +18,7 @@ export class GeneralService {
   }
 
   postData(apiUrl, data) {
-    var url;
+    let url;
     if (apiUrl.indexOf('http') > -1) {
       url = apiUrl
     } else {
@@ -44,8 +43,8 @@ export class GeneralService {
   }
 
 
-  getData(apiUrl, outside: boolean = false) {
-    var url;
+  getData(apiUrl, outside = false) {
+    let url;
     if (outside) {
       url = apiUrl;
     }
@@ -60,8 +59,8 @@ export class GeneralService {
   }
 
   getPrefillData(apiUrl) {
-    var url = apiUrl;
-    let headers = new HttpHeaders();
+    const url = apiUrl;
+    const headers = new HttpHeaders();
     url.replace('//', '/');
     const req = {
       url: url,
@@ -82,7 +81,7 @@ export class GeneralService {
   }
 
   putData(apiUrl, id, data) {
-    var url;
+    let url;
     if (apiUrl.charAt(0) == '/') {
       url = `${this.baseUrl}${apiUrl}/${id}`
     }
@@ -98,7 +97,7 @@ export class GeneralService {
 
   // Configurations
   getConfigs() {
-    let url = "./assets/config/config.json";
+    const url = "./assets/config/config.json";
     const req = {
       url: url
     };
@@ -107,7 +106,7 @@ export class GeneralService {
   }
 
   updateclaims(apiUrl, data) {
-    let url = `${this.baseUrl}${apiUrl}`;
+    const url = `${this.baseUrl}${apiUrl}`;
     const req = {
       url: url,
       data: data
@@ -123,7 +122,7 @@ export class GeneralService {
   }
 
   attestationReq(apiUrl, data) {
-    let url = `${this.baseUrl}${apiUrl}`;
+    const url = `${this.baseUrl}${apiUrl}`;
     const req = {
       url: url,
       data: data
@@ -135,15 +134,15 @@ export class GeneralService {
   openPDF(url){
     url = `${this.baseUrl}` + '/' + `${url}`;
 
-    let requestOptions = { responseType: 'blob' as 'blob' };
+    const requestOptions = { responseType: 'blob' as 'blob' };
     // post or get depending on your requirement
     this.http.get(url, requestOptions).pipe(map((data: any) => {
 
-        let blob = new Blob([data], {
+        const blob = new Blob([data], {
             type: 'application/pdf' // must match the Accept type
             // type: 'application/octet-stream' // for excel 
         });
-        var link = document.createElement('a');
+        const link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
 
         window.open(link.href, '_blank')
@@ -151,7 +150,7 @@ export class GeneralService {
        // link.click();
        // window.URL.revokeObjectURL(link.href);
 
-    })).subscribe((result: any) => {
+    })).subscribe(() => {
     });
   }
   
