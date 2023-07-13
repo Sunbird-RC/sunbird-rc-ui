@@ -6,18 +6,19 @@ import { catchError, mergeMap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthConfigService {
   private config: any;
 
   constructor(private httpClient: HttpClient) {}
 
-  public getConfig(): Observable<any> {
+  public getConfig(): Observable<any | null> {
     return this.httpClient
         .get('./assets/config/config.json', {
           observe: 'response',
         })
         .pipe(
-          catchError((error) => {
+          catchError(() => {
             return of(null)
           } ),
           mergeMap((response) => {

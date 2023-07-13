@@ -40,7 +40,7 @@
         <div *ngIf="block.items[0].length > 0; else noData">
             <div [ngClass]="public ? 'd-flex flex-justify-between' : 'd-flex flex-justify-between mt-1'">
                 <div class="mt-1">
-                    <p class="d-inline-block fs-6 font-weight-bold mb-2">{{block.title | translate}}</p>
+                    <p class="d-inline-block fs-6 font-weight-bold mb-2">{{block.title | translate}}</p>                  
                     <ng-template [ngIf]="block.edit">
                         <a *ngIf="!public" panelEditLink="{{block.editform}}" class="pl-1 fs-7 text-secondary-color">{{'EDIT'| translate}}
                             <!-- <i class="fa fa-pencil-square-o" aria-hidden="true"></i> -->
@@ -100,7 +100,7 @@
                                         <div *ngIf="element[objectIndex].property != block.headValue;">
                                             <div *ngIf="objectIndex + 1 != element.length; else greyBlock" data-mdb-toggle="tooltip" title={{element[objectIndex].title}}>
                                                 <span class="text-grey-color p14">{{element[objectIndex].title}}:
-                                                </span> <span class="p14">{{element[objectIndex].value}}</span>
+                                                </span> <span class="p14">{{element[objectIndex].value}}</span>                        
                                             </div>
                                             <ng-template #greyBlock>
                                                 <div class="fs-6" data-mdb-toggle="tooltip" title={{element[objectIndex].title}}><span class="text-grey-color p14">{{element[objectIndex].title}}:</span>

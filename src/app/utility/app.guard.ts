@@ -4,7 +4,7 @@ import {
     Router,
     RouterStateSnapshot,
 } from '@angular/router';
-import { KeycloakAuthGuard, KeycloakEvent, KeycloakEventType, KeycloakService } from 'keycloak-angular';
+import { KeycloakAuthGuard, KeycloakService } from 'keycloak-angular';
 import { KeycloakLoginOptions } from 'keycloak-js';
 
 @Injectable({

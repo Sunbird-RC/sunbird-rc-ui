@@ -8,7 +8,7 @@
     "start1": "ng serve",
     "build": "ng build --prod",
     "test": "ng test",
-    "lint": "ng lint",
+    "lint": "eslint .",
     "e2e": "ng e2e"
   },
   "private": true,
@@ -43,6 +43,8 @@
     "@ngx-formly/material": "^5.10.22",
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.61.0",
+    "@typescript-eslint/parser": "^5.61.0",
     "@zxing/browser": "0.0.10",
     "@zxing/library": "^0.18.6",
     "ajv": "^6.10.2",
@@ -106,4 +108,3 @@
     "https": false
   }
 }
-

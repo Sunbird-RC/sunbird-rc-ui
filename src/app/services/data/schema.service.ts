@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AppConfig } from 'src/app/app.config';
-import { environment } from 'src/environments/environment';
 import { DataService } from './data-request.service';
 
 @Injectable({
@@ -15,7 +14,7 @@ export class SchemaService {
   }
 
   getSchemas() {
-    let url = `${this.schemaUrl}`;
+    const url = `${this.schemaUrl}`;
     const req = {
       url: url
     };
@@ -24,7 +23,7 @@ export class SchemaService {
   }
 
   getHeaderJSON() {
-    let url = `.${this.configFolder}/headers.json`;
+    const url = `.${this.configFolder}/headers.json`;
     url.replace('//', '/');
     const req = {
       url: url
@@ -34,7 +33,7 @@ export class SchemaService {
   }
 
   getFormJSON() {
-    let url = `.${this.configFolder}/forms.json`;
+    const url = `.${this.configFolder}/forms.json`;
     url.replace('//', '/');
     const req = {
       url: url
@@ -44,7 +43,7 @@ export class SchemaService {
   }
 
   getLayoutJSON() {
-    let url = `.${this.configFolder}/layouts.json`;
+    const url = `.${this.configFolder}/layouts.json`;
     url.replace('//', '/');
     const req = {
       url: url
@@ -54,7 +53,7 @@ export class SchemaService {
   }
 
   getTableJSON() {
-    let url = `.${this.configFolder}/tables.json`;
+    const url = `.${this.configFolder}/tables.json`;
     url.replace('//', '/');
     const req = {
       url: url
@@ -64,7 +63,7 @@ export class SchemaService {
   }
 
   getSearchJSON() {
-    let url = `.${this.configFolder}/search.json`;
+    const url = `.${this.configFolder}/search.json`;
     url.replace('//', '/');
     const req = {
       url: url
@@ -74,7 +73,7 @@ export class SchemaService {
   }
 
   getPageJSON() {
-    let url = `.${this.configFolder}/pages.json`;
+    const url = `.${this.configFolder}/pages.json`;
     url.replace('//', '/');
     const req = {
       url: url

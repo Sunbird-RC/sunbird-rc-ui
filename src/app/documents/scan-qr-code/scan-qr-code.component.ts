@@ -9,8 +9,8 @@ import { GeneralService } from 'src/app/services/general/general.service';
   styleUrls: ['./scan-qr-code.component.scss']
 })
 export class ScanQrCodeComponent implements OnInit {
-  loader: boolean = false;
-  notValid: boolean = false;
+  loader = false;
+  notValid = false;
   qrString;
   entity: any;
   model;
@@ -38,14 +38,14 @@ export class ScanQrCodeComponent implements OnInit {
     }).then(contents => {
       // console.log('con', contents)
       // this.loader = true;
-      var signedData = JSON.parse(contents)
+      const signedData = JSON.parse(contents)
       console.log('-----s',signedData)
-      var context = {}
+      const context = {}
       context['signedCredentials'] = signedData
       this.model = JSON.stringify(context);
       this.generalService.getData(this.entity).subscribe((res) => {
         console.log('res', res)
-        var attest = {
+        const attest = {
           "name": "attestation-DIVOC",
           "entityName": "User",
           "entityId": res[0]['osid'],

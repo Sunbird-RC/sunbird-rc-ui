@@ -41,8 +41,8 @@ export class FormlyFieldMultiCheckbox extends FieldType {
       }
     }
   }
-  allChecked: boolean = false;
-  onChange(value: any, checked: boolean) {
+  allChecked = false;
+  onChange(value: string | number | symbol, checked: boolean) {
     this.allChecked = false;
     this.formControl.markAsDirty();
     if (this.to.formate === 'array') {
@@ -60,25 +60,24 @@ export class FormlyFieldMultiCheckbox extends FieldType {
     }
   }
 
-  isChecked(option: any) {
+  isChecked(option) {
     const value = this.formControl.value;
     return value && (this.to.formate === 'array' ? value.indexOf(option.value) !== -1 : value[option.value]);
   }
 
-  setAll(checked: boolean) {
+  setAll(checked) {
     this.allChecked = !this.allChecked;
-    let self = this;
 
-    this.to.options.forEach(function (key) {
+    this.to.options.forEach(key => {
 
-      if (self.to.formate === 'array') {
-        self.formControl.patchValue(
-          self.allChecked
-            ? [...new Set(self.formControl.value || []), key['value']]
-            : [...new Set(self.formControl.value || [])].filter((o) => o !== key['value']),
+      if (this.to.formate === 'array') {
+        this.formControl.patchValue(
+          this.allChecked
+            ? [...new Set(this.formControl.value || []), key['value']]
+            : [...new Set(this.formControl.value || [])].filter((o) => o !== key['value']),
         );
       } else {
-        self.formControl.patchValue({ ...new Set(this.formControl.value), [key['value']]: self.allChecked });
+        this.formControl.patchValue({ ...new Set(this.formControl.value), [key['value']]: this.allChecked });
       }
 
     })

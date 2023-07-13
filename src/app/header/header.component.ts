@@ -1,12 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
 import { AppConfig } from '../app.config';
 import { SchemaService } from '../services/data/schema.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ThemeService } from "../../app/services/theme/theme.service";
-
-declare var $: any;
 
 @Component({
   selector: 'app-header',
@@ -15,7 +12,7 @@ declare var $: any;
 })
 
 export class HeaderComponent implements OnInit {
-  @Input() headerFor: string = 'default';
+  @Input() headerFor = 'default';
   @Input() tab: string;
   logo;
   languages: any;
@@ -40,7 +37,7 @@ export class HeaderComponent implements OnInit {
 
     this.logo = this.config.getEnv(localStorage.getItem('ELOCKER_THEME') + '_theme').logoPath;
     this.schemaService.getHeaderJSON().subscribe(async (HeaderSchemas) => {
-      var filtered = HeaderSchemas.headers.filter(obj => {
+      const filtered = HeaderSchemas.headers.filter(obj => {
         return Object.keys(obj)[0] === this.headerFor;
       });
       this.headerSchema = filtered[0][this.headerFor];
@@ -57,14 +54,14 @@ export class HeaderComponent implements OnInit {
 
 
       if (localStorage.getItem('activeTab')) {
-        let activeT = JSON.parse(localStorage.getItem('activeTab'));
+        const activeT = JSON.parse(localStorage.getItem('activeTab'));
         this.headerSchema[activeT.pos][activeT.i]["activeTab"] = 'active';
 
         console.log(this.headerSchema);
 
       }
 
-    }, (error) => {
+    }, () => {
       console.error('headers.json not found in src/assets/config/ - You can refer to examples folder to create the file')
     });
   }

@@ -28,7 +28,7 @@ export class PagesComponent implements OnInit {
 
     this.schemaService.getPageJSON().subscribe((PageSchemas) => {
       try{
-        var filtered = PageSchemas.pages.filter(obj => {
+        const filtered = PageSchemas.pages.filter(obj => {
           return Object.keys(obj)[0] === this.page
         })
         this.pageSchema = filtered[0][this.page]
@@ -41,10 +41,10 @@ export class PagesComponent implements OnInit {
             this.notFound = true;
           }
         },
-          (error) => {
+          () => {
             this.notFound = true;
-            var handler = document.getElementById('menu-open-handler');
-            var toggleInterval = setInterval(function () {
+            const handler = document.getElementById('menu-open-handler');
+            const toggleInterval = setInterval(function () {
               this.checkbox = document.getElementById('menu-open');
               this.checkbox.checked = !this.checkbox.checked;
             }, 4000);
@@ -65,8 +65,7 @@ export class PagesComponent implements OnInit {
     return this.httpClient.get(path,{responseType:'text'})
       .pipe(
         map((html: any) => {
-          // console.log('html',html);
-          return html;
+        return html;
         }),
         catchError(error => {
           console.log(error);

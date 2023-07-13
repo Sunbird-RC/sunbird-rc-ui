@@ -13,8 +13,8 @@ import { catchError, map } from 'rxjs/operators';
   styleUrls: ['./install.component.scss']
 })
 export class InstallComponent implements OnInit {
-  installed: boolean = false;
-  message: boolean = false;
+  installed = false;
+  message = false;
   form = new FormGroup({});
   model: any = {};
   options: FormlyFormOptions = {};
@@ -505,7 +505,7 @@ export class InstallComponent implements OnInit {
   ngOnInit(): void {
     try{
       this.checkConfig().subscribe((res) => { if (res) { this.router.navigate(['']) } },
-        (error) => this.installed = false);
+        () => this.installed = false);
     }
     catch(error) {
       console.log('---------------------',error);
@@ -535,7 +535,7 @@ export class InstallComponent implements OnInit {
   }
 
   saveConfig(filename, data) {
-    var a = document.createElement('a');
+    const a = document.createElement('a');
     a.setAttribute('href', 'data:text/plain;charset=utf-u,' + encodeURIComponent(data));
     a.setAttribute('download', filename);
     a.click()

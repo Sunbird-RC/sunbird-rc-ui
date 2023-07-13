@@ -18,17 +18,17 @@ import { TranslateService } from '@ngx-translate/core';
 
 export class SearchComponent implements OnInit {
   header: string = null;
-  searchSchemas: any;
+  searchSchemas;
   filtered = [];
-  searchString: any;
+  searchString: object; 
 
   fields: FormlyFieldConfig[] = [];
-  data: any = [];
+  data = [];
 
   form = new FormGroup({});
-  model: any = {};
+  model = {};
   options: FormlyFormOptions = {};
-  isLoading: boolean = true;
+  isLoading = true;
   searchJson;
   cardFields = [];
   selectOption = {};
@@ -36,9 +36,9 @@ export class SearchComponent implements OnInit {
   activeTabIs: string;
 
   items = [];
-  apiUrl: any;
-  user: any;
-  searchResult: any;
+  apiUrl: unknown;
+  user: [] | object |string;
+  searchResult: unknown;
   dropdownList = [];
   selectedItems = [];
   dropdownSettings = {};
@@ -55,7 +55,7 @@ export class SearchComponent implements OnInit {
     ]
   };
 
-  page: number = 1;
+  page = 1;
   limit: number;
   fieldsTemp = [];
 
@@ -85,18 +85,17 @@ export class SearchComponent implements OnInit {
     this.schemaService.getSearchJSON().subscribe((searchSchemas) => {
       this.searchSchemas = searchSchemas;
 
-      let _self = this;
-      Object.keys(_self.searchSchemas.searches).forEach(function (key) {
-        _self.searchJson = _self.searchSchemas.searches[key];
+      Object.keys(this.searchSchemas.searches).forEach(key => {
+        this.searchJson = this.searchSchemas.searches[key];
 
 
-        Object.keys(_self.searchJson).forEach(function (key1) {
+        Object.keys(this.searchJson).forEach(key1 =>{
 
-          _self.filtered.push(_self.searchJson[key1]);
+          this.filtered.push(this.searchJson[key1]);
 
-          if (_self.searchJson[key1].hasOwnProperty('activeTab') && _self.searchJson[key1].activeTab == 'active') {
-            _self.activeTabIs = _self.searchJson[key1].tab;
-            _self.apiUrl = _self.searchJson[key1].api;
+          if (this.searchJson[key1].hasOwnProperty('activeTab') && this.searchJson[key1].activeTab == 'active') {
+            this.activeTabIs = this.searchJson[key1].tab;
+            this.apiUrl = this.searchJson[key1].api;
           }
 
         })
@@ -130,11 +129,11 @@ export class SearchComponent implements OnInit {
           this.privateFields = (this.responseData.definitions[filtered[index]['privateFields']].hasOwnProperty('privateFields') ? this.responseData.definitions[filtered[index]['privateFields']].privateFields : []);
         }
 
-        fieldset.filters.forEach((filter, index1) => {
+        fieldset.filters.forEach((filter) => {
 
-          if (this.privateFields != [] && !this.privateFields.includes('$.' + filter.propertyPath)) {
+          if (!this.privateFields.includes('$.' + filter.propertyPath)) {
 
-            let fieldObj = {
+            const fieldObj = {
               key: filter.key,
               type: 'input',
               className: 'col-sm-4',
@@ -152,7 +151,7 @@ export class SearchComponent implements OnInit {
 
               fieldObj['templateOptions']['search$'] = (term) => {
                 if (term || term != '') {
-                  var formData = {
+                  const formData = {
                     "filters": {},
                     "limit": 20,
                     "offset": 0
@@ -189,7 +188,7 @@ export class SearchComponent implements OnInit {
         this.fields = [this.data[0]];
 
         fieldset.results.fields.forEach((fields) => {
-          if (this.privateFields != [] && !this.privateFields.includes('$.' + fields.property)) {
+          if (!this.privateFields.includes('$.' + fields.property)) {
             this.cardFields.push(fields);
           }
         });
@@ -209,18 +208,20 @@ export class SearchComponent implements OnInit {
       }
     }
 
-    let _self = this;
-
-    Object.keys(_self.model).forEach(function (key) {
-      _self.filtered.forEach((fieldset, index) => {
-        if (_self.filtered[index].tab == _self.activeTabIs) {
+    Object.keys(this.model).forEach(key => {
+      this.filtered.forEach((fieldset, index) => {
+        if (this.filtered[index].tab == this.activeTabIs) {
 
           fieldset.filters.forEach((filter) => {
 
             if (key == filter.key) {
-              if (_self.model[key]) {
-                _self.searchString.filters[filter.propertyPath] = {
-                  "startsWith": _self.model[key]
+              if (this.model[key]) {
+                this.searchString = {
+                  filters: {
+                    [filter.propertyPath]: {
+                      startsWith: this.model[key]
+                    }
+                  }
                 };
               }
             }
@@ -234,7 +235,6 @@ export class SearchComponent implements OnInit {
     this.generalService.postData(this.apiUrl, this.searchString).subscribe((res) => {
       this.mapFieldsdata(res);
       this.isLoading = false;
-    }, (err) => {
     });
   }
 
@@ -242,19 +242,19 @@ export class SearchComponent implements OnInit {
     this.items = [];
 
 
-    await res.forEach((item, index) => {
+    await res.forEach((item) => {
       this.fieldsTemp = [];
 
-      this.cardFields.forEach((key, i) => {
+      this.cardFields.forEach((key) => {
 
-        var property = key.property;
-        var title = this.translate.instant(key.title);
-        var propertySplit = property.split(".");
+        const property = key.property;
+        const title = this.translate.instant(key.title);
+        const propertySplit = property.split(".");
 
         let fieldValue = [];
 
         for (let j = 0; j < propertySplit.length; j++) {
-          let a = propertySplit[j];
+          const a = propertySplit[j];
 
           if (j == 0 && item.hasOwnProperty(a)) {
             fieldValue = item[a];
@@ -263,7 +263,7 @@ export class SearchComponent implements OnInit {
             fieldValue = fieldValue[a];
 
           } else if (fieldValue[0]) {
-            let arryItem = []
+            const arryItem = []
             if (fieldValue.length > 0) {
               for (let i = 0; i < fieldValue.length; i++) {
                 arryItem.push({ 'value': fieldValue[i][a], "status": fieldValue[i][key.attest] });
@@ -301,7 +301,7 @@ export class SearchComponent implements OnInit {
   }
 
 
-  resetModel(index) {
+  resetModel() {
     this.model = {};
     this.searchData();
   }
@@ -310,12 +310,12 @@ export class SearchComponent implements OnInit {
     this.fields = [];
   }
 
-  onItemSelect(item: any) {
+  onItemSelect(item) {
     this.fields = [];
     this.data[0].fieldGroup.push(item.data);
     this.fields = [this.data[0]];
   }
-  OnItemDeSelect(item: any) {
+  OnItemDeSelect(item) {
     this.fields = [];
     this.fields = this.data[0].fieldGroup.filter(function (obj) {
       return obj.key !== item.id;
@@ -323,7 +323,7 @@ export class SearchComponent implements OnInit {
     this.data[0].fieldGroup = this.fields;
   }
 
-  onSelectAll(items: any) {
+  onSelectAll(items) {
     this.data[0].fieldGroup = [];
     for (let i = 0; i < items.length; i++) {
       this.data[0].fieldGroup.push(items[i].data);
@@ -332,16 +332,10 @@ export class SearchComponent implements OnInit {
 
   }
 
-  onDeSelectAll(items: any) {
+  onDeSelectAll(event) {
     this.data[0].fieldGroup = [];
     this.model = {};
   }
-
-  searchInstituteData(event) {
-    let apiUrl;
-  }
-
-
 
   onTabChange(event, activeTabIs) {
     this.cardFields = [];

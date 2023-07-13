@@ -1,16 +1,13 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 @Injectable()
 export class AppConfig {
 
-    private config: Object = null;
-    private environment:    Object = null;
+    private config: object = null;
+    private environment: object = null;
 
     constructor(private http: HttpClient, public router: Router, private titleService: Title) {
 
@@ -41,10 +38,10 @@ export class AppConfig {
      *   b) Loads "config.[environment].json" to get all environment's variables (e.g.: 'config.development.json')
      */
     public load() {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             this.http.get('/assets/config/config.json').subscribe((envResponse) => {
                 this.environment= envResponse;
-                let request:any = null;
+                let request = null;
 
                 switch (envResponse['environment']) {
                     case 'production': {

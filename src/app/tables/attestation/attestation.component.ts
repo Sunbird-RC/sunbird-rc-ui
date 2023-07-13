@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GeneralService } from 'src/app/services/general/general.service';
-
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { AppConfig } from '../../app.config';
@@ -52,16 +51,10 @@ export class AttestationComponent implements OnInit {
   ];
   
   entityId: string;
-  user: any;
-  education: any;
-  educationDetail: any;
-  experience: any;
-  experienceDetail: any;
   id: string;
   type: string;
   contact: string;
-  consent: any = false;
-  noteAdded: boolean = false;
+  noteAdded = false;
   claimId: string;
   entityIdt: string;
 
@@ -125,26 +118,26 @@ export class AttestationComponent implements OnInit {
     }
   ]
 
-  apiUrl: any;
+  apiUrl: string;
   claimData: any;
   attestationData: any;
   entity: any;
-  osid: any;
-  propertyData: any[] = [];
+  osid: string;
+  propertyData = [];
   claimEntity: any;
-  claimEntityId: any;
+  claimEntityId: string;
   profileData: any;
   profile: boolean;
-  note: any = "";
-  comment: any = "";
-  table: any;
+  note = "";
+  comment = "";
+  table: string;
   documents = null;
-  notes: any[] = [];
+  notes = [];
   logo: any;
   fileURL: string;
   titleVal: any;
   formSchema: any;
-  langKey: any;
+  langKey: string | number;
   constructor(
     public router: Router,
     private route: ActivatedRoute,
@@ -188,15 +181,15 @@ export class AttestationComponent implements OnInit {
         this.claimEntity = res.claim.entity;
         this.claimData = res.claim;
         this.notes = res.notes;
-        let noteDesc = 'This note will be sent to ' + this.claimData?.requestorName;
+        const noteDesc = 'This note will be sent to ' + this.claimData?.requestorName;
         this.denyFields[0].templateOptions.description = noteDesc;
         this.noteFields[0].templateOptions.description = noteDesc;
 
         this.attestationData = JSON.parse(this.claimData.propertyData);
 
         this.schemaService.getFormJSON().subscribe((FormSchemas) => {
-          let temp =  this.claimEntity.toLowerCase() + '-' + 'setup';
-          var filtered = FormSchemas.forms.filter(obj => {
+          const temp =  this.claimEntity.toLowerCase() + '-' + 'setup';
+          const filtered = FormSchemas.forms.filter(obj => {
             
             return Object.keys(obj)[0] === temp
           })
@@ -206,18 +199,13 @@ export class AttestationComponent implements OnInit {
           if (this.formSchema.langKey) {
             this.langKey = this.formSchema.langKey;
           }
-    
-       
 
-        let _self = this;
-        Object.keys(this.attestationData).forEach(function (key) {
-        if(typeof(_self.attestationData[key]) == 'object')
-        {
-          _self.attestationData = _self.attestationData[key][0];
-          _self.removeCommonFields();
-          _self.generateData()
-        }
-      
+        Object.keys(this.attestationData).forEach(key => {
+        if(typeof(this.attestationData[key]) == 'object'){
+          this.attestationData = this.attestationData[key][0];
+          this.removeCommonFields();
+          this.generateData()
+        }   
         });
 
         this.generalService.getData("/"+ this.claimData.propertyURI).subscribe((res) => {
@@ -246,7 +234,7 @@ export class AttestationComponent implements OnInit {
     // this.getStudentData();
   }
 
-  generateData(){
+  generateData(){    
     for (const [index, [key, value]] of Object.entries(Object.entries(this.attestationData))) {
       console.log("att", key, value)
       if(key === 'documents'){
@@ -270,7 +258,7 @@ export class AttestationComponent implements OnInit {
         //   temp_object['value'] = value;
         //   this.propertyData.push(temp_object);
         // }
-        var temp_object = {};
+        const temp_object = {};
          // temp_object['title'] = (key).charAt(0).toUpperCase() + key.slice(1);
           temp_object['title'] = this.check(key);
           temp_object['value'] = value;
@@ -283,7 +271,7 @@ export class AttestationComponent implements OnInit {
 
   check(conStr) {
     this.translate.get(this.langKey + '.' + conStr).subscribe(res => {
-      let constr = this.langKey + '.' + conStr;
+      const constr = this.langKey + '.' + conStr;
       if (res != constr) {
         this.titleVal = res;
       } else {
@@ -294,7 +282,7 @@ export class AttestationComponent implements OnInit {
   }
 
   removeCommonFields() {
-    var commonFields = ['osCreatedAt', 'osCreatedBy', 'osUpdatedAt', 'osUpdatedBy','OsUpdatedBy','_osAttestedData', 'osid','_osClaimId','_osState','Osid', 'InstituteOSID', 'TeacherOSID', 'sorder'];
+    const commonFields = ['osCreatedAt', 'osCreatedBy', 'osUpdatedAt', 'osUpdatedBy','OsUpdatedBy','_osAttestedData', 'osid','_osClaimId','_osState','Osid', 'InstituteOSID', 'TeacherOSID', 'sorder'];
     commonFields.forEach(element => {
       if(this.attestationData.hasOwnProperty(element)){
         delete this.attestationData[element]
@@ -314,12 +302,12 @@ export class AttestationComponent implements OnInit {
     // }
 
     //this.note = this.denyForm.value.note ? this.denyForm.value.note : this.note;
-    let data = {
+    const data = {
       "action": action,
       "notes": this.denyForm.value.note ? this.denyForm.value.note : this.note
   }
   console.log("data--",data);
-    var url = this.entity+"/claims/"+this.claimId+"/attest"
+    const url = this.entity+"/claims/"+this.claimId+"/attest"
     this.generalService.postData(url, data).subscribe((res) => {
       // alert('success');
       console.log(res);
@@ -344,9 +332,7 @@ export class AttestationComponent implements OnInit {
   typeOf(value) {
     return typeof value;
   }
-  
-  onConsent() { }
-
+ 
   saveNote(){
     // localStorage.setItem('note', JSON.stringify(event));
     console.log('evv noteForm -- ', this.noteForm.value.note);

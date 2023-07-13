@@ -1,9 +1,5 @@
-import { Component, ElementRef, Input, NgModule, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FieldType } from '@ngx-formly/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { GeneralService } from 'src/app/services/general/general.service';
-
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -39,7 +35,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 
 export class FormlyFieldFile extends FieldType {
-  data: any;
+  data: unknown;
   fileName = '';
   lable = '+ Upload File';
   color = 'blue'
@@ -49,7 +45,7 @@ export class FormlyFieldFile extends FieldType {
   constructor(public sanitizer: DomSanitizer) {
     super();
   }
-  ngOnInit(): void {}
+ 
   openFileInput() {
     this.el.nativeElement.click();
   }
@@ -77,7 +73,7 @@ export class FormlyFieldFile extends FieldType {
     return /^image\//.test(file.type);
   }
 
-  fileChanged(event: any) {
+  fileChanged() {
   //   const file: File = event.target.files[0];
 
   //   if (file) {

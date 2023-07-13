@@ -12,7 +12,7 @@ import { ToastMessageService } from '../services/toast-message/toast-message.ser
 import { SharedService } from '../services/shared/shared.service';
 import { of as observableOf } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { throwError } from 'rxjs';
+import { JSONSchema7Definition } from 'json-schema';
 
 @Component({
   selector: 'app-forms',
@@ -46,31 +46,31 @@ export class FormsComponent implements OnInit {
   fields: FormlyFieldConfig[];
   customFields = [];
   header = null;
-exLength : number = 0
+  exLength  = 0
   type: string;
   apiUrl: string;
-  redirectTo: any;
+  redirectTo: unknown;
   add: boolean;
-  dependencies: any;
+  dependencies: object;
   privateFields = [];
   internalFields = [];
-  privacyCheck: boolean = false;
+  privacyCheck = false;
   globalPrivacy;
-  searchResult: any[];
-  states: any[] = [];
-  fileFields: any[] = [];
+  searchResult: [];
+  states = [];
+  fileFields = [];
   propertyName: string;
   notes: any;
   langKey: string;
   headingTitle;
   enumVal;
   titleVal
-  isSignupForm: boolean = false;
-  entityUrl: any;
-  propertyId: any;
+  isSignupForm = false;
+  entityUrl: string;
+  propertyId: string;
   entityName: string;
   sorder: any;
-  isSubmitForm: boolean = false;
+  isSubmitForm = false;
   fieldsetData: any;
   properties = {};
   constructor(private route: ActivatedRoute,
@@ -99,7 +99,7 @@ exLength : number = 0
     this.entityName = localStorage.getItem('entity');
 
     this.schemaService.getFormJSON().subscribe((FormSchemas) => {
-      var filtered = FormSchemas.forms.filter(obj => {
+      const filtered = FormSchemas.forms.filter(obj => {
         return Object.keys(obj)[0] === this.form
       })
       this.formSchema = filtered[0][this.form]
@@ -162,37 +162,34 @@ exLength : number = 0
 
           if (fieldset.dependencies) {
 
-            let _self = this;
-            Object.keys(fieldset.dependencies).forEach(function (key) {
-              let above13 = fieldset.dependencies[key];
-              if (typeof (above13) === 'object') {
-                Object.keys(above13).forEach(function (key1) {
-                  let oneOf = above13[key1];
-
+            Object.keys(fieldset.dependencies).forEach((key) => {
+              const above13 = fieldset.dependencies[key];
+              if (typeof above13 === 'object') {
+                Object.keys(above13).forEach((key1) => {
+                  const oneOf = above13[key1];
+            
                   if (oneOf.length) {
                     for (let i = 0; i < oneOf.length; i++) {
-
                       if (oneOf[i].hasOwnProperty('properties')) {
-
-                        Object.keys(oneOf[i].properties).forEach(function (key2) {
-                          let pro = oneOf[i].properties[key2];
-
+                        Object.keys(oneOf[i].properties).forEach((key2) => {
+                          const pro = oneOf[i].properties[key2];
+            
                           if (pro.hasOwnProperty('properties')) {
-                            Object.keys(pro['properties']).forEach(function (key3) {
+                            Object.keys(pro['properties']).forEach((key3) => {
                               console.log(pro.properties[key3]);
                               if (pro.properties[key3].hasOwnProperty('title')) {
-                                fieldset.dependencies[key][key1][i].properties[key2].properties[key3]['title'] = _self.translate.instant(pro.properties[key3].title);
+                                fieldset.dependencies[key][key1][i].properties[key2].properties[key3]['title'] = this.translate.instant(pro.properties[key3].title);
                               }
                             });
                           }
-
-                        })
+                        });
                       }
                     }
                   }
-                })
+                });
               }
-            })
+            });
+            
 
             this.dependencies = fieldset.dependencies;
 
@@ -252,14 +249,14 @@ exLength : number = 0
         this.schema["definitions"] = this.definations;
         this.schema["properties"] = this.properties;
         this.schema["required"] = this.required;
-        this.schema["dependencies"] = this.dependencies;
+        this.schema["dependencies"] = this.dependencies as { [key: string]: JSONSchema7Definition };
         this.loadSchema();
       },
-        (error) => {
+        () => {
           this.toastMsg.error('error', this.translate.instant('SOMETHING_WENT_WRONG_WITH_SCHEMA_URL'))
         });
 
-    }, (error) => {
+    }, () => {
       this.toastMsg.error('error', 'forms.json not found in src/assets/config/ - You can refer to examples folder to create the file')
     })
   }
@@ -291,11 +288,11 @@ exLength : number = 0
 
         if (this.privateFields.length || this.internalFields.length) {
 
-          let label = fieldObj.templateOptions.label;
-          let key = fieldObj.key.replace(/^./, fieldObj.key[0].toUpperCase());
+          const label = fieldObj.templateOptions.label;
+          const key = fieldObj.key.replace(/^./, fieldObj.key[0].toUpperCase());
 
           if (this.schema.definitions[key] && this.schema.definitions[key].hasOwnProperty('description')) {
-            let desc = this.checkString(fieldObj.key, this.schema.definitions[key]['description']);
+            const desc = this.checkString(fieldObj.key, this.schema.definitions[key]['description']);
             fieldObj.templateOptions.label = (label ? label : desc);
           }
 
@@ -338,8 +335,8 @@ exLength : number = 0
 
   checkProperty(fieldset, field) {
     this.definations[field.children.definition] = this.responseData.definitions[field.children.definition];
-    var ref_properties = {}
-    var ref_required = []
+    const ref_properties = {}
+    const ref_required = []
     if (field.children.fields && field.children.fields.length > 0) {
 
       if (!this.responseData.definitions[fieldset.definition].properties[field.name]['widget'].hasOwnProperty('formlyConfig')) {
@@ -379,10 +376,10 @@ exLength : number = 0
   }
 
   nastedChild(fieldset, fieldName, res) {
-    let tempArr = res;
+    const tempArr = res;
 
-    let temp_arr_fields = [];
-    let nastedArr = [];
+    const temp_arr_fields = [];
+    const nastedArr = [];
 
     for (const key in tempArr) {
       if (tempArr[key].hasOwnProperty('type') && tempArr[key].type == 'string') {
@@ -390,16 +387,16 @@ exLength : number = 0
           temp_arr_fields.push({ 'name': key, 'type': tempArr[key].type });
         }
       } else {
-        let res = this.responseData.definitions[fieldName.replace(/^./, fieldName[0].toUpperCase())].properties[key];
+        const res = this.responseData.definitions[fieldName.replace(/^./, fieldName[0].toUpperCase())].properties[key];
         if (res.hasOwnProperty('properties') || res.hasOwnProperty('$ref')) {
           this.responseData.definitions[fieldName.replace(/^./, fieldName[0].toUpperCase())].properties[key].properties = tempArr[key].properties;
 
           for (const key1 in tempArr[key].properties) {
             nastedArr.push({ 'name': key1, 'type': tempArr[key].properties[key1].type });
-          };
+          }
           delete this.responseData.definitions[fieldName.replace(/^./, fieldName[0].toUpperCase())].properties[key]['$ref'];
 
-          let temp2 = {
+          const temp2 = {
             children: {
               definition: fieldName.replace(/^./, fieldName[0].toUpperCase()) + '.properties.' + key,
               fields: nastedArr
@@ -417,7 +414,7 @@ exLength : number = 0
         }
       }
     }
-    let temp_field = {
+    const temp_field = {
       children: {
         definition: fieldName.replace(/^./, fieldName[0].toUpperCase()),
         fields: temp_arr_fields
@@ -449,31 +446,23 @@ exLength : number = 0
         }
 
         if (this.responseData.definitions[fieldset.definition] && this.responseData.definitions[fieldset.definition].hasOwnProperty('properties')) {
-          let res = this.responseData.definitions[fieldset.definition].properties;
           if (field.children) {
             this.fieldsetData = {};
             this.checkProperty(fieldset, field);
 
             if (this.responseData.definitions[fieldset.definition].properties[field.name].hasOwnProperty('properties')) {
-              let _self = this;
-              Object.keys(_self.responseData.definitions[fieldset.definition].properties[field.name].properties).forEach(function (key) {
-                if (_self.responseData.definitions[fieldset.definition].properties[field.name].properties[key].hasOwnProperty('properties')) {
-                  Object.keys(_self.responseData.definitions[fieldset.definition].properties[field.name].properties[key].properties).forEach(function (key1) {
-
-                    _self.responseData.definitions[fieldset.definition].properties[field.name].properties[key].properties[key1].title = _self.checkString(key1, _self.responseData.definitions[fieldset.definition].properties[field.name].properties[key].properties[key1].title);
-
-
-                  });
-
-
-                }
-                console.log(key);
-              });
-            }
+          Object.keys(this.responseData.definitions[fieldset.definition].properties[field.name].properties).forEach(key => {
+           if (this.responseData.definitions[fieldset.definition].properties[field.name].properties[key].hasOwnProperty('properties')) {
+           Object.keys(this.responseData.definitions[fieldset.definition].properties[field.name].properties[key].properties).forEach((key1) => {
+           this.responseData.definitions[fieldset.definition].properties[field.name].properties[key].properties[key1].title = this.checkString(key1, this.responseData.definitions[fieldset.definition].properties[field.name].properties[key].properties[key1].title);
+           });
+          }
+        });
+       }
 
 
           } else if (this.responseData.definitions[fieldset.definition].properties.hasOwnProperty(field.name) && this.responseData.definitions[fieldset.definition].properties[field.name].hasOwnProperty('properties')) {
-            let res = this.responseData.definitions[fieldset.definition].properties[field.name].properties;
+            const res = this.responseData.definitions[fieldset.definition].properties[field.name].properties;
             this.fieldsetData = field;
             this.nastedChild(fieldset, field.name, res);
           }
@@ -521,7 +510,7 @@ exLength : number = 0
         }
       });
     } else {
-      let res = this.responseData.definitions[fieldset.definition].properties;
+      const res = this.responseData.definitions[fieldset.definition].properties;
       this.nastedChild(fieldset, fieldset.definition, res);
     }
   }
@@ -570,7 +559,7 @@ exLength : number = 0
 
   checkString(conStr, title) {
     this.translate.get(this.langKey + '.' + conStr).subscribe(res => {
-      let constr = this.langKey + '.' + conStr;
+      const constr = this.langKey + '.' + conStr;
       if (res != constr) {
         this.titleVal = res;
       } else {
@@ -584,7 +573,7 @@ exLength : number = 0
   addWidget(fieldset, field, childrenName) {
 
     this.translate.get(this.langKey + '.' + field.name).subscribe(res => {
-      let constr = this.langKey + '.' + field.name;
+      const constr = this.langKey + '.' + field.name;
       if (res != constr) {
         this.responseData.definitions[fieldset.definition].properties[field.name].title = this.generalService.translateString(this.langKey + '.' + field.name);
       }
@@ -634,12 +623,9 @@ exLength : number = 0
 
         if (this.responseData.definitions[fieldset.definition].properties[field.name].hasOwnProperty('items')) {
           if (this.responseData.definitions[fieldset.definition].properties[field.name].items.hasOwnProperty('properties')) {
-            let _self = this;
-            Object.keys(_self.responseData.definitions[fieldset.definition].properties[field.name].items.properties).forEach(function (key) {
+            Object.keys(this.responseData.definitions[fieldset.definition].properties[field.name].items.properties).forEach((key) =>{
               console.log(key);
-              _self.responseData.definitions[fieldset.definition].properties[field.name].items.properties[key].title = _self.checkString(key, _self.responseData.definitions[fieldset.definition].properties[field.name].items.properties[key].title);
-
-
+              this.responseData.definitions[fieldset.definition].properties[field.name].items.properties[key].title = this.checkString(key, this.responseData.definitions[fieldset.definition].properties[field.name].items.properties[key].title);
             });
 
           }
@@ -738,7 +724,7 @@ exLength : number = 0
                   }
                 }
               }
-              return new Promise((resolve, reject) => {
+              return new Promise((resolve) => {
                 setTimeout(() => {
                   resolve(true);
                 }, 1000);
@@ -758,11 +744,11 @@ exLength : number = 0
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['asyncValidators'][field.name]['expression'] = (control: FormControl) => {
             if (control.value != null) {
               if (field.autofill.method === 'GET') {
-                var apiurl = field.autofill.apiURL.replace("{{value}}", control.value)
+                const apiurl = field.autofill.apiURL.replace("{{value}}", control.value)
                 this.generalService.getPrefillData(apiurl).subscribe((res) => {
                   if (field.autofill.fields) {
                     field.autofill.fields.forEach(element => {
-                      for (var [key1, value1] of Object.entries(element)) {
+                      for (const [key1, value1] of Object.entries(element)) {
                         this.createPath(this.model, key1, this.ObjectbyString(res, value1))
                         this.form2.get(key1).setValue(this.ObjectbyString(res, value1))
                       }
@@ -770,7 +756,7 @@ exLength : number = 0
                   }
                   if (field.autofill.dropdowns) {
                     field.autofill.dropdowns.forEach(element => {
-                      for (var [key1, value1] of Object.entries(element)) {
+                      for (const [key1, value1] of Object.entries(element)) {
                         if (Array.isArray(res)) {
                           res = res[0]
                         }
@@ -781,9 +767,9 @@ exLength : number = 0
                 });
               }
               else if (field.autofill.method === 'POST') {
-                var datapath = this.findPath(field.autofill.body, "{{value}}", '')
+                const datapath = this.findPath(field.autofill.body, "{{value}}", '')
                 if (datapath) {
-                  var dataobject = this.setPathValue(field.autofill.body, datapath, control.value)
+                  const dataobject = this.setPathValue(field.autofill.body, datapath, control.value)
                   this.generalService.postPrefillData(field.autofill.apiURL, dataobject).subscribe((res) => {
                     if (Array.isArray(res)) {
                       res = res[0]
@@ -791,7 +777,7 @@ exLength : number = 0
                     if (field.autofill.fields) {
                       field.autofill.fields.forEach(element => {
 
-                        for (var [key1, value1] of Object.entries(element)) {
+                        for (const [key1, value1] of Object.entries(element)) {
                           this.createPath(this.model, key1, this.ObjectbyString(res, value1))
                           this.form2.get(key1).setValue(this.ObjectbyString(res, value1))
                         }
@@ -799,7 +785,7 @@ exLength : number = 0
                     }
                     if (field.autofill.dropdowns) {
                       field.autofill.dropdowns.forEach(element => {
-                        for (var [key1, value1] of Object.entries(element)) {
+                        for (const [key1, value1] of Object.entries(element)) {
                           this.schema["properties"][key1]['items']['enum'] = this.ObjectbyString(res, value1)
                         }
                       });
@@ -808,7 +794,7 @@ exLength : number = 0
                 }
               }
             }
-            return new Promise((resolve, reject) => {
+            return new Promise((resolve) => {
               setTimeout(() => {
                 resolve(true);
               }, 1000);
@@ -821,10 +807,10 @@ exLength : number = 0
         this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['type'] = "autocomplete";
         this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['placeholder'] = this.generalService.translateString(this.responseData.definitions[fieldset.definition].properties[field.name]['title']);
         this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['label'] = field.autocomplete.responseKey;
-        var dataval = "{{value}}"
+        let dataval = "{{value}}"
         this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['search$'] = (term) => {
           if (term || term != '') {
-            var datapath = this.findPath(field.autocomplete.body, dataval, '')
+            const datapath = this.findPath(field.autocomplete.body, dataval, '')
             this.setPathValue(field.autocomplete.body, datapath, term)
 
             dataval = term;
@@ -923,7 +909,7 @@ exLength : number = 0
                   return of(false);
                 }
               }
-              return new Promise((resolve, reject) => {
+              return new Promise((resolve) => {
                 setTimeout(() => {
                   resolve(true);
                 }, 1000);
@@ -939,12 +925,12 @@ exLength : number = 0
 
       if (field.disabled || field.disable) {
         this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['disabled'] = field.disabled
-      };
+      }
 
       if (field.disabledConfig) {
 
         if(field['disabledConfig'].hasOwnProperty('isFieldNotEmpty') || field['disabledConfig'].hasOwnProperty('condition')){
-        let temp = this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig'];
+          const temp = this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig'];
         this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig'] = {
           'expressionProperties': {
             "templateOptions.disabled": (model, formState, field1) => {
@@ -955,18 +941,17 @@ exLength : number = 0
                   if (this.model.hasOwnProperty(this.firstLowerCase(fieldset.definition)) ) {
 
                     if (field.disabledConfig.isFieldNotEmpty && this.model[this.firstLowerCase(fieldset.definition)][field.name]) {
-                      let isVal;
                       this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['expressionPropertiesCache'] = false;
-                      return isVal = (this.model[this.firstLowerCase(fieldset.definition)][field.name]) ? true : false;
+                      return (this.model[this.firstLowerCase(fieldset.definition)][field.name]) ? true : false;
                     } else if (this.model[this.firstLowerCase(fieldset.definition)].hasOwnProperty(field.name)) {
                       this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['expressionPropertiesCache'] = false;
                       return false;
                     }
                   }else {
                     if (field.disabledConfig.isFieldNotEmpty && this.model[field.name]) {
-                     let isVal : boolean;
+
                      this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['expressionPropertiesCache'] = false;
-                     return isVal = (this.model[field.name]) ? true : false;
+                     return (this.model[field.name]) ? true : false;
                      } else if (this.model.hasOwnProperty(field.name)) {
                       this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['expressionPropertiesCache'] = false;
                       return false;
@@ -995,20 +980,20 @@ exLength : number = 0
         }
       }
 
-      };
+      }
 
       if (field.hideConfig) {
         if( field['hideConfig'].hasOwnProperty('condition')){
-          let temp = this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig'];
+          const temp = this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig'];
 
         this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig'] = {
-          "hideExpression": (model, formState, field1) => {
+          "hideExpression": () => {
             
-               let hData = field.hideConfig.condition;
+            const hData = field.hideConfig.condition;
 
                 if (hData.hasOwnProperty('valueDependent') && hData.valueDependent.hasOwnProperty('keyPath') && hData.valueDependent.hasOwnProperty('checkValTo')) {
 
-                  let val = this.sharedService.getObjPathVal(hData.valueDependent.keyPath, this.model)
+                  const val = this.sharedService.getObjPathVal(hData.valueDependent.keyPath, this.model)
 
                   switch(hData.valueDependent.isValCondition)
                   {
@@ -1031,12 +1016,11 @@ exLength : number = 0
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig'] = temp;
         }
         }
-      };
-
+      }
 
       if ((this.privateFields.indexOf('$.' + childrenName) < 0) || (this.internalFields.indexOf('$.' + childrenName) < 0)) {
 
-        let temp_access_field = '$.' + childrenName + '.' + field.name;
+        const temp_access_field = '$.' + childrenName + '.' + field.name;
 
         if (this.privateFields.includes(temp_access_field) && (this.privateFields.indexOf('$.' + childrenName) < 0)) {
           this.responseData.definitions[fieldset.definition].properties[field.name].access = 'private';
@@ -1110,9 +1094,9 @@ exLength : number = 0
 
       if (field.disabled || field.disable) {
         this.res.properties[field.name]['widget']['formlyConfig']['templateOptions']['disabled'] = field.disabled
-      };
+      }
 
-      let temp_access_field = '$.' + ParentName + '.' + childrenName + '.' + field.name;
+      const temp_access_field = '$.' + ParentName + '.' + childrenName + '.' + field.name;
 
       if ((this.privateFields.indexOf('$.' + ParentName) < 0) || (this.privateFields.indexOf('$.' + ParentName) < 0)) {
 
@@ -1129,28 +1113,29 @@ exLength : number = 0
       this.responseData.definitions[ParentName.replace(/^./, ParentName[0].toUpperCase())].properties[childrenName] = this.res;
 
     }
-  };
+  }
 
   submit() {
-this.isSubmitForm = true;
+  this.isSubmitForm = true;
     if (this.fileFields.length > 0) {
       this.fileFields.forEach(fileField => {
         if (this.model[fileField]) {
-          var formData = new FormData();
+          const formData = new FormData();
           for (let i = 0; i < this.model[fileField].length; i++) {
             const file = this.model[fileField][i]
             formData.append("files", file);
           }
-
+          
+          let property;
           if (this.type && this.type.includes("property")) {
-            var property = this.type.split(":")[1];
+             property = this.type.split(":")[1];
           }
-
-          let id = (this.entityId) ? this.entityId : this.identifier;
-          var url = [this.apiUrl, id , property, 'documents']
+        
+          const id = (this.entityId) ? this.entityId : this.identifier;
+          const url = [this.apiUrl, id , property, 'documents']
           this.generalService.postData(url.join('/'), formData).subscribe((res) => {
-            var documents_list: any[] = [];
-            var documents_obj = {
+            const documents_list: any[] = [];
+            const documents_obj = {
               "fileName": "",
               "format": "file"
             }
@@ -1169,12 +1154,12 @@ this.isSubmitForm = true;
               }
             }
             else if (this.type && this.type.includes("property")) {
-              var property = this.type.split(":")[1];
+              const property = this.type.split(":")[1];
 
               if (this.identifier != null && this.entityId != undefined) {
-                var url = [this.apiUrl, this.entityId, property, this.identifier];
+                const url = [this.apiUrl, this.entityId, property, this.identifier];
               } else {
-                var url = [this.apiUrl, this.identifier, property];
+                const url = [this.apiUrl, this.identifier, property];
               }
   
               this.apiUrl = (url.join("/"));
@@ -1204,12 +1189,12 @@ this.isSubmitForm = true;
             }
           }
           else if (this.type && this.type.includes("property")) {
-            var property = this.type.split(":")[1];
-
+            const property = this.type.split(":")[1];
+          let url;
             if (this.identifier != null && this.entityId != undefined) {
-              var url = [this.apiUrl, this.entityId, property, this.identifier];
+              url = [this.apiUrl, this.entityId, property, this.identifier];
             } else {
-              var url = [this.apiUrl, this.identifier, property];
+              url = [this.apiUrl, this.identifier, property];
             }
 
             this.apiUrl = (url.join("/"));
@@ -1238,16 +1223,16 @@ this.isSubmitForm = true;
         if (this.identifier != null) {
           this.updateData()
         } else {
-          this.postData()
+           this.postData()
         }
       }
-      else if (this.type && this.type.includes("property")) {
-        var property = this.type.split(":")[1];
-
+      if (this.type && this.type.includes("property")) {
+        const property = this.type.split(":")[1];
+        let url;
         if (this.identifier != null && this.entityId != undefined) {
-          var url = [this.apiUrl, this.entityId, property, this.identifier];
+          url = [this.apiUrl, this.entityId, property, this.identifier];
         } else {
-          var url = [this.apiUrl, this.identifier, property];
+          url = [this.apiUrl, this.identifier, property];
         }
 
         this.apiUrl = (url.join("/"));
@@ -1295,20 +1280,20 @@ this.isSubmitForm = true;
 
         if(this.sorder)
         {
-          var result = res[property].filter(obj => {
+          const result = res[property].filter(obj => {
             return obj.sorder === this.sorder
           })
 
           this.propertyId = result[0]["osid"];
         }
 
-        var temp = {};
+        const temp = {};
         temp[property] = [this.propertyId];
         let propertyUniqueName = this.entityName.toLowerCase() + property.charAt(0).toUpperCase() + property.slice(1);
 
         propertyUniqueName = (this.entityName == 'student' || this.entityName == 'Student') ? 'studentInstituteAttest' : propertyUniqueName;
 
-        let data = {
+        const data = {
           "entityName": this.entityName.charAt(0).toUpperCase() + this.entityName.slice(1),
           "entityId": this.entityId,
           "name": propertyUniqueName,
@@ -1345,7 +1330,7 @@ this.isSubmitForm = true;
 
   filtersearchResult(term: string) {
     if (term && term != '') {
-      var formData = {
+      const formData = {
         "filters": {
           "instituteName": {
             "contains": term
@@ -1365,7 +1350,7 @@ this.isSubmitForm = true;
   }
 
   getNotes() {
-let entity = this.entityName.charAt(0).toUpperCase() + this.entityName.slice(1);
+    const entity = this.entityName.charAt(0).toUpperCase() + this.entityName.slice(1);
     this.generalService.getData(entity).subscribe((res) => {
       res = (res[0]) ? res[0] : res;
 
@@ -1375,10 +1360,10 @@ let entity = this.entityName.charAt(0).toUpperCase() + this.entityName.slice(1);
 
       if (res.hasOwnProperty(propertyUniqueName)) {
 
-      let  attestionRes= res[propertyUniqueName];
+        const attestionRes= res[propertyUniqueName];
 
 
-        var tempObj = [];
+        const tempObj = [];
 
         for (let j = 0; j < attestionRes.length; j++) {
           if (this.propertyId == attestionRes[j].propertiesOSID[this.propertyName][0]) {
@@ -1388,7 +1373,7 @@ let entity = this.entityName.charAt(0).toUpperCase() + this.entityName.slice(1);
         }
 
         tempObj.sort((a, b) => (b.propertiesOSID.osUpdatedAt) - (a.osUpdatedAt));
-        let claimId = tempObj[0]["_osClaimId"];
+        const claimId = tempObj[0]["_osClaimId"];
 
 
         if(claimId)
@@ -1405,7 +1390,7 @@ let entity = this.entityName.charAt(0).toUpperCase() + this.entityName.slice(1);
   }
 
   getData() {
-    var get_url;
+    let get_url;
     if (this.identifier) {
       get_url = this.propertyName + '/' + this.identifier;
     } else {
@@ -1463,9 +1448,9 @@ let entity = this.entityName.charAt(0).toUpperCase() + this.entityName.slice(1);
   ObjectbyString = function (o, s) {
     s = s.replace(/\[(\w+)\]/g, '.$1');
     s = s.replace(/^\./, '');
-    var a = s.split('.');
-    for (var i = 0, n = a.length; i < n; ++i) {
-      var k = a[i];
+    const a = s.split('.');
+    for (let i = 0, n = a.length; i < n; ++i) {
+      const k = a[i];
       if (k in o) {
         o = o[k];
       } else {
@@ -1494,18 +1479,18 @@ let entity = this.entityName.charAt(0).toUpperCase() + this.entityName.slice(1);
     if (typeof obj !== 'object') {
       return false;
     }
-    for (var key in obj) {
+    for (const key in obj) {
       if (obj.hasOwnProperty(key)) {
-        var t = path;
-        var v = obj[key];
-        var newPath = path ? path.slice() : [];
+        const t = path;
+        const v = obj[key];
+        let newPath = path ? path.slice() : [];
         newPath.push(key);
         if (v === value) {
           return newPath;
         } else if (typeof v !== 'object') {
           newPath = t;
         }
-        var res = this.findPath(v, value, newPath);
+        const res = this.findPath(v, value, newPath);
         if (res) {
           return res;
         }
@@ -1515,7 +1500,7 @@ let entity = this.entityName.charAt(0).toUpperCase() + this.entityName.slice(1);
   }
 
   setPathValue(obj, path, value) {
-    var keys;
+    let keys;
     if (typeof path === 'string') {
       keys = path.split(".");
     }

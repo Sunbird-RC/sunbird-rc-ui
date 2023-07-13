@@ -4,11 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 import { JSONSchema7 } from "json-schema";
-import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
-import { Observable, Observer, Subject } from 'rxjs';
+import { WebcamImage } from 'ngx-webcam';
+import { Observable, Observer } from 'rxjs';
 import { GeneralService } from '../../services/general/general.service';
 import { interval } from 'rxjs';
 import { ToastMessageService } from 'src/app/services/toast-message/toast-message.service';
+import { JSONSchema7Definition } from 'json-schema';
 
 @Component({
   selector: 'app-add-document',
@@ -30,24 +31,24 @@ export class AddDocumentComponent implements OnInit {
     "required": []
   };
   schemaloaded = false;
-  osid: any;
+  osid: string;
   docType;
-  verify: boolean = true;
-  verified: boolean = false;
-  certificate: any;
-  entity: any;
-  isScan: boolean = false;
+  verify = true;
+  verified = false;
+  certificate: string;
+  entity: unknown;
+  isScan = false;
   property: { name: { type: string; title: string; }; fileUrl: { type: string; title: string; widget: { formlyConfig: { type: string; }; }; }; };
-  width: any = "100";
+  width = "100";
   imageFile: File;
   step = 0;
   steps_length = 0;
   steps_data = [];
-  doc_data: any;
-  schema_property: {};
-  loading: boolean = false;
-  policyName: any;
-  attestationOSID: any;
+  doc_data:  object[] | object | [];
+  schema_property: object;
+  loading = false;
+  policyName: string;
+  attestationOSID: string;
   mySubscription: any;
   constructor(private route: ActivatedRoute,public toastMsg: ToastMessageService, public generalService: GeneralService, private formlyJsonschema: FormlyJsonschema, public router: Router) { }
 
@@ -83,8 +84,8 @@ export class AddDocumentComponent implements OnInit {
 
   generateName(): string {
     const date: number = new Date().valueOf();
-    let text: string = "";
-    const possibleText: string =
+    let text = "";
+    const possibleText =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     for (let i = 0; i < 5; i++) {
       text += possibleText.charAt(
@@ -129,20 +130,20 @@ export class AddDocumentComponent implements OnInit {
 
   createStaticForm() {
     if (this.docType === 'scan') {
-      var schema: any = {
+      const schema : object = {
         "name": { "title": this.generalService.translateString('NAME_OF_DOCUMENT'), "type": "string" }
       };
-      this.schema['properties'] = schema;
+      this.schema['properties'] = schema as { [key: string]: JSONSchema7Definition };
       this.schema['properties']['name']['widget'] = {};
       this.schema['properties']['name']['widget']['formlyConfig'] = {};
       this.schema['properties']['name']['widget']['formlyConfig']['templateOptions'] = { required: true };
     } else {
-      var schema: any = {
+      const schema: object = {
         "name": { "title": this.generalService.translateString('NAME_OF_DOCUMENT'), "type": "string" },
         "fileUrl": { "title": this.generalService.translateString('DOCUMENT'), "type": "string" },
       };
 
-      this.schema['properties'] = schema;
+      this.schema['properties'] = schema as { [key: string]: JSONSchema7Definition };
       this.schema['properties']['name']['widget'] = {};
       this.schema['properties']['fileUrl']['widget'] = {};
       this.schema['properties']['name']['widget']['formlyConfig'] = {};
@@ -159,7 +160,7 @@ export class AddDocumentComponent implements OnInit {
   }
 
   createDynamicForm() {
-    var search = {
+    const search = {
       "entityType": [
         "Issuer"
       ],
@@ -181,7 +182,7 @@ export class AddDocumentComponent implements OnInit {
       }
 
       this.certificate = this.doc_data['title'];
-      this.schema.properties = this.schema_property;
+      this.schema.properties = this.schema_property as { [key: string]: JSONSchema7Definition }; 
       this.form2 = new FormGroup({});
       this.options = {};
       this.fields = [this.formlyJsonschema.toFieldConfig(this.schema)];
@@ -198,7 +199,7 @@ export class AddDocumentComponent implements OnInit {
   submit() {
 
     if (this.steps_length > 0 && this.steps_length != this.step) {
-      var api = this.doc_data['steps'][this.step]['api'];
+      const api = this.doc_data['steps'][this.step]['api'];
       this.doc_data['steps'][this.step]['request'] = this.model
       this.generalService.postData(api, this.model).subscribe((res) => {
         console.log('api res', res);
@@ -209,10 +210,10 @@ export class AddDocumentComponent implements OnInit {
         if (this.steps_length == this.step) {
           this.schemaloaded = false;
           this.schema_property = JSON.parse(this.doc_data['additionalInput'])
-          for (var [key, value] of Object.entries(this.schema_property)) {
+          for (const [key, value] of Object.entries(this.schema_property)) {
             console.log(key, value);
             if (value["value"]) {
-              var datavalue = this.getValue(value["value"], this.doc_data);
+              const datavalue = this.getValue(value["value"], this.doc_data);
               console.log("datavalue", datavalue)
               this.schema_property[key]["value"] = datavalue;
               this.schema_property[key]['widget'] = {
@@ -234,8 +235,8 @@ export class AddDocumentComponent implements OnInit {
               }
             }
 
-          };
-          this.schema.properties = this.schema_property;
+          }
+          this.schema.properties = this.schema_property as { [key: string]: JSONSchema7Definition };
           this.form2 = new FormGroup({});
           this.options = {};
           this.fields = [this.formlyJsonschema.toFieldConfig(this.schema)];
@@ -247,8 +248,8 @@ export class AddDocumentComponent implements OnInit {
 
     } else {
       if (!this.osid) {
-        var formData = new FormData();
-        var file;
+        const formData = new FormData();
+        let file;
         if (this.docType === 'scan') {
           file = this.imageFile;
           formData.append("files", file);
@@ -259,10 +260,10 @@ export class AddDocumentComponent implements OnInit {
           formData.append("files", file[0]);
 
           this.generalService.getData(this.entity).subscribe((res) => {
-            var url = [this.entity, res[0]['osid'], 'attestation', 'documents']
+            const url = [this.entity, res[0]['osid'], 'attestation', 'documents']
             this.generalService.postData(url.join('/'), formData).subscribe((res2) => {
               this.model['fileUrl'] = res2['documentLocations'];
-              var attest = {
+              const attest = {
                 "name": "attestation-SELF",
                 "entityName": "User",
                 "entityId": res[0]['osid'],
@@ -277,7 +278,7 @@ export class AddDocumentComponent implements OnInit {
       else {
         this.generalService.getData(this.entity).subscribe((res) => {
           this.model['title'] = this.certificate;
-          var attest = {
+          const attest = {
             "name": this.policyName,
             "entityName": "User",
             "entityId": res[0]['osid'],
@@ -292,10 +293,9 @@ export class AddDocumentComponent implements OnInit {
   }
 
   getValue(value, steps) {
-    var data = value.split('.');
-    var result;
+    const data = value.split('.');
     data.forEach(element => {
-      var num = this.isNumeric(element)
+      const num = this.isNumeric(element)
       if (num) {
         try {
           element = parseInt(element)
@@ -349,7 +349,7 @@ export class AddDocumentComponent implements OnInit {
   getPublishedData(){
     this.generalService.getData(this.entity).subscribe((res) => {
       console.log('res', res)
-      var document = res[0][this.policyName].filter(doc => {
+      const document = res[0][this.policyName].filter(doc => {
         return doc.osid === this.attestationOSID
       })
       console.log("document", document);
