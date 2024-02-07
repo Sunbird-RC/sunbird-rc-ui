@@ -1,0 +1,140 @@
+{
+    "type": "opensaberLayoutSchema",
+    "version": "0.1",
+    "header": "default",
+    "limit" : "5",
+    "searches": [
+         {
+            "institute": {
+                "tab": "institute",
+                "tabTitle": "SEARCH_INSTITUTE",
+                "api": "/Institute/search",
+                "activeTab": "active",
+                "privateFields": "InstituteOsConfig",
+                "filters": [
+                    {
+                        "key": "board",
+                        "type": "text",
+                        "title": "BOARD",
+                        "propertyPath": "affiliation.board"
+                    },
+                    {
+                        "key": "instituteName",
+                        "type": "autocomplete",
+                        "autocomplete": {
+                            "apiURL": "https://demo-education-registry.xiv.in/registry/api/v1/Institute/search",
+                            "body": {
+                                "filters": {
+                                    "instituteName": {
+                                        "startsWith": "{{value}}"
+                                    },
+                                    "instituteAffiliation._osState": {
+                                        "eq": "PUBLISHED"
+                                    }
+                                    
+                                },
+                                "limit": 20,
+                                "offset": 0
+                            }
+                        },
+                        
+                        "title": "INSTITUTE_NAME",
+                        "default": true,
+                        "propertyPath": "instituteName",
+                        "placeholder" : "SEARCH_BY_INSTITUTE_NAME"
+                    },
+                    {
+                        "key": "state",
+                        "type": "text",
+                        "title": "STATE",
+                        "propertyPath": "address.state"
+                    },
+                    {
+                        "key": "district",
+                        "type": "text",
+                        "title": "DISTRICT",
+                        "propertyPath": "address.district"
+                    }
+                    
+                ],
+                "results": {
+                    "fields": [
+                        {
+                            "title" : "INSTITUTE_NAME", 
+                            "property" : "instituteName"                          
+                        },
+                        {
+
+                            "title" : "STATE", 
+                            "property" : "address.state"  
+                        },
+                        {
+
+                            "title" : "AFFILIATION_NUMBER", 
+                            "property" : "affiliation.affiliationNumber" ,
+                            "attest" : "_osState"
+                        },
+                        {
+
+                            "title" : "AFFILIATION_CLASS", 
+                            "property" : "affiliation.classes" 
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "teacher": {
+                "tab": "teacher",
+                "tabTitle": "SEARCH_TEACHER",
+                "api": "/Teacher/search",
+                "privateFields": "TeacherOsConfig",
+                "filters": [
+                    
+                    {
+                        "key": "teacherName",
+                        "type": "text",
+                        "title": "TEACHER_NAME",
+                        "propertyPath": "identityDetails.fullName"
+                    },
+                    {
+                        "key": "subject",
+                        "type": "text",
+                        "title": "SUBJECT",
+                        "propertyPath": "experience.subjects"
+                    },
+                    {
+                        "key": "state",
+                        "type": "text",
+                        "title": "STATE",
+                        "propertyPath": "contactDetails.address.state"
+                    },
+                    {
+                        "key": "district",
+                        "type": "text",
+                        "title": "DISTRICT",
+                        "propertyPath": "contactDetails.address.district"
+                    }
+                ],
+                "results": {
+                    "fields": [
+                        {
+                            "title" : "TEACHER_NAME", 
+                            "property" : "identityDetails.fullName"                          
+                        },
+                        {
+
+                            "title" : "QUALIFICATION", 
+                            "property" : "academicQualifications.qualification"  
+                        },
+                        {
+
+                            "title" : "STATE", 
+                            "property" : "contactDetails.address.state"  
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}

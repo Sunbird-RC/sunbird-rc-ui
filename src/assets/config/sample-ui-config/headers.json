@@ -1,0 +1,193 @@
+{
+    "type": "opensaberLayoutSchema",
+    "version": "0.1",
+    "headers": [
+        {
+            "default":{
+                "right":[
+                    {
+                        "title": "LOGIN",
+                        "redirectTo": "/login"
+                    }
+                ]
+            }
+        },
+        {
+            "plain":{
+                "right":[
+                    {
+                        "title": "LOGOUT",
+                        "redirectTo": "/logout",
+                        "className" : "font-weight-bold"
+                    }
+                ]
+            }
+        },
+        {
+            "institute": {
+                "left": [
+                    {
+                        "title": "HOME",
+                        "redirectTo": "/profile/institute"
+                    },
+                    {
+                        "title": "ATTESTATIONS",
+                        "redirectTo": "/institute/attestation/institute-attestation"
+                    }
+                ],
+                "right": [
+                    {
+                        "title": "LOGOUT",
+                        "redirectTo": "/logout",
+                        "className" : "font-weight-bold"
+                    }
+                ]
+            }
+        },
+        {
+            "teacher": {
+                "left": [
+                    {
+                        "title": "HOME",
+                        "redirectTo": "/profile/teacher"
+                    },
+                    {
+                        "title": "ATTESTATIONS",
+                        "redirectTo": "/teacher/attestation/teacher-attestation"
+                    }
+                ],
+                "right": [
+                    {
+                        "title": "LOGOUT",
+                        "redirectTo": "/logout",
+                        "className" : "font-weight-bold"
+                    }
+                ]
+            }
+        },
+        {
+            "student": {
+                "left": [
+                    {
+                        "title": "HOME",
+                        "redirectTo": "/profile/student"
+                    },
+                    {
+                        "title": "My Verifiable Credential",
+                        "redirectTo": "/student/attestation/verifiable-credential"
+                    }
+                ],
+                "right": [
+                    {
+                        "title": "LOGOUT",
+                        "redirectTo": "/logout",
+                        "className" : "font-weight-bold"
+                    }
+                ]
+            }
+        },
+        {
+            "board-cbse": {
+                "left": [
+                    {
+                        "title": "ATTESTATIONS",
+                        "redirectTo": "/profile/board-cbse"
+                    }
+                ],
+                "right": [
+                    {
+                        "title": "LOGOUT",
+                        "redirectTo": "/logout",
+                        "className" : "font-weight-bold"
+                    }
+                ]
+            }
+        },
+        {
+            "state-board": {
+                "left": [
+                    {
+                        "title": "ATTESTATIONS",
+                        "redirectTo": "/profile/state-board"
+                    }
+                ],
+                "right": [
+                    {
+                        "title": "LOGOUT",
+                        "redirectTo": "/logout",
+                        "className" : "font-weight-bold"
+                    }
+                ]
+            }
+        },
+        {
+            "issuer":{
+                "left":[
+                    {
+                        "title": "Home",
+                        "redirectTo": "/dashboard",
+                        "activeTab" : "active"
+                    },
+                    {
+                        "title": "Document",
+                        "redirectTo": "/records"
+                    }
+                ],
+                "right": [
+                    {
+                        "title": "LOGOUT",
+                        "redirectTo": "/logout",
+                        "className" : "font-weight-bold"
+                    }
+                ]
+            }
+        },
+        {
+            "records":{
+                "left":[
+                    {
+                        "title": "Home",
+                        "redirectTo": "/dashboard"
+                    },
+                    {
+                        "title": "Document",
+                        "redirectTo": "/records",
+                        "activeTab" : "active"
+                    }
+                ]
+            }
+        },
+        {
+            "ntse-admin":{
+                "left":[
+                    {
+                        "title": "Home",
+                        "redirectTo": "/dashboard",
+                        "activeTab" : "active"
+                    },
+                    {
+                        "title": "Document",
+                        "redirectTo": "/records"
+                    }
+                ], "right": [
+                    {
+                        "title": "LOGOUT",
+                        "redirectTo": "/logout",
+                        "className" : "font-weight-bold"
+                    }
+                ]
+            }
+        },
+        {
+            "list":{
+                "right": [
+                    {
+                        "title": "LOGOUT",
+                        "redirectTo": "/logout",
+                        "className" : "font-weight-bold"
+                    }
+                ]
+            }
+        }
+    ]
+}
