@@ -1,25 +1,37 @@
 {
-    "/registry/api/v1": {
-      "target": "https://demo-education-registry.xiv.in",
+    "/api/v1": {
+      "target": "http://localhost:8081/",
       "changeOrigin": true,
       "logLevel": "debug",
       "secure": false
 
     },
 
-    "/registry/api": {
-      "target": "https://demo-education-registry.xiv.in",
+    "/api": {
+      "target": "http://localhost:8081/",
       "changeOrigin": true,
       "logLevel": "debug",
       "secure": false
 
     },
 
-    "/registry/api/docs": {
-      "target": "https://demo-education-registry.xiv.in",
+    "/api/docs": {
+      "target": "http://localhost:8081/",
       "changeOrigin": true,
       "logLevel": "debug",
       "secure": false
 
+    },
+    "/github": {
+      "target": "https://gist.githubusercontent.com/",
+      "changeOrigin": true,
+      "logLevel": "debug",
+      "secure": false
+    },
+    "/auth" : {
+      "target": "http://localhost:8080/",
+      "changeOrigin": true,
+      "logLevel": "debug",
+      "secure": false
     }
   }
