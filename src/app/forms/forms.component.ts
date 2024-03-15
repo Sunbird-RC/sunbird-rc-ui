@@ -13,6 +13,7 @@ import { SharedService } from '../services/shared/shared.service';
 import { of as observableOf } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { throwError } from 'rxjs';
+import * as _ from "lodash-es";
 
 @Component({
   selector: 'app-forms',
@@ -46,7 +47,7 @@ export class FormsComponent implements OnInit {
   fields: FormlyFieldConfig[];
   customFields = [];
   header = null;
-exLength : number = 0
+  exLength: number = 0
   type: string;
   apiUrl: string;
   redirectTo: any;
@@ -62,6 +63,7 @@ exLength : number = 0
   propertyName: string;
   notes: any;
   langKey: string;
+  attestationName: string;
   headingTitle;
   enumVal;
   titleVal
@@ -74,7 +76,7 @@ exLength : number = 0
   fieldsetData: any;
   properties = {};
   constructor(private route: ActivatedRoute,
-    public translate: TranslateService, public sharedService:SharedService,
+    public translate: TranslateService, public sharedService: SharedService,
     public toastMsg: ToastMessageService, public router: Router, public schemaService: SchemaService, private formlyJsonschema: FormlyJsonschema, public generalService: GeneralService, private location: Location) { }
 
   ngOnInit(): void {
@@ -131,6 +133,10 @@ exLength : number = 0
 
       if (this.formSchema.langKey) {
         this.langKey = this.formSchema.langKey;
+      }
+
+      if (this.formSchema.attestationName) {
+        this.attestationName = this.formSchema.attestationName;
       }
 
       if (this.type != 'entity') {
@@ -208,24 +214,23 @@ exLength : number = 0
           }
 
           if (this.formSchema.formclass) {
-          
+
             this.schema['widget']['formlyConfig'] = { fieldGroupClassName: this.formSchema.formclass }
           }
 
-         
+
 
 
           if (this.formSchema.hasOwnProperty('wrappers')) {
-           
+
             this.schema['widget']['formlyConfig'] = { type: this.formSchema.wrappers }
 
-            if(this.formSchema.wrappers == 'stepper')
-            {
+            if (this.formSchema.wrappers == 'stepper') {
               this.schema['widget']['formlyConfig']['templateOptions'] = {
-                label :  fieldset.hasOwnProperty('stepConfig') ?  fieldset.stepConfig.stepTitle : "",
-                stepperConfig :  (this.formSchema.hasOwnProperty('formConfig')) ?  this.formSchema.formConfig : ""
+                label: fieldset.hasOwnProperty('stepConfig') ? fieldset.stepConfig.stepTitle : "",
+                stepperConfig: (this.formSchema.hasOwnProperty('formConfig')) ? this.formSchema.formConfig : ""
               }
-              
+
             }
           }
 
@@ -238,7 +243,7 @@ exLength : number = 0
             this.addFields(fieldset);
           }
 
-          this.properties = {...this.properties, ...this.definations[fieldset.definition].properties};
+          this.properties = { ...this.properties, ...this.definations[fieldset.definition].properties };
 
 
           if (fieldset.except) {
@@ -436,8 +441,8 @@ exLength : number = 0
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget'] = {
             "formlyConfig": {
               "templateOptions": {
-                "label" :  (fieldset.hasOwnProperty('stepConfig') && fieldset.stepConfig.hasOwnProperty('stepTitle')) ? fieldset.stepConfig.stepTitle : '',
-                'config' :  (fieldset.hasOwnProperty('stepConfig')) ?  fieldset.stepConfig : ""
+                "label": (fieldset.hasOwnProperty('stepConfig') && fieldset.stepConfig.hasOwnProperty('stepTitle')) ? fieldset.stepConfig.stepTitle : '',
+                'config': (fieldset.hasOwnProperty('stepConfig')) ? fieldset.stepConfig : ""
               }
             }
           }
@@ -445,7 +450,7 @@ exLength : number = 0
         }
 
         if (field.formclass) {
-          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['fieldGroupClassName'] =  field.formclass 
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['fieldGroupClassName'] = field.formclass
         }
 
         if (this.responseData.definitions[fieldset.definition] && this.responseData.definitions[fieldset.definition].hasOwnProperty('properties')) {
@@ -626,7 +631,7 @@ exLength : number = 0
           this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['className'] = field.class;
         }
 
-        if(this.fieldsetData){
+        if (this.fieldsetData) {
           if (this.fieldsetData.class) {
             this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['className'] = this.fieldsetData.class;
           }
@@ -782,30 +787,31 @@ exLength : number = 0
               }
               else if (field.autofill.method === 'POST') {
                 var datapath = this.findPath(field.autofill.body, "{{value}}", '')
+                var dataobject = field.autofill.body;
                 if (datapath) {
-                  var dataobject = this.setPathValue(field.autofill.body, datapath, control.value)
-                  this.generalService.postPrefillData(field.autofill.apiURL, dataobject).subscribe((res) => {
-                    if (Array.isArray(res)) {
-                      res = res[0]
-                    }
-                    if (field.autofill.fields) {
-                      field.autofill.fields.forEach(element => {
-
-                        for (var [key1, value1] of Object.entries(element)) {
-                          this.createPath(this.model, key1, this.ObjectbyString(res, value1))
-                          this.form2.get(key1).setValue(this.ObjectbyString(res, value1))
-                        }
-                      });
-                    }
-                    if (field.autofill.dropdowns) {
-                      field.autofill.dropdowns.forEach(element => {
-                        for (var [key1, value1] of Object.entries(element)) {
-                          this.schema["properties"][key1]['items']['enum'] = this.ObjectbyString(res, value1)
-                        }
-                      });
-                    }
-                  });
+                  dataobject = this.setPathValue(field.autofill.body, datapath, control.value)
                 }
+                this.generalService.postPrefillData(field.autofill.apiURL, dataobject).subscribe((res) => {
+                  if (Array.isArray(res)) {
+                    res = res[0]
+                  }
+                  if (field.autofill.fields) {
+                    field.autofill.fields.forEach(element => {
+
+                      for (var [key1, value1] of Object.entries(element)) {
+                        this.createPath(this.model, key1, this.ObjectbyString(res, value1))
+                        this.form2.get(key1).setValue(this.ObjectbyString(res, value1))
+                      }
+                    });
+                  }
+                  if (field.autofill.dropdowns) {
+                    field.autofill.dropdowns.forEach(element => {
+                      for (var [key1, value1] of Object.entries(element)) {
+                        this.schema["properties"][key1]['items']['enum'] = this.ObjectbyString(res, value1)
+                      }
+                    });
+                  }
+                });
               }
             }
             return new Promise((resolve, reject) => {
@@ -824,7 +830,7 @@ exLength : number = 0
         var dataval = "{{value}}"
         this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['templateOptions']['search$'] = (term) => {
           if (term || term != '') {
-            var datapath = this.findPath(field.autocomplete.body, dataval, '')
+            var datapath = this.findPath(field.autocomplete.body, dataval, '');
             this.setPathValue(field.autocomplete.body, datapath, term)
 
             dataval = term;
@@ -844,10 +850,10 @@ exLength : number = 0
       if (field.hasOwnProperty('required') && field.required) {
         setTimeout(() => {
           const labels = document.querySelectorAll('label > span');
-            labels.forEach(label => {
-              label.classList.add('red');
-            })
-        }, 100) 
+          labels.forEach(label => {
+            label.classList.add('red');
+          })
+        }, 100)
       }
       if (field.type) {
 
@@ -943,93 +949,92 @@ exLength : number = 0
 
       if (field.disabledConfig) {
 
-        if(field['disabledConfig'].hasOwnProperty('isFieldNotEmpty') || field['disabledConfig'].hasOwnProperty('condition')){
-        let temp = this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig'];
-        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig'] = {
-          'expressionProperties': {
-            "templateOptions.disabled": (model, formState, field1) => {
+        if (field['disabledConfig'].hasOwnProperty('isFieldNotEmpty') || field['disabledConfig'].hasOwnProperty('condition')) {
+          let temp = this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig'];
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig'] = {
+            'expressionProperties': {
+              "templateOptions.disabled": (model, formState, field1) => {
 
-              if (  !field1.formControl._pendingTouched) {
-                if (field['disabledConfig'].hasOwnProperty('isFieldNotEmpty') || field['disabledConfig']['isFieldNotEmpty'] == 'disabled') {
+                if (!field1.formControl._pendingTouched) {
+                  if (field['disabledConfig'].hasOwnProperty('isFieldNotEmpty') || field['disabledConfig']['isFieldNotEmpty'] == 'disabled') {
 
-                  if (this.model.hasOwnProperty(this.firstLowerCase(fieldset.definition)) ) {
+                    if (this.model.hasOwnProperty(this.firstLowerCase(fieldset.definition))) {
 
-                    if (field.disabledConfig.isFieldNotEmpty && this.model[this.firstLowerCase(fieldset.definition)][field.name]) {
-                      let isVal;
-                      this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['expressionPropertiesCache'] = false;
-                      return isVal = (this.model[this.firstLowerCase(fieldset.definition)][field.name]) ? true : false;
-                    } else if (this.model[this.firstLowerCase(fieldset.definition)].hasOwnProperty(field.name)) {
-                      this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['expressionPropertiesCache'] = false;
+                      if (field.disabledConfig.isFieldNotEmpty && this.model[this.firstLowerCase(fieldset.definition)][field.name]) {
+                        let isVal;
+                        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['expressionPropertiesCache'] = false;
+                        return isVal = (this.model[this.firstLowerCase(fieldset.definition)][field.name]) ? true : false;
+                      } else if (this.model[this.firstLowerCase(fieldset.definition)].hasOwnProperty(field.name)) {
+                        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['expressionPropertiesCache'] = false;
+                        return false;
+                      }
+                    } else {
+                      if (field.disabledConfig.isFieldNotEmpty && this.model[field.name]) {
+                        let isVal: boolean;
+                        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['expressionPropertiesCache'] = false;
+                        return isVal = (this.model[field.name]) ? true : false;
+                      } else if (this.model.hasOwnProperty(field.name)) {
+                        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['expressionPropertiesCache'] = false;
+                        return false;
+                      }
+                    }
+                  }
+
+                  if (field.disabledConfig.hasOwnProperty('condition')) {
+                    if (this.sharedService.isSetObjectPathVal(field.disabledConfig.condition.isValueSet, this.model, field.disabledConfig.condition.isAllValCheck)) {
                       return false;
                     }
-                  }else {
-                    if (field.disabledConfig.isFieldNotEmpty && this.model[field.name]) {
-                     let isVal : boolean;
-                     this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['expressionPropertiesCache'] = false;
-                     return isVal = (this.model[field.name]) ? true : false;
-                     } else if (this.model.hasOwnProperty(field.name)) {
-                      this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['expressionPropertiesCache'] = false;
-                      return false;
-                    } 
+                    else {
+                      return true;
+                    }
                   }
+                } else {
+                  return false;
                 }
-
-                if (field.disabledConfig.hasOwnProperty('condition')) {
-                  if (this.sharedService.isSetObjectPathVal(field.disabledConfig.condition.isValueSet, this.model, field.disabledConfig.condition.isAllValCheck)) {
-                    return false;
-                  }
-                  else {
-                    return true;
-                  }
-                }
-              } else {
-                return false;
               }
             }
           }
-        }
 
-        if (temp != undefined) {
-          temp['expressionProperties'] = this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['expressionProperties'];
-          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig'] = temp;
+          if (temp != undefined) {
+            temp['expressionProperties'] = this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['expressionProperties'];
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig'] = temp;
+          }
         }
-      }
 
       };
 
       if (field.hideConfig) {
-        if( field['hideConfig'].hasOwnProperty('condition')){
+        if (field['hideConfig'].hasOwnProperty('condition')) {
           let temp = this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig'];
 
-        this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig'] = {
-          "hideExpression": (model, formState, field1) => {
-            
-               let hData = field.hideConfig.condition;
+          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig'] = {
+            "hideExpression": (model, formState, field1) => {
 
-                if (hData.hasOwnProperty('valueDependent') && hData.valueDependent.hasOwnProperty('keyPath') && hData.valueDependent.hasOwnProperty('checkValTo')) {
+              let hData = field.hideConfig.condition;
 
-                  let val = this.sharedService.getObjPathVal(hData.valueDependent.keyPath, this.model)
+              if (hData.hasOwnProperty('valueDependent') && hData.valueDependent.hasOwnProperty('keyPath') && hData.valueDependent.hasOwnProperty('checkValTo')) {
 
-                  switch(hData.valueDependent.isValCondition)
-                  {
-                    case 'equal'  :  return !val.includes(hData.valueDependent.checkValTo);
-                    case 'notequal'  :  return (val.includes(hData.valueDependent.checkValTo));
-                  }
-                
-                }else if (hData.hasOwnProperty('isValueSet')) {
-                  if ((this.sharedService.getObjPathVal(hData.isValueSet, this.model)).length) {
-                    return false;
-                  }
-                  else {
-                    return true;
-                  }
+                let val = this.sharedService.getObjPathVal(hData.valueDependent.keyPath, this.model)
+
+                switch (hData.valueDependent.isValCondition) {
+                  case 'equal': return !val.includes(hData.valueDependent.checkValTo);
+                  case 'notequal': return (val.includes(hData.valueDependent.checkValTo));
                 }
+
+              } else if (hData.hasOwnProperty('isValueSet')) {
+                if ((this.sharedService.getObjPathVal(hData.isValueSet, this.model)).length) {
+                  return false;
+                }
+                else {
+                  return true;
+                }
+              }
+            }
           }
-        }
-        if (temp != undefined) {
-          temp['hideExpression'] = this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['hideExpression'];
-          this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig'] = temp;
-        }
+          if (temp != undefined) {
+            temp['hideExpression'] = this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig']['hideExpression'];
+            this.responseData.definitions[fieldset.definition].properties[field.name]['widget']['formlyConfig'] = temp;
+          }
         }
       };
 
@@ -1074,18 +1079,18 @@ exLength : number = 0
         }
       }
 
-    
-      if(this.fieldsetData){
+
+      if (this.fieldsetData) {
         if (this.fieldsetData.formclass) {
           this.res['widget'] = {
             "formlyConfig": {
-              "fieldGroupClassName" : {},
+              "fieldGroupClassName": {},
               "templateOptions": {},
               "validation": {},
               "expressionProperties": {}
             }
           }
-          this.res['widget']['formlyConfig']['fieldGroupClassName'] =  this.fieldsetData.formclass 
+          this.res['widget']['formlyConfig']['fieldGroupClassName'] = this.fieldsetData.formclass
         }
         if (this.fieldsetData.class) {
           this.res.properties[field.name]['widget']['formlyConfig']['className'] = this.fieldsetData.class;
@@ -1131,10 +1136,12 @@ exLength : number = 0
     }
   };
 
-  submit() {
-this.isSubmitForm = true;
+  async submit() {
+    this.isSubmitForm = true;
+    console.log("submitting the form");
     if (this.fileFields.length > 0) {
-      this.fileFields.forEach(fileField => {
+      for (const fileField of this.fileFields) {
+        console.log("model: ", this.model, fileField);
         if (this.model[fileField]) {
           var formData = new FormData();
           for (let i = 0; i < this.model[fileField].length; i++) {
@@ -1147,8 +1154,8 @@ this.isSubmitForm = true;
           }
 
           let id = (this.entityId) ? this.entityId : this.identifier;
-          var url = [this.apiUrl, id , property, 'documents']
-          this.generalService.postData(url.join('/'), formData).subscribe((res) => {
+          var url = [this.apiUrl, id, property, 'documents']
+          await this.generalService.postData(url.join('/'), formData).toPromise().then(async (res) => {
             var documents_list: any[] = [];
             var documents_obj = {
               "fileName": "",
@@ -1163,9 +1170,9 @@ this.isSubmitForm = true;
             if (this.type && this.type === 'entity') {
 
               if (this.identifier != null) {
-                this.updateData()
+                await this.updateData()
               } else {
-                this.postData()
+                await this.postData()
               }
             }
             else if (this.type && this.type.includes("property")) {
@@ -1176,14 +1183,14 @@ this.isSubmitForm = true;
               } else {
                 var url = [this.apiUrl, this.identifier, property];
               }
-  
+
               this.apiUrl = (url.join("/"));
               if (this.model[property]) {
                 this.model = this.model[property];
               }
 
 
-              this.postData();
+              await this.postData();
 
               if (this.model.hasOwnProperty('attest') && this.model['attest']) {
                 this.raiseClaim(property);
@@ -1198,9 +1205,9 @@ this.isSubmitForm = true;
           if (this.type && this.type === 'entity') {
 
             if (this.identifier != null) {
-              this.updateData()
+              await this.updateData()
             } else {
-              this.postData()
+              await this.postData()
             }
           }
           else if (this.type && this.type.includes("property")) {
@@ -1219,26 +1226,26 @@ this.isSubmitForm = true;
 
 
             if (this.identifier != null && this.entityId != undefined) {
-              this.updateClaims()
+              await this.updateClaims()
             } else {
-              this.postData()
+              await this.postData()
             }
 
             if (this.model.hasOwnProperty('attest') && this.model['attest']) {
-              this.raiseClaim(property);
+              await this.raiseClaim(property);
             }
 
           }
         }
-      });
+      };
     }
     else {
       if (this.type && this.type === 'entity') {
 
         if (this.identifier != null) {
-          this.updateData()
+          await this.updateData()
         } else {
-          this.postData()
+          await this.postData()
         }
       }
       else if (this.type && this.type.includes("property")) {
@@ -1254,15 +1261,14 @@ this.isSubmitForm = true;
         if (this.model[property]) {
           this.model = this.model[property];
         }
-
         if (this.identifier != null && this.entityId != undefined) {
-          this.updateClaims()
+          await this.updateClaims()
         } else {
-          this.postData()
+          await this.postData()
         }
 
         if (this.model.hasOwnProperty('attest') && this.model['attest']) {
-          this.raiseClaim(property);
+          await this.raiseClaim(property);
         }
 
       }
@@ -1270,31 +1276,35 @@ this.isSubmitForm = true;
   }
 
   async raiseClaim(property) {
-    setTimeout(() => {
-     this.generalService.getData(this.entityUrl).subscribe((res) => {
-
+    setTimeout(async () => {
+      let res = await this.generalService.getData(this.entityUrl).toPromise();
       res = (res[0]) ? res[0] : res;
       this.entityId = res.osid;
-      if (res.hasOwnProperty(property)) {
+      if (_.get(res, property.split("/"))) {
+        const value = _.get(res, property.split("/"));
 
         if (!this.propertyId && !this.sorder) {
 
-        /*  var tempObj = []
-          for (let j = 0; j < res[property].length; j++) {
-            res[property][j].osUpdatedAt = new Date(res[property][j].osUpdatedAt);
-            tempObj.push(res[property][j])
+          /*  var tempObj = []
+            for (let j = 0; j < res[property].length; j++) {
+              res[property][j].osUpdatedAt = new Date(res[property][j].osUpdatedAt);
+              tempObj.push(res[property][j])
+            }
+  
+           // tempObj.sort((a, b) => (b.osUpdatedAt) - (a.osUpdatedAt));
+            this.propertyId = tempObj[0]["osid"];*/
+          if (Array.isArray(typeof value)) {
+            value.sort((a, b) => (b.sorder) - (a.sorder));
+            this.propertyId = value[0]["osid"];
+          } else {
+            this.propertyId = value["osid"];
           }
 
-         // tempObj.sort((a, b) => (b.osUpdatedAt) - (a.osUpdatedAt));
-          this.propertyId = tempObj[0]["osid"];*/
 
-          res[property].sort((a, b) => (b.sorder) - (a.sorder));
-           this.propertyId = res[property][0]["osid"];
 
         }
 
-        if(this.sorder)
-        {
+        if (this.sorder) {
           var result = res[property].filter(obj => {
             return obj.sorder === this.sorder
           })
@@ -1304,149 +1314,142 @@ this.isSubmitForm = true;
 
         var temp = {};
         temp[property] = [this.propertyId];
-        let propertyUniqueName = this.entityName.toLowerCase() + property.charAt(0).toUpperCase() + property.slice(1);
-
-        propertyUniqueName = (this.entityName == 'student' || this.entityName == 'Student') ? 'studentInstituteAttest' : propertyUniqueName;
 
         let data = {
           "entityName": this.entityName.charAt(0).toUpperCase() + this.entityName.slice(1),
           "entityId": this.entityId,
-          "name": propertyUniqueName,
+          "name": this.attestationName,
           "propertiesOSID": temp,
-           "additionalInput":{
+          "additionalInput": {
             "notes": this.model['notes']
           }
         }
-        this.sentToAttestation(data);
+        await this.sentToAttestation(data);
       }
-      
-    });
   }, 1000);
 
-  }
+}
 
-  sentToAttestation(data) {
-    this.generalService.attestationReq('/send', data).subscribe((res) => {
-      if (res.params.status == 'SUCCESSFUL') {
-        this.router.navigate([this.redirectTo])
-      }
-      else if (res.params.errmsg != '' && res.params.status == 'UNSUCCESSFUL') {
-        this.toastMsg.error('error', res.params.errmsg);
-        this.isSubmitForm = false;
-
-      }
-    }, (err) => {
-      this.toastMsg.error('error', err.error.params.errmsg);
+async sentToAttestation(data) {
+  await this.generalService.attestationReq('/send', data).toPromise().then((res) => {
+    if (res.params.status == 'SUCCESSFUL') {
+      this.router.navigate([this.redirectTo])
+    }
+    else if (res.params.errmsg != '' && res.params.status == 'UNSUCCESSFUL') {
+      this.toastMsg.error('error', res.params.errmsg);
       this.isSubmitForm = false;
-
-    });
-
-  }
-
-  filtersearchResult(term: string) {
-    if (term && term != '') {
-      var formData = {
-        "filters": {
-          "instituteName": {
-            "contains": term
-          }
-        },
-        "limit": 20,
-        "offset": 0
-      }
-      this.generalService.postData('/Institute/search', formData).subscribe(async (res) => {
-        let items = res;
-        items = await items.filter(x => x.instituteName.toLocaleLowerCase().indexOf(term.toLocaleLowerCase()) > -1);
-        if (items) {
-          return items;
-        }
-      });
     }
-  }
+  }).catch((err) => {
+    this.toastMsg.error('error', err.error.params.errmsg);
+    this.isSubmitForm = false;
+  });
+}
 
-  getNotes() {
-let entity = this.entityName.charAt(0).toUpperCase() + this.entityName.slice(1);
-    this.generalService.getData(entity).subscribe((res) => {
-      res = (res[0]) ? res[0] : res;
-
-
-      let propertyUniqueName = this.entityName.toLowerCase() + this.propertyName.charAt(0).toUpperCase() + this.propertyName.slice(1);
-      propertyUniqueName = (this.entityName == 'student' || this.entityName == 'Student') ? 'studentInstituteAttest' : propertyUniqueName;
-
-      if (res.hasOwnProperty(propertyUniqueName)) {
-
-      let  attestionRes= res[propertyUniqueName];
-
-
-        var tempObj = [];
-
-        for (let j = 0; j < attestionRes.length; j++) {
-          if (this.propertyId == attestionRes[j].propertiesOSID[this.propertyName][0]) {
-            attestionRes[j].propertiesOSID.osUpdatedAt = new Date(attestionRes[j].propertiesOSID.osUpdatedAt);
-            tempObj.push(attestionRes[j])
-          }
+filtersearchResult(term: string) {
+  if (term && term != '') {
+    var formData = {
+      "filters": {
+        "instituteName": {
+          "contains": term
         }
-
-        tempObj.sort((a, b) => (b.propertiesOSID.osUpdatedAt) - (a.osUpdatedAt));
-        let claimId = tempObj[0]["_osClaimId"];
-
-
-        if(claimId)
-        {
-          this.generalService.getData(entity + "/claims/" + claimId).subscribe((res) => {
-            this.notes = res.notes;
-          });
-        }
-       
-      }
-    });
-
-
-  }
-
-  getData() {
-    var get_url;
-    if (this.identifier) {
-      get_url = this.propertyName + '/' + this.identifier;
-    } else {
-      get_url = this.apiUrl
+      },
+      "limit": 20,
+      "offset": 0
     }
-    this.generalService.getData(get_url).subscribe((res) => {
-      res = (res[0]) ? res[0] : res;
-      if (this.propertyName && this.entityId) {
-        this.getNotes();
+    this.generalService.postData('/Institute/search', formData).subscribe(async (res) => {
+      let items = res;
+      items = await items.filter(x => x.instituteName.toLocaleLowerCase().indexOf(term.toLocaleLowerCase()) > -1);
+      if (items) {
+        return items;
       }
-
-      this.model = res;
-      this.identifier = res.osid;
-      this.loadSchema()
     });
   }
+}
+
+getNotes() {
+  let entity = this.entityName.charAt(0).toUpperCase() + this.entityName.slice(1);
+  this.generalService.getData(entity).subscribe((res) => {
+    res = (res[0]) ? res[0] : res;
+
+
+    let propertyUniqueName = this.entityName.toLowerCase() + this.propertyName.charAt(0).toUpperCase() + this.propertyName.slice(1);
+    propertyUniqueName = (this.entityName == 'student' || this.entityName == 'Student') ? 'studentInstituteAttest' : propertyUniqueName;
+
+    if (res.hasOwnProperty(propertyUniqueName)) {
+
+      let attestionRes = res[propertyUniqueName];
+
+
+      var tempObj = [];
+
+      for (let j = 0; j < attestionRes.length; j++) {
+        if (this.propertyId == attestionRes[j].propertiesOSID[this.propertyName][0]) {
+          attestionRes[j].propertiesOSID.osUpdatedAt = new Date(attestionRes[j].propertiesOSID.osUpdatedAt);
+          tempObj.push(attestionRes[j])
+        }
+      }
+
+      tempObj.sort((a, b) => (b.propertiesOSID.osUpdatedAt) - (a.osUpdatedAt));
+      let claimId = tempObj[0] && tempObj[0]["_osClaimId"];
+
+
+      if (claimId) {
+        this.generalService.getData(entity + "/claims/" + claimId).subscribe((res) => {
+          this.notes = res.notes;
+        });
+      }
+
+    }
+  });
+
+
+}
+
+getData() {
+  var get_url;
+  if (this.identifier) {
+    get_url = this.propertyName + '/' + this.identifier;
+  } else {
+    get_url = this.apiUrl
+  }
+  this.generalService.getData(get_url).subscribe((res) => {
+    res = (res[0]) ? res[0] : res;
+    if (this.propertyName && this.entityId) {
+      this.getNotes();
+    }
+
+    this.model = res;
+    this.identifier = res.osid;
+    this.loadSchema()
+  });
+}
 
   async postData() {
-    if (Array.isArray(this.model)) {
-      this.model = this.model[0];
-    }
-    this.model['sorder']  = this.exLength;
-    await this.generalService.postData(this.apiUrl, this.model).subscribe((res) => {
-      if (res.params.status == 'SUCCESSFUL' && !this.model['attest']) {
-       this.router.navigate([this.redirectTo])
-      }
-      else if (res.params.errmsg != '' && res.params.status == 'UNSUCCESSFUL') {
-        this.toastMsg.error('error', res.params.errmsg);
-        this.isSubmitForm = false;
-
-      }
-    }, (err) => {
-      this.toastMsg.error('error', err.error.params.errmsg);
-      this.isSubmitForm = false;
-    });
-
+  console.log("posting the data: ", this.apiUrl, this.model);
+  if (Array.isArray(this.model)) {
+    this.model = this.model[0];
   }
+  this.model['sorder'] = this.exLength;
+  await this.generalService.postData(this.apiUrl, this.model).toPromise().then((res) => {
+    if (res.params.status == 'SUCCESSFUL' && !this.model['attest']) {
+      this.router.navigate([this.redirectTo])
+    }
+    else if (res.params.errmsg != '' && res.params.status == 'UNSUCCESSFUL') {
+      this.toastMsg.error('error', res.params.errmsg);
+      this.isSubmitForm = false;
 
-  updateData() {
-    this.generalService.putData(this.apiUrl, this.identifier, this.model).subscribe((res) => {
-      if (res.params.status == 'SUCCESSFUL'  && !this.model['attest']) {
+    }
+  }, (err) => {
+    this.toastMsg.error('error', err.error.params.errmsg);
+    this.isSubmitForm = false;
+  });
+
+}
+
+  async updateData() {
+  await this.generalService.putData(this.apiUrl, this.identifier, this.model)
+    .toPromise().then((res) => {
+      if (res.params.status == 'SUCCESSFUL' && !this.model['attest']) {
         this.router.navigate([this.redirectTo])
       }
       else if (res.params.errmsg != '' && res.params.status == 'UNSUCCESSFUL') {
@@ -1458,112 +1461,113 @@ let entity = this.entityName.charAt(0).toUpperCase() + this.entityName.slice(1);
       this.isSubmitForm = false;
 
     });
+}
+
+ObjectbyString = function (o, s) {
+  s = s.replace(/\[(\w+)\]/g, '.$1');
+  s = s.replace(/^\./, '');
+  var a = s.split('.');
+  for (var i = 0, n = a.length; i < n; ++i) {
+    var k = a[i];
+    if (k in o) {
+      o = o[k];
+    } else {
+      return;
+    }
   }
+  return o;
+};
 
-  ObjectbyString = function (o, s) {
-    s = s.replace(/\[(\w+)\]/g, '.$1');
-    s = s.replace(/^\./, '');
-    var a = s.split('.');
-    for (var i = 0, n = a.length; i < n; ++i) {
-      var k = a[i];
-      if (k in o) {
-        o = o[k];
-      } else {
-        return;
-      }
+createPath = (obj, path, value = null) => {
+  path = typeof path === 'string' ? path.split('.') : path;
+  let current = obj;
+  while (path.length > 1) {
+    const [head, ...tail] = path;
+    path = tail;
+    if (current[head] === undefined) {
+      current[head] = {};
     }
-    return o;
-  };
+    current = current[head];
+  }
+  current[path[0]] = value;
+  return obj;
+};
 
-  createPath = (obj, path, value = null) => {
-    path = typeof path === 'string' ? path.split('.') : path;
-    let current = obj;
-    while (path.length > 1) {
-      const [head, ...tail] = path;
-      path = tail;
-      if (current[head] === undefined) {
-        current[head] = {};
-      }
-      current = current[head];
-    }
-    current[path[0]] = value;
-    return obj;
-  };
-
-  findPath = (obj, value, path) => {
-    if (typeof obj !== 'object') {
-      return false;
-    }
-    for (var key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        var t = path;
-        var v = obj[key];
-        var newPath = path ? path.slice() : [];
-        newPath.push(key);
-        if (v === value) {
-          return newPath;
-        } else if (typeof v !== 'object') {
-          newPath = t;
-        }
-        var res = this.findPath(v, value, newPath);
-        if (res) {
-          return res;
-        }
-      }
-    }
+findPath = (obj, value, path) => {
+  if (typeof obj !== 'object') {
     return false;
   }
-
-  setPathValue(obj, path, value) {
-    var keys;
-    if (typeof path === 'string') {
-      keys = path.split(".");
-    }
-    else {
-      keys = path;
-    }
-    const propertyName = keys.pop();
-    let propertyParent = obj;
-    while (keys.length > 0) {
-      const key = keys.shift();
-      if (!(key in propertyParent)) {
-        propertyParent[key] = {};
+  for (var key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      var t = path;
+      var v = obj[key];
+      var newPath = path ? path.slice() : [];
+      newPath.push(key);
+      if (v === value) {
+        return newPath;
+      } else if (typeof v !== 'object') {
+        newPath = t;
       }
-      propertyParent = propertyParent[key];
+      var res = this.findPath(v, value, newPath);
+      if (res) {
+        return res;
+      }
     }
-    propertyParent[propertyName] = value;
-    return obj;
   }
+  return false;
+}
 
-  getEntityData(apiUrl) {
-    if (this.identifier !== undefined) {
-      this.generalService.getData(apiUrl).subscribe((res) => {
-        this.entityId = res[0].osid;
-        this.exLength = res[0][this.propertyName].length;
-
-      });
-    }else{
-      this.generalService.getData(apiUrl).subscribe((res) => {
-        this.exLength = res[0][this.propertyName].length;
-      });
-    }
-
+setPathValue(obj, path, value) {
+  var keys;
+  if (typeof path === 'string') {
+    keys = path.split(".");
   }
+  else {
+    keys = path;
+  }
+  const propertyName = keys.pop();
+  let propertyParent = obj;
+  while (keys.length > 0) {
+    const key = keys.shift();
+    if (!(key in propertyParent)) {
+      propertyParent[key] = {};
+    }
+    propertyParent = propertyParent[key];
+  }
+  propertyParent[propertyName] = value;
+  return obj;
+}
 
-  updateClaims() {
-    this.sorder = this.model.hasOwnProperty('sorder')? this.model['sorder'] : '';
+getEntityData(apiUrl) {
+  if (this.identifier !== undefined) {
+    this.generalService.getData(apiUrl).subscribe((res) => {
+      this.entityId = res[0].osid;
+      this.exLength = res[0][this.propertyName].length;
 
-    this.generalService.updateclaims(this.apiUrl, this.model).subscribe((res) => {
-      if (res.params.status == 'SUCCESSFUL' && !this.model['attest']) {
-        this.router.navigate([this.redirectTo])
-      }
-      else if (res.params.errmsg != '' && res.params.status == 'UNSUCCESSFUL') {
-        this.toastMsg.error('error', res.params.errmsg)
-      }
-    }, (err) => {
-      this.toastMsg.error('error', err.error.params.errmsg);
+    });
+  } else {
+    this.generalService.getData(apiUrl).subscribe((res) => {
+      this.exLength = res[0][this.propertyName].length;
     });
   }
+
+}
+
+  async updateClaims() {
+  console.log("updating claims");
+  this.sorder = this.model.hasOwnProperty('sorder') ? this.model['sorder'] : '';
+
+  await this.generalService.updateclaims(this.apiUrl, this.model).toPromise().then((res) => {
+    if (res.params.status == 'SUCCESSFUL' && !this.model['attest']) {
+      this.router.navigate([this.redirectTo])
+    }
+    else if (res.params.errmsg != '' && res.params.status == 'UNSUCCESSFUL') {
+      this.toastMsg.error('error', res.params.errmsg)
+    }
+  }, (err) => {
+    this.toastMsg.error('error', err.error.params.errmsg);
+  });
+}
 
 }
 

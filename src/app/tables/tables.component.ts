@@ -63,7 +63,7 @@ export class TablesComponent implements OnInit {
 
     var temp_array;
     let temp_object
-    this.model.forEach(element => {
+    this.model.content.forEach(element => {
       if (element.status === "OPEN") {
         temp_array = [];
         this.tableSchema.fields.forEach((field) => {

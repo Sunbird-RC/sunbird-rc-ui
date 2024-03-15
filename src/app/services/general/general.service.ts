@@ -74,7 +74,7 @@ export class GeneralService {
   postPrefillData(apiUrl, data) {
     apiUrl.replace('//', '/');
     const req = {
-      url: apiUrl,
+      url: `${this.baseUrl}${apiUrl}`,
       data: data
     };
 
