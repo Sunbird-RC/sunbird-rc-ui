@@ -306,7 +306,7 @@ export class AttestationComponent implements OnInit {
     // });
   }
 
-  onAttestApproveReject(action,event) {
+  async onAttestApproveReject(action,event) {
     console.log(this.form);
     // if(action == 'REJECT_CLAIM')
     // {
@@ -320,7 +320,7 @@ export class AttestationComponent implements OnInit {
   }
   console.log("data--",data);
     var url = this.entity+"/claims/"+this.claimId+"/attest"
-    this.generalService.postData(url, data).subscribe((res) => {
+    await this.generalService.postData(url, data).toPromise().then((res) => {
       // alert('success');
       console.log(res);
       
