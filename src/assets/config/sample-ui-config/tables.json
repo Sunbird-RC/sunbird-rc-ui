@@ -1,0 +1,140 @@
+{
+    "type": "opensaberLayoutSchema",
+    "version": "0.1",
+    "limit" : "15",
+    "tables": [
+        {
+            "teacher-attestation": {
+                "api": "/Teacher/claims?size=1000",
+                "title": "TEACHER_ATTESTATIONS",
+                "checkStatus" : true,
+                "fields": [
+                    {
+                        "name": "createdAt",
+                        "title": "SUBMITTED_DATE",
+                        "formate": "date"
+                    },
+                    {
+                        "name": "requestorName",
+                        "title": "NAME"
+                    },
+                    {   
+                        "custom": true,
+                        "title": "ACTION",
+                        "buttonText": "ATTEST",
+                        "type": "button",
+                        "redirectTo": "/Teacher/attestation/teacher-attestation/:id"
+                    }
+                ]
+            }
+        },
+        {
+            "institute-attestation": {
+                "api": "/Institute/claims?size=1000",
+                "title": "INSTITUTE_ATTESTATIONS",
+                "checkStatus" : true,
+                "fields": [
+                    {
+                        "name": "createdAt",
+                        "title": "SUBMITTED_DATE",
+                        "formate": "date"
+                    },
+                    {
+                        "name": "requestorName",
+                        "title": "NAME"
+                    },
+                    {   
+                        "custom": true,
+                        "title": "ACTION",
+                        "type": "button",
+                        "buttonText": "ATTEST",
+                        "redirectTo": "/Institute/attestation/institute-attestation/:id"
+                    }
+                ]
+            }
+        },
+        {
+            "board-cbse-attestation": {
+                "api": "/board-cbse/claims?size=1000",
+                "title": "CBSE_BOARD_ATTESTATIONS",
+                "checkStatus" : true,
+                "fields": [
+                    {
+                        "name": "createdAt",
+                        "title": "SUBMITTED_DATE",
+                        "formate": "date"
+                    },
+                    {
+                        "name": "requestorName",
+                        "title": "NAME"
+                    },
+                    {   
+                        "custom": true,
+                        "title": "ACTION",
+                        "type": "button",
+                        "buttonText": "ATTEST",
+                        "redirectTo": "/board-cbse/attestation/board-cbse-attestation/:id"
+                    }
+                ]
+            }
+        },
+        {
+            "state-board-attestation": {
+                "api": "/board-cbse/claims?size=1000",
+                "title": "State Board",
+                "checkStatus" : true,
+                "fields": [
+                    {
+                        "name": "createdAt",
+                        "title": "SUBMITTED_DATE",
+                        "formate": "date"
+                    },
+                    {
+                        "name": "requestorName",
+                        "title": "NAME"
+                    },
+                    {   
+                        "custom": true,
+                        "title": "ACTION",
+                        "type": "button",
+                        "buttonText": "ATTEST",
+                        "redirectTo": "/state-board/attestation/state-board-attestation/:id"
+                    }
+                ]
+              }
+        },
+        {
+            "verifiable-credential": {
+                "api": "/NTSE",
+                "title": "My Verifiable Credential",
+                "checkStatus" : "false",
+                "callMultiApi" : {
+                    "api" : ["NTSE_Maths", "NTSE_Science", "KalaUtsav", "KheloIndia", "Toycathon","MetroTravel","PreMatricScholarship","ScholarshipForTopClassStudents", "Belem__Courses"]
+                },
+                "call" : "post",
+                "fields": [
+                    {
+                        "name": "name",
+                        "title": "Student Name"
+                    },
+                   
+                    {
+                        "name": "contact",
+                        "title": "Mobile Number"
+                    },
+                    {
+                        "name": "vctype",
+                        "title": "Credential type"
+                    },
+                    {   
+                        "custom": true,
+                        "title": "ACTION",
+                        "buttonText": "View Credential",
+                        "type": "button",
+                        "redirectTo": "/pdf-view/:vctype:osid"
+                    }
+                ]
+            }
+        }
+    ]
+}
